@@ -1,0 +1,546 @@
+[0.055s] Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping
+[0.226s] -- The C compiler identification is GNU 11.4.0
+[0.363s] -- The CXX compiler identification is GNU 11.4.0
+[0.391s] -- Detecting C compiler ABI info
+[0.571s] -- Detecting C compiler ABI info - done
+[0.583s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.584s] -- Detecting C compile features
+[0.585s] -- Detecting C compile features - done
+[0.594s] -- Detecting CXX compiler ABI info
+[0.707s] -- Detecting CXX compiler ABI info - done
+[0.728s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.728s] -- Detecting CXX compile features
+[0.729s] -- Detecting CXX compile features - done
+[0.743s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.879s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.173s] -- Configuring done
+[1.333s] -- Generating done
+[1.362s] -- Build files have been written to: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+[1.365s] Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping
+[1.366s] Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping -- -j12 -l12
+[1.410s] [ 18%] [32mBuilding CXX object utils/CMakeFiles/utils.dir/stat.cpp.o[0m
+[1.410s] [ 18%] [32mBuilding CXX object utils/CMakeFiles/utils.dir/movement.cpp.o[0m
+[1.410s] [ 18%] [32mBuilding CXX object sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.o[0m
+[1.410s] [ 18%] [32mBuilding CXX object sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.o[0m
+[1.611s] [ 22%] [32m[1mLinking CXX static library libsensor_base.a[0m
+[1.675s] [ 27%] [32m[1mLinking CXX static library libutils.a[0m
+[1.676s] [ 27%] Built target sensor_base
+[1.697s] [ 45%] [32mBuilding CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o[0m
+[1.697s] [ 45%] [32mBuilding CXX object sensor/sensor_range/CMakeFiles/sensor_range.dir/rangereading.cpp.o[0m
+[1.697s] [ 45%] [32mBuilding CXX object sensor/sensor_range/CMakeFiles/sensor_range.dir/rangesensor.cpp.o[0m
+[1.697s] [ 45%] [32mBuilding CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o[0m
+[1.740s] [ 45%] Built target utils
+[1.955s] [ 50%] [32m[1mLinking CXX static library libsensor_odometry.a[0m
+[2.014s] [ 50%] Built target sensor_odometry
+[2.060s] [ 54%] [32m[1mLinking CXX static library libsensor_range.a[0m
+[2.129s] [ 54%] Built target sensor_range
+[2.154s] [ 72%] [32mBuilding CXX object scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.o[0m
+[2.154s] [ 72%] [32mBuilding CXX object scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.o[0m
+[2.154s] [ 72%] [32mBuilding CXX object scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.o[0m
+[2.154s] [ 72%] [32mBuilding CXX object scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.o[0m
+[3.150s] [ 77%] [32m[1mLinking CXX static library libscanmatcher.a[0m
+[3.249s] [ 77%] Built target scanmatcher
+[3.268s] [ 86%] [32mBuilding CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o[0m
+[3.269s] [ 95%] [32mBuilding CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o[0m
+[3.269s] [ 95%] [32mBuilding CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o[0m
+[3.269s] [ 95%] [32mBuilding CXX object gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o[0m
+[4.416s] [100%] [32m[1mLinking CXX static library libgridfastslam.a[0m
+[4.534s] [100%] Built target gridfastslam
+[4.560s] Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping -- -j12 -l12
+[4.600s] Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+[4.606s] -- Install configuration: ""
+[4.611s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.sh
+[4.614s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.dsv
+[4.617s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/
+[4.618s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping
+[4.620s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/grid
+[4.622s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/grid/accessstate.h
+[4.625s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/grid/array2d.h
+[4.627s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/grid/harray2d.h
+[4.630s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/grid/map.h
+[4.634s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/gridfastslam
+[4.635s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/gridfastslam/gridslamprocessor.h
+[4.639s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/gridfastslam/gridslamprocessor.hxx
+[4.642s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/gridfastslam/motionmodel.h
+[4.644s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/log
+[4.646s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/log/configuration.h
+[4.648s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/log/sensorlog.h
+[4.650s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/particlefilter
+[4.651s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/particlefilter/particlefilter.h
+[4.655s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/scanmatcher
+[4.656s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/scanmatcher/icp.h
+[4.659s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/scanmatcher/scanmatcher.h
+[4.662s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/scanmatcher/smmap.h
+[4.664s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor
+[4.666s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_base
+[4.667s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_base/sensor.h
+[4.669s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_base/sensorreading.h
+[4.672s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_odometry
+[4.673s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_odometry/odometryreading.h
+[4.675s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_odometry/odometrysensor.h
+[4.677s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_range
+[4.679s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_range/rangereading.h
+[4.681s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/sensor/sensor_range/rangesensor.h
+[4.683s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils
+[4.684s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/autoptr.h
+[4.687s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/commandline.h
+[4.690s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/gvalues.h
+[4.692s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/macro_params.h
+[4.694s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/point.h
+[4.697s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include//gmapping/utils/stat.h
+[4.717s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/ament_index/resource_index/package_run_dependencies/openslam_gmapping
+[4.721s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/ament_index/resource_index/parent_prefix_path/openslam_gmapping
+[4.724s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/ament_prefix_path.sh
+[4.726s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/ament_prefix_path.dsv
+[4.729s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/path.sh
+[4.731s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/path.dsv
+[4.733s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/local_setup.bash
+[4.736s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/local_setup.sh
+[4.739s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/local_setup.zsh
+[4.741s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/local_setup.dsv
+[4.743s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.dsv
+[4.747s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/ament_index/resource_index/packages/openslam_gmapping
+[4.750s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/cmake/ament_cmake_export_libraries-extras.cmake
+[4.752s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/cmake/ament_cmake_export_include_directories-extras.cmake
+[4.755s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/cmake/openslam_gmappingConfig.cmake
+[4.757s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/cmake/openslam_gmappingConfig-version.cmake
+[4.759s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.xml
+[4.763s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libgridfastslam.a
+[4.787s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libscanmatcher.a
+[4.799s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.sh
+[4.799s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.dsv
+[4.800s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_base.a
+[4.803s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.sh
+[4.803s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.dsv
+[4.804s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_odometry.a
+[4.807s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_range.a
+[4.812s] -- Installing: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libutils.a
+[4.816s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.sh
+[4.816s] -- Up-to-date: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/environment/library_path.dsv
+[4.820s] Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
