@@ -1,0 +1,39 @@
+cabal-version:      3.4
+name:               ranger-daemon
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            AGPL-3.0-or-later
+license-file:       LICENSE
+author:             ryndubei
+maintainer:         114586905+ryndubei@users.noreply.github.com
+-- copyright:
+category:           System
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:  Ranger.Bluetooth
+    -- other-modules:
+    -- other-extensions:
+    build-depends:   base ^>=4.18.2.1
+                   , dbus
+                   , stm
+    hs-source-dirs:   src
+    default-language: GHC2021
+    pkgconfig-depends: simpleble
+
+executable ranger-daemon
+    import:           warnings
+    main-is:          Main.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:   base ^>=4.18.2.1
+                   , ranger-daemon
+    hs-source-dirs:   app
+    default-language: GHC2021
