@@ -10,19 +10,15 @@
           inherit system;
           overlays = [ nix-ros-overlay.overlays.default ];
         };
-        compile-packages = with pkgs; [
-          cabal-install
-          ghc
-        ];
+        compile-packages = with pkgs; [ cabal-install ghc ];
         ros-packages = with pkgs; [
           colcon
-          (with rosPackages.humble; buildEnv {
-            paths = [ ros-core ];
-          })];
+          (with rosPackages.humble; buildEnv { paths = [ ros-core ]; })
+        ];
       in {
         devShells.default = pkgs.mkShell {
           name = "Ranger compile shell";
           packages = compile-packages ++ ros-packages;
         };
-    });
+      });
 }
