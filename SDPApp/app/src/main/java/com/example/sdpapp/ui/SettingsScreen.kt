@@ -40,7 +40,7 @@ fun SettingsScreen(navController: NavController) {
         Text(
             text = "Settings",
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.tertiary
+            color = MaterialTheme.colorScheme.surfaceBright
         )
         ElevatedButton(
             onClick = { navController.navigate("display") },

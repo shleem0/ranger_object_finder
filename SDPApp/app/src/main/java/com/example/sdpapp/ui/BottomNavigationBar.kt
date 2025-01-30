@@ -87,6 +87,7 @@ fun BottomNavigationBar() {
             composable("about") { AboutSettingsScreen(navController) }
             composable("display") { DisplaySettingsScreen(navController) }
             composable("permissions") { PermissionsSettingsScreen(navController) }
+            composable("alerts") { AlertsScreen(navController) }
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +31,18 @@ fun DisplaySettingsScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(20.dp)
+            .padding(horizontal = 20.dp)
     ) {
+        TextButton(
+            onClick = { navController.navigate("settings") }
+        ) {
+            Text(
+                "< back",
+                color = MaterialTheme.colorScheme.surfaceBright,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(0.dp)
+            )
+        }
         Text(
             text = "Display",
             style = MaterialTheme.typography.bodyLarge,
@@ -45,7 +56,9 @@ fun DisplaySettingsScreen(navController: NavController) {
             modifier = Modifier.padding(top = 10.dp)
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp),
             horizontalArrangement = Arrangement.Absolute.SpaceBetween
         ) {
             Text(
@@ -69,7 +82,9 @@ fun DisplaySettingsScreen(navController: NavController) {
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp),
             horizontalArrangement = Arrangement.Absolute.SpaceBetween
         ) {
             Text(
