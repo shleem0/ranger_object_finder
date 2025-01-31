@@ -17,6 +17,7 @@
           zlib
           cabal-install
           ghc
+          glibc_multi
         ];
         ros-packages = with pkgs; [
           colcon
