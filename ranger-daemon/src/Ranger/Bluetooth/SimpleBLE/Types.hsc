@@ -1,6 +1,6 @@
-{-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards, LambdaCase, PatternSynonyms #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards, LambdaCase, PatternSynonyms, TemplateHaskell #-}
 module Ranger.Bluetooth.SimpleBLE.Types
-  ( uuidStringLength, characteristicMaxCount, descriptorMaxCount, maxManufacturerData
+  ( pattern UUID_STR_LENGTH, pattern SIMPLEBLE_CHARACTERISTIC_MAX_COUNT, pattern SIMPLEBLE_DESCRIPTOR_MAX_COUNT, pattern MAX_MANUFACTURER_DATA_BYTES
   , SimpleBleResult, pattern SIMPLEBLE_SUCCESS, pattern SIMPLEBLE_FAILURE
   , SimpleBleUuid, mkSimpleBleUuid
   , SimpleBleDescriptor(..)
@@ -19,18 +19,22 @@ import qualified Data.Text.Foreign as T
 import Foreign.Storable
 import Data.Vector.Storable (Vector)
 import qualified Data.Vector.Storable as V
+import Language.Haskell.TH
+import Language.Haskell.TH.Syntax
 
 #include <simpleble_c/types.h>
 
 
-uuidStringLength, characteristicMaxCount, descriptorMaxCount, maxManufacturerData :: Int
--- 37 originally, but that includes the null terminator
-uuidStringLength = (#const SIMPLEBLE_UUID_STR_LEN) - 1
--- 16
-characteristicMaxCount = #const SIMPLEBLE_CHARACTERISTIC_MAX_COUNT
--- 16
-descriptorMaxCount = #const SIMPLEBLE_DESCRIPTOR_MAX_COUNT
-maxManufacturerData = 27
+pattern UUID_STR_LENGTH, SIMPLEBLE_CHARACTERISTIC_MAX_COUNT, SIMPLEBLE_DESCRIPTOR_MAX_COUNT, MAX_MANUFACTURER_DATA_BYTES :: Int
+-- | 37 originally, but that includes the null terminator, so we subtract 1
+pattern UUID_STR_LENGTH = $(fmap (\case (LitE l) -> LitP l; _ -> error "not a lit") . lift $ (#const SIMPLEBLE_UUID_STR_LEN) - (1 :: Int))
+-- | 16
+pattern SIMPLEBLE_CHARACTERISTIC_MAX_COUNT = #const SIMPLEBLE_CHARACTERISTIC_MAX_COUNT
+-- | 16
+pattern SIMPLEBLE_DESCRIPTOR_MAX_COUNT = #const SIMPLEBLE_DESCRIPTOR_MAX_COUNT
+-- | 27
+pattern MAX_MANUFACTURER_DATA_BYTES = 27
+
 
 newtype SimpleBleResult = SimpleBleResult CInt deriving (Eq, Ord)
 
@@ -53,10 +57,10 @@ instance Storable SimpleBleResult where
 
 newtype SimpleBleUuid = SimpleBleUuid T.Text deriving (Eq, Show)
 
--- | Length of the UUID string in bytes must equal `simpleBleUuidStringLength`: throws otherwise
+-- | Length of the UUID string in bytes must equal `UUID_STR_LENGTH`: throws otherwise
 mkSimpleBleUuid :: HasCallStack => T.Text -> SimpleBleUuid
 mkSimpleBleUuid t
-  | T.lengthWord8 t == uuidStringLength = SimpleBleUuid t
+  | T.lengthWord8 t == UUID_STR_LENGTH = SimpleBleUuid t
   | otherwise = error "SimpleBleUuid: invalid length"
 
 instance Storable SimpleBleUuid where
@@ -86,7 +90,7 @@ data SimpleBleCharacteristic = SimpleBleCharacteristic
   , canNotify :: CBool
   , canIndicate :: CBool
   , descriptors :: Vector SimpleBleDescriptor
-  -- ^ Maximum length is `descriptorMaxCount`
+  -- ^ Maximum length is `SIMPLEBLE_DESCRIPTOR_MAX_COUNT`
   }
 
 instance Storable SimpleBleCharacteristic where
@@ -119,9 +123,9 @@ instance Storable SimpleBleCharacteristic where
 data SimpleBleService = SimpleBleService
   { serviceUuid :: SimpleBleUuid
   , manufacturerData :: Vector CUChar
-  -- ^ Maximum length is `maxManufacturerData`
+  -- ^ Maximum length is `MAX_MANUFACTURER_DATA_BYTES`
   , characteristics :: Vector SimpleBleCharacteristic
-  -- ^ Maximum length is `characteristicMaxCount`
+  -- ^ Maximum length is `SIMPLEBLE_CHARACTERISTIC_MAX_COUNT`
   }
 
 instance Storable SimpleBleService where
