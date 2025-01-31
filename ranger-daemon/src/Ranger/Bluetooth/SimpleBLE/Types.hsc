@@ -1,6 +1,5 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards #-}
--- | SimpleBLE library bindings
-module Ranger.Bluetooth.SimpleBLE where
+module Ranger.Bluetooth.SimpleBLE.Types where
 
 import Foreign.C
 import Foreign.Ptr
@@ -11,12 +10,7 @@ import Foreign.Storable
 import Data.Vector.Storable (Vector)
 import qualified Data.Vector.Storable as V
 
-#include <simpleble_c/simpleble.h>
-
-
---------------------------------------------------------------------------------
--- types.h
---------------------------------------------------------------------------------
+#include <simpleble_c/types.h>
 
 
 uuidStringLength, characteristicMaxCount, descriptorMaxCount, maxManufacturerData :: Int
