@@ -92,7 +92,9 @@ fun BottomNavigationBar() {
                 val name = backStackEntry.arguments?.getString("name") ?: ""
                 CameraScreen(navController, name)
             }
-            composable("cameraPreview") { CameraPreview(navController) }
+            composable("cameraPreview") { backStackEntry ->
+                val name = backStackEntry.arguments?.getString("name") ?: ""
+                CameraPreview(navController, name) }
         }
     }
 }
