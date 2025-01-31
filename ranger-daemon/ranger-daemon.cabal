@@ -26,7 +26,7 @@ library
                    , stm
     hs-source-dirs:   src
     default-language: GHC2021
-    pkgconfig-depends: zlib, simpleble
+    pkgconfig-depends: simpleble
 
 executable ranger-daemon
     import:           warnings
