@@ -1,5 +1,15 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards #-}
-module Ranger.Bluetooth.SimpleBLE.Types where
+module Ranger.Bluetooth.SimpleBLE.Types
+  ( uuidStringLength, characteristicMaxCount, descriptorMaxCount, maxManufacturerData
+  , SimpleBleResult, simpleBle_Success, simpleBle_Failure
+  , SimpleBleUuid, mkSimpleBleUuid
+  , SimpleBleDescriptor(..)
+  , SimpleBleCharacteristic(..)
+  , SimpleBleService(..)
+  , SimpleBleAdapter(..), SimpleBlePeripheral(..)
+  , SimpleBleOS, simpleBleOS_Linux, simpleBleOS_Windows, simpleBleOS_MacOS
+  , SimpleBleAddressType, simpleBleAddressType_Public, simpleBleAddressType_Random, simpleBleAddressType_Unspecified
+  ) where
 
 import Foreign.C
 import Foreign.Ptr
