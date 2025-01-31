@@ -1,4 +1,4 @@
-cabal-version:      3.4
+cabal-version:      3.8
 name:               ranger-daemon
 version:            0.1.0.0
 -- synopsis:
@@ -28,7 +28,7 @@ library
                    , vector
     hs-source-dirs:   src
     default-language: GHC2021
-    extra-libraries: simpleble-c
+    extra-libraries-static: simpleble-c
 
 executable ranger-daemon
     import:           warnings
