@@ -56,4 +56,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.camera.camera.core2)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.camera.camera2.v122)
+    implementation(libs.androidx.camera.view.v122)
+    implementation(libs.androidx.camera.lifecycle.v122)
+    implementation(libs.kotlinx.coroutines.android)
 }

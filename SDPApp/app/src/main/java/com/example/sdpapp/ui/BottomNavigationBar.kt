@@ -26,7 +26,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.sdpapp.CameraScreen
 import com.example.sdpapp.HomeScreen
 import com.example.sdpapp.SettingsScreen
 
@@ -93,6 +92,7 @@ fun BottomNavigationBar() {
                 val name = backStackEntry.arguments?.getString("name") ?: ""
                 CameraScreen(navController, name)
             }
+            composable("cameraPreview") { CameraPreview(navController) }
         }
     }
 }

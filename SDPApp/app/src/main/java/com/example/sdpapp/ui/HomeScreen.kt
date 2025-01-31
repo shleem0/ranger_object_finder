@@ -146,14 +146,6 @@ fun FABWithNotification(notificationCount: Int, navController: NavController) {
     }
 }
 
-@Composable
-fun CameraScreen(navController: NavController, name: String){
-    Text(
-        name,
-        color = MaterialTheme.colorScheme.surfaceBright
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
