@@ -19,14 +19,14 @@ common warnings
 library
     import:           warnings
     exposed-modules:  Ranger.Bluetooth
+                    , Ranger.Bluetooth.SimpleBLE
     -- other-modules:
     -- other-extensions:
     build-depends:   base ^>=4.18.2.1
-                   , dbus
                    , stm
     hs-source-dirs:   src
     default-language: GHC2021
-    pkgconfig-depends: simpleble
+    pkgconfig-depends: zlib, simpleble
 
 executable ranger-daemon
     import:           warnings
