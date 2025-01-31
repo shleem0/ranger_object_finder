@@ -1,14 +1,14 @@
-{-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards #-}
+{-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards, LambdaCase, PatternSynonyms #-}
 module Ranger.Bluetooth.SimpleBLE.Types
   ( uuidStringLength, characteristicMaxCount, descriptorMaxCount, maxManufacturerData
-  , SimpleBleResult, simpleBle_Success, simpleBle_Failure
+  , SimpleBleResult, pattern SIMPLEBLE_SUCCESS, pattern SIMPLEBLE_FAILURE
   , SimpleBleUuid, mkSimpleBleUuid
   , SimpleBleDescriptor(..)
   , SimpleBleCharacteristic(..)
   , SimpleBleService(..)
   , SimpleBleAdapter(..), SimpleBlePeripheral(..)
-  , SimpleBleOS, simpleBleOS_Linux, simpleBleOS_Windows, simpleBleOS_MacOS
-  , SimpleBleAddressType, simpleBleAddressType_Public, simpleBleAddressType_Random, simpleBleAddressType_Unspecified
+  , SimpleBleOS, pattern SIMPLEBLE_OS_LINUX, pattern SIMPLEBLE_OS_WINDOWS, pattern SIMPLEBLE_OS_MACOS
+  , SimpleBleAddressType, pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC, pattern SIMPLEBLE_ADDRESS_TYPE_RANDOM, pattern SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED
   ) where
 
 import Foreign.C
@@ -32,16 +32,26 @@ characteristicMaxCount = #const SIMPLEBLE_CHARACTERISTIC_MAX_COUNT
 descriptorMaxCount = #const SIMPLEBLE_DESCRIPTOR_MAX_COUNT
 maxManufacturerData = 27
 
+newtype SimpleBleResult = SimpleBleResult CInt deriving (Eq, Ord)
 
-newtype SimpleBleResult = SimpleBleResult Int deriving Eq
+pattern SIMPLEBLE_SUCCESS :: SimpleBleResult
+pattern SIMPLEBLE_SUCCESS = SimpleBleResult (#const SIMPLEBLE_SUCCESS)
+pattern SIMPLEBLE_FAILURE :: SimpleBleResult
+pattern SIMPLEBLE_FAILURE = SimpleBleResult (#const SIMPLEBLE_FAILURE)
+{-# COMPLETE SIMPLEBLE_SUCCESS, SIMPLEBLE_FAILURE #-}
 
-#{enum SimpleBleResult, SimpleBleResult
- , simpleBle_Success = SIMPLEBLE_SUCCESS
- , simpleBle_Failure = SIMPLEBLE_FAILURE
- }
+instance Show SimpleBleResult where
+  show SIMPLEBLE_SUCCESS = "SIMPLEBLE_SUCCESS"
+  show SIMPLEBLE_FAILURE = "SIMPLEBLE_FAILURE"
+
+instance Storable SimpleBleResult where
+  alignment _ = #alignment simpleble_err_t
+  sizeOf _ = #size simpleble_err_t
+  peek ptr = SimpleBleResult <$> peek (castPtr ptr)
+  poke ptr (SimpleBleResult x) = poke (castPtr ptr :: Ptr CInt) x
 
 
-newtype SimpleBleUuid = SimpleBleUuid T.Text deriving Eq
+newtype SimpleBleUuid = SimpleBleUuid T.Text deriving (Eq, Show)
 
 -- | Length of the UUID string in bytes must equal `simpleBleUuidStringLength`: throws otherwise
 mkSimpleBleUuid :: HasCallStack => T.Text -> SimpleBleUuid
@@ -149,19 +159,41 @@ newtype SimpleBleAdapter = SimpleBleAdapter (FunPtr (IO ()))
 newtype SimpleBlePeripheral = SimpleBlePeripheral (FunPtr (IO ()))
 
 
-newtype SimpleBleOS = SimpleBleOS Int
+newtype SimpleBleOS = SimpleBleOS CInt deriving (Eq, Ord)
 
-#{enum SimpleBleOS, SimpleBleOS
- , simpleBleOS_Linux = SIMPLEBLE_OS_LINUX
- , simpleBleOS_Windows = SIMPLEBLE_OS_WINDOWS
- , simpleBleOS_MacOS = SIMPLEBLE_OS_MACOS
- }
+pattern SIMPLEBLE_OS_LINUX, SIMPLEBLE_OS_WINDOWS, SIMPLEBLE_OS_MACOS :: SimpleBleOS
+pattern SIMPLEBLE_OS_LINUX = SimpleBleOS (#const SIMPLEBLE_OS_LINUX)
+pattern SIMPLEBLE_OS_WINDOWS = SimpleBleOS (#const SIMPLEBLE_OS_WINDOWS)
+pattern SIMPLEBLE_OS_MACOS = SimpleBleOS (#const SIMPLEBLE_OS_MACOS)
+{-# COMPLETE SIMPLEBLE_OS_LINUX, SIMPLEBLE_OS_WINDOWS, SIMPLEBLE_OS_MACOS #-}
+
+instance Show SimpleBleOS where
+  show SIMPLEBLE_OS_LINUX = "SIMPLEBLE_OS_LINUX"
+  show SIMPLEBLE_OS_WINDOWS = "SIMPLEBLE_OS_WINDOWS"
+  show SIMPLEBLE_OS_MACOS = "SIMPLEBLE_OS_MACOS"
+
+instance Storable SimpleBleOS where
+  alignment _ = #alignment simpleble_os_t
+  sizeOf _ = #size simpleble_os_t
+  peek ptr = SimpleBleOS <$> peek (castPtr ptr)
+  poke ptr (SimpleBleOS x) = poke (castPtr ptr :: Ptr CInt) x
 
 
-newtype SimpleBleAddressType = SimpleBleAddressType Int
+newtype SimpleBleAddressType = SimpleBleAddressType CInt
 
-#{enum SimpleBleAddressType, SimpleBleAddressType
- , simpleBleAddressType_Public = SIMPLEBLE_ADDRESS_TYPE_PUBLIC
- , simpleBleAddressType_Random = SIMPLEBLE_ADDRESS_TYPE_RANDOM
- , simpleBleAddressType_Unspecified = SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED
- }
+pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC, SIMPLEBLE_ADDRESS_TYPE_RANDOM, SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED :: SimpleBleAddressType
+pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC = SimpleBleAddressType (#const SIMPLEBLE_ADDRESS_TYPE_PUBLIC)
+pattern SIMPLEBLE_ADDRESS_TYPE_RANDOM = SimpleBleAddressType (#const SIMPLEBLE_ADDRESS_TYPE_RANDOM)
+pattern SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED = SimpleBleAddressType (#const SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED)
+{-# COMPLETE SIMPLEBLE_ADDRESS_TYPE_PUBLIC, SIMPLEBLE_ADDRESS_TYPE_RANDOM, SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED #-}
+
+instance Show SimpleBleAddressType where
+  show SIMPLEBLE_ADDRESS_TYPE_PUBLIC = "SIMPLEBLE_ADDRESS_TYPE_PUBLIC"
+  show SIMPLEBLE_ADDRESS_TYPE_RANDOM = "SIMPLEBLE_ADDRESS_TYPE_RANDOM"
+  show SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED = "SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED"
+
+instance Storable SimpleBleAddressType where
+  alignment _ = #alignment simpleble_address_type_t
+  sizeOf _ = #size simpleble_address_type_t
+  peek ptr = SimpleBleAddressType <$> peek (castPtr ptr)
+  poke ptr (SimpleBleAddressType x) = poke (castPtr ptr :: Ptr CInt) x
