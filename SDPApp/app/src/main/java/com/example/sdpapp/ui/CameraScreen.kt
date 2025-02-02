@@ -76,6 +76,47 @@ fun CameraScreen(navController: NavController, name: String) {
 }
 
 @Composable
+fun CheckCameraPermission(onPermissionGranted: () -> Unit) {
+    val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        cameraPermissionState.launchPermissionRequest()
+    }
+
+    if (cameraPermissionState.status.isGranted) {
+        onPermissionGranted()
+    } else {
+        Column (
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Spacer(modifier = Modifier.padding(top = 30.dp))
+            Text(
+                text = "Camera permission is required to use this feature.",
+                color = MaterialTheme.colorScheme.surfaceBright,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(horizontal = 12.dp),
+                lineHeight = 22.sp
+            )
+            Button(
+                modifier = Modifier.padding(4.dp),
+                onClick = {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.parse("package:${context.packageName}")
+                    }
+                    context.startActivity(intent)
+                }) {
+                Text(
+                    text = "Go to Settings",
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    lineHeight = 22.sp,
+                    fontSize = 20.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun CameraPreview(navController: NavController, name: String) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -141,8 +182,9 @@ fun CameraPreview(navController: NavController, name: String) {
             if (capturedImageUri == null) {
                 Button(
                     onClick = {
-                        captureImage(context, imageCapture, name) { uri ->
+                        captureImage(context, imageCapture, name) { uri, file ->
                             capturedImageUri = uri
+                            capturedFile = file
                         }
                     },
                     modifier = Modifier.padding(16.dp)
@@ -176,50 +218,8 @@ fun CameraPreview(navController: NavController, name: String) {
     }
 }
 
-
-@Composable
-fun CheckCameraPermission(onPermissionGranted: () -> Unit) {
-    val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        cameraPermissionState.launchPermissionRequest()
-    }
-
-    if (cameraPermissionState.status.isGranted) {
-        onPermissionGranted()
-    } else {
-        Column (
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Spacer(modifier = Modifier.padding(top = 30.dp))
-            Text(
-                text = "Camera permission is required to use this feature.",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(horizontal = 12.dp),
-                lineHeight = 22.sp
-            )
-            Button(
-                modifier = Modifier.padding(4.dp),
-                onClick = {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.parse("package:${context.packageName}")
-                    }
-                    context.startActivity(intent)
-                }) {
-                Text(
-                    text = "Go to Settings",
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                    lineHeight = 22.sp,
-                    fontSize = 20.sp
-                )
-            }
-        }
-    }
-}
-
 private fun captureImage(context: Context, imageCapture: ImageCapture,
-                         name: String, onImageCaptured: (Uri) -> Unit) {
+                         name: String, onImageCaptured: (Uri, File) -> Unit) {
     val directory = File(context.filesDir, name)
     if (!directory.exists()) {
         directory.mkdirs()
@@ -244,7 +244,7 @@ private fun captureImage(context: Context, imageCapture: ImageCapture,
                 )
                 Log.d("CameraPreview", "Photo saved at: $savedUri")
 
-                onImageCaptured(savedUri)
+                onImageCaptured(savedUri, photoFile)
             }
 
             override fun onError(exception: ImageCaptureException) {
