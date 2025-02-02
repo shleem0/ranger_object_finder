@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +39,7 @@ fun BottomNavigationBar() {
 
     val bottomNavigationItems = listOf(
         NavigationItem("Home", "home", Icons.Filled.Home),
+        NavigationItem("Photos", "photos", Icons.Filled.Face),
         NavigationItem("Settings", "settings", Icons.Filled.Settings)
     )
 
@@ -83,6 +85,7 @@ fun BottomNavigationBar() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable("home") { HomeScreen(navController) }
+            composable("photos") { PhotosScreen(navController) }
             composable("settings") { SettingsScreen(navController) }
             composable("about") { AboutSettingsScreen(navController) }
             composable("display") { DisplaySettingsScreen(navController) }

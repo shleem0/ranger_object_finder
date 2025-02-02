@@ -5,6 +5,7 @@ androidxCameraCamera2 = "1.2.2"
 androidxCameraCameraCore = "1.3.0"
 cameraLifecycle = "1.2.2"
 cameraView = "1.2.2"
+coilCompose = "2.4.0"
 kotlin = "2.0.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -31,6 +32,7 @@ androidx-camera-view-v122 = { module = "androidx.camera:camera-view", version.re
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material3-v100beta03 = { module = "androidx.compose.material3:material3", version.ref = "material3Version" }
 androidx-navigation-compose-v240 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

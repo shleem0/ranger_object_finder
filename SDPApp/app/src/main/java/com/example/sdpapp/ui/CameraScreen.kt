@@ -3,6 +3,7 @@
 package com.example.sdpapp.ui
 
 import android.Manifest
+import androidx.compose.foundation.Image
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -17,6 +18,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +31,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,6 +45,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -77,19 +83,19 @@ fun CameraPreview(navController: NavController, name: String) {
 
     val imageCapture = remember {
         ImageCapture.Builder()
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
             .build()
     }
 
     val previewView = remember { PreviewView(context) }
 
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var capturedFile by remember { mutableStateOf<File?>(null) }
+
     LaunchedEffect(Unit) {
         val executor = ContextCompat.getMainExecutor(context)
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
-            if (cameraProvider == null) {
-                Log.e("CameraPreview", "CameraProvider not ready!")
-            }
             val preview = Preview.Builder().build().also {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
@@ -116,21 +122,60 @@ fun CameraPreview(navController: NavController, name: String) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
-        AndroidView(
-            factory = { previewView },
-            modifier = Modifier.fillMaxWidth().height(660.dp)
-        )
+        if (capturedImageUri == null) {
+            AndroidView(
+                factory = { previewView },
+                modifier = Modifier.fillMaxWidth().height(660.dp)
+            )
+        } else {
+            Image(
+                painter = rememberAsyncImagePainter(capturedImageUri),
+                contentDescription = "Captured photo",
+                modifier = Modifier.fillMaxSize()
+            )
+        }
 
-        Button(
-            onClick = {
-                captureImage(context, imageCapture, name)
-            },
-            modifier = Modifier.padding(16.dp)
+        Column(
+            modifier = Modifier.align(Alignment.BottomCenter)
         ) {
-            Text("Capture Image")
+            if (capturedImageUri == null) {
+                Button(
+                    onClick = {
+                        captureImage(context, imageCapture, name) { uri ->
+                            capturedImageUri = uri
+                        }
+                    },
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text("Capture Image")
+                }
+            } else {
+                Row(modifier = Modifier.padding(16.dp)) {
+                    Button(
+                        onClick = {
+                            navController.navigate("home")
+                        },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text("Save Image")
+                    }
+
+                    Button(
+                        onClick = {
+                            capturedFile?.delete()
+                            capturedImageUri = null
+                            capturedFile = null
+                        },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text("Retake Photo")
+                    }
+                }
+            }
         }
     }
 }
+
 
 @Composable
 fun CheckCameraPermission(onPermissionGranted: () -> Unit) {
@@ -173,8 +218,9 @@ fun CheckCameraPermission(onPermissionGranted: () -> Unit) {
     }
 }
 
-private fun captureImage(context: Context, imageCapture: ImageCapture, name: String) {
-    val directory = File(context.filesDir, name) // Use filesDir instead of cacheDir
+private fun captureImage(context: Context, imageCapture: ImageCapture,
+                         name: String, onImageCaptured: (Uri) -> Unit) {
+    val directory = File(context.filesDir, name)
     if (!directory.exists()) {
         directory.mkdirs()
     }
@@ -197,6 +243,8 @@ private fun captureImage(context: Context, imageCapture: ImageCapture, name: Str
                     photoFile
                 )
                 Log.d("CameraPreview", "Photo saved at: $savedUri")
+
+                onImageCaptured(savedUri)
             }
 
             override fun onError(exception: ImageCaptureException) {
