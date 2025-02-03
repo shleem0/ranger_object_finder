@@ -1,5 +1,5 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards, LambdaCase, PatternSynonyms, TemplateHaskell #-}
-module Ranger.Bluetooth.SimpleBLE.Types
+module Ranger.Bluetooth.SimpleBLE.Raw.Types
   ( pattern UUID_STR_LENGTH, pattern SIMPLEBLE_CHARACTERISTIC_MAX_COUNT, pattern SIMPLEBLE_DESCRIPTOR_MAX_COUNT, pattern MAX_MANUFACTURER_DATA_BYTES
   , SimpleBleResult, pattern SIMPLEBLE_SUCCESS, pattern SIMPLEBLE_FAILURE
   , SimpleBleUuid, mkSimpleBleUuid
