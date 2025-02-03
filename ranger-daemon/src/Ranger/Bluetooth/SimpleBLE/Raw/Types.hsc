@@ -1,15 +1,15 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface, RecordWildCards, LambdaCase, PatternSynonyms, TemplateHaskell #-}
 module Ranger.Bluetooth.SimpleBLE.Raw.Types
   ( pattern UUID_STR_LENGTH, pattern SIMPLEBLE_CHARACTERISTIC_MAX_COUNT, pattern SIMPLEBLE_DESCRIPTOR_MAX_COUNT, pattern MAX_MANUFACTURER_DATA_BYTES
-  , SimpleBleResult, pattern SIMPLEBLE_SUCCESS, pattern SIMPLEBLE_FAILURE
-  , SimpleBleUuid, mkSimpleBleUuid
+  , SimpleBleResult(..), pattern SIMPLEBLE_SUCCESS, pattern SIMPLEBLE_FAILURE
+  , SimpleBleUuid(..), mkSimpleBleUuid
   , SimpleBleDescriptor(..)
   , SimpleBleCharacteristic(..)
   , SimpleBleService(..)
   , SimpleBleAdapter(..), SimpleBlePeripheral(..)
   , SimpleBleManufacturerData(..)
-  , SimpleBleOS, pattern SIMPLEBLE_OS_LINUX, pattern SIMPLEBLE_OS_WINDOWS, pattern SIMPLEBLE_OS_MACOS
-  , SimpleBleAddressType, pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC, pattern SIMPLEBLE_ADDRESS_TYPE_RANDOM, pattern SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED
+  , SimpleBleOS(..), pattern SIMPLEBLE_OS_LINUX, pattern SIMPLEBLE_OS_WINDOWS, pattern SIMPLEBLE_OS_MACOS
+  , SimpleBleAddressType(..), pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC, pattern SIMPLEBLE_ADDRESS_TYPE_RANDOM, pattern SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED
   ) where
 
 import Foreign.C
