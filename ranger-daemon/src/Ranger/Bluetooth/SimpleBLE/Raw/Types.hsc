@@ -7,6 +7,7 @@ module Ranger.Bluetooth.SimpleBLE.Raw.Types
   , SimpleBleCharacteristic(..)
   , SimpleBleService(..)
   , SimpleBleAdapter(..), SimpleBlePeripheral(..)
+  , SimpleBleManufacturerData(..)
   , SimpleBleOS, pattern SIMPLEBLE_OS_LINUX, pattern SIMPLEBLE_OS_WINDOWS, pattern SIMPLEBLE_OS_MACOS
   , SimpleBleAddressType, pattern SIMPLEBLE_ADDRESS_TYPE_PUBLIC, pattern SIMPLEBLE_ADDRESS_TYPE_RANDOM, pattern SIMPLEBLE_ADDRESS_TYPE_UNSPECIFIED
   ) where
