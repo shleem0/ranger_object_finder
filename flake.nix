@@ -18,6 +18,7 @@
           cabal-install
           ghc
           glibc_multi
+          dbus
         ];
         ros-packages = with pkgs; [
           colcon
