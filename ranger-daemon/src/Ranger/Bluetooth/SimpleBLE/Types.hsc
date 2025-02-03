@@ -122,7 +122,7 @@ instance Storable SimpleBleCharacteristic where
 
 data SimpleBleService = SimpleBleService
   { serviceUuid :: SimpleBleUuid
-  , manufacturerData :: Vector CUChar
+  , serviceManufacturerData :: Vector CUChar
   -- ^ Maximum length is `MAX_MANUFACTURER_DATA_BYTES`, anything extra is UB
   , characteristics :: Vector SimpleBleCharacteristic
   -- ^ Maximum length is `SIMPLEBLE_CHARACTERISTIC_MAX_COUNT`, anything extra is UB
@@ -136,7 +136,7 @@ instance Storable SimpleBleService where
 
     let manufDataPtr = #{ptr simpleble_service_t, data} ptr
     (dataLength :: CSize) <- #{peek simpleble_service_t, data_length} ptr
-    manufacturerData <- V.generateM (fromIntegral dataLength) $ \i -> peekElemOff manufDataPtr i
+    serviceManufacturerData <- V.generateM (fromIntegral dataLength) $ \i -> peekElemOff manufDataPtr i
 
     let charPtr = #{ptr simpleble_service_t, characteristics} ptr
     (charCount :: CSize) <- #{peek simpleble_service_t, characteristic_count} ptr
@@ -146,10 +146,10 @@ instance Storable SimpleBleService where
   poke ptr SimpleBleService{..} = do
     #{poke simpleble_service_t, uuid} ptr serviceUuid
 
-    let dataLength = fromIntegral $ V.length manufacturerData :: CSize
+    let dataLength = fromIntegral $ V.length serviceManufacturerData :: CSize
     #{poke simpleble_service_t, data_length} ptr dataLength
 
-    V.iforM_ manufacturerData $ \i d ->
+    V.iforM_ serviceManufacturerData $ \i d ->
       pokeElemOff (#{ptr simpleble_service_t, data} ptr) i d
 
     let charCount = fromIntegral $ V.length characteristics :: CSize
@@ -157,6 +157,32 @@ instance Storable SimpleBleService where
 
     V.iforM_ characteristics $ \i c ->
       pokeElemOff (#{ptr simpleble_service_t, characteristics} ptr) i c
+
+
+data SimpleBleManufacturerData = SimpleBleManufacturerData
+  { manufacturerId :: CUShort
+  , manufacturerData :: Vector CUChar
+  -- ^ Maximum length is `MAX_MANUFACTURER_DATA_BYTES`, anything extra is UB
+  }
+
+
+instance Storable SimpleBleManufacturerData where
+  alignment _ = #alignment simpleble_manufacturer_data_t
+  sizeOf _ = #size simpleble_manufacturer_data_t
+  peek ptr = do
+    manufacturerId <- #{peek simpleble_manufacturer_data_t, manufacturer_id} ptr
+    (dataLength :: CSize) <- #{peek simpleble_manufacturer_data_t, data_length} ptr
+    let dataPtr = #{ptr simpleble_manufacturer_data_t, data} ptr
+    manufacturerData <- V.generateM (fromIntegral dataLength) $ \i -> peekElemOff dataPtr i
+
+    pure SimpleBleManufacturerData{..}
+
+  poke ptr SimpleBleManufacturerData{..} = do
+    #{poke simpleble_manufacturer_data_t, manufacturer_id} ptr manufacturerId
+    let dataLength = fromIntegral $ V.length manufacturerData :: CSize
+    #{poke simpleble_manufacturer_data_t, data_length} ptr dataLength
+    V.iforM_ manufacturerData $ \i d ->
+      pokeElemOff (#{ptr simpleble_manufacturer_data_t, data} ptr) i d
 
 
 newtype SimpleBleAdapter = SimpleBleAdapter (FunPtr (IO ()))
