@@ -90,7 +90,7 @@ data SimpleBleCharacteristic = SimpleBleCharacteristic
   , canNotify :: CBool
   , canIndicate :: CBool
   , descriptors :: Vector SimpleBleDescriptor
-  -- ^ Maximum length is `SIMPLEBLE_DESCRIPTOR_MAX_COUNT`
+  -- ^ Maximum length is `SIMPLEBLE_DESCRIPTOR_MAX_COUNT`, anything extra is UB
   }
 
 instance Storable SimpleBleCharacteristic where
@@ -123,9 +123,9 @@ instance Storable SimpleBleCharacteristic where
 data SimpleBleService = SimpleBleService
   { serviceUuid :: SimpleBleUuid
   , manufacturerData :: Vector CUChar
-  -- ^ Maximum length is `MAX_MANUFACTURER_DATA_BYTES`
+  -- ^ Maximum length is `MAX_MANUFACTURER_DATA_BYTES`, anything extra is UB
   , characteristics :: Vector SimpleBleCharacteristic
-  -- ^ Maximum length is `SIMPLEBLE_CHARACTERISTIC_MAX_COUNT`
+  -- ^ Maximum length is `SIMPLEBLE_CHARACTERISTIC_MAX_COUNT`, anything extra is UB
   }
 
 instance Storable SimpleBleService where
