@@ -33,7 +33,7 @@ library
     hs-source-dirs:   src
     default-language: GHC2021
     pkgconfig-depends: simpleble, dbus-1
-    extra-libraries: simpleble simpleble-c stdc++
+    extra-libraries: simpleble-c stdc++
     include-dirs: cbits
     c-sources: cbits/simpleble_wrappers.c
 
