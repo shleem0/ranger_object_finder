@@ -11,6 +11,8 @@ maintainer:         114586905+ryndubei@users.noreply.github.com
 category:           System
 build-type:         Simple
 extra-doc-files:    CHANGELOG.md
+extra-source-files: cbits/*.c
+                  , cbits/*.h
 
 common warnings
     ghc-options: -Wall
@@ -18,6 +20,7 @@ common warnings
 library
     import:           warnings
     exposed-modules:  Ranger.Bluetooth
+                    , Ranger.Bluetooth.SimpleBLE.Raw
                     , Ranger.Bluetooth.SimpleBLE.Raw.Types
     -- other-modules:
     -- other-extensions:
@@ -30,6 +33,8 @@ library
     hs-source-dirs:   src
     default-language: GHC2021
     extra-libraries-static: simpleble-c
+    include-dirs: cbits
+    c-sources: cbits/simpleble_wrappers.c
 
 executable ranger-daemon
     import:           warnings
