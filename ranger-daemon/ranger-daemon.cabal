@@ -33,7 +33,7 @@ library simpleble-raw-bindings
     extra-libraries: simpleble-c stdc++
     include-dirs: cbits
     c-sources: cbits/simpleble_wrappers.c
-    hs-source-dirs: src
+    hs-source-dirs: src-raw-bindings
     default-language: GHC2021
 
 library
