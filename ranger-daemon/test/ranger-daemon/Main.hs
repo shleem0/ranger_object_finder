@@ -7,7 +7,7 @@ import Ranger.Bluetooth.SimpleBLE.Raw
 main :: IO ()
 main = defaultMain $
   testGroup "Ranger.Bluetooth.SimpleBLE"
-    [ testGroup "Raw" [ callAdapterIsBluetoothEnabled ] ]
+    [ testGroup "Raw" [ callAdapterGetCount, callAdapterIsBluetoothEnabled ] ]
 
 callAdapterGetCount :: TestTree
 callAdapterGetCount = testCase "simpleble_adapter_get_count" $ do

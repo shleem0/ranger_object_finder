@@ -13,6 +13,8 @@ build-type:         Simple
 extra-doc-files:    CHANGELOG.md
 extra-source-files: cbits/*.c
                   , cbits/*.h
+                  , test/simpleble/cbits/*.c
+                  , test/simpleble/cbits/*.h
 
 common warnings
     ghc-options: -Wall
@@ -47,13 +49,23 @@ executable ranger-daemon
     hs-source-dirs:   app
     default-language: GHC2021
 
+
+test-suite simpleble-test
+    import: warnings
+    build-depends: base
+    main-is: Main.hs
+    hs-source-dirs: test/simpleble
+    include-dirs: test/simpleble/cbits
+    pkgconfig-depends: simpleble, dbus-1
+    extra-libraries: simpleble-c stdc++
+    c-sources: test/simpleble/cbits/simpleble_example.c
+
 test-suite ranger-daemon-test
-    build-tool-depends:
-        hspec-discover:hspec-discover
+    import: warnings
     build-depends: base
                  , ranger-daemon
                  , tasty
                  , tasty-hunit-compat
                  , hspec-expectations
     main-is: Main.hs
-    hs-source-dirs: test
+    hs-source-dirs: test/ranger-daemon

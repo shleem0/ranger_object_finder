@@ -12,9 +12,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ cmake fmt pkg-config dbus ];
 
-  cmakeFlags = [
-    "-S /build/source/simpleble -DSIMPLEBLE_USE_SESSION_DBUS=TRUE -DLIBFMT_VENDORIZE=False"
-  ];
+  cmakeFlags = [ "-S /build/source/simpleble -DLIBFMT_VENDORIZE=False" ];
 
   cmakeBuildDir = "build_simpleble";
 
