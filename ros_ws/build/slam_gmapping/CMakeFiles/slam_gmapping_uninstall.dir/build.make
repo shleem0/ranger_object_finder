@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping
 
 # Utility rule file for slam_gmapping_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/slam_gmapping_uninstall.dir/compiler_depend.make
 include CMakeFiles/slam_gmapping_uninstall.dir/progress.make
 
 CMakeFiles/slam_gmapping_uninstall:
-	/usr/bin/cmake -P /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 slam_gmapping_uninstall: CMakeFiles/slam_gmapping_uninstall
 slam_gmapping_uninstall: CMakeFiles/slam_gmapping_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/slam_gmapping_uninstall.dir/clean:
 .PHONY : CMakeFiles/slam_gmapping_uninstall.dir/clean
 
 CMakeFiles/slam_gmapping_uninstall.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles/slam_gmapping_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles/slam_gmapping_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/slam_gmapping_uninstall.dir/depend
 

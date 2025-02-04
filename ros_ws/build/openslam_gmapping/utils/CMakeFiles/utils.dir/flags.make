@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include -I/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/utils/.
+CXX_INCLUDES = -I/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include -I/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/utils/.
 
 CXX_FLAGS = -O3 -funroll-loops -fPIC -std=gnu++14
 

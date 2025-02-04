@@ -1,7 +1,7 @@
 CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp \
  /usr/include/stdc-predef.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/include/slam_gmapping/slam_gmapping.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/include/slam_gmapping/slam_gmapping.h \
  /usr/include/c++/11/mutex /usr/include/c++/11/tuple \
  /usr/include/c++/11/utility \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -742,7 +742,7 @@ CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: \
  /opt/ros/humble/include/tf2_msgs/tf2_msgs/srv/detail/frame_graph__struct.hpp \
  /opt/ros/humble/include/tf2_msgs/tf2_msgs/srv/detail/frame_graph__builder.hpp \
  /opt/ros/humble/include/tf2_msgs/tf2_msgs/srv/detail/frame_graph__traits.hpp \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/gridslamprocessor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/gridslamprocessor.h \
  /usr/include/c++/11/climits \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h \
@@ -756,31 +756,31 @@ CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/deque \
  /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/particlefilter/particlefilter.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/gvalues.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/point.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/gvalues.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/macro_params.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/log/sensorlog.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensorreading.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensor.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometrysensor.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensor.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_range/rangesensor.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometryreading.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometrysensor.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_range/rangereading.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/log/configuration.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/scanmatcher.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/icp.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/smmap.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/map.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/accessstate.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/array2d.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/harray2d.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/autoptr.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/stat.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/point.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/motionmodel.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/gridslamprocessor.hxx \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/particlefilter/particlefilter.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/gvalues.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/point.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/gvalues.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/macro_params.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/log/sensorlog.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensorreading.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometrysensor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_base/sensor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_range/rangesensor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometryreading.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_odometry/odometrysensor.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/sensor/sensor_range/rangereading.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/log/configuration.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/scanmatcher.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/icp.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/scanmatcher/smmap.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/map.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/accessstate.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/array2d.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/grid/harray2d.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/autoptr.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/stat.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/utils/point.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/motionmodel.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/include/gmapping/gridfastslam/gridslamprocessor.hxx \
  /opt/ros/humble/include/tf2_ros/tf2_ros/create_timer_ros.h

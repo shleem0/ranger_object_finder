@@ -1,5 +1,5 @@
 utils/CMakeFiles/utils.dir/stat.cpp.o: \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/utils/stat.cpp \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/utils/stat.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/stdlib.h \
  /usr/include/c++/11/cstdlib \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -62,9 +62,9 @@ utils/CMakeFiles/utils.dir/stat.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/stat.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/point.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/stat.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/point.h \
  /usr/include/assert.h /usr/include/c++/11/iostream \
  /usr/include/c++/11/ostream /usr/include/c++/11/ios \
  /usr/include/c++/11/iosfwd /usr/include/c++/11/bits/stringfwd.h \
@@ -165,7 +165,7 @@ utils/CMakeFiles/utils.dir/stat.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \

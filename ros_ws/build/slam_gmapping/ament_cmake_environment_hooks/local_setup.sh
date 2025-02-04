@@ -2,7 +2,7 @@
 
 # since this file is sourced use either the provided AMENT_CURRENT_PREFIX
 # or fall back to the destination set at configure time
-: ${AMENT_CURRENT_PREFIX:="/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/slam_gmapping"}
+: ${AMENT_CURRENT_PREFIX:="/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping"}
 if [ ! -d "$AMENT_CURRENT_PREFIX" ]; then
   if [ -z "$COLCON_CURRENT_PREFIX" ]; then
     echo "The compile time prefix path '$AMENT_CURRENT_PREFIX' doesn't " \

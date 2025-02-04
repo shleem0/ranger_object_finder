@@ -1,9 +1,9 @@
 scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.o: \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/scanmatcher/smmap.cpp \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/scanmatcher/smmap.cpp \
  /usr/include/stdc-predef.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/scanmatcher/smmap.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/map.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/point.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/scanmatcher/smmap.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/map.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/point.h \
  /usr/include/assert.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -165,13 +165,13 @@ scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/accessstate.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/array2d.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/harray2d.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/gvalues.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/accessstate.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/array2d.h \
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/harray2d.h \
  /usr/include/c++/11/set /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h \
  /usr/include/c++/11/bits/erase_if.h \
- /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/autoptr.h
+ /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/utils/autoptr.h

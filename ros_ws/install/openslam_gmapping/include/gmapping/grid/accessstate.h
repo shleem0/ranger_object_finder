@@ -1,9 +1,1 @@
-#ifndef ACCESSTATE_H
-#define ACCESSTATE_H
-
-namespace GMapping {
-enum AccessibilityState{Outside=0x0, Inside=0x1, Allocated=0x2};
-};
-
-#endif
-
+/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/grid/accessstate.h

@@ -1,2 +1,1 @@
-source;share/slam_gmapping/environment/ament_prefix_path.sh
-source;share/slam_gmapping/environment/path.sh
+/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/ament_cmake_environment_hooks/local_setup.dsv

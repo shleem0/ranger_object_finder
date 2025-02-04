@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 # Include any dependencies generated for this target.
 include gridfastslam/CMakeFiles/gridfastslam.dir/depend.make
@@ -70,60 +70,60 @@ include gridfastslam/CMakeFiles/gridfastslam.dir/progress.make
 include gridfastslam/CMakeFiles/gridfastslam.dir/flags.make
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/flags.make
-gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp
+gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp
 gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o -MF CMakeFiles/gridfastslam.dir/gfsreader.cpp.o.d -o CMakeFiles/gridfastslam.dir/gfsreader.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o -MF CMakeFiles/gridfastslam.dir/gfsreader.cpp.o.d -o CMakeFiles/gridfastslam.dir/gfsreader.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gridfastslam.dir/gfsreader.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp > CMakeFiles/gridfastslam.dir/gfsreader.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp > CMakeFiles/gridfastslam.dir/gfsreader.cpp.i
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gridfastslam.dir/gfsreader.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp -o CMakeFiles/gridfastslam.dir/gfsreader.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gfsreader.cpp -o CMakeFiles/gridfastslam.dir/gfsreader.cpp.s
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/flags.make
-gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp
+gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o -MF CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o.d -o CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o -MF CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o.d -o CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp > CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp > CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp -o CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor.cpp -o CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/flags.make
-gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp
+gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o -MF CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o.d -o CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o -MF CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o.d -o CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp > CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp > CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i
 
 gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp -o CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/gridslamprocessor_tree.cpp -o CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s
 
 gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/flags.make
-gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp
+gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp
 gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o: gridfastslam/CMakeFiles/gridfastslam.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o -MF CMakeFiles/gridfastslam.dir/motionmodel.cpp.o.d -o CMakeFiles/gridfastslam.dir/motionmodel.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o -MF CMakeFiles/gridfastslam.dir/motionmodel.cpp.o.d -o CMakeFiles/gridfastslam.dir/motionmodel.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp
 
 gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gridfastslam.dir/motionmodel.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp > CMakeFiles/gridfastslam.dir/motionmodel.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp > CMakeFiles/gridfastslam.dir/motionmodel.cpp.i
 
 gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gridfastslam.dir/motionmodel.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp -o CMakeFiles/gridfastslam.dir/motionmodel.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam/motionmodel.cpp -o CMakeFiles/gridfastslam.dir/motionmodel.cpp.s
 
 # Object files for target gridfastslam
 gridfastslam_OBJECTS = \
@@ -141,19 +141,19 @@ gridfastslam/libgridfastslam.a: gridfastslam/CMakeFiles/gridfastslam.dir/gridsla
 gridfastslam/libgridfastslam.a: gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o
 gridfastslam/libgridfastslam.a: gridfastslam/CMakeFiles/gridfastslam.dir/build.make
 gridfastslam/libgridfastslam.a: gridfastslam/CMakeFiles/gridfastslam.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libgridfastslam.a"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -P CMakeFiles/gridfastslam.dir/cmake_clean_target.cmake
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gridfastslam.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libgridfastslam.a"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -P CMakeFiles/gridfastslam.dir/cmake_clean_target.cmake
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gridfastslam.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 gridfastslam/CMakeFiles/gridfastslam.dir/build: gridfastslam/libgridfastslam.a
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/build
 
 gridfastslam/CMakeFiles/gridfastslam.dir/clean:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -P CMakeFiles/gridfastslam.dir/cmake_clean.cmake
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam && $(CMAKE_COMMAND) -P CMakeFiles/gridfastslam.dir/cmake_clean.cmake
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/clean
 
 gridfastslam/CMakeFiles/gridfastslam.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam/CMakeFiles/gridfastslam.dir/DependInfo.cmake --color=$(COLOR)
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/gridfastslam /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam/CMakeFiles/gridfastslam.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/depend
 

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_base//CMakeFiles/progress.marks
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_base//CMakeFiles/progress.marks
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/clean
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 sensor/sensor_base/CMakeFiles/sensor_base.dir/rule:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/CMakeFiles/sensor_base.dir/rule
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/CMakeFiles/sensor_base.dir/rule
 .PHONY : sensor/sensor_base/CMakeFiles/sensor_base.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ sensor_base: sensor/sensor_base/CMakeFiles/sensor_base.dir/rule
 
 # fast build rule for target.
 sensor_base/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/build
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/build
 .PHONY : sensor_base/fast
 
 sensor.o: sensor.cpp.o
@@ -190,7 +190,7 @@ sensor.o: sensor.cpp.o
 
 # target to build an object file
 sensor.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.o
 .PHONY : sensor.cpp.o
 
 sensor.i: sensor.cpp.i
@@ -198,7 +198,7 @@ sensor.i: sensor.cpp.i
 
 # target to preprocess a source file
 sensor.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.i
 .PHONY : sensor.cpp.i
 
 sensor.s: sensor.cpp.s
@@ -206,7 +206,7 @@ sensor.s: sensor.cpp.s
 
 # target to generate assembly for a file
 sensor.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensor.cpp.s
 .PHONY : sensor.cpp.s
 
 sensorreading.o: sensorreading.cpp.o
@@ -214,7 +214,7 @@ sensorreading.o: sensorreading.cpp.o
 
 # target to build an object file
 sensorreading.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.o
 .PHONY : sensorreading.cpp.o
 
 sensorreading.i: sensorreading.cpp.i
@@ -222,7 +222,7 @@ sensorreading.i: sensorreading.cpp.i
 
 # target to preprocess a source file
 sensorreading.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.i
 .PHONY : sensorreading.cpp.i
 
 sensorreading.s: sensorreading.cpp.s
@@ -230,7 +230,7 @@ sensorreading.s: sensorreading.cpp.s
 
 # target to generate assembly for a file
 sensorreading.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/sensorreading.cpp.s
 .PHONY : sensorreading.cpp.s
 
 # Help Target
@@ -264,6 +264,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

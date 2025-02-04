@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_range/rangereading.cpp" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangereading.cpp.o" "gcc" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangereading.cpp.o.d"
-  "/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_range/rangesensor.cpp" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangesensor.cpp.o" "gcc" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangesensor.cpp.o.d"
+  "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_range/rangereading.cpp" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangereading.cpp.o" "gcc" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangereading.cpp.o.d"
+  "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_range/rangesensor.cpp" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangesensor.cpp.o" "gcc" "sensor/sensor_range/CMakeFiles/sensor_range.dir/rangesensor.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_base/CMakeFiles/sensor_base.dir/DependInfo.cmake"
+  "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_base/CMakeFiles/sensor_base.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

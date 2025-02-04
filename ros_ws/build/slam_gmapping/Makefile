@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

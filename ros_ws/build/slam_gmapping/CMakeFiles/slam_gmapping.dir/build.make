@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping
 
 # Include any dependencies generated for this target.
 include CMakeFiles/slam_gmapping.dir/depend.make
@@ -70,18 +70,18 @@ include CMakeFiles/slam_gmapping.dir/progress.make
 include CMakeFiles/slam_gmapping.dir/flags.make
 
 CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: CMakeFiles/slam_gmapping.dir/flags.make
-CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp
+CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp
 CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o: CMakeFiles/slam_gmapping.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o -MF CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o.d -o CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o -MF CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o.d -o CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp
 
 CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp > CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp > CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.i
 
 CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp -o CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping/src/slam_gmapping.cpp -o CMakeFiles/slam_gmapping.dir/src/slam_gmapping.cpp.s
 
 # Object files for target slam_gmapping
 slam_gmapping_OBJECTS = \
@@ -104,12 +104,12 @@ slam_gmapping: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_introspection
 slam_gmapping: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_introspection_cpp.so
 slam_gmapping: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_cpp.so
 slam_gmapping: /opt/ros/humble/lib/libnav_msgs__rosidl_generator_py.so
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libgridfastslam.a
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libscanmatcher.a
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_base.a
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_odometry.a
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libsensor_range.a
-slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/install/openslam_gmapping/lib/libutils.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libgridfastslam.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libscanmatcher.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libsensor_base.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libsensor_odometry.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libsensor_range.a
+slam_gmapping: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/libutils.a
 slam_gmapping: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_c.so
 slam_gmapping: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_c.so
 slam_gmapping: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_cpp.so
@@ -216,7 +216,7 @@ slam_gmapping: /opt/ros/humble/lib/librcutils.so
 slam_gmapping: /usr/lib/x86_64-linux-gnu/libpython3.10.so
 slam_gmapping: /usr/lib/x86_64-linux-gnu/liborocos-kdl.so
 slam_gmapping: CMakeFiles/slam_gmapping.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable slam_gmapping"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable slam_gmapping"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/slam_gmapping.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -228,6 +228,6 @@ CMakeFiles/slam_gmapping.dir/clean:
 .PHONY : CMakeFiles/slam_gmapping.dir/clean
 
 CMakeFiles/slam_gmapping.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/slam_gmapping/CMakeFiles/slam_gmapping.dir/DependInfo.cmake --color=$(COLOR)
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping/CMakeFiles/slam_gmapping.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/slam_gmapping.dir/depend
 

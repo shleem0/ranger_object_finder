@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 # Include any dependencies generated for this target.
 include sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/depend.make
@@ -70,32 +70,32 @@ include sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/progress.make
 include sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/flags.make
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/flags.make
-sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp
+sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o -MF CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o.d -o CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o -MF CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o.d -o CMakeFiles/sensor_odometry.dir/odometryreading.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sensor_odometry.dir/odometryreading.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp > CMakeFiles/sensor_odometry.dir/odometryreading.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp > CMakeFiles/sensor_odometry.dir/odometryreading.cpp.i
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometryreading.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sensor_odometry.dir/odometryreading.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp -o CMakeFiles/sensor_odometry.dir/odometryreading.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometryreading.cpp -o CMakeFiles/sensor_odometry.dir/odometryreading.cpp.s
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/flags.make
-sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp
+sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o -MF CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o.d -o CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o -MF CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o.d -o CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.i"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp > CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp > CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.i
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.s"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp -o CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry/odometrysensor.cpp -o CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.s
 
 # Object files for target sensor_odometry
 sensor_odometry_OBJECTS = \
@@ -109,19 +109,19 @@ sensor/sensor_odometry/libsensor_odometry.a: sensor/sensor_odometry/CMakeFiles/s
 sensor/sensor_odometry/libsensor_odometry.a: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/odometrysensor.cpp.o
 sensor/sensor_odometry/libsensor_odometry.a: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build.make
 sensor/sensor_odometry/libsensor_odometry.a: sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libsensor_odometry.a"
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -P CMakeFiles/sensor_odometry.dir/cmake_clean_target.cmake
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sensor_odometry.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libsensor_odometry.a"
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -P CMakeFiles/sensor_odometry.dir/cmake_clean_target.cmake
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sensor_odometry.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build: sensor/sensor_odometry/libsensor_odometry.a
 .PHONY : sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/clean:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -P CMakeFiles/sensor_odometry.dir/cmake_clean.cmake
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry && $(CMAKE_COMMAND) -P CMakeFiles/sensor_odometry.dir/cmake_clean.cmake
 .PHONY : sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/clean
 
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/DependInfo.cmake --color=$(COLOR)
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping/sensor/sensor_odometry /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/depend
 

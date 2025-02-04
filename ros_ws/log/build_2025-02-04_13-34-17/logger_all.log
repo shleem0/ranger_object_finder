@@ -1,0 +1,1504 @@
+[0.065s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.065s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='sequential', event_handlers=None, base_paths=['.'], paths=None, cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=CustomArgumentParser(prog='colcon build', usage=None, description='Build a set of packages.', formatter_class=<class 'colcon_core.command.CustomFormatter'>, conflict_handler='error', add_help=True), verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f53d9d2a4a0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f53d9d2a4a0>>)
+[0.266s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.266s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.266s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.266s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws'
+[0.267s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.267s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.267s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.267s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.267s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.275s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.275s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.275s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/hls_lfcd_lds_driver) by extensions ['ignore', 'ignore_ament_install']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/hls_lfcd_lds_driver) by extension 'ignore'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/hls_lfcd_lds_driver) by extension 'ignore_ament_install'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/hls_lfcd_lds_driver) by extensions ['ros']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(src/hls_lfcd_lds_driver) by extension 'ros'
+[0.279s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hls_lfcd_lds_driver' with type 'ros.ament_cmake' and name 'hls_lfcd_lds_driver'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extensions ['ignore', 'ignore_ament_install']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'ignore'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'ignore_ament_install'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extensions ['ros']
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'ros'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extensions ['cmake', 'python']
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'cmake'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'python'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extensions ['python_setup_py']
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping) by extension 'python_setup_py'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/openslam_gmapping) by extensions ['ignore', 'ignore_ament_install']
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/openslam_gmapping) by extension 'ignore'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/openslam_gmapping) by extension 'ignore_ament_install'
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/openslam_gmapping) by extensions ['ros']
+[0.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/openslam_gmapping) by extension 'ros'
+[0.281s] DEBUG:colcon.colcon_core.package_identification:Package 'src/slam_gmapping/openslam_gmapping' with type 'ros.ament_cmake' and name 'openslam_gmapping'
+[0.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/slam_gmapping) by extensions ['ignore', 'ignore_ament_install']
+[0.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/slam_gmapping) by extension 'ignore'
+[0.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/slam_gmapping) by extension 'ignore_ament_install'
+[0.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/slam_gmapping) by extensions ['ros']
+[0.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/slam_gmapping/slam_gmapping) by extension 'ros'
+[0.282s] DEBUG:colcon.colcon_core.package_identification:Package 'src/slam_gmapping/slam_gmapping' with type 'ros.ament_cmake' and name 'slam_gmapping'
+[0.282s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.282s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.283s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_target' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_clean_cache' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_clean_first' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'cmake_force_configure' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'ament_cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'catkin_cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'hls_lfcd_lds_driver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.301s] DEBUG:colcon.colcon_core.verb:Building package 'hls_lfcd_lds_driver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver', 'merge_install': False, 'path': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver', 'symlink_install': True, 'test_result_base': None}
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_target' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_clean_cache' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_clean_first' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'cmake_force_configure' from command line to 'False'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'ament_cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'catkin_cmake_args' from command line to 'None'
+[0.301s] Level 5:colcon.colcon_core.verb:set package 'openslam_gmapping' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.301s] DEBUG:colcon.colcon_core.verb:Building package 'openslam_gmapping' with the following arguments: {'ament_cmake_args': None, 'build_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping', 'merge_install': False, 'path': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping', 'symlink_install': True, 'test_result_base': None}
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_args' from command line to 'None'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_target' from command line to 'None'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_clean_cache' from command line to 'False'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_clean_first' from command line to 'False'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'cmake_force_configure' from command line to 'False'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'ament_cmake_args' from command line to 'None'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'catkin_cmake_args' from command line to 'None'
+[0.302s] Level 5:colcon.colcon_core.verb:set package 'slam_gmapping' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.302s] DEBUG:colcon.colcon_core.verb:Building package 'slam_gmapping' with the following arguments: {'ament_cmake_args': None, 'build_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping', 'merge_install': False, 'path': '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping', 'symlink_install': True, 'test_result_base': None}
+[0.302s] INFO:colcon.colcon_core.executor:Executing jobs using 'sequential' executor
+[0.303s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'hls_lfcd_lds_driver'
+[0.303s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver' with build type 'ament_cmake'
+[0.303s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver'
+[0.304s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.304s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.304s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.304s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.305s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.305s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.349s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver
+[4.400s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver
+[4.402s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver -- -j12 -l12
+[9.514s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver -- -j12 -l12
+[9.551s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver
+[9.987s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(hls_lfcd_lds_driver)
+[9.987s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/hls_lfcd_lds_driver
+[9.989s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver' for CMake module files
+[9.990s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver' for CMake config files
+[9.991s] Level 1:colcon.colcon_core.shell:create_environment_hook('hls_lfcd_lds_driver', 'cmake_prefix_path')
+[9.991s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/hook/cmake_prefix_path.dsv'
+[9.994s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/hook/cmake_prefix_path.sh'
+[9.996s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib'
+[9.996s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/bin'
+[9.996s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib/pkgconfig/hls_lfcd_lds_driver.pc'
+[9.997s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib/python3.10/site-packages'
+[9.997s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/bin'
+[9.997s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/package.dsv'
+[9.999s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/package.sh'
+[10.001s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/colcon-core/packages/hls_lfcd_lds_driver)
+[10.038s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(hls_lfcd_lds_driver)
+[10.038s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver' for CMake module files
+[10.039s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver' for CMake config files
+[10.040s] Level 1:colcon.colcon_core.shell:create_environment_hook('hls_lfcd_lds_driver', 'cmake_prefix_path')
+[10.040s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/hook/cmake_prefix_path.dsv'
+[10.042s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/hook/cmake_prefix_path.sh'
+[10.044s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib'
+[10.044s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/bin'
+[10.044s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib/pkgconfig/hls_lfcd_lds_driver.pc'
+[10.045s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/lib/python3.10/site-packages'
+[10.045s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/bin'
+[10.045s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/package.dsv'
+[10.048s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/hls_lfcd_lds_driver/package.sh'
+[10.051s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/hls_lfcd_lds_driver/share/colcon-core/packages/hls_lfcd_lds_driver)
+[10.054s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'hls_lfcd_lds_driver' finished with '0'
+[10.054s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'openslam_gmapping'
+[10.054s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping' with build type 'ament_cmake'
+[10.054s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping'
+[10.054s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[10.070s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping
+[12.535s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping
+[12.536s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping -- -j12 -l12
+[15.822s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping -- -j12 -l12
+[15.858s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
+[16.374s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(openslam_gmapping)
+[16.375s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' for CMake module files
+[16.375s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
+[16.376s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' for CMake config files
+[16.376s] Level 1:colcon.colcon_core.shell:create_environment_hook('openslam_gmapping', 'cmake_prefix_path')
+[16.376s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/hook/cmake_prefix_path.dsv'
+[16.380s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/hook/cmake_prefix_path.sh'
+[16.381s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib'
+[16.381s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/bin'
+[16.381s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/pkgconfig/openslam_gmapping.pc'
+[16.381s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/python3.10/site-packages'
+[16.381s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/bin'
+[16.382s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.dsv'
+[16.383s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.sh'
+[16.385s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/colcon-core/packages/openslam_gmapping)
+[16.424s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(openslam_gmapping)
+[16.424s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' for CMake module files
+[16.425s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping' for CMake config files
+[16.426s] Level 1:colcon.colcon_core.shell:create_environment_hook('openslam_gmapping', 'cmake_prefix_path')
+[16.426s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/hook/cmake_prefix_path.dsv'
+[16.434s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/hook/cmake_prefix_path.sh'
+[16.441s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib'
+[16.441s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/bin'
+[16.441s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/pkgconfig/openslam_gmapping.pc'
+[16.442s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/lib/python3.10/site-packages'
+[16.442s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/bin'
+[16.442s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.dsv'
+[16.448s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/openslam_gmapping/package.sh'
+[16.459s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping/share/colcon-core/packages/openslam_gmapping)
+[16.461s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'openslam_gmapping' finished with '0'
+[16.461s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'slam_gmapping'
+[16.461s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping' with build type 'ament_cmake'
+[16.461s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping'
+[16.461s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[16.496s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping
+[18.943s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/slam_gmapping -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping
+[18.944s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping -- -j12 -l12
+[29.437s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --build /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping -- -j12 -l12
+[29.472s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping
+[29.665s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(slam_gmapping)
+[29.665s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping' returned '0': BASH=/bin/sh CMAKE_PREFIX_PATH=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/openslam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/stage_ros2:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/pf_localisation:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/Stage:/afs/inf.ed.ac.uk/user/s22/s2281597/ros_ws/install/socspioneer:/opt/ros/humble CONDA_PROMPT_MODIFIER=(base) TERM_PROGRAM=${TERM_PROGRAM}
+BASH_FUNC_rvirsh%%=() {  KVMHOST=$1;
+ shift;
+ if [ "$KVMHOST" ]; then
+ if [ "$KVMHOST" = "." ]; then
+ URI="qemu:///system";
+ else
+ URI="qemu+ssh://$KVMHOST/system";
+ fi;
+ else
+ URI="qemu:///system";
+ fi;
+ virsh --connect $URI $@
+}
+BASH_FUNC_ml%%=() {  module ml "$@"
+}
+BASH_FUNC_module%%=() {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+BASH_FUNC_resize%%=() {  eval `command resize`
+}
+BASH_FUNC_command_not_found_handle%%=() {  unset command_not_found_handle;
+ if [[ "$IFS" != '
+' ]]; then
+ _command_not_found $*;
+ fi;
+ function dbg ()
+ {
+ [[ -n $CRICHTON_DEBUG ]] && echo $1 1>&2
+ };
+ SORT="/usr/bin/_SortBashRC";
+ PATTERN='[0-9][0-9][0-9].*';
+ if [[ -n $CRICHTON_DEBUG ]]; then
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN);
+ else
+ modules=$($SORT $CRICHTON_SYS/$PATTERN $CRICHTON_USR/$PATTERN 2>&-);
+ fi;
+ dbg "- Found $(/bin/echo $modules | /usr/bin/wc -w 2>&-) modules.";
+ for mod in ${modules} _command_not_found;
+ do
+ dbg "-- $(/bin/basename $mod 2>&-)";
+ CRICHTON_SYS=$CRICHTON_SYS CRICHTON_USR=$CRICHTON_USR "$mod" $*;
+ exit=$?;
+ dbg "[exit $exit]";
+ [[ $exit == 255 ]] && {
+ _command_not_found $1;
+ break
+ };
+ [[ $exit == 0 ]] && break;
+ done;
+ return 127
+}
+BASH_FUNC_setpath%%=() {  if [ -f /usr/bin/pathfix ]; then
+ pathfix_binary=/usr/bin/pathfix;
+ else
+ pathfix_binary=/usr/local/bin/pathfix;
+ fi;
+ new_PATH=`$pathfix_binary $@`;
+ [ "$new_PATH" ] && PATH="$new_PATH";
+ export PATH
+}
+BASH_FUNC__command_not_found%%=() {  echo "bash: $1: command not found" 1>&2
+}
+BASH_FUNC_colloq%%=() {  more /usr/local/alert/misc/coll
+}
+BASH_FUNC_gnu%%=() {  command gnu -u $LOGNAME $*
+}
+BASH_FUNC_purge%%=() {  rm -f *~ .*~ \#*\# tmp*
+}
+BASH_FUNC_setup%%=() {  source /usr/local/share/setup/setup.sh $*
+} _=/usr/bin/env /usr/bin/cmake --install /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/slam_gmapping
+[29.665s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' for CMake module files
+[29.666s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' for CMake config files
+[29.666s] Level 1:colcon.colcon_core.shell:create_environment_hook('slam_gmapping', 'cmake_prefix_path')
+[29.666s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/hook/cmake_prefix_path.dsv'
+[29.669s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/hook/cmake_prefix_path.sh'
+[29.671s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib'
+[29.672s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/bin'
+[29.672s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib/pkgconfig/slam_gmapping.pc'
+[29.672s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib/python3.10/site-packages'
+[29.672s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/bin'
+[29.673s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/package.dsv'
+[29.675s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/package.sh'
+[29.676s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/colcon-core/packages/slam_gmapping)
+[29.715s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(slam_gmapping)
+[29.715s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' for CMake module files
+[29.716s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping' for CMake config files
+[29.716s] Level 1:colcon.colcon_core.shell:create_environment_hook('slam_gmapping', 'cmake_prefix_path')
+[29.716s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/hook/cmake_prefix_path.dsv'
+[29.718s] INFO:colcon.colcon_core.shell:Creating environment hook '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/hook/cmake_prefix_path.sh'
+[29.720s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib'
+[29.720s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/bin'
+[29.720s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib/pkgconfig/slam_gmapping.pc'
+[29.720s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/lib/python3.10/site-packages'
+[29.720s] Level 1:colcon.colcon_core.environment:checking '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/bin'
+[29.721s] INFO:colcon.colcon_core.shell:Creating package descriptor '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/package.dsv'
+[29.724s] INFO:colcon.colcon_core.shell:Creating package script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/slam_gmapping/package.sh'
+[29.729s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/slam_gmapping/share/colcon-core/packages/slam_gmapping)
+[29.732s] DEBUG:colcon.colcon_core.executor.sequential:run_until_complete 'slam_gmapping' finished with '0'
+[29.732s] DEBUG:colcon.colcon_core.executor.sequential:closing loop
+[29.732s] DEBUG:colcon.colcon_core.executor.sequential:loop closed
+[29.732s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[29.732s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[29.732s] INFO:colcon.colcon_core.shell:Creating prefix script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/local_setup.sh'
+[29.738s] INFO:colcon.colcon_core.shell:Creating prefix util module '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/_local_setup_util_sh.py'
+[29.742s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/install/setup.sh'

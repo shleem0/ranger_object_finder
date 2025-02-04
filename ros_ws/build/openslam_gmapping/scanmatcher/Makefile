@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/scanmatcher//CMakeFiles/progress.marks
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/scanmatcher//CMakeFiles/progress.marks
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/clean
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 scanmatcher/CMakeFiles/scanmatcher.dir/rule:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/CMakeFiles/scanmatcher.dir/rule
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/CMakeFiles/scanmatcher.dir/rule
 .PHONY : scanmatcher/CMakeFiles/scanmatcher.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ scanmatcher: scanmatcher/CMakeFiles/scanmatcher.dir/rule
 
 # fast build rule for target.
 scanmatcher/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/build
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/build
 .PHONY : scanmatcher/fast
 
 eig3.o: eig3.cpp.o
@@ -190,7 +190,7 @@ eig3.o: eig3.cpp.o
 
 # target to build an object file
 eig3.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.o
 .PHONY : eig3.cpp.o
 
 eig3.i: eig3.cpp.i
@@ -198,7 +198,7 @@ eig3.i: eig3.cpp.i
 
 # target to preprocess a source file
 eig3.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.i
 .PHONY : eig3.cpp.i
 
 eig3.s: eig3.cpp.s
@@ -206,7 +206,7 @@ eig3.s: eig3.cpp.s
 
 # target to generate assembly for a file
 eig3.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/eig3.cpp.s
 .PHONY : eig3.cpp.s
 
 scanmatcher.o: scanmatcher.cpp.o
@@ -214,7 +214,7 @@ scanmatcher.o: scanmatcher.cpp.o
 
 # target to build an object file
 scanmatcher.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.o
 .PHONY : scanmatcher.cpp.o
 
 scanmatcher.i: scanmatcher.cpp.i
@@ -222,7 +222,7 @@ scanmatcher.i: scanmatcher.cpp.i
 
 # target to preprocess a source file
 scanmatcher.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.i
 .PHONY : scanmatcher.cpp.i
 
 scanmatcher.s: scanmatcher.cpp.s
@@ -230,7 +230,7 @@ scanmatcher.s: scanmatcher.cpp.s
 
 # target to generate assembly for a file
 scanmatcher.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcher.cpp.s
 .PHONY : scanmatcher.cpp.s
 
 scanmatcherprocessor.o: scanmatcherprocessor.cpp.o
@@ -238,7 +238,7 @@ scanmatcherprocessor.o: scanmatcherprocessor.cpp.o
 
 # target to build an object file
 scanmatcherprocessor.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.o
 .PHONY : scanmatcherprocessor.cpp.o
 
 scanmatcherprocessor.i: scanmatcherprocessor.cpp.i
@@ -246,7 +246,7 @@ scanmatcherprocessor.i: scanmatcherprocessor.cpp.i
 
 # target to preprocess a source file
 scanmatcherprocessor.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.i
 .PHONY : scanmatcherprocessor.cpp.i
 
 scanmatcherprocessor.s: scanmatcherprocessor.cpp.s
@@ -254,7 +254,7 @@ scanmatcherprocessor.s: scanmatcherprocessor.cpp.s
 
 # target to generate assembly for a file
 scanmatcherprocessor.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/scanmatcherprocessor.cpp.s
 .PHONY : scanmatcherprocessor.cpp.s
 
 smmap.o: smmap.cpp.o
@@ -262,7 +262,7 @@ smmap.o: smmap.cpp.o
 
 # target to build an object file
 smmap.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.o
 .PHONY : smmap.cpp.o
 
 smmap.i: smmap.cpp.i
@@ -270,7 +270,7 @@ smmap.i: smmap.cpp.i
 
 # target to preprocess a source file
 smmap.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.i
 .PHONY : smmap.cpp.i
 
 smmap.s: smmap.cpp.s
@@ -278,7 +278,7 @@ smmap.s: smmap.cpp.s
 
 # target to generate assembly for a file
 smmap.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/smmap.cpp.s
 .PHONY : smmap.cpp.s
 
 # Help Target
@@ -318,6 +318,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

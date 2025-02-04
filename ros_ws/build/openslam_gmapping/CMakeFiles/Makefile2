@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -203,14 +203,14 @@ utils/clean: utils/CMakeFiles/utils.dir/clean
 CMakeFiles/uninstall.dir/all: CMakeFiles/openslam_gmapping_uninstall.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num= "Built target uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num= "Built target uninstall"
 .PHONY : CMakeFiles/uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : CMakeFiles/uninstall.dir/rule
 
 # Convenience name for target.
@@ -229,14 +229,14 @@ CMakeFiles/uninstall.dir/clean:
 CMakeFiles/openslam_gmapping_uninstall.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/openslam_gmapping_uninstall.dir/build.make CMakeFiles/openslam_gmapping_uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/openslam_gmapping_uninstall.dir/build.make CMakeFiles/openslam_gmapping_uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num= "Built target openslam_gmapping_uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num= "Built target openslam_gmapping_uninstall"
 .PHONY : CMakeFiles/openslam_gmapping_uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/openslam_gmapping_uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/openslam_gmapping_uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : CMakeFiles/openslam_gmapping_uninstall.dir/rule
 
 # Convenience name for target.
@@ -258,14 +258,14 @@ gridfastslam/CMakeFiles/gridfastslam.dir/all: sensor/sensor_range/CMakeFiles/sen
 gridfastslam/CMakeFiles/gridfastslam.dir/all: utils/CMakeFiles/utils.dir/all
 	$(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/depend
 	$(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=1,2,3,4,5 "Built target gridfastslam"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=1,2,3,4,5 "Built target gridfastslam"
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/all
 
 # Build rule for subdir invocation for target.
 gridfastslam/CMakeFiles/gridfastslam.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/CMakeFiles/gridfastslam.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/rule
 
 # Convenience name for target.
@@ -286,14 +286,14 @@ scanmatcher/CMakeFiles/scanmatcher.dir/all: sensor/sensor_range/CMakeFiles/senso
 scanmatcher/CMakeFiles/scanmatcher.dir/all: utils/CMakeFiles/utils.dir/all
 	$(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/depend
 	$(MAKE) $(MAKESILENT) -f scanmatcher/CMakeFiles/scanmatcher.dir/build.make scanmatcher/CMakeFiles/scanmatcher.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=6,7,8,9,10 "Built target scanmatcher"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=6,7,8,9,10 "Built target scanmatcher"
 .PHONY : scanmatcher/CMakeFiles/scanmatcher.dir/all
 
 # Build rule for subdir invocation for target.
 scanmatcher/CMakeFiles/scanmatcher.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 14
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanmatcher/CMakeFiles/scanmatcher.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : scanmatcher/CMakeFiles/scanmatcher.dir/rule
 
 # Convenience name for target.
@@ -312,14 +312,14 @@ scanmatcher/CMakeFiles/scanmatcher.dir/clean:
 sensor/sensor_base/CMakeFiles/sensor_base.dir/all:
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/depend
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_base/CMakeFiles/sensor_base.dir/build.make sensor/sensor_base/CMakeFiles/sensor_base.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=11,12,13 "Built target sensor_base"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=11,12,13 "Built target sensor_base"
 .PHONY : sensor/sensor_base/CMakeFiles/sensor_base.dir/all
 
 # Build rule for subdir invocation for target.
 sensor/sensor_base/CMakeFiles/sensor_base.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_base/CMakeFiles/sensor_base.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : sensor/sensor_base/CMakeFiles/sensor_base.dir/rule
 
 # Convenience name for target.
@@ -338,14 +338,14 @@ sensor/sensor_base/CMakeFiles/sensor_base.dir/clean:
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/all: sensor/sensor_base/CMakeFiles/sensor_base.dir/all
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build.make sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/depend
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build.make sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=14,15,16 "Built target sensor_odometry"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=14,15,16 "Built target sensor_odometry"
 .PHONY : sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/all
 
 # Build rule for subdir invocation for target.
 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/rule
 
 # Convenience name for target.
@@ -364,14 +364,14 @@ sensor/sensor_odometry/CMakeFiles/sensor_odometry.dir/clean:
 sensor/sensor_range/CMakeFiles/sensor_range.dir/all: sensor/sensor_base/CMakeFiles/sensor_base.dir/all
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_range/CMakeFiles/sensor_range.dir/build.make sensor/sensor_range/CMakeFiles/sensor_range.dir/depend
 	$(MAKE) $(MAKESILENT) -f sensor/sensor_range/CMakeFiles/sensor_range.dir/build.make sensor/sensor_range/CMakeFiles/sensor_range.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=17,18,19 "Built target sensor_range"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=17,18,19 "Built target sensor_range"
 .PHONY : sensor/sensor_range/CMakeFiles/sensor_range.dir/all
 
 # Build rule for subdir invocation for target.
 sensor/sensor_range/CMakeFiles/sensor_range.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sensor/sensor_range/CMakeFiles/sensor_range.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : sensor/sensor_range/CMakeFiles/sensor_range.dir/rule
 
 # Convenience name for target.
@@ -390,14 +390,14 @@ sensor/sensor_range/CMakeFiles/sensor_range.dir/clean:
 utils/CMakeFiles/utils.dir/all:
 	$(MAKE) $(MAKESILENT) -f utils/CMakeFiles/utils.dir/build.make utils/CMakeFiles/utils.dir/depend
 	$(MAKE) $(MAKESILENT) -f utils/CMakeFiles/utils.dir/build.make utils/CMakeFiles/utils.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=20,21,22 "Built target utils"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles --progress-num=20,21,22 "Built target utils"
 .PHONY : utils/CMakeFiles/utils.dir/all
 
 # Build rule for subdir invocation for target.
 utils/CMakeFiles/utils.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 utils/CMakeFiles/utils.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : utils/CMakeFiles/utils.dir/rule
 
 # Convenience name for target.

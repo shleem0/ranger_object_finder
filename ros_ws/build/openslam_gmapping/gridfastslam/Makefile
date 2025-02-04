@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/src/slam_gmapping/openslam_gmapping
+CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/slam_gmapping/openslam_gmapping
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping
+CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/gridfastslam//CMakeFiles/progress.marks
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/gridfastslam//CMakeFiles/progress.marks
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/clean
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/preinstall
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 gridfastslam/CMakeFiles/gridfastslam.dir/rule:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/CMakeFiles/gridfastslam.dir/rule
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gridfastslam/CMakeFiles/gridfastslam.dir/rule
 .PHONY : gridfastslam/CMakeFiles/gridfastslam.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ gridfastslam: gridfastslam/CMakeFiles/gridfastslam.dir/rule
 
 # fast build rule for target.
 gridfastslam/fast:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/build
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/build
 .PHONY : gridfastslam/fast
 
 gfsreader.o: gfsreader.cpp.o
@@ -190,7 +190,7 @@ gfsreader.o: gfsreader.cpp.o
 
 # target to build an object file
 gfsreader.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.o
 .PHONY : gfsreader.cpp.o
 
 gfsreader.i: gfsreader.cpp.i
@@ -198,7 +198,7 @@ gfsreader.i: gfsreader.cpp.i
 
 # target to preprocess a source file
 gfsreader.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.i
 .PHONY : gfsreader.cpp.i
 
 gfsreader.s: gfsreader.cpp.s
@@ -206,7 +206,7 @@ gfsreader.s: gfsreader.cpp.s
 
 # target to generate assembly for a file
 gfsreader.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gfsreader.cpp.s
 .PHONY : gfsreader.cpp.s
 
 gridslamprocessor.o: gridslamprocessor.cpp.o
@@ -214,7 +214,7 @@ gridslamprocessor.o: gridslamprocessor.cpp.o
 
 # target to build an object file
 gridslamprocessor.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.o
 .PHONY : gridslamprocessor.cpp.o
 
 gridslamprocessor.i: gridslamprocessor.cpp.i
@@ -222,7 +222,7 @@ gridslamprocessor.i: gridslamprocessor.cpp.i
 
 # target to preprocess a source file
 gridslamprocessor.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.i
 .PHONY : gridslamprocessor.cpp.i
 
 gridslamprocessor.s: gridslamprocessor.cpp.s
@@ -230,7 +230,7 @@ gridslamprocessor.s: gridslamprocessor.cpp.s
 
 # target to generate assembly for a file
 gridslamprocessor.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor.cpp.s
 .PHONY : gridslamprocessor.cpp.s
 
 gridslamprocessor_tree.o: gridslamprocessor_tree.cpp.o
@@ -238,7 +238,7 @@ gridslamprocessor_tree.o: gridslamprocessor_tree.cpp.o
 
 # target to build an object file
 gridslamprocessor_tree.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.o
 .PHONY : gridslamprocessor_tree.cpp.o
 
 gridslamprocessor_tree.i: gridslamprocessor_tree.cpp.i
@@ -246,7 +246,7 @@ gridslamprocessor_tree.i: gridslamprocessor_tree.cpp.i
 
 # target to preprocess a source file
 gridslamprocessor_tree.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.i
 .PHONY : gridslamprocessor_tree.cpp.i
 
 gridslamprocessor_tree.s: gridslamprocessor_tree.cpp.s
@@ -254,7 +254,7 @@ gridslamprocessor_tree.s: gridslamprocessor_tree.cpp.s
 
 # target to generate assembly for a file
 gridslamprocessor_tree.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/gridslamprocessor_tree.cpp.s
 .PHONY : gridslamprocessor_tree.cpp.s
 
 motionmodel.o: motionmodel.cpp.o
@@ -262,7 +262,7 @@ motionmodel.o: motionmodel.cpp.o
 
 # target to build an object file
 motionmodel.cpp.o:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.o
 .PHONY : motionmodel.cpp.o
 
 motionmodel.i: motionmodel.cpp.i
@@ -270,7 +270,7 @@ motionmodel.i: motionmodel.cpp.i
 
 # target to preprocess a source file
 motionmodel.cpp.i:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.i
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.i
 .PHONY : motionmodel.cpp.i
 
 motionmodel.s: motionmodel.cpp.s
@@ -278,7 +278,7 @@ motionmodel.s: motionmodel.cpp.s
 
 # target to generate assembly for a file
 motionmodel.cpp.s:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.s
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(MAKE) $(MAKESILENT) -f gridfastslam/CMakeFiles/gridfastslam.dir/build.make gridfastslam/CMakeFiles/gridfastslam.dir/motionmodel.cpp.s
 .PHONY : motionmodel.cpp.s
 
 # Help Target
@@ -318,6 +318,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/Ranger-object-finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/build/openslam_gmapping && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
