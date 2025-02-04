@@ -1,1 +1,0 @@
-/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ros_ws/src/hls_lfcd_lds_driver/launch/hlds_laser.launch.py

@@ -1,0 +1,3 @@
+[console_scripts]
+ranger_nav = ranger_nav.ranger_nav.py:main
+
