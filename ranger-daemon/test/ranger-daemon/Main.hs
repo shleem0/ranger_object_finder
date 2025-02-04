@@ -2,19 +2,19 @@ module Main (main) where
 
 import Test.Tasty
 import Test.Tasty.HUnit
-import Ranger.Bluetooth.SimpleBLE.Raw
+import Ranger.Bluetooth.SimpleBLE
 
 main :: IO ()
 main = defaultMain $
-  testGroup "Ranger.Bluetooth.SimpleBLE"
-    [ testGroup "Raw" [ callAdapterGetCount, callAdapterIsBluetoothEnabled ] ]
+  testGroup "Ranger.Bluetooth"
+    [ testGroup "SimpleBLE" [ callAdapterGetCount, callAdapterIsBluetoothEnabled ] ]
 
 callAdapterGetCount :: TestTree
-callAdapterGetCount = testCase "simpleble_adapter_get_count" $ do
-  c <- simpleble_adapter_get_count
+callAdapterGetCount = testCase "getAdapterCount" $ do
+  c <- getAdapterCount
   print c
 
 callAdapterIsBluetoothEnabled :: TestTree
-callAdapterIsBluetoothEnabled = testCase "simpleble_adapter_is_bluetooth_enabled" $ do
-  b <- simpleble_adapter_is_bluetooth_enabled
+callAdapterIsBluetoothEnabled = testCase "isBluetoothEnabled" $ do
+  b <- isBluetoothEnabled
   print b
