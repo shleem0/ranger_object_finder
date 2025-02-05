@@ -186,8 +186,8 @@ instance Storable SimpleBleManufacturerData where
       pokeElemOff (#{ptr simpleble_manufacturer_data_t, data} ptr) i d
 
 
-newtype SimpleBleAdapter = SimpleBleAdapter (FunPtr (IO ()))
-newtype SimpleBlePeripheral = SimpleBlePeripheral (FunPtr (IO ()))
+type SimpleBleAdapter = Ptr ()
+type SimpleBlePeripheral = Ptr ()
 
 
 newtype SimpleBleOS = SimpleBleOS CInt deriving (Eq, Ord)
