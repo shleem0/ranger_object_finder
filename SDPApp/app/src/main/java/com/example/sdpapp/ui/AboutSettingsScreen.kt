@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
@@ -32,97 +33,99 @@ import androidx.navigation.NavController
 
 @Composable
 fun AboutSettingsScreen(navController: NavController) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 20.dp)
     ) {
-        TextButton(
-            onClick = { navController.navigate("settings") }
-        ) {
-            Text(
-                "< back",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(0.dp)
-            )
-        }
-        Text(
-            text = "About The App",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.tertiary
-        )
-        OutlinedCard(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.onBackground,
-            ),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(330.dp)
-                .padding(top = 16.dp)
-        ) {
-            Text(
-                text = "Pani Pani Pani Pani PANI PANI PANI pani PANI PANI",
-                modifier = Modifier
-                    .padding(12.dp),
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.secondary,
-                textAlign = TextAlign.Left,
-                style = LocalTextStyle.current.merge(
-                    TextStyle(
-                        lineHeight = 1.em,
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        ),
-                        lineHeightStyle = LineHeightStyle(
-                            alignment = LineHeightStyle.Alignment.Center,
-                            trim = LineHeightStyle.Trim.None
+        item {
+            Column {
+                TextButton(
+                    onClick = { navController.navigate("settings") }
+                ) {
+                    Text(
+                        "< back",
+                        color = MaterialTheme.colorScheme.surfaceBright,
+                        fontSize = 18.sp,
+                        modifier = Modifier.padding(0.dp)
+                    )
+                }
+                Text(
+                    text = "About The App",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+                OutlinedCard(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.onBackground,
+                    ),
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(330.dp)
+                        .padding(top = 16.dp)
+                ) {
+                    Text(
+                        text = "Pani Pani Pani Pani PANI PANI PANI pani PANI PANI",
+                        modifier = Modifier.padding(12.dp),
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Left,
+                        style = LocalTextStyle.current.merge(
+                            TextStyle(
+                                lineHeight = 1.em,
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                ),
+                                lineHeightStyle = LineHeightStyle(
+                                    alignment = LineHeightStyle.Alignment.Center,
+                                    trim = LineHeightStyle.Trim.None
+                                )
+                            )
                         )
                     )
-                )
-            )
-        }
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            HorizontalDivider(
-                thickness = 2.dp,
-                color = MaterialTheme.colorScheme.surfaceBright,
-                modifier = Modifier
-                    .padding(top = 7.dp, bottom = 7.dp)
-            )
-        }
-        OutlinedCard(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.onBackground,
-            ),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(330.dp)
-        ) {
-            Text(
-                text = "Pani Pani Pani Pani PANI PANI PANI PANI pani pani",
-                modifier = Modifier
-                    .padding(12.dp),
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.secondary,
-                textAlign = TextAlign.Left,
-                style = LocalTextStyle.current.merge(
-                    TextStyle(
-                        lineHeight = 1.em,
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        ),
-                        lineHeightStyle = LineHeightStyle(
-                            alignment = LineHeightStyle.Alignment.Center,
-                            trim = LineHeightStyle.Trim.None
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    HorizontalDivider(
+                        thickness = 2.dp,
+                        color = MaterialTheme.colorScheme.surfaceBright,
+                        modifier = Modifier
+                            .padding(top = 7.dp, bottom = 7.dp)
+                    )
+                }
+                OutlinedCard(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.onBackground,
+                    ),
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.tertiary),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(330.dp)
+                ) {
+                    Text(
+                        text = "Pani Pani Pani Pani PANI PANI PANI PANI pani pani",
+                        modifier = Modifier.padding(12.dp),
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.secondary,
+                        textAlign = TextAlign.Left,
+                        style = LocalTextStyle.current.merge(
+                            TextStyle(
+                                lineHeight = 1.em,
+                                platformStyle = PlatformTextStyle(
+                                    includeFontPadding = false
+                                ),
+                                lineHeightStyle = LineHeightStyle(
+                                    alignment = LineHeightStyle.Alignment.Center,
+                                    trim = LineHeightStyle.Trim.None
+                                )
+                            )
                         )
                     )
-                )
-            )
+                }
+            }
         }
     }
 }

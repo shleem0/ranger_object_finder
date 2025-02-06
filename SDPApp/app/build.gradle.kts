@@ -66,4 +66,5 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle.v122)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.coil.compose)
+    implementation(libs.gson)
 }

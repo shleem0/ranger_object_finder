@@ -12,16 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -37,15 +32,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.sdpapp.FABWithNotification
-import com.example.sdpapp.Item
-import com.example.sdpapp.R
 import java.io.File
 import coil.compose.rememberAsyncImagePainter
 
@@ -162,13 +151,12 @@ fun FullscreenImagePreview(imageFile: File, onDelete: () -> Unit, onClose: () ->
             painter = rememberAsyncImagePainter(imageFile),
             contentDescription = "Full-screen preview",
             contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter)
         )
-
         Button(
             onClick = onClose,
             modifier = Modifier
-                .align(Alignment.TopEnd)
+                .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
             Text("Close")
@@ -177,7 +165,7 @@ fun FullscreenImagePreview(imageFile: File, onDelete: () -> Unit, onClose: () ->
         Button(
             onClick = onDelete,
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomStart)
                 .padding(16.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red

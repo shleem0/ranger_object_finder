@@ -20,11 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.sdpapp.HomeScreen
 import com.example.sdpapp.SettingsScreen
 
 @Composable
@@ -95,6 +95,14 @@ fun BottomNavigationBar() {
             composable("cameraPreview") { backStackEntry ->
                 val name = backStackEntry.arguments?.getString("name") ?: ""
                 CameraPreview(navController, name) }
+            composable("fullScreenAlert/{alertId}") { backStackEntry ->
+                val alertId = backStackEntry.arguments?.getString("alertId")?.toLong() ?: 0L
+                FullScreenAlertScreen(navController, alertId)
+            }
+            composable("addItem") { AddItem(navController) }
+            composable("deleteItem/{itemName}") { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
+                DeleteRow(navController, itemName, LocalContext.current) }
         }
     }
 }
