@@ -13,8 +13,7 @@ DEFAULT_SIMILARITY_THRESHOLD = 0.5  # Adjust if needed (may be too high)
 DEFAULT_TARGET_SIZE = (224, 224)
 DEFAULT_MIN_BOX_SIZE = 20
 DEFAULT_DOWNSCALE_FACTOR = 0.25
-DEFAULT_TOP_K = 1000
-print(tf.__version__)
+DEFAULT_TOP_K = 2000 # Might need to increase
 # ----- HELPER FUNCTIONS -----
 
 def load_feature_extractor(model_path):
