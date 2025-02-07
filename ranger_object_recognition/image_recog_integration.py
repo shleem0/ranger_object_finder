@@ -14,6 +14,7 @@ DEFAULT_TARGET_SIZE = (224, 224)
 DEFAULT_MIN_BOX_SIZE = 20
 DEFAULT_DOWNSCALE_FACTOR = 0.25
 DEFAULT_TOP_K = 1000
+print(tf.__version__)
 # ----- HELPER FUNCTIONS -----
 
 def load_feature_extractor(model_path):
@@ -82,6 +83,39 @@ def visualize_matches(scene_img, matches):
     plt.title("Matched Candidate Regions")
     plt.show()
 
+def apply_nms(matches, iou_threshold=0.5):
+    """
+    Applies non-maximum suppression to a list of candidate matches.
+    This effectively removes overlapping boxes with lower scores, helping to only keep potential true positives.
+    
+    Args:
+        matches (list): List of tuples (box, score) where box is (x, y, w, h)
+                        and score is the similarity score.
+        iou_threshold (float): IoU threshold for suppression.
+        
+    Returns:
+        List of matches after NMS.
+    """
+    if len(matches) == 0:
+        return []
+    
+    # Separate boxes and scores
+    boxes = [match[0] for match in matches]
+    scores = [match[1] for match in matches]
+    
+    # Convert boxes to the format expected by cv2.dnn.NMSBoxes:
+    # a list of [x, y, w, h]
+    boxes_array = np.array(boxes).tolist()  # Ensure it's a list of lists
+    
+    # OpenCV requires scores as a list of floats
+    indices = cv2.dnn.NMSBoxes(boxes_array, scores, score_threshold=0.0, nms_threshold=iou_threshold)
+    
+    # cv2.dnn.NMSBoxes returns indices in a list of lists, so flatten it:
+    indices = [i[0] if isinstance(i, (list, tuple, np.ndarray)) else i for i in indices]
+    
+    nms_matches = [matches[i] for i in indices]
+    return nms_matches
+
 # ----- MAIN API FUNCTION -----
 def find_item_in_scene(scene_image_path, reference_image_paths,
                        model_path=DEFAULT_MODEL_PATH,
@@ -134,6 +168,11 @@ def find_item_in_scene(scene_image_path, reference_image_paths,
             print(f"Processed {processed} regions...")
     
     print(f"Found {len(matches)} candidate matches above threshold {similarity_threshold}.")
+
+    # Apply non-maximum suppression to reduce overlapping boxes
+    matches = apply_nms(matches, iou_threshold=0)
+    print(f"Matches after NMS: {len(matches)}")
+
     print(f"Total processing time: {time.time() - start_time:.2f} seconds")
     
     # Visualising matches for debugging
