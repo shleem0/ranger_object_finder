@@ -45,7 +45,7 @@ fun AboutSettingsScreen(navController: NavController) {
                     onClick = { navController.navigate("settings") }
                 ) {
                     Text(
-                        "< back",
+                        "< Back",
                         color = MaterialTheme.colorScheme.surfaceBright,
                         fontSize = 18.sp,
                         modifier = Modifier.padding(0.dp)
@@ -54,7 +54,8 @@ fun AboutSettingsScreen(navController: NavController) {
                 Text(
                     text = "About The App",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.tertiary
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontSize = 45.sp
                 )
                 OutlinedCard(
                     colors = CardDefaults.cardColors(
@@ -67,16 +68,20 @@ fun AboutSettingsScreen(navController: NavController) {
                         .padding(top = 16.dp)
                 ) {
                     Text(
-                        text = "This app is designed as the user interface for the Ranger robot. " +
-                                "Add a commonly lost item and at least 3 photos for that item, " +
+                        text = "With Ranger, you can find your lost items with ease, whether you " +
+                                "are rushing to find your keys in the morning, or trying to locate" +
+                                " the forever-lost remote, we have got the solution for you. " +
+                                "This app is designed as the user interface for the Ranger robot, " +
+                                "which can be bought separately. " +
+                                "Add a commonly lost item with at least 3 photos for that item, " +
                                 "and the robot will find the object for you.",
                         modifier = Modifier.padding(12.dp),
-                        fontSize = 20.sp,
+                        fontSize = 19.sp,
                         color = MaterialTheme.colorScheme.secondary,
                         textAlign = TextAlign.Left,
                         style = LocalTextStyle.current.merge(
                             TextStyle(
-                                lineHeight = 1.em,
+                                lineHeight = 22.sp,
                                 platformStyle = PlatformTextStyle(
                                     includeFontPadding = false
                                 ),
@@ -108,14 +113,15 @@ fun AboutSettingsScreen(navController: NavController) {
                         .height(330.dp)
                 ) {
                     Text(
-                        text = "Pani Pani Pani Pani PANI PANI PANI PANI pani pani",
+                        text = "Ranger does searching and finding and picking and retrieving and " +
+                                "returning and looking and analysing and Pani.",
                         modifier = Modifier.padding(12.dp),
-                        fontSize = 20.sp,
+                        fontSize = 19.sp,
                         color = MaterialTheme.colorScheme.secondary,
                         textAlign = TextAlign.Left,
                         style = LocalTextStyle.current.merge(
                             TextStyle(
-                                lineHeight = 1.em,
+                                lineHeight = 22.sp,
                                 platformStyle = PlatformTextStyle(
                                     includeFontPadding = false
                                 ),

@@ -6,20 +6,29 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sdpapp.ui.BottomNavigationBar
+import com.example.sdpapp.ui.ThemeViewModelFactory
 import com.example.sdpapp.ui.theme.SDPAppTheme
+import com.example.sdpapp.ui.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SDPAppTheme(darkTheme = false) {
-                BottomNavigationBar()
+            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext)) // Pass context
+            val darkTheme by themeViewModel.darkTheme.collectAsState()
+
+            SDPAppTheme(darkTheme = darkTheme) {
+                BottomNavigationBar(themeViewModel)
             }
         }
     }
+
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()

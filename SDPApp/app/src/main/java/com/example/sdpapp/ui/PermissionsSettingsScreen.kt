@@ -3,6 +3,9 @@
 package com.example.sdpapp.ui
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +13,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -23,7 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -40,7 +42,7 @@ fun PermissionsSettingsScreen(navController: NavController) {
             .padding(horizontal = 20.dp)
     ) {
         TextButton(onClick = { navController.navigate("settings") }) {
-            Text("< back", color = MaterialTheme.colorScheme.surfaceBright, fontSize = 18.sp)
+            Text("< Back", color = MaterialTheme.colorScheme.surfaceBright, fontSize = 18.sp)
         }
 
         Text(
@@ -75,11 +77,12 @@ fun CameraPermissionSwitch() {
         Switch(
             checked = checked,
             onCheckedChange = { newCheckedState ->
-                checked = newCheckedState
-                if (newCheckedState && !cameraPermissionState.status.isGranted) {
-                    //LaunchedEffect(newCheckedState) {
-                        cameraPermissionState.launchPermissionRequest()
-                    //}
+                if (newCheckedState) {
+                    // If enabling, request permission
+                    cameraPermissionState.launchPermissionRequest()
+                } else {
+                    // If disabling, guide user to settings since permissions cannot be revoked programmatically
+                    openAppSettings()
                 }
             },
             colors = SwitchDefaults.colors(
@@ -90,4 +93,14 @@ fun CameraPermissionSwitch() {
             )
         )
     }
+}
+
+@Composable
+fun openAppSettings() {
+    val context = LocalContext.current
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", context.packageName, null)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    context.startActivity(intent)
 }

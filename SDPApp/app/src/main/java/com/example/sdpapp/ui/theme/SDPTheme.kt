@@ -15,8 +15,8 @@ private val DarkColourScheme = darkColorScheme(
     secondary = AppColors.primaryColor,
     tertiary = AppColors.backgroundColor,
     background = AppColors.tertiaryColor,
-    surfaceBright = AppColors.tgtgColor,
-    onBackground = AppColors.offWhite
+    surfaceBright = AppColors.offWhite,
+    onBackground = AppColors.tgtgColor
 )
 
 private val LightColourScheme = lightColorScheme(

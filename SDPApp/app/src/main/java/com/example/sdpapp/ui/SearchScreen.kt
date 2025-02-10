@@ -58,7 +58,7 @@ fun SearchScreen(navController: NavController) {
             onClick = { navController.navigate("home") }
         ) {
             Text(
-                "< back",
+                "< Back",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 18.sp
             )

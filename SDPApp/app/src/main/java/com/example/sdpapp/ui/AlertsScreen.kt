@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.PlatformTextStyle
@@ -40,8 +42,10 @@ import androidx.navigation.compose.rememberNavController
 import java.util.Date
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.YearMonth
+import java.util.Locale
 
 data class Alert(
     val id: Long,
@@ -71,6 +75,11 @@ fun getAlertsFromSharedPreferences(context: Context): List<Alert> {
 fun AlertsScreen(navController: NavController) {
     val context = LocalContext.current
 
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
+    val parsedDate = dateFormat.parse("2025-02-10")!!
+    saveAlertsToSharedPreferences(
+        context,
+        listOf(Alert(0, parsedDate, "Example Alert", "Description of example alert that will contain informative information and can be opened in full screen if the text runs over the allocated space like this does.")))
     val alerts = remember { getAlertsFromSharedPreferences(context) }
 
     Column(
@@ -84,7 +93,7 @@ fun AlertsScreen(navController: NavController) {
             onClick = { navController.navigate("home") }
         ) {
             Text(
-                "< back",
+                "< Back",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(0.dp)
@@ -106,13 +115,12 @@ fun AlertList(alerts: List<Alert>, navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(130.dp)
-                .padding(bottom = 10.dp)
                 .clickable {
                     navController.navigate("fullScreenAlert/${alert.id}")
                 }
         ) {
             Column(
-                modifier = Modifier.padding(12.dp)
+                modifier = Modifier.padding(6.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -121,25 +129,29 @@ fun AlertList(alerts: List<Alert>, navController: NavController) {
                     Text(
                         text = alert.title,
                         fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.secondary
+                        color = MaterialTheme.colorScheme.secondary,
+                        lineHeight = 21.sp
                     )
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
                     Text(
-                        text = alert.date.toString(),
+                        text = dateFormat.format(alert.date),
                         fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.secondary,
+                        lineHeight = 21.sp
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
-
                 Text(
                     text = alert.description,
-                    modifier = Modifier.fillMaxWidth(),
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                    fontSize = 17.sp,
+                    color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Start,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    lineHeight = 20.sp,
+                    maxLines = 4
                 )
             }
         }
@@ -147,25 +159,61 @@ fun AlertList(alerts: List<Alert>, navController: NavController) {
 }
 
 @Composable
-fun FullScreenAlertScreen(alertId: Long) {
+fun FullScreenAlertScreen(navController: NavController, alertId: Long) {
     val alerts = getAlertsFromSharedPreferences(LocalContext.current)
-
     val alert = alerts.firstOrNull { it.id == alertId }
 
     if (alert != null) {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            Text("Full Screen Alert: ${alert.title}")
-            Spacer(modifier = Modifier.height(8.dp))
-            Text("Description: ${alert.description}")
+        Column(
+            modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+        ) {
+            TextButton(
+                onClick = { navController.navigate("alerts") }
+            ) {
+                Text(
+                    "< Back",
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(0.dp)
+                )
+            }
+            Text(
+                alert.title,
+                fontSize = 40.sp,
+                color = MaterialTheme.colorScheme.secondary,
+                lineHeight = 42.sp
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = alert.date.toString(),
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.secondary,
+                lineHeight = 21.sp
+            )
+
+            LazyColumn {
+                item() {
+                    Column() {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            alert.description,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
+                            fontSize = 25.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                            textAlign = TextAlign.Start,
+                            lineHeight = 27.sp,
+                        )
+                    }
+                }
+            }
         }
     } else {
         Text("Alert not found!")
     }
-}
-
-
-@Composable
-fun getAlertById(alertId: Long): Alert {
-    val alerts = getAlertsFromSharedPreferences(LocalContext.current)
-    return alerts.first { it.id == alertId }
 }

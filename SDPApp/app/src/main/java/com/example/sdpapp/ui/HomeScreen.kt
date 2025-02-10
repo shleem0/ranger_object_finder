@@ -336,7 +336,7 @@ fun AddItem(navController: NavController){
             onClick = { navController.navigate("home") }
         ) {
             Text(
-                "< back",
+                "< Back",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(0.dp)

@@ -65,7 +65,7 @@ fun CameraScreen(navController: NavController, name: String) {
         )
     ) {
         Text(
-            "< back",
+            "< Back",
             color = MaterialTheme.colorScheme.surfaceBright,
             fontSize = 18.sp,
             modifier = Modifier.padding(bottom = 40.dp)
