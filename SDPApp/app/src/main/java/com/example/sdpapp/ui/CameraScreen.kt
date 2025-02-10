@@ -85,7 +85,8 @@ fun CheckCameraPermission(onPermissionGranted: () -> Unit) {
 
     if (cameraPermissionState.status.isGranted) {
         onPermissionGranted()
-    } else {
+    }
+    else {
         Column (
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -133,84 +134,120 @@ fun CameraPreview(navController: NavController, name: String) {
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     var capturedFile by remember { mutableStateOf<File?>(null) }
 
-    LaunchedEffect(Unit) {
-        val executor = ContextCompat.getMainExecutor(context)
-        cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(previewView.surfaceProvider)
-            }
-
-            val cameraSelector = CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build()
-
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    lifecycleOwner,
-                    cameraSelector,
-                    preview,
-                    imageCapture
-                )
-            } catch (exc: Exception) {
-                Log.e("CameraPreview", "Use case binding failed", exc)
-            }
-        }, executor)
-    }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
+    Column (
+        modifier = Modifier.fillMaxWidth()
     ) {
-        if (capturedImageUri == null) {
-            AndroidView(
-                factory = { previewView },
-                modifier = Modifier.fillMaxWidth().height(660.dp)
-            )
-        } else {
-            Image(
-                painter = rememberAsyncImagePainter(capturedImageUri),
-                contentDescription = "Captured photo",
-                modifier = Modifier.fillMaxSize()
-            )
+        Spacer(modifier = Modifier.padding(top = 30.dp))
+        Text(
+            text = "Make sure the area is free of clutter and only shows the item.",
+            color = MaterialTheme.colorScheme.secondary,
+            fontSize = 20.sp,
+            modifier = Modifier.padding(horizontal = 12.dp),
+            lineHeight = 22.sp
+        )
+        Spacer(modifier = Modifier.padding(bottom = 10.dp))
+        LaunchedEffect(Unit) {
+            val executor = ContextCompat.getMainExecutor(context)
+            cameraProviderFuture.addListener({
+                val cameraProvider = cameraProviderFuture.get()
+                val preview = Preview.Builder().build().also {
+                    it.setSurfaceProvider(previewView.surfaceProvider)
+                }
+
+                val cameraSelector = CameraSelector.Builder()
+                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .build()
+
+                try {
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        cameraSelector,
+                        preview,
+                        imageCapture
+                    )
+                } catch (exc: Exception) {
+                    Log.e("CameraPreview", "Use case binding failed", exc)
+                }
+            }, executor)
         }
 
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter)
+        Box(
+            modifier = Modifier.fillMaxWidth().height(600.dp),
+            contentAlignment = Alignment.TopCenter
         ) {
             if (capturedImageUri == null) {
-                Button(
-                    onClick = {
-                        captureImage(context, imageCapture, name) { uri, file ->
-                            capturedImageUri = uri
-                            capturedFile = file
-                        }
-                    },
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Text("Capture Image")
-                }
+                AndroidView(
+                    factory = { previewView },
+                    modifier = Modifier.fillMaxWidth().height(500.dp)
+                )
             } else {
-                Row(modifier = Modifier.padding(16.dp)) {
-                    Button(
-                        onClick = {
-                            navController.navigate("home")
-                        },
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text("Save Image")
-                    }
+                Image(
+                    painter = rememberAsyncImagePainter(capturedImageUri),
+                    contentDescription = "Captured photo",
+                    modifier = Modifier.fillMaxWidth().height(450.dp)
+                )
+            }
 
+            Column(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) {
+                if (capturedImageUri == null) {
                     Button(
                         onClick = {
-                            capturedFile?.delete()
-                            capturedImageUri = null
-                            capturedFile = null
+                            captureImage(context, imageCapture, name) { uri, file ->
+                                capturedImageUri = uri
+                                capturedFile = file
+                            }
                         },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(16.dp),
+                        colors = ButtonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground,
+                            disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                            disabledContentColor = MaterialTheme.colorScheme.onBackground
+                        )
                     ) {
-                        Text("Retake Photo")
+                        Text("Capture Image")
+                    }
+                } else {
+                    Row(modifier = Modifier.padding(16.dp)) {
+                        Button(
+                            onClick = {
+                                capturedFile?.delete()
+                                capturedImageUri = null
+                                capturedFile = null
+                            },
+                            modifier = Modifier.padding(8.dp),
+                            colors = ButtonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onBackground,
+                                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                                disabledContentColor = MaterialTheme.colorScheme.onBackground
+                            )
+                        ) {
+                            Text("Retake",
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                        }
+                        Button(
+                            onClick = {
+                                navController.navigate("home")
+                            },
+                            modifier = Modifier.padding(8.dp),
+                            colors = ButtonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onBackground,
+                                disabledContainerColor = MaterialTheme.colorScheme.secondary,
+                                disabledContentColor = MaterialTheme.colorScheme.onBackground
+                            )
+                        ) {
+                            Text("Save",
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                        }
                     }
                 }
             }

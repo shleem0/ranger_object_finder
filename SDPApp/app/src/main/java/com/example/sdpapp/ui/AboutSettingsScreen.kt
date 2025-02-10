@@ -67,7 +67,9 @@ fun AboutSettingsScreen(navController: NavController) {
                         .padding(top = 16.dp)
                 ) {
                     Text(
-                        text = "Pani Pani Pani Pani PANI PANI PANI pani PANI PANI",
+                        text = "This app is designed as the user interface for the Ranger robot. " +
+                                "Add a commonly lost item and at least 3 photos for that item, " +
+                                "and the robot will find the object for you.",
                         modifier = Modifier.padding(12.dp),
                         fontSize = 20.sp,
                         color = MaterialTheme.colorScheme.secondary,
