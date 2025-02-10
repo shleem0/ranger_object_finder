@@ -14,6 +14,8 @@
         compile-packages = with pkgs; [
           pkg-config
           simpleble
+          cargo
+          rustc
           zlib
           cabal-install
           ghc
