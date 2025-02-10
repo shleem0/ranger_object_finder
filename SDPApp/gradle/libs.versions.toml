@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.30.1"
-agp = "8.8.0"
+agp = "8.7.0"
 androidxCameraCamera2 = "1.2.2"
 androidxCameraCameraCore = "1.3.0"
 cameraLifecycle = "1.2.2"
