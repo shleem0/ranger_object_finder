@@ -31,7 +31,7 @@ async fn main() -> bluer::Result<()> {
                             read_buf = vec![0; req.mtu()];
                             current_demo_reader = Some(req.accept()?);
                         } else {
-                            log::info!("Rejecting write event with MTU {} from {}: already being written to", req.mtu(), req.device_address());
+                            log::warn!("Rejecting write event with MTU {} from {}: already being written to", req.mtu(), req.device_address());
                             req.reject(ReqError::InProgress);
                         }
                     },
