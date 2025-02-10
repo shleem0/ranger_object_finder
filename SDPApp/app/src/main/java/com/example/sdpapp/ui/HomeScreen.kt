@@ -4,6 +4,7 @@ package com.example.sdpapp.ui
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,6 +52,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,6 +88,39 @@ fun HomeScreen(navController: NavController) {
             painter = painterResource(id = R.drawable.rangergreenletters),
             contentDescription = stringResource(id = R.string.logo_description)
         )
+
+
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth().height(90.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Button(
+                onClick = { navController.navigate("search") },
+                modifier = Modifier
+                    .height(90.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomEnd)
+                    .border(
+                        BorderStroke(13.dp, MaterialTheme.colorScheme.secondary),
+                        shape = RoundedCornerShape(16.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
+            ) {
+                Text(
+                    "Find Item",
+                    fontSize = 34.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -104,7 +139,9 @@ fun HomeScreen(navController: NavController) {
                     fontSize = 18.sp)
             }
         }
-        LazyColumn() {
+        LazyColumn(
+            Modifier.height(255.dp)
+        ) {
             items(itemNames) { itemName ->
                 val imageName = "sdp$itemName"
                 val imageResId = remember {
@@ -174,6 +211,7 @@ fun HomeScreen(navController: NavController) {
                 }
             }
         }
+
         FABWithNotification(
             getAlertsFromSharedPreferences(LocalContext.current).size,
             navController
@@ -255,7 +293,7 @@ fun AddItem(navController: NavController){
 
     fun createItemFolderAndSaveData() {
         if (itemName.text.isNotEmpty()) {
-            val folder = File(context.filesDir, itemName.text)
+            val folder = File(context.filesDir, itemName.text.lowercase())
             if (!folder.exists()) {
                 folder.mkdirs()
 
@@ -295,7 +333,7 @@ fun AddItem(navController: NavController){
             .padding(16.dp),
     ) {
         TextButton(
-            onClick = { navController.navigate("home") } // Assuming you have a "home" screen
+            onClick = { navController.navigate("home") }
         ) {
             Text(
                 "< back",
@@ -316,6 +354,7 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = itemName,
             onValueChange = { itemName = it },
+            textStyle = TextStyle(fontSize = 20.sp),
             modifier = Modifier
                 .fillMaxWidth()
                 .size(30.dp)
@@ -325,6 +364,7 @@ fun AddItem(navController: NavController){
                     color = MaterialTheme.colorScheme.surfaceBright,
                     RoundedCornerShape(4.dp)
                 )
+                .padding(4.dp)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -337,18 +377,26 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = additionalDetails,
             onValueChange = { additionalDetails = it },
+            textStyle = TextStyle(fontSize = 20.sp),
             modifier = Modifier
                 .fillMaxWidth()
-                .size(100.dp)
+                .size(180.dp)
                 .background(MaterialTheme.colorScheme.onBackground)
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colorScheme.surfaceBright,
                     RoundedCornerShape(4.dp)
                 )
+                .padding(4.dp)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        Text("We recommend taking at least 3 photos of the item from different angles.",
+            color = MaterialTheme.colorScheme.surfaceBright,
+            fontSize = 17.sp,
+            lineHeight = 20.sp
+        )
 
         Box(
             contentAlignment = Alignment.BottomCenter,

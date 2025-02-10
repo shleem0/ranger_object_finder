@@ -71,7 +71,6 @@ fun getAlertsFromSharedPreferences(context: Context): List<Alert> {
 fun AlertsScreen(navController: NavController) {
     val context = LocalContext.current
 
-    // Fetch alerts once
     val alerts = remember { getAlertsFromSharedPreferences(context) }
 
     Column(
@@ -82,7 +81,7 @@ fun AlertsScreen(navController: NavController) {
             .verticalScroll(rememberScrollState())
     ) {
         TextButton(
-            onClick = { navController.navigate("home") } // Assuming you have a "home" screen
+            onClick = { navController.navigate("home") }
         ) {
             Text(
                 "< back",
@@ -92,7 +91,7 @@ fun AlertsScreen(navController: NavController) {
             )
         }
 
-        AlertList(alerts, navController)  // Pass alerts to AlertList
+        AlertList(alerts, navController)
     }
 }
 
@@ -109,7 +108,6 @@ fun AlertList(alerts: List<Alert>, navController: NavController) {
                 .height(130.dp)
                 .padding(bottom = 10.dp)
                 .clickable {
-                    // Navigate to FullScreenAlertScreen with alertId
                     navController.navigate("fullScreenAlert/${alert.id}")
                 }
         ) {
@@ -149,7 +147,7 @@ fun AlertList(alerts: List<Alert>, navController: NavController) {
 }
 
 @Composable
-fun FullScreenAlertScreen(navController: NavController, alertId: Long) {
+fun FullScreenAlertScreen(alertId: Long) {
     val alerts = getAlertsFromSharedPreferences(LocalContext.current)
 
     val alert = alerts.firstOrNull { it.id == alertId }

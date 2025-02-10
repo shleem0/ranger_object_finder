@@ -97,12 +97,13 @@ fun BottomNavigationBar() {
                 CameraPreview(navController, name) }
             composable("fullScreenAlert/{alertId}") { backStackEntry ->
                 val alertId = backStackEntry.arguments?.getString("alertId")?.toLong() ?: 0L
-                FullScreenAlertScreen(navController, alertId)
+                FullScreenAlertScreen(alertId)
             }
             composable("addItem") { AddItem(navController) }
             composable("deleteItem/{itemName}") { backStackEntry ->
                 val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
                 DeleteRow(navController, itemName, LocalContext.current) }
+            composable("search") { SearchScreen(navController) }
         }
     }
 }
