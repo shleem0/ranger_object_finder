@@ -10,7 +10,7 @@ struct Cli {
     bluetooth_adapter: Option<String>,
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main(flavor = "multi_thread")]
 async fn main() -> bluer::Result<()> {
     env_logger::init();
 
@@ -26,6 +26,7 @@ async fn main() -> bluer::Result<()> {
             evt = bh.is_demo_active_writes.next() => {
                 match evt {
                     Some(req) => {
+                        log::debug!("Write event from {}", req.device_address());
                         if current_demo_reader.is_none() {
                             log::info!("Accepting write event with MTU {} from {}", req.mtu(), req.device_address());
                             read_buf = vec![0; req.mtu()];
@@ -35,7 +36,10 @@ async fn main() -> bluer::Result<()> {
                             req.reject(ReqError::InProgress);
                         }
                     },
-                    None => break,
+                    None => {
+                        log::info!("No more writes");
+                        break;
+                    }
                 }
             }
             length_read = async {

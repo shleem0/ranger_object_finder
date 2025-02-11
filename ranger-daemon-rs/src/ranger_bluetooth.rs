@@ -77,7 +77,7 @@ impl RangerType for bool {
 // 5a772388-abcf-43a7-9691-6598ab86b2f6
 
 // RangerDemo
-// fbb876fb-3ee3-5315-9716-01ede2358aab
+// fbb887fb-3ee3-5315-9716-01ede2358aab
 const RANGER_DEMO_SERVICE_UUID: Uuid = Uuid::from_bytes(
     [ 0xfb, 0xb8, 0x87, 0xfb
     , 0x3e, 0xe3
@@ -142,9 +142,6 @@ fn demo_service(rs: Arc<Mutex<RangerState>>, rn: Arc<Mutex<RangerStateNotifiers>
                 uuid: IS_DEMO_ACTIVE_UUID,
                 write: Some(CharacteristicWrite {
                     write: true,
-                    write_without_response: true,
-                    encrypt_write: true,
-                    encrypt_authenticated_write: true,
                     method: CharacteristicWriteMethod::Io,
                     ..Default::default()
                 }),
@@ -187,6 +184,8 @@ pub async fn start_bluetooth(adapter_name: &Option<String>) -> bluer::Result<Ran
     };
 
     adapter.set_powered(true).await?;
+    adapter.set_discoverable(true).await?;
+    adapter.set_pairable(true).await?;
 
     log::info!("Serving GATT service on Bluetooth adapter {}", adapter.name());
 
@@ -201,10 +200,12 @@ pub async fn start_bluetooth(adapter_name: &Option<String>) -> bluer::Result<Ran
 
     log::debug!("IsDemoActive characteristic handle is 0x{:x}", is_demo_active_ctl.handle()?);
 
-    let write_requests = is_demo_active_ctl.filter_map(|evt| match evt {
+    let write_requests = is_demo_active_ctl.filter_map(|evt| {
+        log::debug!("Handling event {:?}", evt);     
+        match evt {
         CharacteristicControlEvent::Write(req) => future::ready(Some(req)),
         CharacteristicControlEvent::Notify(_) => unreachable!("Using callbacks for notify")
-    }).boxed();
+    }}).boxed();
 
     Ok(RangerBluetoothHandle {
         _adv_handle: adv_handle,
