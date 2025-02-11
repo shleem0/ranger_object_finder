@@ -1,11 +1,11 @@
 package com.example.sdpapp.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -18,32 +18,32 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.sdpapp.RangerBluetoothService
 import com.example.sdpapp.SettingsScreen
+import com.example.sdpapp.ui.theme.ThemeViewModel
 
 @Composable
-fun BottomNavigationBar() {
-    var navigationSelectedItem by remember {
-        mutableStateOf(0)
-    }
+fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: RangerBluetoothService?) { // Accept ViewModel as parameter
+    var navigationSelectedItem by remember { mutableStateOf(0) }
     val navController = rememberNavController()
 
     val bottomNavigationItems = listOf(
         NavigationItem("Home", "home", Icons.Filled.Home),
         NavigationItem("Photos", "photos", Icons.Filled.Face),
-        NavigationItem("Settings", "settings", Icons.Filled.Settings)
+        NavigationItem("Settings", "settings", Icons.Filled.Settings),
+        NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
     )
 
     Scaffold(
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White
+                containerColor = MaterialTheme.colorScheme.background
             ) {
                 bottomNavigationItems.forEachIndexed { index, navigationItem ->
                     NavigationBarItem(
@@ -60,7 +60,6 @@ fun BottomNavigationBar() {
                                 }
                             )
                         },
-                        modifier = Modifier.background(Color.White),
                         onClick = {
                             navigationSelectedItem = index
                             navController.navigate(navigationItem.route) {
@@ -85,7 +84,7 @@ fun BottomNavigationBar() {
             composable("photos") { PhotosScreen() }
             composable("settings") { SettingsScreen(navController) }
             composable("about") { AboutSettingsScreen(navController) }
-            composable("display") { DisplaySettingsScreen(navController) }
+            composable("display") { DisplaySettingsScreen(navController, themeViewModel) }
             composable("permissions") { PermissionsSettingsScreen(navController) }
             composable("alerts") { AlertsScreen(navController) }
             composable("camera/{name}") { backStackEntry ->
@@ -94,16 +93,20 @@ fun BottomNavigationBar() {
             }
             composable("cameraPreview") { backStackEntry ->
                 val name = backStackEntry.arguments?.getString("name") ?: ""
-                CameraPreview(navController, name) }
+                CameraPreview(navController, name)
+            }
             composable("fullScreenAlert/{alertId}") { backStackEntry ->
                 val alertId = backStackEntry.arguments?.getString("alertId")?.toLong() ?: 0L
-                FullScreenAlertScreen(alertId)
+                FullScreenAlertScreen(navController, alertId)
             }
             composable("addItem") { AddItem(navController) }
             composable("deleteItem/{itemName}") { backStackEntry ->
                 val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
-                DeleteRow(navController, itemName, LocalContext.current) }
+                DeleteRow(navController, itemName, LocalContext.current)
+            }
             composable("search") { SearchScreen(navController) }
+            composable("demo") { DemoScreen(navController, bluetoothService) }
+            composable("openAppSettings") { openAppSettings() }
         }
     }
 }

@@ -1,3 +1,4 @@
+
 package com.example.sdpapp.ui
 
 import android.widget.Toast
@@ -58,7 +59,7 @@ fun SearchScreen(navController: NavController) {
             onClick = { navController.navigate("home") }
         ) {
             Text(
-                "< back",
+                "< Back",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 18.sp
             )
@@ -154,9 +155,9 @@ fun SearchScreen(navController: NavController) {
             Button(
                 onClick = { navController.navigate("home")
                     Toast.makeText(context,
-                    "Ranger will alert you when the item is found.",
-                    Toast.LENGTH_SHORT).show()
-                          },
+                        "Ranger will alert you when the item is found.",
+                        Toast.LENGTH_SHORT).show()
+                },
                 modifier = Modifier
                     .height(70.dp)
                     .fillMaxWidth()

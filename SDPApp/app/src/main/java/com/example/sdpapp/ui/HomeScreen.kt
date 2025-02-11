@@ -136,7 +136,9 @@ fun HomeScreen(navController: NavController) {
                 onClick = { navController.navigate("addItem") }
             ) {
                 Text("Add Item",
-                    fontSize = 18.sp)
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
         LazyColumn(
@@ -236,7 +238,7 @@ fun DeleteRow(navController: NavController, itemName: String, context: Context){
                 Text("Delete", color = Color.Red)
             } },
         dismissButton = { TextButton(onClick = { navController.navigate("home") }) {
-                    Text("Cancel") } },
+            Text("Cancel") } },
         title = { Text("Delete Item?") },
         text = { Text("Are you sure you want to delete $itemName? All photos will be lost.") }
     )
@@ -336,7 +338,7 @@ fun AddItem(navController: NavController){
             onClick = { navController.navigate("home") }
         ) {
             Text(
-                "< back",
+                "< Back",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(0.dp)
@@ -354,7 +356,7 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = itemName,
             onValueChange = { itemName = it },
-            textStyle = TextStyle(fontSize = 20.sp),
+            textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.surfaceBright),
             modifier = Modifier
                 .fillMaxWidth()
                 .size(30.dp)
@@ -377,7 +379,7 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = additionalDetails,
             onValueChange = { additionalDetails = it },
-            textStyle = TextStyle(fontSize = 20.sp),
+            textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.surfaceBright),
             modifier = Modifier
                 .fillMaxWidth()
                 .size(180.dp)
@@ -404,8 +406,8 @@ fun AddItem(navController: NavController){
         ) {
             Button(
                 onClick = { createItemFolderAndSaveData()
-                          navController.navigate("home")
-                          },
+                    navController.navigate("home")
+                },
             ) {
                 Text(
                     "Save Item",
