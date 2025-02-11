@@ -73,15 +73,31 @@ impl RangerType for bool {
     }
 }
 
-// randomly generated v4 UUID
-const NAMESPACE_RANGER: Uuid = Uuid::from_bytes([0xcf, 0x68, 0x0c, 0x60, 0xaa, 0x9a, 0x47, 0x94, 0xbe, 0x83, 0x38, 0x2d, 0xfd, 0xe7, 0xd8, 0x0c]);
+// using the following namespace with sha1 (uuidv5)
+// 5a772388-abcf-43a7-9691-6598ab86b2f6
 
-static RANGER_DEMO_SERVICE_UUID: LazyLock<Uuid> = LazyLock::new(||Uuid::new_v3(&NAMESPACE_RANGER, "RangerDemo".as_bytes()));
+// RangerDemo
+// fbb876fb-3ee3-5315-9716-01ede2358aab
+const RANGER_DEMO_SERVICE_UUID: Uuid = Uuid::from_bytes(
+    [ 0xfb, 0xb8, 0x87, 0xfb
+    , 0x3e, 0xe3
+    , 0x53, 0x15
+    , 0x97, 0x16
+    , 0x01, 0xed, 0xe2, 0x35, 0x8a, 0xab
+    ]);
 
-static IS_DEMO_ACTIVE_UUID: LazyLock<Uuid> = LazyLock::new(||Uuid::new_v3(&NAMESPACE_RANGER, "IsDemoActive".as_bytes()));
+// IsDemoActive
+// 82e761bc-8508-5f80-90ee-9b3455444798
+const IS_DEMO_ACTIVE_UUID: Uuid = Uuid::from_bytes(
+    [ 0x82, 0xe7, 0x61, 0xbc
+    , 0x85, 0x08
+    , 0x5f, 0x80
+    , 0x90, 0xee
+    , 0x9b, 0x34, 0x55, 0x44, 0x47, 0x98
+    ]);
 
 static LE_ADVERTISEMENT: LazyLock<Advertisement> = LazyLock::new(||Advertisement {
-    service_uuids: vec![*RANGER_DEMO_SERVICE_UUID].into_iter().collect(),
+    service_uuids: vec![RANGER_DEMO_SERVICE_UUID].into_iter().collect(),
     discoverable: Some(true),
     local_name: Some("Ranger".to_string()),
     ..Default::default()
@@ -118,12 +134,12 @@ fn demo_service(rs: Arc<Mutex<RangerState>>, rn: Arc<Mutex<RangerStateNotifiers>
     let (demo_active_control, demo_active_handle) = characteristic_control();
 
     let s = Service {
-        uuid: *RANGER_DEMO_SERVICE_UUID,
+        uuid: RANGER_DEMO_SERVICE_UUID,
         primary: true,
         characteristics: vec![
             // IsDemoActive
             Characteristic {
-                uuid: *IS_DEMO_ACTIVE_UUID,
+                uuid: IS_DEMO_ACTIVE_UUID,
                 write: Some(CharacteristicWrite {
                     write: true,
                     write_without_response: true,
