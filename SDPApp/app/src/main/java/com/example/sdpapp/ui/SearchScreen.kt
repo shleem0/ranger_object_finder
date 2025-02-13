@@ -128,7 +128,7 @@ fun SearchScreen(navController: NavController) {
             }
             items(
                 listOf(
-                    " - The robot can take up to 7 minutes to find an item.",
+                    " - The robot can take up to n minutes to find an item.",
                     " - The robot will only be able to find the item in an enclosed area.",
                     " - The robot will grab the item, so it is not suitable for fragile objects."
                 )

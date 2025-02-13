@@ -51,12 +51,12 @@ fun PermissionsSettingsScreen(navController: NavController) {
             color = MaterialTheme.colorScheme.tertiary,
         )
 
-        CameraPermissionSwitch()
+        CameraPermissionSwitch(navController)
     }
 }
 
 @Composable
-fun CameraPermissionSwitch() {
+fun CameraPermissionSwitch(navController: NavController) {
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
     var checked by remember { mutableStateOf(cameraPermissionState.status.isGranted) }
 
@@ -78,11 +78,9 @@ fun CameraPermissionSwitch() {
             checked = checked,
             onCheckedChange = { newCheckedState ->
                 if (newCheckedState) {
-                    // If enabling, request permission
                     cameraPermissionState.launchPermissionRequest()
                 } else {
-                    // If disabling, guide user to settings since permissions cannot be revoked programmatically
-                    openAppSettings()
+                    navController.navigate("openAppSettings")
                 }
             },
             colors = SwitchDefaults.colors(

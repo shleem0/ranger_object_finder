@@ -32,11 +32,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.io.File
 import coil.compose.rememberAsyncImagePainter
+import com.example.sdpapp.R
 
 @Composable
 fun PhotosScreen () {
@@ -128,7 +130,7 @@ fun PhotoItem(file: File, onClick: () -> Unit) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(file),
-            contentDescription = "Captured photo",
+            contentDescription = "Captured photo of ${file.parentFile!!.name}",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(220.dp)
@@ -159,7 +161,9 @@ fun FullscreenImagePreview(imageFile: File, onDelete: () -> Unit, onClose: () ->
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Text("Close")
+            Text("Close",
+                color = MaterialTheme.colorScheme.surfaceBright
+            )
         }
 
         Button(

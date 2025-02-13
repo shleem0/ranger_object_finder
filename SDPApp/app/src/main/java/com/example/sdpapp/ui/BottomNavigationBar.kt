@@ -1,5 +1,7 @@
 package com.example.sdpapp.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -27,10 +29,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sdpapp.SettingsScreen
+import com.example.sdpapp.bt.RangerBluetoothService
 import com.example.sdpapp.ui.theme.ThemeViewModel
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun BottomNavigationBar(themeViewModel: ThemeViewModel) { // Accept ViewModel as parameter
+fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: RangerBluetoothService?) {
     var navigationSelectedItem by remember { mutableStateOf(0) }
     val navController = rememberNavController()
 
@@ -107,6 +111,12 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel) { // Accept ViewModel as
             }
             composable("search") { SearchScreen(navController) }
             composable("demo") { DemoScreen(navController) }
+            composable("openAppSettings") { openAppSettings() }
+            composable("connectForDemo") {
+                if (bluetoothService != null) {
+                    bluetoothService.connectForDemo()
+                }
+            }
         }
     }
 }

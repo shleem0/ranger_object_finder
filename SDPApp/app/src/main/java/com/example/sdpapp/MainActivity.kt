@@ -10,11 +10,16 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.Manifest
+import android.annotation.SuppressLint
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.sdpapp.bt.RangerBluetoothService
@@ -25,37 +30,39 @@ import com.example.sdpapp.ui.theme.SDPAppTheme
 import com.example.sdpapp.ui.theme.ThemeViewModel
 
 class MainActivity : ComponentActivity() {
-    private var bluetoothService : RangerBluetoothService? = null
+    var bluetoothService : RangerBluetoothService? = null
 
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(cn: ComponentName?, bnd: IBinder?) {
+            Log.d("MainActivity", "Bluetooth service connected")
             bluetoothService = (bnd as RangerBluetoothService.LocalBinder).getService()
             bluetoothService?.let { bluetooth ->
                 if (!bluetooth.initialize()) {
                     Log.e("MainActivity", "Unable to initialize Bluetooth")
-                    // may want to show the user a failure message instead of this
                     finish()
                 }
-                bluetooth.connectForDemo()
             }
         }
 
         override fun onServiceDisconnected(cn: ComponentName?) {
+            Log.e("MainActivity", "Bluetooth service disconnected")
             bluetoothService = null
         }
     }
 
-    private val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(ctx: Context, it: Intent) {
+    public val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(ctx: Context, intent: Intent) {
             when (intent.action) {
-                RangerBluetoothService.Companion.ACTION_GATT_CONNECTED -> {
+                RangerBluetoothService.ACTION_GATT_CONNECTED -> {
                     Log.i("MainActivity", "Connected to GATT device")
                 }
-                RangerBluetoothService.Companion.ACTION_GATT_DISCONNECTED -> {
+                RangerBluetoothService.ACTION_GATT_DISCONNECTED -> {
                     Log.w("MainActivity", "Disconnected from GATT device")
+                    // Only reconnect if needed
                 }
-                RangerBluetoothService.Companion.ACTION_GATT_READY -> {
+                RangerBluetoothService.ACTION_GATT_READY -> {
                     Log.i("MainActivity", "GATT device ready for startDemo command")
+                    // Now, the user should manually press "Start Demo"
                 }
             }
         }
@@ -63,12 +70,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-        val s = bluetoothService
-        if (s != null) {
-            val result = s.connectForDemo()
-            Log.d("MainActivity", "Connect request result=$result")
-        }
+        registerReceiverSafely()
     }
 
     override fun onPause() {
@@ -76,54 +78,68 @@ class MainActivity : ComponentActivity() {
         unregisterReceiver(gattUpdateReceiver)
     }
 
-    private fun makeGattUpdateIntentFilter(): IntentFilter {
-        return IntentFilter().apply {
-            addAction(RangerBluetoothService.Companion.ACTION_GATT_CONNECTED)
-            addAction(RangerBluetoothService.Companion.ACTION_GATT_DISCONNECTED)
-            addAction(RangerBluetoothService.Companion.ACTION_GATT_READY)
+    internal fun registerReceiverSafely() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.e("MainActivity", "Receiver already registered or error: ${e.message}")
         }
     }
 
+    public fun makeGattUpdateIntentFilter(): IntentFilter {
+        return IntentFilter().apply {
+            addAction(RangerBluetoothService.ACTION_GATT_CONNECTED)
+            addAction(RangerBluetoothService.ACTION_GATT_DISCONNECTED)
+            addAction(RangerBluetoothService.ACTION_GATT_READY)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext)) // Pass context
+            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext))
             val darkTheme by themeViewModel.darkTheme.collectAsState()
 
             SDPAppTheme(darkTheme = darkTheme) {
-                BottomNavigationBar(themeViewModel)
+                BottomNavigationBar(themeViewModel, bluetoothService)
             }
         }
         val gattServiceIntent = Intent(this, RangerBluetoothService::class.java)
-        bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+        Log.d("MainActivity", "Binding service")
+        val b = bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+        Log.d("MainActivity", "Bluetooth service binding result: $b")
     }
 
+    private val requestBluetoothPermissionLauncher =
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Log.i("MainActivity", "Permission granted")
-        } else {
-            Log.i("MainActivity", "Permission denied")
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Log.i("MainActivity", "Bluetooth permission granted")
+                bluetoothService?.connectForDemo()
+            } else {
+                Log.i("MainActivity", "Bluetooth permission denied")
+            }
         }
-    }
 
-    private fun requestCameraPermission() {
+    public fun requestBluetoothPermission() {
         when {
             ContextCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.CAMERA
+                Manifest.permission.BLUETOOTH_CONNECT
             ) == PackageManager.PERMISSION_GRANTED -> {
-                Log.i("MainActivity", "Permission granted before")
+                Log.i("MainActivity", "Bluetooth permission already granted")
+                bluetoothService?.connectForDemo()
             }
-
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                android.Manifest.permission.CAMERA
-            ) -> Log.i("MainActivity", "Show camera permissions rationale")
-
-            else -> requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            else -> {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 4444444)
+                requestBluetoothPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
+            }
         }
     }
 }

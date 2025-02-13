@@ -77,7 +77,7 @@ fun AboutSettingsScreen(navController: NavController) {
                                 "and the robot will find the object for you.",
                         modifier = Modifier.padding(12.dp),
                         fontSize = 19.sp,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.surfaceBright,
                         textAlign = TextAlign.Left,
                         style = LocalTextStyle.current.merge(
                             TextStyle(
@@ -117,7 +117,7 @@ fun AboutSettingsScreen(navController: NavController) {
                                 "returning and looking and analysing and Pani.",
                         modifier = Modifier.padding(12.dp),
                         fontSize = 19.sp,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.surfaceBright,
                         textAlign = TextAlign.Left,
                         style = LocalTextStyle.current.merge(
                             TextStyle(

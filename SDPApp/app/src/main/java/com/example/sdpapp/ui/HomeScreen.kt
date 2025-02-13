@@ -136,7 +136,9 @@ fun HomeScreen(navController: NavController) {
                 onClick = { navController.navigate("addItem") }
             ) {
                 Text("Add Item",
-                    fontSize = 18.sp)
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright
+                )
             }
         }
         LazyColumn(
@@ -354,7 +356,7 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = itemName,
             onValueChange = { itemName = it },
-            textStyle = TextStyle(fontSize = 20.sp),
+            textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.tertiary),
             modifier = Modifier
                 .fillMaxWidth()
                 .size(30.dp)
@@ -377,7 +379,7 @@ fun AddItem(navController: NavController){
         BasicTextField(
             value = additionalDetails,
             onValueChange = { additionalDetails = it },
-            textStyle = TextStyle(fontSize = 20.sp),
+            textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.tertiary),
             modifier = Modifier
                 .fillMaxWidth()
                 .size(180.dp)
