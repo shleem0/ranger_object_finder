@@ -1,6 +1,12 @@
 package com.example.sdpapp.ui
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,8 +44,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.example.sdpapp.MainActivity
+import com.example.sdpapp.bt.RangerBluetoothService
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun SearchScreen(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
@@ -130,7 +140,8 @@ fun SearchScreen(navController: NavController) {
                 listOf(
                     " - The robot can take up to n minutes to find an item.",
                     " - The robot will only be able to find the item in an enclosed area.",
-                    " - The robot will grab the item, so it is not suitable for fragile objects."
+                    " - The robot will grab the item, so it is not suitable for fragile objects.",
+                    " - The robot will be sent the photos of the item for processing"
                 )
             ) { text ->
                 Text(
@@ -151,30 +162,94 @@ fun SearchScreen(navController: NavController) {
         Box(
             contentAlignment = Alignment.TopEnd
         ) {
-            Button(
-                onClick = { navController.navigate("home")
-                    Toast.makeText(context,
-                    "Ranger will alert you when the item is found.",
-                    Toast.LENGTH_SHORT).show()
-                          },
-                modifier = Modifier
-                    .height(70.dp)
-                    .fillMaxWidth()
-                    .border(
-                        BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    contentColor = MaterialTheme.colorScheme.onBackground
-                )
-            ) {
-                Text(
-                    "Find Item",
-                    fontSize = 34.sp,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+            val mainActivity = context as MainActivity
+            if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
+                Button(
+                    onClick = {
+                        runRanger(navController, context)
+                        navController.navigate("home")
+                    },
+                    modifier = Modifier
+                        .height(70.dp)
+                        .fillMaxWidth()
+                        .border(
+                            BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    )
+                ) {
+                    Text(
+                        "Find Item",
+                        fontSize = 34.sp,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
+            else{
+                Button(
+                    onClick = {
+                        runRanger(navController, context)
+                    },
+                    modifier = Modifier
+                        .height(70.dp)
+                        .fillMaxWidth()
+                        .border(
+                            BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    )
+                ) {
+                    Text(
+                        "Connect to Robot",
+                        fontSize = 34.sp,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun runRanger(navController: NavController, context: Context) {
+    Log.i("DemoScreen", "Start demooo")
+    val mainActivity = context as MainActivity
+
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(context,
+            "Please wait while connecting.",
+            Toast.LENGTH_SHORT).show()
+        mainActivity.requestBluetoothPermission()
+        Log.i("DemoScreen", "Start demooo0")
+
+        return
+    }
+
+    if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
+        Log.i("DemoScreen", "Start demooo1")
+        mainActivity.bluetoothService?.startDemo()
+
+    } else {
+        mainActivity.registerReceiverSafely()
+        Log.i("DemoScreen", "Start demooo2")
+
+        val s = mainActivity.bluetoothService
+        if (s == null) {
+            Toast.makeText(context,
+                "Please try again",
+                Toast.LENGTH_SHORT).show()
+            Log.w("DemoScreen", "can't connect, no service")
+        } else {
+            Toast.makeText(context,
+                "Please wait while connecting.",
+                Toast.LENGTH_SHORT).show()
+            s.connectForDemo()
         }
     }
 }

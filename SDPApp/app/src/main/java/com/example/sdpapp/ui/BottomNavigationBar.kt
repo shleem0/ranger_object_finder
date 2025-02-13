@@ -42,7 +42,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
         NavigationItem("Home", "home", Icons.Filled.Home),
         NavigationItem("Photos", "photos", Icons.Filled.Face),
         NavigationItem("Settings", "settings", Icons.Filled.Settings),
-        NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
+        //NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
     )
 
     Scaffold(

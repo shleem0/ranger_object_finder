@@ -47,7 +47,7 @@ fun DemoScreen(navController: NavController){
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
                 Button(
-                    onClick = { runDemo(navController, context) },
+                    onClick = { runRanger(navController, context) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(500.dp)
@@ -69,7 +69,7 @@ fun DemoScreen(navController: NavController){
             }
             else{
                 Button(
-                    onClick = { runDemo(navController, context)
+                    onClick = { runRanger(navController, context)
                               },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,44 +90,6 @@ fun DemoScreen(navController: NavController){
                     )
                 }
             }
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun runDemo(navController: NavController, context: Context) {
-    Log.i("DemoScreen", "Start demooo")
-    val mainActivity = context as MainActivity
-
-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-        Toast.makeText(context,
-            "Please wait to connect",
-            Toast.LENGTH_SHORT).show()
-        mainActivity.requestBluetoothPermission()
-        Log.i("DemoScreen", "Start demooo0")
-
-        return
-    }
-
-    if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-        Log.i("DemoScreen", "Start demooo1")
-        mainActivity.bluetoothService?.startDemo()
-
-    } else {
-        mainActivity.registerReceiverSafely()
-        Log.i("DemoScreen", "Start demooo2")
-
-        val s = mainActivity.bluetoothService
-        if (s == null) {
-            Toast.makeText(context,
-                "Please try again",
-                Toast.LENGTH_SHORT).show()
-            Log.w("DemoScreen", "can't connect, no service")
-        } else {
-            Toast.makeText(context,
-                "Please wait to connect",
-                Toast.LENGTH_SHORT).show()
-            s.connectForDemo()
         }
     }
 }
