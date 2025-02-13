@@ -69,20 +69,12 @@ import java.io.IOException
 fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
     val itemNames = getItemNames(context)
-    var showDeleteButton by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(20.dp)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = {
-                        showDeleteButton = false
-                    }
-                )
-            }
     ) {
         Image(
             painter = painterResource(id = R.drawable.rangergreenletters),
@@ -93,7 +85,9 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.padding(vertical = 15.dp))
 
         Box(
-            modifier = Modifier.fillMaxWidth().height(90.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(90.dp),
             contentAlignment = Alignment.BottomCenter
         ) {
             Button(
@@ -130,7 +124,9 @@ fun HomeScreen(navController: NavController) {
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 10.dp).weight(1f)
+                modifier = Modifier
+                    .padding(vertical = 10.dp)
+                    .weight(1f)
             )
             Button(
                 onClick = { navController.navigate("addItem") }
@@ -164,14 +160,6 @@ fun HomeScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(
-                            modifier = Modifier
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onLongPress = {
-                                            showDeleteButton = true
-                                        }
-                                    )
-                                },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
@@ -186,28 +174,13 @@ fun HomeScreen(navController: NavController) {
                                 color = MaterialTheme.colorScheme.surfaceBright
                             )
                         }
-
-                        if (showDeleteButton) {
-                            Button(
-                                onClick = {
-                                    navController.navigate("deleteItem/$itemName")
-                                    showDeleteButton = false
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-                            ) {
-                                Text("Delete", color = Color.White)
-                            }
-                        } else {
-                            IconButton(
-                                onClick = { navController.navigate("camera/$itemName") }
-                            ) {
-                                Icon(
-                                    Icons.Filled.Add,
-                                    contentDescription = "Add " + itemName + " Photos",
-                                    modifier = Modifier.size(35.dp),
-                                    contentColorFor(MaterialTheme.colorScheme.surfaceBright)
-                                )
-                            }
+                        Button(
+                            onClick = {
+                                navController.navigate("deleteItem/$itemName")
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                        ) {
+                            Text("Delete", color = Color.White)
                         }
                     }
                 }

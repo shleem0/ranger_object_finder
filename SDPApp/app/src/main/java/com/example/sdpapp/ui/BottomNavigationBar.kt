@@ -86,7 +86,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
             modifier = Modifier.padding(paddingValues)
         ) {
             composable("home") { HomeScreen(navController) }
-            composable("photos") { PhotosScreen() }
+            composable("photos") { PhotosScreen(navController) }
             composable("settings") { SettingsScreen(navController) }
             composable("about") { AboutSettingsScreen(navController) }
             composable("display") { DisplaySettingsScreen(navController, themeViewModel) }

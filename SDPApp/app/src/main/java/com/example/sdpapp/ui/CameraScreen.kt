@@ -233,7 +233,7 @@ fun CameraPreview(navController: NavController, name: String) {
                         }
                         Button(
                             onClick = {
-                                navController.navigate("home")
+                                navController.navigate("photos")
                             },
                             modifier = Modifier.padding(8.dp),
                             colors = ButtonColors(

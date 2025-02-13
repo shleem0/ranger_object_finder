@@ -84,32 +84,6 @@ fun DisplaySettingsScreen(navController: NavController, themeViewModel: ThemeVie
                     )
                 )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween
-            ) {
-                Text(
-                    text = "Other Setting",
-                    fontSize = 25.sp,
-                    color = MaterialTheme.colorScheme.surfaceBright
-                )
-                var checked by remember { mutableStateOf(true) }
-
-                Switch(
-                    checked = checked,
-                    onCheckedChange = {
-                        checked = it
-                    },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.onBackground,
-                        checkedTrackColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
-                    )
-                )
-            }
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
