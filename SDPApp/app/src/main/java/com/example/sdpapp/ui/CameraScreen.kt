@@ -16,6 +16,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -138,13 +140,26 @@ fun CameraPreview(navController: NavController, name: String) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.padding(top = 30.dp))
-        Text(
-            text = "Make sure the area is free of clutter and only shows the item.",
-            color = MaterialTheme.colorScheme.secondary,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(horizontal = 12.dp),
-            lineHeight = 22.sp
-        )
+        if (capturedImageUri == null) {
+            Text(
+                text = "Make sure the area is free of clutter and only shows the item.",
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = 21.sp,
+                modifier = Modifier.padding(6.dp),
+                lineHeight = 22.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+        else {
+            Text(
+                "All images are saved locally on your phone.",
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = 21.sp,
+                modifier = Modifier.padding(6.dp),
+                lineHeight = 22.sp,
+                textAlign = TextAlign.Center
+            )
+        }
         Spacer(modifier = Modifier.padding(bottom = 10.dp))
         LaunchedEffect(Unit) {
             val executor = ContextCompat.getMainExecutor(context)
@@ -173,19 +188,25 @@ fun CameraPreview(navController: NavController, name: String) {
         }
 
         Box(
-            modifier = Modifier.fillMaxWidth().height(600.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(600.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             if (capturedImageUri == null) {
                 AndroidView(
                     factory = { previewView },
-                    modifier = Modifier.fillMaxWidth().height(500.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(500.dp)
                 )
             } else {
                 Image(
                     painter = rememberAsyncImagePainter(capturedImageUri),
                     contentDescription = "Captured photo",
-                    modifier = Modifier.fillMaxWidth().height(450.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(450.dp)
                 )
             }
 
@@ -211,14 +232,16 @@ fun CameraPreview(navController: NavController, name: String) {
                         Text("Capture Image")
                     }
                 } else {
-                    Row(modifier = Modifier.padding(16.dp)) {
+                    Row(modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                        ) {
                         Button(
                             onClick = {
                                 capturedFile?.delete()
                                 capturedImageUri = null
                                 capturedFile = null
                             },
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(8.dp).align(Alignment.Top),
                             colors = ButtonColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -235,7 +258,7 @@ fun CameraPreview(navController: NavController, name: String) {
                             onClick = {
                                 navController.navigate("photos")
                             },
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(8.dp).align(Alignment.Bottom),
                             colors = ButtonColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
