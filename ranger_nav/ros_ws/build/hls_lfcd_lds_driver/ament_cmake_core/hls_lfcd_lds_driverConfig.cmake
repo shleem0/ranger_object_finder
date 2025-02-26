@@ -16,7 +16,7 @@ set(_hls_lfcd_lds_driver_CONFIG_INCLUDED TRUE)
 
 # output package information
 if(NOT hls_lfcd_lds_driver_FIND_QUIETLY)
-  message(STATUS "Found hls_lfcd_lds_driver: 2.0.5 (${hls_lfcd_lds_driver_DIR})")
+  message(STATUS "Found hls_lfcd_lds_driver: 2.1.0 (${hls_lfcd_lds_driver_DIR})")
 endif()
 
 # warn when using a deprecated package

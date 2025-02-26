@@ -1,6 +1,6 @@
 set(_AMENT_PACKAGE_NAME "hls_lfcd_lds_driver")
-set(hls_lfcd_lds_driver_VERSION "2.0.5")
-set(hls_lfcd_lds_driver_MAINTAINER "Will Son <willson@robotis.com>")
+set(hls_lfcd_lds_driver_VERSION "2.1.0")
+set(hls_lfcd_lds_driver_MAINTAINER "Pyo <pyo@robotis.com>")
 set(hls_lfcd_lds_driver_BUILD_DEPENDS "rclcpp" "sensor_msgs" "libboost-system-dev")
 set(hls_lfcd_lds_driver_BUILDTOOL_DEPENDS "ament_cmake")
 set(hls_lfcd_lds_driver_BUILD_EXPORT_DEPENDS "rclcpp" "sensor_msgs" "libboost-system-dev")

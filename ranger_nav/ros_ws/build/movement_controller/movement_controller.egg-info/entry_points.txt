@@ -1,0 +1,3 @@
+[console_scripts]
+odom_publisher = movement_controller.odom_publisher:main
+
