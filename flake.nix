@@ -61,8 +61,9 @@
       };
       specialArgs = { inherit programsdb base-home; };
     in {
-      nixosConfigurations.sdp = lib.nixosSystem {
-        inherit raspiSystem specialArgs;
+      nixosConfigurations.sdp = lib.nixosSystem rec {
+        inherit specialArgs;
+        system = raspiSystem;
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ./ranger-nixos/sdp.nix
@@ -71,7 +72,7 @@
           {
             # TODO: replace with default package
             environment.systemPackages = [
-              self.outputs.packages.${raspiSystem}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
             ];
           }
         ];
