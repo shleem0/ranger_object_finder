@@ -10,31 +10,36 @@
   outputs = { nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, ... }:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
+        lib = nixpkgs.lib;
+
         pkgs = import nixpkgs {
-          inherit system overlays;
+          inherit system;
+          overlays = [ haskellNix.overlay ];
           inherit (haskellNix) config;
         };
 
-        overlays = [
-          haskellNix.overlay
-          (final: prev: {
-            ranger-daemon = final.haskell-nix.cabalProject' {
-              src = pkgs.lib.fileset.toSource {
-                root = ./.;
-                fileset = ./ranger-daemon;
-              };
-              cabalProject = builtins.readFile ./cabal.project;
-              cabalProjectFreeze = builtins.readFile ./cabal.project.freeze;
-              compiler-nix-name = "ghc8107";
-              shell.tools = {
-                cabal = { };
-                haskell-language-server = {
-                  src = final.haskell-nix.sources."hls-2.2";
-                };
-              };
+        ranger-daemon = pkgs.haskell-nix.cabalProject' {
+          src = lib.fileset.toSource {
+            root = ./.;
+            fileset = ./ranger-daemon;
+          };
+          cabalProject = builtins.readFile ./cabal.project;
+          cabalProjectFreeze = builtins.readFile ./cabal.project.freeze;
+          compiler-nix-name = "ghc8107";
+          shell.tools = {
+            cabal = { };
+            haskell-language-server = {
+              src = pkgs.haskell-nix.sources."hls-2.2";
             };
-          })
-        ];
+          };
+          shell.buildInputs = [
+            (pkgs.writeScriptBin "haskell-language-server-wrapper" ''
+              #!${pkgs.stdenv.shell}
+              exec haskell-language-server "$@"
+            '')
+          ];
+        };
+
         pkgs-ros = import nixpkgs-ros {
           inherit system;
           overlays = [ nix-ros-overlay.overlays.default ];
@@ -45,7 +50,7 @@
           (with rosPackages.humble; buildEnv { paths = [ ros-core ]; })
         ];
 
-        flake = pkgs.ranger-daemon.flake { };
+        flake = ranger-daemon.flake { };
 
       in flake // rec {
         devShells.default = pkgs.mkShell {
