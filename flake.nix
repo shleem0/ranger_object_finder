@@ -1,23 +1,94 @@
 {
   description = "Ranger development flake";
 
-  inputs.haskellNix.url =
-    "github:input-output-hk/haskell.nix?rev=29be2a6f5fec17f7385128eee8d8fac28ca65bfa";
-  inputs.nixpkgs.follows = "haskellNix/nixpkgs-2411";
-  inputs.nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
-  inputs.nixpkgs-ros.follows = "nix-ros-overlay/nixpkgs";
+  inputs = {
+    haskellNix.url =
+      "github:input-output-hk/haskell.nix?rev=29be2a6f5fec17f7385128eee8d8fac28ca65bfa";
 
-  outputs = { nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, ... }:
-    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
-      let
-        lib = nixpkgs.lib;
+    nixpkgs.follows = "haskellNix/nixpkgs-2411";
 
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ haskellNix.overlay ];
-          inherit (haskellNix) config;
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+
+    nixpkgs-ros.follows = "nix-ros-overlay/nixpkgs";
+
+    home-manager = {
+      url = "home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-user.url = "github:ryndubei/nixos-user";
+    nixos-user.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-user.inputs.home-manager.follows = "home-manager";
+
+    fps.url = "github:wamserma/flake-programs-sqlite";
+    fps.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
+    , nixos-user, home-manager, nixos-hardware, deploy-rs, ... }:
+    let
+      system = "aarch64-linux";
+      lib = nixpkgs.lib;
+      programsdb = fps.packages.${system}.programs-sqlite;
+      hm = home-manager.nixosModules.home-manager;
+      raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
+      base-home = nixos-user.nixosModules.cli;
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ haskellNix.overlay ];
+        inherit (haskellNix) config;
+      };
+      # Use nixpkgs binary cache for deploy-rs
+      deployPkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          deploy-rs.overlay
+          (self: super: {
+            deploy-rs = {
+              inherit (pkgs) deploy-rs;
+              lib = super.deploy-rs.lib;
+            };
+          })
+        ];
+      };
+      specialArgs = { inherit programsdb base-home; };
+    in {
+      nixosConfigurations.sdp = lib.nixosSystem {
+        inherit system specialArgs;
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          ./ranger-nixos/sdp.nix
+          raspi-3
+          hm
+          {
+            # TODO: replace with default package
+            environment.systemPackages = [
+              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+            ];
+          }
+        ];
+      };
+
+      deploy.nodes.sdp = {
+        hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
+        profiles.system = {
+          sshUser = "vasily";
+          user = "root";
+          path = deployPkgs.deploy-rs.lib.activate.nixos
+            self.nixosConfigurations.sdp;
         };
-
+      };
+    }
+    # Packages and shells
+    // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+      let
         ranger-daemon = pkgs.haskell-nix.cabalProject' {
           src = lib.fileset.toSource {
             root = ./.;
@@ -57,7 +128,9 @@
           name = "ROS + daemon combined shell";
           inputsFrom = [ devShells.daemon devShells.ros ];
         };
+
         devShells.daemon = flake.devShells.default;
+
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
           buildInputs = ros-packages;
