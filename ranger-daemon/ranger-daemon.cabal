@@ -10,77 +10,24 @@ maintainer:         114586905+ryndubei@users.noreply.github.com
 -- copyright:
 category:           System
 build-type:         Simple
-extra-doc-files:    CHANGELOG.md
-extra-source-files: cbits/*.c
-                  , cbits/*.h
-                  , test/simpleble/cbits/*.c
-                  , test/simpleble/cbits/*.h
 
 common warnings
     ghc-options: -Wall
 
-library simpleble-raw-bindings
-    import:           warnings
-    exposed-modules:  Ranger.Bluetooth.SimpleBLE.Raw
-                    , Ranger.Bluetooth.SimpleBLE.Raw.Types
-    -- other-modules:
-    -- other-extensions:
-    build-depends:   base
-                   , template-haskell
-                   , text
-                   , vector
-    pkgconfig-depends: simpleble, dbus-1
-    extra-libraries: simpleble-c stdc++
-    include-dirs: cbits
-    c-sources: cbits/simpleble_wrappers.c
-    hs-source-dirs: src-raw-bindings
-    default-language: GHC2021
-
 library
     import:           warnings
     exposed-modules:  Ranger.Bluetooth
-                    , Ranger.Bluetooth.SimpleBLE
     -- other-modules:
     -- other-extensions:
-    build-depends:   base ^>=4.18.2.1
-                   , ranger-daemon:simpleble-raw-bindings
-                   , async
-                   , bytestring
-                   , conduit
-                   , containers
-                   , stm
-                   , text ^>= 2.1.2
-                   , vector
+    build-depends:   base ^>=4.14.0.0
+                   , ble
     hs-source-dirs:   src
-    default-language: GHC2021
 
 executable ranger-daemon
     import:           warnings
     main-is:          Main.hs
     -- other-modules:
     -- other-extensions:
-    build-depends:   base ^>=4.18.2.1
+    build-depends:   base ^>=4.14.0.0
                    , ranger-daemon
     hs-source-dirs:   app
-    default-language: GHC2021
-
-
-test-suite simpleble-test
-    import: warnings
-    build-depends: base
-    main-is: Main.hs
-    hs-source-dirs: test/simpleble
-    include-dirs: test/simpleble/cbits
-    pkgconfig-depends: simpleble, dbus-1
-    extra-libraries: simpleble-c stdc++
-    c-sources: test/simpleble/cbits/simpleble_example.c
-
-test-suite ranger-daemon-test
-    import: warnings
-    build-depends: base
-                 , ranger-daemon
-                 , tasty
-                 , tasty-hunit-compat
-                 , hspec-expectations
-    main-is: Main.hs
-    hs-source-dirs: test/ranger-daemon
