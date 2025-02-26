@@ -34,25 +34,26 @@
   outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
     , nixos-user, home-manager, nixos-hardware, deploy-rs, ... }:
     let
-      system = "aarch64-linux";
+      raspiSystem = "aarch64-linux";
       lib = nixpkgs.lib;
-      programsdb = fps.packages.${system}.programs-sqlite;
+      programsdb = fps.packages.${raspiSystem}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
       raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ haskellNix.overlay ];
-        inherit (haskellNix) config;
-      };
+      pkgs-hs = s:
+        import nixpkgs {
+          system = s;
+          overlays = [ haskellNix.overlay ];
+          inherit (haskellNix) config;
+        };
       # Use nixpkgs binary cache for deploy-rs
       deployPkgs = import nixpkgs {
-        inherit system;
+        inherit raspiSystem;
         overlays = [
           deploy-rs.overlay
           (self: super: {
             deploy-rs = {
-              inherit (pkgs) deploy-rs;
+              inherit (pkgs-hs raspiSystem) deploy-rs;
               lib = super.deploy-rs.lib;
             };
           })
@@ -61,7 +62,7 @@
       specialArgs = { inherit programsdb base-home; };
     in {
       nixosConfigurations.sdp = lib.nixosSystem {
-        inherit system specialArgs;
+        inherit raspiSystem specialArgs;
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ./ranger-nixos/sdp.nix
@@ -70,7 +71,7 @@
           {
             # TODO: replace with default package
             environment.systemPackages = [
-              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${raspiSystem}."ranger-daemon:exe:ranger-daemon"
             ];
           }
         ];
@@ -89,6 +90,7 @@
     # Packages and shells
     // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
+        pkgs = pkgs-hs system;
         ranger-daemon = pkgs.haskell-nix.cabalProject' {
           src = lib.fileset.toSource {
             root = ./.;
