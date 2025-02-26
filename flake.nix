@@ -120,7 +120,8 @@
 
         ros-packages = with pkgs-ros; [
           colcon
-          (with rosPackages.humble; buildEnv { paths = [ ros-core ]; })
+          (with rosPackages.humble;
+            buildEnv { paths = [ ros-core slam-toolbox ]; })
         ];
 
         flake = ranger-daemon.flake { };
