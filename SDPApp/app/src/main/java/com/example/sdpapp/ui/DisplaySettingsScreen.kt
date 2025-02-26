@@ -14,6 +14,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,98 +25,75 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.sdpapp.ui.theme.SDPAppTheme
+import com.example.sdpapp.ui.theme.ThemeViewModel
 
 @Composable
-fun DisplaySettingsScreen(navController: NavController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 20.dp)
-    ) {
-        TextButton(
-            onClick = { navController.navigate("settings") }
-        ) {
-            Text(
-                "< back",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(0.dp)
-            )
-        }
-        Text(
-            text = "Display",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.tertiary,
-        )
-        Text(
-            text = "Subsection",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 27.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 10.dp)
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween
-        ) {
-            Text(
-                text = "Dark Mode",
-                fontSize = 25.sp,
-                color = MaterialTheme.colorScheme.surfaceBright
-            )
-            var checked by remember { mutableStateOf(true) }
+fun DisplaySettingsScreen(navController: NavController, themeViewModel: ThemeViewModel) {
+    val darkTheme by themeViewModel.darkTheme.collectAsState()
 
-            Switch(
-                checked = checked,
-                onCheckedChange = {
-                    checked = it
-                },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.onBackground,
-                    checkedTrackColor = MaterialTheme.colorScheme.secondary,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
-                )
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween
-        ) {
-            Text(
-                text = "Other Setting",
-                fontSize = 25.sp,
-                color = MaterialTheme.colorScheme.surfaceBright
-            )
-            var checked by remember { mutableStateOf(true) }
-
-            Switch(
-                checked = checked,
-                onCheckedChange = {
-                    checked = it
-                },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.onBackground,
-                    checkedTrackColor = MaterialTheme.colorScheme.secondary,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
-                )
-            )
-        }
+    SDPAppTheme(darkTheme = darkTheme) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
         ) {
-            HorizontalDivider(
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.surfaceBright,
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp)
+            TextButton(
+                onClick = { navController.navigate("settings") }
+            ) {
+                Text(
+                    "< Back",
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(0.dp)
+                )
+            }
+            Text(
+                text = "Display",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.tertiary,
             )
+            Text(
+                text = "Subsection",
+                color = MaterialTheme.colorScheme.surfaceBright,
+                fontSize = 27.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 10.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                Text(
+                    text = "Dark Mode",
+                    fontSize = 25.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright
+                )
+
+                Switch(
+                    checked = darkTheme,
+                    onCheckedChange = { themeViewModel.toggleTheme() },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.onBackground,
+                        checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
+                    )
+                )
+            }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 8.dp)
+                )
+            }
         }
     }
 }
