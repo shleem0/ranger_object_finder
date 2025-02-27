@@ -32,7 +32,7 @@ class OdometryPublisher(Node):
 
         # Placeholder for motor updates (replace with actual motor data)
         # You should calculate the robot's movement here based on the I2C motor control
-        linear_velocity = 0.05  # m/s (example value)
+        linear_velocity = 0.0 #* motor_speed / 100  m/s (example value)
         angular_velocity = 0.0  # rad/s (example value)
 
         # Update position and orientation based on velocity
