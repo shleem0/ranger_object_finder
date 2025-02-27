@@ -48,7 +48,7 @@
         };
       # Use nixpkgs binary cache for deploy-rs
       deployPkgs = import nixpkgs {
-        inherit raspiSystem;
+        system = raspiSystem;
         overlays = [
           deploy-rs.overlay
           (self: super: {
