@@ -26,7 +26,8 @@ let
     };
   };
 
-  adminUsers = names: builtins.foldl' (acc: n: acc // (adminUser n)) { } names;
+  adminUsers = names:
+    builtins.foldl' (acc: n: { imports = [ acc (adminUser n) ]; }) { } names;
 in {
   networking.hostName = "sdp-ranger";
 
