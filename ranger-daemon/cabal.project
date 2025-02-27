@@ -1,3 +1,6 @@
+packages:
+    ranger-daemon.cabal
+
 source-repository-package
     type: git
     location: https://github.com/ryndubei/ble.git
