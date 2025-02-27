@@ -1,7 +1,6 @@
-dist-newstyle
-cabal.project.local
 .vscode
 .direnv
 .envrc
 target
 *.secret
+nixos.qcow2

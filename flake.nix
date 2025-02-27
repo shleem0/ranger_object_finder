@@ -120,27 +120,7 @@
     // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
-        ranger-daemon = pkgs.haskell-nix.cabalProject' {
-          src = lib.fileset.toSource {
-            root = ./.;
-            fileset = ./ranger-daemon;
-          };
-          cabalProject = builtins.readFile ./cabal.project;
-          cabalProjectFreeze = builtins.readFile ./cabal.project.freeze;
-          compiler-nix-name = "ghc8107";
-          shell.tools = {
-            cabal = { };
-            haskell-language-server = {
-              src = pkgs.haskell-nix.sources."hls-2.2";
-            };
-          };
-          shell.buildInputs = [
-            (pkgs.writeScriptBin "haskell-language-server-wrapper" ''
-              #!${pkgs.stdenv.shell}
-              exec haskell-language-server "$@"
-            '')
-          ];
-        };
+        ranger-flake = (import ranger-daemon/project.nix pkgs).flake { };
 
         pkgs-ros = import nixpkgs-ros {
           inherit system;
@@ -153,20 +133,20 @@
             buildEnv { paths = [ ros-core slam-toolbox ]; })
         ];
 
-        flake = ranger-daemon.flake { };
-
-      in flake // rec {
+      in rec {
         devShells.default = pkgs.mkShell {
           name = "ROS + daemon combined shell";
           inputsFrom = [ devShells.daemon devShells.ros ];
         };
 
-        devShells.daemon = flake.devShells.default;
+        devShells.daemon = ranger-flake.devShells.default;
 
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
           buildInputs = ros-packages;
         };
+
+        packages = ranger-flake.packages;
       });
 
   nixConfig = {
