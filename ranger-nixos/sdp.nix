@@ -26,6 +26,8 @@ let
     };
   };
 in {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   networking.hostName = "sdp-ranger";
 
   time.timeZone = "Europe/London";
