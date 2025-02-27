@@ -27,22 +27,25 @@
     nixos-user.inputs.nixpkgs.follows = "nixpkgs";
     nixos-user.inputs.home-manager.follows = "home-manager";
 
+    nixos-shell.url = "github:Mic92/nixos-shell";
+    nixos-shell.inputs.nixpkgs.follows = "nixpkgs";
+
     fps.url = "github:wamserma/flake-programs-sqlite";
     fps.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
-    , nixos-user, home-manager, nixos-hardware, deploy-rs, ... }:
+    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, ... }:
     let
       raspiSystem = "aarch64-linux";
       lib = nixpkgs.lib;
-      programsdb = fps.packages.${raspiSystem}.programs-sqlite;
+      programsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
       raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
-      pkgs-hs = s:
+      pkgs-hs = system:
         import nixpkgs {
-          system = s;
+          system = system;
           overlays = [ haskellNix.overlay ];
           inherit (haskellNix) config;
         };
@@ -59,11 +62,14 @@
           })
         ];
       };
-      specialArgs = { inherit programsdb base-home; };
+
     in {
       nixosConfigurations.sdp = lib.nixosSystem rec {
-        inherit specialArgs;
         system = raspiSystem;
+        specialArgs = {
+          inherit base-home;
+          programsdb = programsdb system;
+        };
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           ./ranger-nixos/sdp.nix
@@ -71,6 +77,28 @@
           hm
           {
             # TODO: replace with default package
+            environment.systemPackages = [
+              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+            ];
+          }
+        ];
+      };
+
+      # nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
+      nixosConfigurations.sdp-local = lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit base-home;
+          programsdb = programsdb system;
+        };
+        modules = [
+          ./ranger-nixos/sdp.nix
+          hm
+          nixos-shell.nixosModules.nixos-shell
+          {
+            # https://github.com/Mic92/nixos-shell/pull/89
+            # lol
+            networking.hostName = lib.mkForce "nixos";
             environment.systemPackages = [
               self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
             ];
