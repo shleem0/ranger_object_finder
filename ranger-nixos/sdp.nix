@@ -23,6 +23,7 @@ let
       home.username = name;
       home.homeDirectory = "/home/${name}";
       home.stateVersion = "24.05";
+      programs.home-manager.enable = true;
     };
   };
 in {
