@@ -109,7 +109,7 @@
       deploy.nodes.sdp = {
         hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
         profiles.system = {
-          sshUser = "vasily";
+          sshUser = "pi";
           user = "root";
           path = deployPkgs.deploy-rs.lib.activate.nixos
             self.nixosConfigurations.sdp;

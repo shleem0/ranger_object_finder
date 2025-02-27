@@ -25,9 +25,6 @@ let
       home.stateVersion = "24.05";
     };
   };
-
-  adminUsers = names:
-    builtins.foldl' (acc: n: { imports = [ acc (adminUser n) ]; }) { } names;
 in {
   networking.hostName = "sdp-ranger";
 
@@ -81,13 +78,5 @@ in {
 
   system.stateVersion = "24.05";
 
-} // (adminUsers [
-  "sholto"
-  "kian"
-  "remi"
-  "bruce"
-  "eric"
-  "pelayo"
-  "pani"
-  "vasily"
-])
+} // (adminUser "pi")
+
