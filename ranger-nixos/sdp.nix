@@ -80,5 +80,10 @@ in {
 
   system.stateVersion = "24.05";
 
+  nix.settings.trusted-public-keys = [
+    "nixos-desktop:9+ZeV3IhjkppmYbFJPra5HG08ZmknrHIT/Fllz1h6SE="
+    "nixos-laptop:FKieHCOcy6GVQkjgs+aZahQI2HYAYfq5NDtBVMiz8qY="
+  ];
+
 } // (adminUser "pi")
 
