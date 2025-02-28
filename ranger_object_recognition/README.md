@@ -32,7 +32,7 @@ To test the object detection pipeline normally (with the default demo reference/
 python -m object_recognition.integration
 ```
 
-# **Testing with Custom Reference and/or scene images**
+### **Testing with Custom Reference and/or scene images**
 To override the default reference and scene images use the `--ref_dir` and `--scene` arguments to provide a reference image directory and scene image respectively. Example:
 
 ```bash
