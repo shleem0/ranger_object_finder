@@ -59,14 +59,6 @@ connect the Raspberry Pi to the internet, as it fails to connect to mobile
 hotspots whenever it is connected to a monitor over HDMI (no problems when
 disconnected). I have no explanation for why this happens.
 
-### `nixosConfigurations.sdp-no-ranger`
-
-There is no Nix cache for GHC on aarch64 (the CPU architecture used by the
-Raspberry Pi 3), so you have to cross-compile it yourself. This takes a very long
-time. This configuration is identical to `sdp`, except it excludes `ranger-daemon`
-from the configuration. Use this if you need to quickly test something on the
-Raspberry Pi, but do not need `ranger-daemon`.
-
 ### `nixosConfigurations.sdp-local`
 
 Mostly identical to the `sdp` configuration, except excludes some Raspberry
@@ -126,8 +118,7 @@ you lose the SD card)
 Build and extract the image:
 
 ```bash
-# builds the configuration, will take a long time (you will have to build the
-# Linux kernel + GHC on an emulated aarch64)
+# builds the configuration, will take a long time
 nix build .#nixosConfigurations.sdp.config.system.build.sdImage
 
 # this may also take 20-30 minutes

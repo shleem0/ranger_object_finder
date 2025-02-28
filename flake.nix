@@ -38,6 +38,7 @@
     , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, ... }:
     let
       raspiSystem = "aarch64-linux";
+      builderSystem = "x86_64-linux";
       lib = nixpkgs.lib;
       programsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
@@ -66,59 +67,46 @@
     in rec {
       nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
 
-      nixosModules.ranger = { pkgs, ... }: {
-        environment.systemPackages = [
-          # TODO: replace with default package
-          self.outputs.packages.${pkgs.system}."ranger-daemon:exe:ranger-daemon"
-          self.outputs.packages.${pkgs.system}.ranger-object-recognition
-        ];
-      };
-
-      nixosConfigurations.sdp = lib.nixosSystem rec {
+      nixosConfigurations.sdp = lib.nixosSystem {
         system = raspiSystem;
         specialArgs = {
           inherit base-home;
-          programsdb = programsdb system;
-        };
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          nixosModules.sdp
-          nixosModules.ranger
-          raspi-3
-        ];
-      };
-
-      # The aarch64 version of ranger-daemon will take ages (at least 12 hours) to compile
-      # because you will have to compile ghc. This configuration excludes it
-      nixosConfigurations.sdp-no-ranger = lib.nixosSystem rec {
-        system = raspiSystem;
-        specialArgs = {
-          inherit base-home;
-          programsdb = programsdb system;
+          programsdb = programsdb raspiSystem;
         };
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           nixosModules.sdp
           raspi-3
+          ({ pkgs, lib, ... }: {
+            boot.kernelPackages = lib.mkForce
+              pkgs.pkgsCross.aarch64-multiplatform.linuxPackages_rpi3;
+            environment.systemPackages = [
+              self.outputs.packages.${builderSystem}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${raspiSystem}.ranger-object-recognition
+            ];
+          })
         ];
       };
 
       # nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
-      nixosConfigurations.sdp-local = lib.nixosSystem rec {
-        system = "x86_64-linux";
+      nixosConfigurations.sdp-local = lib.nixosSystem {
+        system = builderSystem;
         specialArgs = {
           inherit base-home;
-          programsdb = programsdb system;
+          programsdb = programsdb builderSystem;
         };
         modules = [
           nixosModules.sdp
-          nixosModules.ranger
           hm
           nixos-shell.nixosModules.nixos-shell
           {
             # https://github.com/Mic92/nixos-shell/pull/89
             # lol
             networking.hostName = lib.mkForce "nixos";
+            environment.systemPackages = [
+              self.outputs.packages.${builderSystem}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${builderSystem}.ranger-object-recognition
+            ];
           }
         ];
       };
@@ -144,7 +132,9 @@
       let
         pkgs = pkgs-hs system;
 
-        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake { };
+        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake {
+          crossPlatforms = p: [ p.aarch64-multiplatform ];
+        };
 
         pkgs-ros = import nixpkgs-ros {
           inherit system;
