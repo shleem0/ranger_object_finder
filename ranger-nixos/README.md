@@ -18,7 +18,7 @@ see https://github.com/lopsided98/nix-ros-overlay
 - [Distrobox](https://github.com/89luca89/distrobox) if you need Ubuntu for development
 
 - [Tailscale](https://tailscale.com) to SSH into the Raspberry Pi from any network as
-long as it's connected to the internet.
+  long as it's connected to the internet.
 
 - [fish](https://fishshell.com), a somewhat nicer shell than Bash (has
   syntax highlighting, better autocomplete and command hints) (you can still run
