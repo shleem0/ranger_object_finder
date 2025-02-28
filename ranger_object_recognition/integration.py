@@ -2,7 +2,9 @@
 
 # Main API function for object detection
 
-
+import glob
+import os
+import argparse
 import time
 import concurrent.futures
 import math
@@ -32,7 +34,22 @@ def process_candidate_chunk(candidate_chunk, scene_img, ref_vectors):
 
 def find_item_in_scene():
     start_time = time.time()
-    
+
+    # Parsing command line arguments
+    parser = argparse.ArgumentParser(description="Run object recognition pipeline")
+    parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
+    parser.add_argument("--scene", type=str, help="Path to scene image")
+    args = parser.parse_args()
+
+    # Overriding default paths if provided via command line
+    if args.ref_dir:
+        # Use glob to find all image files in the directory
+        config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
+        if not config.REFERENCE_IMAGE_PATHS:
+            print(f"Warning: No images found in {args.ref_dir}")
+
+    if args.scene:
+        config.SCENE_IMAGE_PATH = args.scene
     # Load TFLite model once to process reference images
     base_interpreter, base_input_details, base_output_details = feature_extractor.load_tflite_model(config.MODEL_TFLITE_PATH)
     

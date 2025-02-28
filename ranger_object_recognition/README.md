@@ -16,8 +16,8 @@ The object recognition system follows these steps:
 - The scene image undergoes selective search to identify candidate regions that may contain the item.
 
 ### **4. Feature Extraction & Matching**  
-- Each candidate region is cropped and passed through the **TFLite model** to generate its feature vector.  
-- **Cosine similarity** is computed between the candidate feature vector and each reference feature vector.  
+- Each candidate region is cropped and passed through the TFLite model to generate its feature vector.  
+- Cosine similarity is computed between the candidate feature vector and each reference feature vector.  
 - If a candidate exceeds a set similarity threshold, it is flagged as a potential match and sent to the app for confirmation.
 
 ### **5. Non-Maximum Suppression (NMS)**  
@@ -26,7 +26,17 @@ The object recognition system follows these steps:
 ---
 
 ## **Testing the Object Recognition System**
-To test the object detection pipeline, run the following command:
+To test the object detection pipeline normally (with the default demo reference/scene images), run the following command:
 
 ```bash
 python -m object_recognition.integration
+```
+
+# **Testing with Custom Reference and/or scene images**
+To override the default reference and scene images use the `--ref_dir` and `--scene` arguments to provide a reference image directory and scene image respectively. Example:
+
+```bash
+python -m object_recognition.integration \
+    --ref_dir "ranger_object_recognition/local_test_stuff/wallet_refs" \
+    --scene "ranger_object_recognition/local_test_stuff/wallet_scene1.jpeg"
+```

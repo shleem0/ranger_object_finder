@@ -8,14 +8,15 @@ MIN_BOX_SIZE = 20
 DOWNSCALE_FACTOR = 0.25
 TOP_K = 5000
 
-# Reference and scene image paths
+# Example reference image paths (used if --ref_dir is not provided)
 REFERENCE_IMAGE_PATHS = [
-    "Keys/keys_ref1.jpeg",
-    "Keys/keys_ref2.jpeg",
-    "Keys/keys_ref3.jpeg",
-    "Keys/keys_ref4.jpeg",
+    "ranger_object_recognition/example images/keys_ref1.jpeg",
+    "ranger_object_recognition/example images/keys_ref2.jpeg",
+    "ranger_object_recognition/example images/keys_ref3.jpeg",
+    "ranger_object_recognition/example images/keys_ref4.jpeg",
 ]
-SCENE_IMAGE_PATH = "Keys/keys_scene2.jpeg"
+# Example scene image path (used if --scene is not provided)  
+SCENE_IMAGE_PATH = "ranger_object_recognition/example images/keys_scene.jpeg"
 
 # Multithreading config
 NUM_WORKERS = 4
