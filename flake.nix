@@ -46,7 +46,7 @@
       pkgs-hs = system:
         import nixpkgs {
           system = system;
-          overlays = [ haskellNix.overlay ];
+          overlays = [ haskellNix.overlay self.outputs.overlay ];
           inherit (haskellNix) config;
         };
       # Use nixpkgs binary cache for deploy-rs
@@ -131,14 +131,17 @@
             self.nixosConfigurations.sdp;
         };
       };
+
+      # Auxiliary packages
+      overlay = final: prev: {
+        ranger-object-recognition =
+          final.callPackage ./ranger_object_recognition/package.nix { };
+      };
     }
-    # Packages and shells
+    # Shells + daemon
     // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
-
-        ranger-object-recognition =
-          pkgs.callPackage ./ranger_object_recognition/package.nix { };
 
         ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake { };
 
@@ -167,7 +170,7 @@
         };
 
         packages = ranger-daemon-flake.packages // {
-          inherit ranger-object-recognition;
+          inherit (pkgs) ranger-object-recognition;
         };
       });
 
