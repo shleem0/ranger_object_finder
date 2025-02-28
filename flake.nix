@@ -63,7 +63,16 @@
         ];
       };
 
-    in {
+    in rec {
+      nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
+
+      nixosModules.ranger = { pkgs, ... }: {
+        environment.systemPackages = [
+          # TODO: replace with default package
+          self.outputs.packages.${pkgs.system}."ranger-daemon:exe:ranger-daemon"
+        ];
+      };
+
       nixosConfigurations.sdp = lib.nixosSystem rec {
         system = raspiSystem;
         specialArgs = {
@@ -72,15 +81,24 @@
         };
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ./ranger-nixos/sdp.nix
+          nixosModules.sdp
+          nixosModules.ranger
           raspi-3
-          hm
-          {
-            # TODO: replace with default package
-            environment.systemPackages = [
-              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
-            ];
-          }
+        ];
+      };
+
+      # The aarch64 version of ranger-daemon will take ages (at least 12 hours) to compile
+      # because you will have to compile ghc. This configuration excludes it
+      nixosConfigurations.sdp-no-ranger = lib.nixosSystem rec {
+        system = raspiSystem;
+        specialArgs = {
+          inherit base-home;
+          programsdb = programsdb system;
+        };
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+          nixosModules.sdp
+          raspi-3
         ];
       };
 
@@ -92,16 +110,14 @@
           programsdb = programsdb system;
         };
         modules = [
-          ./ranger-nixos/sdp.nix
+          nixosModules.sdp
+          nixosModules.ranger
           hm
           nixos-shell.nixosModules.nixos-shell
           {
             # https://github.com/Mic92/nixos-shell/pull/89
             # lol
             networking.hostName = lib.mkForce "nixos";
-            environment.systemPackages = [
-              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
-            ];
           }
         ];
       };
