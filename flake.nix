@@ -70,6 +70,7 @@
         environment.systemPackages = [
           # TODO: replace with default package
           self.outputs.packages.${pkgs.system}."ranger-daemon:exe:ranger-daemon"
+          self.outputs.packages.${pkgs.system}.ranger-object-recognition
         ];
       };
 
