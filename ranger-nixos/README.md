@@ -132,6 +132,8 @@ lsblk
 
 # look at command output...
 
+# IMPORTANT: be absolutely sure that the path actually points to the SD card,
+# this will destroy all data on the disk
 SD_CARD_FILE=/dev/path/to/sd/card # such as /dev/sdb
 ```
 
