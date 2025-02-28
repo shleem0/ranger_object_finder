@@ -136,7 +136,11 @@
     // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
-        ranger-flake = (import ranger-daemon/project.nix pkgs).flake { };
+
+        ranger-object-recognition =
+          pkgs.callPackage ./ranger_object_recognition/package.nix { };
+
+        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake { };
 
         pkgs-ros = import nixpkgs-ros {
           inherit system;
@@ -155,14 +159,16 @@
           inputsFrom = [ devShells.daemon devShells.ros ];
         };
 
-        devShells.daemon = ranger-flake.devShells.default;
+        devShells.daemon = ranger-daemon-flake.devShells.default;
 
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
           buildInputs = ros-packages;
         };
 
-        packages = ranger-flake.packages;
+        packages = ranger-daemon-flake.packages // {
+          inherit ranger-object-recognition;
+        };
       });
 
   nixConfig = {
