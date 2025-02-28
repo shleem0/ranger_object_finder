@@ -13,6 +13,11 @@ Configurations are specified in the top-level `flake.nix`.
 To build ROS packages to run on the Raspberry Pi as part of the configuration,
 see https://github.com/lopsided98/nix-ros-overlay
 
+Password login over SSH is disabled. SSH keys are stored in `sdp.nix`: add your public key
+there to be able to SSH into the Raspberry Pi.
+You can also log in by directly connecting a monitor and keyboard. The username
+is `pi` and the password is `group13`.
+
 ## Notable pre-installed packages
 
 - [Distrobox](https://github.com/89luca89/distrobox) if you need Ubuntu for development
