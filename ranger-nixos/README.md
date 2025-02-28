@@ -31,6 +31,10 @@ is `pi` and the password is `group13`.
 
 - `ranger-daemon` (stub)
 
+- `ranger_find_item_in_scene`: From ranger_object_recognition: see its own README.
+  Script in PATH taking reference images and a scene image, returning object
+  recognition result.
+
 ## Configurations
 
 ### `nixosConfigurations.sdp`
