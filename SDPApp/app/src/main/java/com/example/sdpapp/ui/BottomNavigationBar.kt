@@ -102,7 +102,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
             }
             composable("fullScreenAlert/{alertId}") { backStackEntry ->
                 val alertId = backStackEntry.arguments?.getString("alertId")?.toLong() ?: 0L
-                FullScreenAlertScreen(navController, alertId)
+                FullScreenAlertScreen(navController, alertId, LocalContext.current)
             }
             composable("addItem") { AddItem(navController) }
             composable("deleteItem/{itemName}") { backStackEntry ->
