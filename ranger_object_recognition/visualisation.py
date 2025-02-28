@@ -1,9 +1,12 @@
+# visualisation.py
+
+# Utility function for drawing bounding boxes and visualizing matches on images
 import cv2
 import matplotlib.pyplot as plt
 
-def visualize_matches(scene_img, matches):
+def visualise_matches(scene_img, matches):
     """
-    Draws bounding boxes and similarity scores on the scene image and displays it.
+    Draws bounding boxes and similarity scores on the scene image and displays the result.
     """
     img_to_show = scene_img.copy()
     for (box, sim) in matches:

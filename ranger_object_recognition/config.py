@@ -1,7 +1,21 @@
-DEFAULT_MODEL_PATH = "ranger_object_recognition/mobilenet-v3-tensorflow2-small-075-224-feature-vector-v1"
+# config.py
 
-DEFAULT_SIMILARITY_THRESHOLD = 0.5  # Adjust if needed (may be too high)
-DEFAULT_TARGET_SIZE = (224, 224)
-DEFAULT_MIN_BOX_SIZE = 20
-DEFAULT_DOWNSCALE_FACTOR = 0.25
-DEFAULT_TOP_K = 2500 # Might need to increase
+# Model configuration
+MODEL_TFLITE_PATH = "ranger_object_recognition/feature_extractor_int8.tflite"
+TARGET_SIZE = (224, 224)
+SIMILARITY_THRESHOLD = 0.4 # Might have to adjust
+MIN_BOX_SIZE = 20
+DOWNSCALE_FACTOR = 0.25
+TOP_K = 5000
+
+# Reference and scene image paths
+REFERENCE_IMAGE_PATHS = [
+    "Keys/keys_ref1.jpeg",
+    "Keys/keys_ref2.jpeg",
+    "Keys/keys_ref3.jpeg",
+    "Keys/keys_ref4.jpeg",
+]
+SCENE_IMAGE_PATH = "Keys/keys_scene2.jpeg"
+
+# Multithreading config
+NUM_WORKERS = 4
