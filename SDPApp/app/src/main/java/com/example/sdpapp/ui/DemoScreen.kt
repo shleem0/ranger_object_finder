@@ -53,7 +53,7 @@ fun DemoScreen(navController: NavController){
                         .height(500.dp)
                         .align(Alignment.Center),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red,
+                        containerColor = MaterialTheme.colorScheme.error,
                         contentColor = MaterialTheme.colorScheme.onBackground
                     ),
                 ) {
@@ -76,7 +76,7 @@ fun DemoScreen(navController: NavController){
                         .height(500.dp)
                         .align(Alignment.Center),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red,
+                        containerColor = MaterialTheme.colorScheme.error,
                         contentColor = MaterialTheme.colorScheme.onBackground
                     ),
                 ) {

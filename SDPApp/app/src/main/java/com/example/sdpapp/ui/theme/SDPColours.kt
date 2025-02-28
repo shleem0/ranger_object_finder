@@ -9,4 +9,5 @@ object AppColors {
     val secondaryColor = Color(0xFF1C9446)
     val tertiaryColor = Color(0xFF0D3B1F)
     val tgtgColor = Color(0xFF174D2D)
+    val redColor = Color(0xFFEF6206)
 }

@@ -178,7 +178,9 @@ fun HomeScreen(navController: NavController) {
                             onClick = {
                                 navController.navigate("deleteItem/$itemName")
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
                         ) {
                             Text("Delete", color = Color.White)
                         }
@@ -208,7 +210,7 @@ fun DeleteRow(navController: NavController, itemName: String, context: Context){
                     navController.navigate("home")
                 }
             ) {
-                Text("Delete", color = Color.Red)
+                Text("Delete", color = MaterialTheme.colorScheme.error)
             } },
         dismissButton = { TextButton(onClick = { navController.navigate("home") }) {
                     Text("Cancel") } },
@@ -239,7 +241,7 @@ fun FABWithNotification(notificationCount: Int, navController: NavController) {
                 Box(
                     modifier = Modifier
                         .size(20.dp)
-                        .background(Color.Red, shape = CircleShape)
+                        .background(MaterialTheme.colorScheme.error, shape = CircleShape)
                         .align(Alignment.TopEnd)
                 )
             }
