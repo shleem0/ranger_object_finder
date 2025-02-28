@@ -1,0 +1,15 @@
+# Object Recognition
+
+The object recognition sytem works by:
+
+- **Reference Image Processing**: Pass in multiple reference images of our item at different angles (such as keys) (will be done through app) and these will go into a TFLite model. Model extracts feature vector from each reference image which captures the visual characteristics of the item.
+- **Scene Image Analysis:** Ranger will capture a scene image of the area periodically in search of the item. Scene image will likely be downscaled to reduce processing time
+- **Generate Candidate Regions:** Scene image processed using selective search to generate candidate regions that may contain the item we’re looking for
+- **Feature Extraction for Candidates and Comparison:** Each candidate region is cropped from the scene image and put into the TFLite model to obtain its feature vector. Cosine similarity is computed between each candidate region’s feature vector and each reference feature vector. Candidate above set threshold similarity is considered a potential match, to be sent to the app for confirmation.
+- **Non-Maximum Suppression:** To remove overlapping candidate regions, NMS is applied to merge overlapping boxes into a single most confident detection.
+
+You can test the object detection pipeline with:
+
+```python
+python -m object_recognition.integration
+```
