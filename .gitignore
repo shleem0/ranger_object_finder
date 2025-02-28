@@ -4,3 +4,5 @@
 target
 *.secret
 nixos.qcow2
+result
+*.img
