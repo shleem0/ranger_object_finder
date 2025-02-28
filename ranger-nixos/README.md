@@ -78,8 +78,7 @@ nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
 There are several options to apply this configuration on a Raspberry Pi.
 
 As mentioned above, if you are applying `sdp`: in all cases, the first run will
-take ages, especially if flashing a completely new SD image (be prepared to
-leave it on overnight).
+take ages, especially if flashing a completely new SD image
 
 Subsequent runs will take a lot less time.
 
@@ -156,7 +155,6 @@ Copy this repository somewhere on the SD card, then `cd` into the SD card's
 ```bash
 sudo nixos-enter --root .
 
-# you may have to rebuild GHC here, but not the kernel
 nixos-rebuild switch --flake /path/to/ranger_object_finder#nixosConfigurations.sdp --option sandbox false --option filter-syscalls false
 ```
 

@@ -77,9 +77,9 @@
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           nixosModules.sdp
           raspi-3
-          ({ pkgs, lib, ... }: {
-            boot.kernelPackages = lib.mkForce
-              pkgs.pkgsCross.aarch64-multiplatform.linuxPackages_rpi3;
+          ({ lib, ... }: {
+            # Disable zfs (kernel must be built, takes ages)
+            boot.supportedFilesystems.zfs = lib.mkForce false;
             environment.systemPackages = [
               self.outputs.packages.${builderSystem}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
               self.outputs.packages.${raspiSystem}.ranger-object-recognition
