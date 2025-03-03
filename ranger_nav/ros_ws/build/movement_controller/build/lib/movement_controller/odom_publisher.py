@@ -5,6 +5,7 @@ from geometry_msgs.msg import TransformStamped
 from tf_transformations import quaternion_from_euler
 from math import sin, cos
 from nav_msgs.msg import Odometry
+import os
 
 class OdometryPublisher(Node):
     def __init__(self):
@@ -30,10 +31,28 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
+        f = open("../motor/info.txt", "r")
+
+        '''direction_line = f.readline()
+        directions = direction_line.split(", ")
+        bool_directions = [eval(directions[0]), eval(directions[1])]
+
+        speed_line = f.readline()
+        speeds = speed_line.split(", ")
+        float_speeds = [int(speeds[0]), int(speeds[1])]'''
+
+
         # Placeholder for motor updates (replace with actual motor data)
         # You should calculate the robot's movement here based on the I2C motor control
         linear_velocity = 0.0 #* motor_speed / 100  m/s (example value)
         angular_velocity = 0.0  # rad/s (example value)
+
+        #vel_L = motor_L / 100 * 1.38
+        #vel_R = motor_R / 100 * 1.38
+        #negative if reverse
+
+        #linear_vel = (vel_L + vel_R) / 2
+        #ang_vel = (vel_L - vel_R) / 0.135
 
         # Update position and orientation based on velocity
         self.x += linear_velocity * dt * cos(self.theta)
