@@ -80,6 +80,8 @@ in {
   networking.wireless.enable = true;
   networking.wireless.networks."ranger-hotspot".psk = "12345678";
 
+  hardware.bluetooth.enable = true;
+
   system.stateVersion = "24.05";
 
   nix.settings.trusted-public-keys = [
