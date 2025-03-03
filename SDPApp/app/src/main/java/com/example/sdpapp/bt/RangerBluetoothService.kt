@@ -104,8 +104,8 @@ class RangerBluetoothService : Service() {
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(
                         this@RangerBluetoothService,
-                        "Unable to connect. Make sure device is on and in range",
-                        Toast.LENGTH_SHORT
+                        "Unable to connect. Make sure the robot is turned on and in range",
+                        Toast.LENGTH_LONG
                     ).show()
                 }
                 Log.e(TAG, "GATT connection state change did not return success")
