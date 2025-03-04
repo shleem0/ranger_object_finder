@@ -145,6 +145,10 @@ sudo dd if=result.img of=$SD_CARD_FILE status=progress bs=4M
 
 Once the last command exits, you are done and can eject and remove the SD card.
 
+Note: you will also have to recreate `secrets/wpa_supplicant.conf` with the
+Raspberry Pi's new encryption key (or just use the `ranger-hotspot` fallback):
+see https://github.com/Mic92/sops-nix
+
 ### `nixos-enter`
 
 If you have access to the SD card, but the Raspberry Pi cannot connect to a network.

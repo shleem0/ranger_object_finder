@@ -76,10 +76,6 @@ in {
   environment.etc."programs.sqlite".source = programsdb;
   programs.command-not-found.dbPath = "/etc/programs.sqlite";
 
-  # Automatically connect to hotspots with this name and password
-  networking.wireless.enable = true;
-  networking.wireless.networks."ranger-hotspot".psk = "12345678";
-
   hardware.bluetooth.enable = true;
 
   system.stateVersion = "24.05";

@@ -32,10 +32,14 @@
 
     fps.url = "github:wamserma/flake-programs-sqlite";
     fps.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
-    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, ... }:
+    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, sops-nix
+    , ... }:
     let
       raspiSystem = "aarch64-linux";
       builderSystem = "x86_64-linux";
@@ -44,6 +48,7 @@
       hm = home-manager.nixosModules.home-manager;
       raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
+      sops = sops-nix.nixosModules.sops;
       pkgs-hs = system:
         import nixpkgs {
           system = system;
@@ -77,6 +82,8 @@
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
           nixosModules.sdp
           raspi-3
+          sops
+          ./ranger-nixos/wifi.nix
           ({ lib, ... }: {
             # Disable zfs (kernel must be built, takes ages)
             boot.supportedFilesystems.zfs = lib.mkForce false;

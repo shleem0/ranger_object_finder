@@ -1,0 +1,9 @@
+keys:
+  - &vasily_laptop age1u2sdxwxg0j8748jx26rmwm2len36xe2tl58sxtgtf3k3mspuydgqn8usdq
+  - &server_ranger age195g2lgelyv977qy5568uxpuwj4r6tmyhu0yatz00hvsundg7dgeqqycg6v
+creation_rules:
+  - path_regex: ranger-nixos/secrets/.*$
+    key_groups:
+    - age:
+      - *vasily_laptop
+      - *server_ranger
