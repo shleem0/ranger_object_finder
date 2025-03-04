@@ -9,6 +9,8 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8A0KqO5HOK7kzLjySfwYGWsrhDobeL3d1LcD2kksxP sholtokinghorn@gmail.com"
     # Bruce added 03/02 2025
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCn/N9ssnsQlu7vL26n4KS3Mn8wz1dBI8SzK/1lj8IaeLfbjwu90F3wTTbgUVn7dU5mCyuobc5fHt8jkOEppn9r7sFcpxuKJhU6Y6q232TOEfW67Dw7uIAW4S5z2TTN4tzTCgr+qgbkmEqiDACNRacaixdcJd34oeNGh5JN7nmwj0izUyEmzDzquFxHyajdVDIy8/cYeQtOxqjREvF+0uo/3Xr0MLsfgKZ+o6n9tl1iaiI0jgGeIUkj4io1LsP3xgaYEcsZqCGGYI4tr+r/j6MFhJwUdMBiTydArZecIcKf3zFTIahHegP2sV8r82uXezF6BISgsRPeHsQj2NCgGQSkBHJuM/KRpjCGnbsZgyxUAl0763hYwGCMtskEsUUgLplXrVKwiriRgnY9S92YFuv3xCEnj2TnJD19UlUGpSx/EgBiwM9rgngizdSldGlPjHScvwVuN7L5HObycnPaHZihtQgGUgx0XMR8iS77cm9qlgDepRgJm0iclKmf+F7M4IM= ztq11@ztx"
+    # Kian
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICE9odlcW4pwlwfPu2dfr6JRr4TUp56v2O+9sptC7Q7s kiandehmahdi3@gmail.com"
   ];
 
   adminUser = name: {
