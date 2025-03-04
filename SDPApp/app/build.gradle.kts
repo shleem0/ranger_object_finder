@@ -67,4 +67,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.coil.compose)
     implementation(libs.gson)
+    implementation(libs.androidx.core.ktx.v1150)
 }

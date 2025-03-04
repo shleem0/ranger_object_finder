@@ -11,6 +11,9 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.NotificationManager.*
 import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +29,7 @@ import com.example.sdpapp.ui.BottomNavigationBar
 import com.example.sdpapp.ui.ThemeViewModelFactory
 import com.example.sdpapp.ui.theme.SDPAppTheme
 import com.example.sdpapp.ui.theme.ThemeViewModel
+
 
 class MainActivity : ComponentActivity() {
     var bluetoothService : RangerBluetoothService? = null
@@ -47,6 +51,31 @@ class MainActivity : ComponentActivity() {
             bluetoothService = null
         }
     }
+
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Log.i("MainActivity", "Notification permission granted")
+            } else {
+                Log.i("MainActivity", "Notification permission denied")
+            }
+        }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    Log.i("MainActivity", "Notification permission already granted")
+                }
+                else -> {
+                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
 
     public val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context, intent: Intent) {
@@ -99,6 +128,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bluetoothService?.createNotificationChannel()
         setContent {
             val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext))
             val darkTheme by themeViewModel.darkTheme.collectAsState()
@@ -107,6 +137,9 @@ class MainActivity : ComponentActivity() {
                 BottomNavigationBar(themeViewModel, bluetoothService)
             }
         }
+
+        requestNotificationPermission()
+
         val gattServiceIntent = Intent(this, RangerBluetoothService::class.java)
         Log.d("MainActivity", "Binding service")
         val b = bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)

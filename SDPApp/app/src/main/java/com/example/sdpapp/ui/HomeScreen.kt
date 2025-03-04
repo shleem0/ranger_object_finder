@@ -2,8 +2,11 @@
 
 package com.example.sdpapp.ui
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -58,9 +61,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.sdpapp.MainActivity
 import com.example.sdpapp.R
@@ -99,7 +104,7 @@ fun HomeScreen(navController: NavController) {
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
-                        onClick = { runRanger(navController, context) },
+                        onClick = { connectToRobot(context) },
                         modifier = Modifier
                             .height(100.dp)
                             .width(155.dp)
@@ -130,7 +135,7 @@ fun HomeScreen(navController: NavController) {
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
-                        onClick = { navController.navigate("search") },
+                        onClick = { navController.navigate("home") },
                         modifier = Modifier
                             .height(100.dp)
                             .width(155.dp)
@@ -245,8 +250,15 @@ fun HomeScreen(navController: NavController) {
                             Spacer(modifier = Modifier.width(15.dp))
                             Text(
                                 text = itemName.replaceFirstChar { it.uppercase() },
+                                modifier = Modifier
+                                    .width(160.dp)
+                                    .padding(top = 10.dp),
                                 fontSize = 30.sp,
-                                color = MaterialTheme.colorScheme.surfaceBright
+                                color = MaterialTheme.colorScheme.surfaceBright,
+                                textAlign = TextAlign.Start,
+                                overflow = TextOverflow.Ellipsis,
+                                lineHeight = 30.sp,
+                                maxLines = 1
                             )
                         }
                         Button(
@@ -465,10 +477,27 @@ fun AddItem(navController: NavController){
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    SDPAppTheme {
-        HomeScreen(navController = rememberNavController())
+fun connectToRobot(context: Context){
+    val mainActivity = context as MainActivity
+    val s = mainActivity.bluetoothService
+
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(context,
+            "Please wait while connecting.",
+            Toast.LENGTH_SHORT).show()
+        mainActivity.requestBluetoothPermission()
+
+        return
+    }
+
+    mainActivity.registerReceiverSafely()
+
+    if (s == null) {
+        Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+        Log.w("HomeScreen", "can't connect, no service")
+    }
+    else {
+        Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
+        s.connectForDemo()
     }
 }

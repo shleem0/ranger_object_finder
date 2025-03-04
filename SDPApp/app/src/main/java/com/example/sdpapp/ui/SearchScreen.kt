@@ -254,13 +254,13 @@ fun runRanger(navController: NavController, context: Context) {
             "Please wait while connecting.",
             Toast.LENGTH_SHORT).show()
         mainActivity.requestBluetoothPermission()
-        Log.i("DemoScreen", "Start demooo0")
+        Log.i("DemoScreen", "Start demo0")
 
         return
     }
 
     if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-        Log.i("DemoScreen", "Start demooo1")
+        Log.i("DemoScreen", "Start demoo1")
         mainActivity.bluetoothService?.startDemo()
 
     } else {
