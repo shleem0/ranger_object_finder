@@ -26,17 +26,18 @@ The object recognition system follows these steps:
 ---
 
 ## **Testing the Object Recognition System**
-To test the object detection pipeline normally (with the default demo reference/scene images), run the following command:
+To test the object detection pipeline normally (with the default demo reference/scene images and model path), run the following command:
 
 ```bash
-python -m ranger_object_recognition.integration
+python -m ranger_object_recognition.integration 
 ```
 
-### **Testing with Custom Reference and/or scene images**
-To override the default reference and scene images use the `--ref_dir` and `--scene` arguments to provide a reference image directory and scene image respectively. Example:
+### **Testing with Custom Reference and/or scene images and model path**
+To override the default reference, scene images and model path use the `--ref_dir`, `--scene` and `--model` arguments to provide a reference image directory, scene image and model path respectively. Example:
 
 ```bash
 python -m ranger_object_recognition.integration \
     --ref_dir "ranger_object_recognition/local_test_stuff/wallet_refs" \
-    --scene "ranger_object_recognition/local_test_stuff/wallet_scene1.jpeg"
+    --scene "ranger_object_recognition/local_test_stuff/wallet_scene1.jpeg" \
+    --model "path/to/feature_extractor_int8.tflite"
 ```
