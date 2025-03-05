@@ -7,7 +7,7 @@
 
     nixpkgs.follows = "haskellNix/nixpkgs-2411";
 
-    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
 
     nixpkgs-ros.follows = "nix-ros-overlay/nixpkgs";
 
