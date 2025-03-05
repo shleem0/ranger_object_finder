@@ -53,14 +53,17 @@ fun DisplaySettingsScreen(navController: NavController, themeViewModel: ThemeVie
                 text = "Display",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier.padding(bottom = 10.dp)
             )
-            Text(
-                text = "Subsection",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 27.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 10.dp)
-            )
+
+//            Text(
+//                text = "Subsection",
+//                color = MaterialTheme.colorScheme.surfaceBright,
+//                fontSize = 27.sp,
+//                fontWeight = FontWeight.Bold,
+//                modifier = Modifier.padding(top = 10.dp)
+//            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -84,16 +87,13 @@ fun DisplaySettingsScreen(navController: NavController, themeViewModel: ThemeVie
                     )
                 )
             }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                    modifier = Modifier
-                        .padding(top = 8.dp, bottom = 8.dp)
-                )
-            }
+
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+                modifier = Modifier
+                    .padding(top = 8.dp, bottom = 8.dp)
+            )
         }
     }
 }

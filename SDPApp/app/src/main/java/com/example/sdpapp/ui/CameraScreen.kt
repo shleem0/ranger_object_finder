@@ -10,6 +10,8 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -51,6 +53,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.yalantis.ucrop.UCrop
+import com.yalantis.ucrop.UCrop.REQUEST_CROP
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -234,7 +238,7 @@ fun CameraPreview(navController: NavController, name: String) {
                 } else {
                     Row(modifier = Modifier.padding(16.dp),
                         horizontalArrangement = Arrangement.Absolute.SpaceBetween
-                        ) {
+                    ) {
                         Button(
                             onClick = {
                                 capturedFile?.delete()

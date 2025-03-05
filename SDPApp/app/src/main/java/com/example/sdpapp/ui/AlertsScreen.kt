@@ -84,7 +84,7 @@ fun AlertsScreen(navController: NavController) {
     val parsedDate = dateFormat.parse("2025-02-10")!!
     saveAlertsToSharedPreferences(
         context,
-        listOf(Alert(0, parsedDate, "Example Alert", "Description of example alert that will contain informative information and can be opened in full screen if the text runs over the allocated space like this does.")))
+        listOf(Alert(0, parsedDate, "Example Alert", "Description of example alert that will contain informative information and can be opened in full screen if the text runs over the allocated space like this one does.")))
     val alerts = remember { getAlertsFromSharedPreferences(context) }
 
     Column(
@@ -188,8 +188,7 @@ fun FullScreenAlertScreen(navController: NavController, alertId: Long, context: 
     if (alert != null) {
         Column(
             modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxSize().padding(horizontal = 10.dp)
         ) {
             Row(
                 horizontalArrangement = Arrangement.Absolute.SpaceBetween,
