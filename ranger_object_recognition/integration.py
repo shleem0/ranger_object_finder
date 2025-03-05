@@ -39,9 +39,14 @@ def find_item_in_scene():
     parser = argparse.ArgumentParser(description="Run object recognition pipeline")
     parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
     parser.add_argument("--scene", type=str, help="Path to scene image")
+    parser.add_argument("--model", type=str, help="Path to TFLite model")
     args = parser.parse_args()
 
     # Overriding default paths if provided via command line
+    if args.model:
+        # Load tfLite model
+        config.MODEL_TFLITE_PATH = args.model
+
     if args.ref_dir:
         # Use glob to find all image files in the directory
         config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
@@ -52,6 +57,7 @@ def find_item_in_scene():
         config.SCENE_IMAGE_PATH = args.scene
     # Load TFLite model once to process reference images
     base_interpreter, base_input_details, base_output_details = feature_extractor.load_tflite_model(config.MODEL_TFLITE_PATH)
+    
     
     # Process reference images
     ref_vectors = []
@@ -94,7 +100,7 @@ def find_item_in_scene():
     # visualisation.visualise_matches(scene_img, matches)
     # return matches
     
-    print(matches)
+    print(matches) # Prints list of matches as tuples and simlarities
 
 if __name__ == "__main__":
     find_item_in_scene()

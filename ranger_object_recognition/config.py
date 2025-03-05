@@ -1,7 +1,10 @@
 # config.py
 
+import os
+
 # Model configuration
-MODEL_TFLITE_PATH = "ranger_object_recognition/feature_extractor_int8.tflite"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_TFLITE_PATH = os.path.join(BASE_DIR, "ranger_object_recognition/feature_extractor_int8.tflite") # Default path if not provided via command line
 TARGET_SIZE = (224, 224)
 SIMILARITY_THRESHOLD = 0.4 # Might have to adjust
 MIN_BOX_SIZE = 20
