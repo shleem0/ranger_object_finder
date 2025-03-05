@@ -91,8 +91,10 @@ def find_item_in_scene():
     print(f"Matches after NMS: {len(matches)}")
     print(f"Total processing time: {time.time() - start_time:.2f} seconds")
     
-    visualisation.visualise_matches(scene_img, matches)
-    return matches
+    # visualisation.visualise_matches(scene_img, matches)
+    # return matches
+    
+    print(matches)
 
 if __name__ == "__main__":
     find_item_in_scene()
