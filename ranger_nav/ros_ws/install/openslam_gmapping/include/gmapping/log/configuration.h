@@ -1,17 +1,1 @@
-#ifndef CONFIGURATION_H
-#define CONFIGURATION_H
-
-#include <istream>
-#include <gmapping/sensor/sensor_base/sensor.h>
-
-namespace GMapping {
-
-class Configuration{
-	public:
-		virtual ~Configuration();
-		virtual SensorMap computeSensorMap() const=0;
-};
-
-};
-#endif
-
+/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/slam_gmapping/openslam_gmapping/include/gmapping/log/configuration.h

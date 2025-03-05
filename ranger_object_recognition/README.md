@@ -29,14 +29,14 @@ The object recognition system follows these steps:
 To test the object detection pipeline normally (with the default demo reference/scene images), run the following command:
 
 ```bash
-python -m object_recognition.integration
+python -m ranger_object_recognition.integration
 ```
 
 ### **Testing with Custom Reference and/or scene images**
 To override the default reference and scene images use the `--ref_dir` and `--scene` arguments to provide a reference image directory and scene image respectively. Example:
 
 ```bash
-python -m object_recognition.integration \
+python -m ranger_object_recognition.integration \
     --ref_dir "ranger_object_recognition/local_test_stuff/wallet_refs" \
     --scene "ranger_object_recognition/local_test_stuff/wallet_scene1.jpeg"
 ```

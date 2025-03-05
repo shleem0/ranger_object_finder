@@ -113,8 +113,13 @@ fun AboutSettingsScreen(navController: NavController) {
                         .height(330.dp)
                 ) {
                     Text(
-                        text = "Ranger does searching and finding and picking and retrieving and " +
-                                "returning and looking and analysing and Pani.",
+                        text = "All photos are stored locally on your phone, and are only shared " +
+                                "with the Ranger robot for as long as you keep them. The app " +
+                                "requires bluetooth, and camera permissions to do basic functionalities" +
+                                " and notifications are highly recommend to alert you when the robot" +
+                                " finds the item. If you find any issues with the app, or anything " +
+                                "you feel should be implemented, please contact " +
+                                "the Ranger Team (SDP Group 13) at s2330567@ed.ac.uk.",
                         modifier = Modifier.padding(12.dp),
                         fontSize = 19.sp,
                         color = MaterialTheme.colorScheme.surfaceBright,

@@ -167,7 +167,7 @@ fun SearchScreen(navController: NavController) {
                 if (options.contains(selectedOption)) {
                     Button(
                         onClick = {
-                            runRanger(navController, context)
+                            runRanger(navController, context, selectedOption)
                             navController.navigate("home")
                         },
                         modifier = Modifier
@@ -219,7 +219,7 @@ fun SearchScreen(navController: NavController) {
             else{
                 Button(
                     onClick = {
-                        runRanger(navController, context)
+                        runRanger(navController, context, selectedOption)
                     },
                     modifier = Modifier
                         .height(70.dp)
@@ -245,7 +245,7 @@ fun SearchScreen(navController: NavController) {
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun runRanger(navController: NavController, context: Context) {
+fun runRanger(navController: NavController, context: Context, selectedOption: String) {
     Log.i("DemoScreen", "Start demooo")
     val mainActivity = context as MainActivity
 
@@ -261,7 +261,7 @@ fun runRanger(navController: NavController, context: Context) {
 
     if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
         Log.i("DemoScreen", "Start demoo1")
-        mainActivity.bluetoothService?.startDemo()
+        mainActivity.bluetoothService?.startDemo(selectedOption)
 
     } else {
         mainActivity.registerReceiverSafely()

@@ -212,10 +212,10 @@ class RangerBluetoothService : Service() {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun startDemo(): Boolean {
+    fun startDemo(item: String): Boolean {
         val gatt = bluetoothGatt
         if (gatt == null) {
-            Log.e(TAG, "Can't start demo, no connection")
+            Log.e(TAG, "Can't start Ranger, no connection")
             return false
         }
         val ch = isDemoActiveCharacteristic
@@ -233,7 +233,7 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Can't start demo, lost BLUETOOTH_CONNECT permissions")
             return false
         }
-        val r = gatt.writeCharacteristic(ch, byteArrayOf(1), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+        val r = gatt.writeCharacteristic(ch, item.encodeToByteArray(), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
 
         if (r == BluetoothStatusCodes.SUCCESS) {
             Log.i(TAG, "Demo started")
