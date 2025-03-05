@@ -69,7 +69,17 @@
         ];
       };
 
-    in nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+    in {
+      deploy.nodes.sdp = {
+        hostname = "sdp-ranger";
+        profiles.system = {
+          sshUser = "pi";
+          user = "root";
+          path = deployPkgs.deploy-rs.lib.activate.nixos
+            self.nixosConfigurations.x86_64-linux.sdp;
+        };
+      };
+    } // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
 
@@ -92,16 +102,6 @@
         overlays.default = final: prev: {
           ranger-object-recognition =
             final.callPackage ./ranger_object_recognition/package.nix { };
-        };
-
-        deploy.nodes.sdp = {
-          hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
-          profiles.system = {
-            sshUser = "pi";
-            user = "root";
-            path = deployPkgs.deploy-rs.lib.activate.nixos
-              self.nixosConfigurations.${system}.sdp;
-          };
         };
 
         nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
