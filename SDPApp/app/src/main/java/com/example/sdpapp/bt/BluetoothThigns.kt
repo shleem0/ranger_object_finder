@@ -10,17 +10,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 
-// Bluetooth Service Interface
 interface IRangerBluetoothService {
     suspend fun initialize(): Boolean
     suspend fun connect(address: String): Boolean
     suspend fun disconnect()
-    fun isConnected(): Flow<Boolean> // Connection status as Flow
+    fun isConnected(): Flow<Boolean>
     suspend fun sendItemRequest(item: String): Boolean
     suspend fun receivePhoto(): Flow<ByteArray?>
 }
 
-// Callback Interface replaced with Flow
 interface IBluetoothConnectionManager {
     suspend fun connect(address: String): Boolean
     suspend fun disconnect()
@@ -32,7 +30,6 @@ interface IDataTransferManager {
     fun receivePhoto(): Flow<ByteArray?>
 }
 
-// Actual Service Implementation
 class RangerBluetoothService : Service(), IRangerBluetoothService {
 
     private val connectionManager: IBluetoothConnectionManager = BluetoothConnectionManager()
@@ -69,7 +66,6 @@ class RangerBluetoothService : Service(), IRangerBluetoothService {
     override fun onBind(intent: Intent?): IBinder = LocalBinder()
 }
 
-// Connection Manager using Flow
 class BluetoothConnectionManager : IBluetoothConnectionManager {
     private var bluetoothGatt: BluetoothGatt? = null
     private val _isConnected = MutableStateFlow(false)
@@ -91,12 +87,10 @@ class BluetoothConnectionManager : IBluetoothConnectionManager {
     override fun isConnected(): Flow<Boolean> = _isConnected
 }
 
-// Data Transfer Manager using Flow
 class BluetoothDataTransferManager : IDataTransferManager {
     private val _photoFlow = MutableStateFlow<ByteArray?>(null)
 
     override suspend fun sendItem(item: String): Boolean {
-        // Simulating data send delay
         kotlinx.coroutines.delay(1000)
         return true
     }
@@ -105,7 +99,6 @@ class BluetoothDataTransferManager : IDataTransferManager {
         return _photoFlow
     }
 
-    // Simulating receiving a photo
     suspend fun simulatePhotoReceived(photo: ByteArray) {
         _photoFlow.value = photo
     }
