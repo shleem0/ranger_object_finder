@@ -95,8 +95,7 @@
         ros-packages = pkgs:
           with pkgs; [
             colcon
-            (with rosPackages.humble;
-              buildEnv { paths = [ ros-core slam-toolbox ]; })
+            (with rosPackages.humble; buildEnv { paths = [ ros-core ]; })
           ];
 
       in rec {
