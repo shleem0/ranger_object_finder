@@ -124,7 +124,7 @@
               environment.systemPackages = [
                 self.outputs.packages.${system}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${raspiSystem}.ranger-object-recognition
-              ];
+              ] ++ ros-packages;
             })
           ];
         };
@@ -147,7 +147,7 @@
               environment.systemPackages = [
                 self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${system}.ranger-object-recognition
-              ];
+              ] ++ ros-packages;
             }
           ];
         };
