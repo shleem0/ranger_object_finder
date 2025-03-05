@@ -95,7 +95,7 @@
         ros-packages = pkgs:
           with pkgs; [
             colcon
-            (with rosPackages.humble; buildEnv { paths = [ ros-core ]; })
+            (with rosPackages.jazzy; buildEnv { paths = [ ros-core ]; })
           ];
 
       in rec {
