@@ -6,3 +6,4 @@ target
 nixos.qcow2
 result
 *.img
+ranger_nav/ros_ws/src/slam_gmapping

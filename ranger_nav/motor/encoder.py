@@ -11,15 +11,17 @@ encoder1 = GroveOpticalRotaryEncoder(PIN1)
 encoder2 = GroveOpticalRotaryEncoder(PIN2)
 def track_position():
     while True:
-        position2 = encoder2.position()
-        f2 = open("motor_data2.txt","w")
+        
         position1 = encoder1.position()
         f1 = open("motor_data1.txt","w")
         f1.write(f"{position1}")
         f1.flush()
 
+        position2 = encoder2.position()
+        f2 = open("motor_data2.txt","w")
         f2.write(f"{position2}")
         f2.flush()
+
         print(f"\rMotor1 Position: {position1} degrees and Motor2 Position:{position2} degrees ",file=sys.stderr,end='')
         time.sleep(0.1)
    

@@ -3,9 +3,8 @@ from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
 from geometry_msgs.msg import TransformStamped
 from tf_transformations import quaternion_from_euler
-from math import sin, cos
+from math import sin, cos, pi
 from nav_msgs.msg import Odometry
-import os
 
 class OdometryPublisher(Node):
     def __init__(self):
@@ -21,6 +20,10 @@ class OdometryPublisher(Node):
         self.x = 0.0
         self.y = 0.0
         self.theta = 0.0
+
+        self.prev_motor_pos1 = 0.0
+        self.prev_motor_pos2 = 0.0
+
         self.last_time = self.get_clock().now()
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
@@ -31,36 +34,32 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
-        f = open("../motor/info.txt", "r")
+        f1 = open("../motor/motor_data1.txt", "r")
+        f2 = open("../motor/motor_data2.txt", "r")
 
-        '''direction_line = f.readline()
-        directions = direction_line.split(", ")
-        bool_directions = [eval(directions[0]), eval(directions[1])]
+        motor_pos1 = float(f1.read())
+        motor_pos2 = float(f2.read())
+        angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
+        angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
-        speed_line = f.readline()
-        speeds = speed_line.split(", ")
-        float_speeds = [int(speeds[0]), int(speeds[1])]'''
+        vel1 = 0.08 * angle_dif1 / 0.1
+        vel2 = 0.08 * angle_dif2 / 0.1
 
-
-        # Placeholder for motor updates (replace with actual motor data)
-        # You should calculate the robot's movement here based on the I2C motor control
-        linear_velocity = 0.0 #* motor_speed / 100  m/s (example value)
-        angular_velocity = 0.0  # rad/s (example value)
-
-        #vel_L = motor_L / 100 * 1.38
-        #vel_R = motor_R / 100 * 1.38
-        #negative if reverse
-
-        #linear_vel = (vel_L + vel_R) / 2
-        #ang_vel = (vel_L - vel_R) / 0.135
+        linear_velocity = (vel1 + vel2) / 2 #m/s (example value)
+        angular_velocity = (vel1 - vel2) / 0.135  # rad/s (example value)
 
         # Update position and orientation based on velocity
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
         self.theta += angular_velocity * dt
 
+        print("x:", self.x,", y:", self.y, ", angle:", self.theta)
+
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+
+        self.prev_motor_pos1 = motor_pos1
+        self.prev_motor_pos2 = motor_pos2
 
         # Publish the TF transform from odom to base_link
         t_odom_base = TransformStamped()
@@ -100,10 +99,9 @@ class OdometryPublisher(Node):
         t_base_laser.header.frame_id = "base_link"
         t_base_laser.child_frame_id = "laser"
         
-        # Assuming the laser sensor is positioned 1 meter ahead of the robot in the x direction
-        t_base_laser.transform.translation.x = 1.0  # 1 meter ahead of the robot
+        t_base_laser.transform.translation.x = 0.0  # 1 meter ahead of the robot
         t_base_laser.transform.translation.y = 0.0  # Same height
-        t_base_laser.transform.translation.z = 0.5  # Height of laser from ground (adjust as needed)
+        t_base_laser.transform.translation.z = 13.5  # Height of laser from ground (adjust as needed)
 
         # Assuming the laser is aligned with the robot (no rotation in this example)
         t_base_laser.transform.rotation.x = 0.0
