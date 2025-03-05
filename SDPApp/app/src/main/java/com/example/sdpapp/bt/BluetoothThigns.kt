@@ -6,121 +6,107 @@ import android.bluetooth.BluetoothGatt
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 
+// Bluetooth Service Interface
 interface IRangerBluetoothService {
-    fun initialize(): Boolean
-    fun connect(address: String): Boolean
-    fun disconnect()
-    fun isConnected(): Boolean
-    fun sendItemRequest(item: String): Boolean
-    fun receivePhoto(): ByteArray?
-    fun registerCallback(callback: RangerBluetoothCallback)
-    fun unregisterCallback(callback: RangerBluetoothCallback)
+    suspend fun initialize(): Boolean
+    suspend fun connect(address: String): Boolean
+    suspend fun disconnect()
+    fun isConnected(): Flow<Boolean> // Connection status as Flow
+    suspend fun sendItemRequest(item: String): Boolean
+    suspend fun receivePhoto(): Flow<ByteArray?>
 }
 
-interface RangerBluetoothCallback {
-    fun onConnected()
-    fun onDisconnected()
-    fun onSearchStarted()
-    fun onSearchCompleted(photo: ByteArray)
-    fun onError(errorMessage: String)
-}
-
+// Callback Interface replaced with Flow
 interface IBluetoothConnectionManager {
-    fun connect(address: String): Boolean
-    fun disconnect()
-    fun isConnected(): Boolean
-    fun maintainConnection()
+    suspend fun connect(address: String): Boolean
+    suspend fun disconnect()
+    fun isConnected(): Flow<Boolean>
 }
 
 interface IDataTransferManager {
-    fun sendItem(item: String): Boolean
-    fun receivePhoto(): ByteArray?
+    suspend fun sendItem(item: String): Boolean
+    fun receivePhoto(): Flow<ByteArray?>
 }
 
-class RangerBluetoothService1 : Service(), IRangerBluetoothService {
+// Actual Service Implementation
+class RangerBluetoothService : Service(), IRangerBluetoothService {
 
     private val connectionManager: IBluetoothConnectionManager = BluetoothConnectionManager()
     private val dataTransferManager: IDataTransferManager = BluetoothDataTransferManager()
-    private val callbacks = mutableListOf<RangerBluetoothCallback>()
 
-    override fun initialize(): Boolean {
-        return connectionManager.isConnected()
+    override suspend fun initialize(): Boolean {
+        return connectionManager.isConnected().first()
     }
 
-    override fun connect(address: String): Boolean {
-        val result = connectionManager.connect(address)
-        if (result) {
-            callbacks.forEach { it.onConnected() }
-        }
-        return result
+    override suspend fun connect(address: String): Boolean {
+        return connectionManager.connect(address)
     }
 
-    override fun disconnect() {
+    override suspend fun disconnect() {
         connectionManager.disconnect()
-        callbacks.forEach { it.onDisconnected() }
     }
 
-    override fun isConnected(): Boolean {
+    override fun isConnected(): Flow<Boolean> {
         return connectionManager.isConnected()
     }
 
-    override fun sendItemRequest(item: String): Boolean {
+    override suspend fun sendItemRequest(item: String): Boolean {
         return dataTransferManager.sendItem(item)
     }
 
-    override fun receivePhoto(): ByteArray? {
+    override suspend fun receivePhoto(): Flow<ByteArray?> {
         return dataTransferManager.receivePhoto()
     }
 
-    override fun registerCallback(callback: RangerBluetoothCallback) {
-        callbacks.add(callback)
-    }
-
-    override fun unregisterCallback(callback: RangerBluetoothCallback) {
-        callbacks.remove(callback)
-    }
-
     inner class LocalBinder : Binder() {
-        fun getService(): RangerBluetoothService1 = this@RangerBluetoothService1
+        fun getService(): RangerBluetoothService = this@RangerBluetoothService
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        TODO("")
-    }
+    override fun onBind(intent: Intent?): IBinder = LocalBinder()
 }
 
+// Connection Manager using Flow
 class BluetoothConnectionManager : IBluetoothConnectionManager {
     private var bluetoothGatt: BluetoothGatt? = null
+    private val _isConnected = MutableStateFlow(false)
 
-    override fun connect(address: String): Boolean {
-        // TODO
+    override suspend fun connect(address: String): Boolean {
+        // Simulating connection delay
+        kotlinx.coroutines.delay(2000)
+        _isConnected.value = true
         return true
     }
 
     @SuppressLint("MissingPermission")
-    override fun disconnect() {
+    override suspend fun disconnect() {
         bluetoothGatt?.close()
         bluetoothGatt = null
+        _isConnected.value = false
     }
 
-    override fun isConnected(): Boolean {
-        return bluetoothGatt != null
-    }
-
-    override fun maintainConnection() {
-        // TODO
-    }
+    override fun isConnected(): Flow<Boolean> = _isConnected
 }
 
+// Data Transfer Manager using Flow
 class BluetoothDataTransferManager : IDataTransferManager {
-    override fun sendItem(item: String): Boolean {
-        // TODO
+    private val _photoFlow = MutableStateFlow<ByteArray?>(null)
+
+    override suspend fun sendItem(item: String): Boolean {
+        // Simulating data send delay
+        kotlinx.coroutines.delay(1000)
         return true
     }
 
-    override fun receivePhoto(): ByteArray? {
-        // TODO
-        return null
+    override fun receivePhoto(): Flow<ByteArray?> {
+        return _photoFlow
+    }
+
+    // Simulating receiving a photo
+    suspend fun simulatePhotoReceived(photo: ByteArray) {
+        _photoFlow.value = photo
     }
 }
