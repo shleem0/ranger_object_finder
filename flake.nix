@@ -42,7 +42,6 @@
     , ... }:
     let
       raspiSystem = "aarch64-linux";
-      builderSystem = "x86_64-linux";
       lib = nixpkgs.lib;
       programsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
@@ -52,7 +51,8 @@
       pkgs-hs = system:
         import nixpkgs {
           system = system;
-          overlays = [ haskellNix.overlay self.outputs.overlay ];
+          overlays =
+            [ haskellNix.overlay self.outputs.overlays.${system}.default ];
           inherit (haskellNix) config;
         };
       # Use nixpkgs binary cache for deploy-rs
@@ -69,73 +69,7 @@
         ];
       };
 
-    in rec {
-      nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
-
-      nixosConfigurations.sdp = lib.nixosSystem {
-        system = raspiSystem;
-        specialArgs = {
-          inherit base-home;
-          programsdb = programsdb raspiSystem;
-        };
-        modules = [
-          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          nixosModules.sdp
-          raspi-3
-          sops
-          ./ranger-nixos/wifi.nix
-          ({ lib, ... }: {
-            # Disable zfs (kernel must be built, takes ages)
-            boot.supportedFilesystems.zfs = lib.mkForce false;
-            environment.systemPackages = [
-              self.outputs.packages.${builderSystem}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
-              self.outputs.packages.${raspiSystem}.ranger-object-recognition
-            ];
-          })
-        ];
-      };
-
-      # nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
-      nixosConfigurations.sdp-local = lib.nixosSystem {
-        system = builderSystem;
-        specialArgs = {
-          inherit base-home;
-          programsdb = programsdb builderSystem;
-        };
-        modules = [
-          nixosModules.sdp
-          hm
-          nixos-shell.nixosModules.nixos-shell
-          {
-            # https://github.com/Mic92/nixos-shell/pull/89
-            # lol
-            networking.hostName = lib.mkForce "nixos";
-            environment.systemPackages = [
-              self.outputs.packages.${builderSystem}."ranger-daemon:exe:ranger-daemon"
-              self.outputs.packages.${builderSystem}.ranger-object-recognition
-            ];
-          }
-        ];
-      };
-
-      deploy.nodes.sdp = {
-        hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
-        profiles.system = {
-          sshUser = "pi";
-          user = "root";
-          path = deployPkgs.deploy-rs.lib.activate.nixos
-            self.nixosConfigurations.sdp;
-        };
-      };
-
-      # Auxiliary packages
-      overlay = final: prev: {
-        ranger-object-recognition =
-          final.callPackage ./ranger_object_recognition/package.nix { };
-      };
-    }
-    # Shells + daemon
-    // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+    in nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
 
@@ -155,6 +89,69 @@
         ];
 
       in rec {
+        overlays.default = final: prev: {
+          ranger-object-recognition =
+            final.callPackage ./ranger_object_recognition/package.nix { };
+        };
+
+        deploy.nodes.sdp = {
+          hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
+          profiles.system = {
+            sshUser = "pi";
+            user = "root";
+            path = deployPkgs.deploy-rs.lib.activate.nixos
+              self.nixosConfigurations.${system}.sdp;
+          };
+        };
+
+        nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
+
+        nixosConfigurations.sdp = lib.nixosSystem {
+          system = raspiSystem;
+          specialArgs = {
+            inherit base-home;
+            programsdb = programsdb raspiSystem;
+          };
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            self.outputs.nixosModules.${system}.sdp
+            raspi-3
+            sops
+            ./ranger-nixos/wifi.nix
+            ({ lib, ... }: {
+              # Disable zfs (kernel must be built, takes ages)
+              boot.supportedFilesystems.zfs = lib.mkForce false;
+              environment.systemPackages = [
+                self.outputs.packages.${system}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
+                self.outputs.packages.${raspiSystem}.ranger-object-recognition
+              ];
+            })
+          ];
+        };
+
+        # nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
+        nixosConfigurations.sdp-local = lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit base-home;
+            programsdb = programsdb system;
+          };
+          modules = [
+            nixosModules.sdp
+            hm
+            nixos-shell.nixosModules.nixos-shell
+            {
+              # https://github.com/Mic92/nixos-shell/pull/89
+              # lol
+              networking.hostName = lib.mkForce "nixos";
+              environment.systemPackages = [
+                self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+                self.outputs.packages.${system}.ranger-object-recognition
+              ];
+            }
+          ];
+        };
+
         devShells.default = pkgs.mkShell {
           name = "ROS + daemon combined shell";
           inputsFrom = [ devShells.daemon devShells.ros ];
