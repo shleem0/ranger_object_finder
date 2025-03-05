@@ -2,3 +2,5 @@ source;share/movement_controller/hook/pythonpath.dsv
 source;share/movement_controller/hook/pythonpath.sh
 source;share/movement_controller/hook/ament_prefix_path.dsv
 source;share/movement_controller/hook/ament_prefix_path.sh
+source;../../build/movement_controller/share/movement_controller/hook/pythonpath_develop.dsv
+source;../../build/movement_controller/share/movement_controller/hook/pythonpath_develop.sh

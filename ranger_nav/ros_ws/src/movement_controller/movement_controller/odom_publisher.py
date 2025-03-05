@@ -5,6 +5,7 @@ from geometry_msgs.msg import TransformStamped
 from tf_transformations import quaternion_from_euler
 from math import sin, cos, pi
 from nav_msgs.msg import Odometry
+import os
 
 class OdometryPublisher(Node):
     def __init__(self):
@@ -34,8 +35,8 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
-        f1 = open("../motor/motor_data1.txt", "r")
-        f2 = open("../motor/motor_data2.txt", "r")
+        f1 = open("motor/motor_data1.txt", "r")
+        f2 = open("motor/motor_data2.txt", "r")
 
         motor_pos1 = float(f1.read())
         motor_pos2 = float(f2.read())
