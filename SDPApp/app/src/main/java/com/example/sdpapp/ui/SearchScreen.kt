@@ -164,28 +164,56 @@ fun SearchScreen(navController: NavController) {
         ) {
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-                Button(
-                    onClick = {
-                        runRanger(navController, context)
-                        navController.navigate("home")
-                    },
-                    modifier = Modifier
-                        .height(70.dp)
-                        .fillMaxWidth()
-                        .border(
-                            BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
-                            shape = RoundedCornerShape(16.dp)
-                        ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
-                    Text(
-                        "Find Item",
-                        fontSize = 34.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                if (options.contains(selectedOption)) {
+                    Button(
+                        onClick = {
+                            runRanger(navController, context)
+                            navController.navigate("home")
+                        },
+                        modifier = Modifier
+                            .height(70.dp)
+                            .fillMaxWidth()
+                            .border(
+                                BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    ) {
+                        Text(
+                            "Find Item",
+                            fontSize = 34.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+                else {
+                    Button(
+                        onClick = {
+                            Toast.makeText(context,
+                                "Please select an item first.",
+                                Toast.LENGTH_SHORT).show()
+                        },
+                        modifier = Modifier
+                            .height(70.dp)
+                            .fillMaxWidth()
+                            .border(
+                                BorderStroke(12.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    ) {
+                        Text(
+                            "Find Item",
+                            fontSize = 34.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                 }
             }
             else{
@@ -226,13 +254,13 @@ fun runRanger(navController: NavController, context: Context) {
             "Please wait while connecting.",
             Toast.LENGTH_SHORT).show()
         mainActivity.requestBluetoothPermission()
-        Log.i("DemoScreen", "Start demooo0")
+        Log.i("DemoScreen", "Start demo0")
 
         return
     }
 
     if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-        Log.i("DemoScreen", "Start demooo1")
+        Log.i("DemoScreen", "Start demoo1")
         mainActivity.bluetoothService?.startDemo()
 
     } else {

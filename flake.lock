@@ -745,7 +745,8 @@
         "nixpkgs-ros": [
           "nix-ros-overlay",
           "nixpkgs"
-        ]
+        ],
+        "sops-nix": "sops-nix"
       }
     },
     "smokeapi-zip": {
@@ -758,6 +759,26 @@
       "original": {
         "type": "file",
         "url": "https://github.com/acidicoala/SmokeAPI/releases/download/v2.0.5/SmokeAPI-v2.0.5.zip"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741043164,
+        "narHash": "sha256-9lfmSZLz6eq9Ygr6cCmvQiiBEaPb54pUBcjvbEMPORc=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "3f2412536eeece783f0d0ad3861417f347219f4d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "spotify-adblock-source": {

@@ -69,10 +69,19 @@ fun PhotosScreen(navController: NavController) {
 @Composable
 fun DisplayPhotos(navController: NavController) {
     val context = LocalContext.current
-    var images by remember { mutableStateOf(getAllImages(context)) }
-    val groupedImages = images.groupBy { it.first }
-
+    val itemNames = remember { getAllItems(context) }
+    var images by remember { mutableStateOf(getAllImages(context, itemNames)) }
     var selectedImage by remember { mutableStateOf<File?>(null) }
+
+    val groupedImages = itemNames.associateWith { category ->
+        images.filter { it.first.equals(category) }.map { it.second }
+    }.toMutableMap()
+
+    itemNames.forEach { folder ->
+        if (!groupedImages.containsKey(folder)) {
+            groupedImages[folder] = emptyList()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (selectedImage == null) {
@@ -83,9 +92,9 @@ fun DisplayPhotos(navController: NavController) {
                     item {
                         Row(
                             modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 10.dp)
-                            .height(60.dp),
+                                .fillMaxWidth()
+                                .padding(bottom = 10.dp)
+                                .height(60.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -100,25 +109,36 @@ fun DisplayPhotos(navController: NavController) {
                             ) {
                                 Icon(
                                     Icons.Filled.Add,
-                                    contentDescription = "Add " + category + " Photos",
+                                    contentDescription = "Add $category Photos",
                                     modifier = Modifier.size(35.dp),
-                                    contentColorFor(MaterialTheme.colorScheme.surfaceBright)
+                                    tint = MaterialTheme.colorScheme.surfaceBright
                                 )
                             }
                         }
                     }
 
-                    item {
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentPadding = PaddingValues(horizontal = 0.dp),
-                            horizontalArrangement = Arrangement.spacedBy(0.dp)
-                        ) {
-                            items(files) { (_, imageFile) ->
-                                PhotoItem(imageFile) {
-                                    selectedImage = imageFile
+                    if (files.isNotEmpty()) {
+                        item {
+                            LazyRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentPadding = PaddingValues(horizontal = 0.dp),
+                                horizontalArrangement = Arrangement.spacedBy(0.dp)
+                            ) {
+                                items(files) { imageFile ->
+                                    PhotoItem(imageFile) {
+                                        selectedImage = imageFile
+                                    }
                                 }
                             }
+                        }
+                    } else {
+                        item {
+                            Text(
+                                text = "No photos available",
+                                color = Color.Gray,
+                                fontSize = 16.sp,
+                                modifier = Modifier.padding(16.dp)
+                            )
                         }
                     }
 
@@ -126,8 +146,7 @@ fun DisplayPhotos(navController: NavController) {
                         HorizontalDivider(
                             thickness = 1.dp,
                             color = MaterialTheme.colorScheme.surfaceBright,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
+                            modifier = Modifier.padding(top = 8.dp)
                         )
                     }
                 }
@@ -135,14 +154,18 @@ fun DisplayPhotos(navController: NavController) {
         }
 
         selectedImage?.let { image ->
-            FullscreenImagePreview(image, onDelete = {
-                if (image.delete()) {
-                    images = images.filterNot { it.second == image }
+            FullscreenImagePreview(
+                image,
+                onDelete = {
+                    if (image.delete()) {
+                        images = images.filterNot { it.second == image }
+                    }
+                    selectedImage = null
+                },
+                onClose = {
+                    selectedImage = null
                 }
-                selectedImage = null
-            }) {
-                selectedImage = null
-            }
+            )
         }
     }
 }
@@ -156,13 +179,13 @@ fun PhotoItem(file: File, onClick: () -> Unit) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(file),
-            contentDescription = "Captured photo of ${file.parentFile!!.name}",
+            contentDescription = "Captured photo of ${file.parentFile?.name ?: "Unknown"}",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(220.dp)
                 .padding(horizontal = 10.dp)
                 .clip(RoundedCornerShape(0.dp))
-                .clickable { onClick() } // Open preview on click
+                .clickable { onClick() }
         )
     }
 }
@@ -198,7 +221,7 @@ fun FullscreenImagePreview(imageFile: File, onDelete: () -> Unit, onClose: () ->
                 .align(Alignment.BottomStart)
                 .padding(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red
+                containerColor = MaterialTheme.colorScheme.error
             )
         ) {
             Text("Delete", color = Color.White)
@@ -206,18 +229,24 @@ fun FullscreenImagePreview(imageFile: File, onDelete: () -> Unit, onClose: () ->
     }
 }
 
-fun getAllImages(context: Context): List<Pair<String, File>> {
+fun getAllImages(context: Context, itemNames: List<String>): List<Pair<String, File>> {
     val imageFiles = mutableListOf<Pair<String, File>>()
     val mainDir = context.filesDir
 
-    mainDir.listFiles()?.forEach { subfolder ->
-        if (subfolder.isDirectory) {
-            subfolder.listFiles()?.forEach { file ->
-                if (file.extension in listOf("jpg", "png", "jpeg")) {
-                    imageFiles.add(Pair(subfolder.name, file))
-                }
+    itemNames.forEach { folderName ->
+        val folder = File(mainDir, folderName)
+        if (folder.exists() && folder.isDirectory) {
+            val imagesInFolder = folder.listFiles()?.filter { it.extension in listOf("jpg", "png", "jpeg") }
+            imagesInFolder?.forEach { file ->
+                imageFiles.add(Pair(folderName, file))
             }
         }
     }
+
     return imageFiles
+}
+
+fun getAllItems(context: Context): List<String> {
+    val mainDir = context.filesDir
+    return mainDir.listFiles()?.filter { it.isDirectory }?.map { it.name } ?: emptyList()
 }

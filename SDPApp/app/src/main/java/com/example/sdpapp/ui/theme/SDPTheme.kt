@@ -16,7 +16,8 @@ private val DarkColourScheme = darkColorScheme(
     tertiary = AppColors.backgroundColor,
     background = AppColors.tertiaryColor,
     surfaceBright = AppColors.offWhite,
-    onBackground = AppColors.tgtgColor
+    onBackground = AppColors.tgtgColor,
+    error = AppColors.redColor
 )
 
 private val LightColourScheme = lightColorScheme(
@@ -25,7 +26,8 @@ private val LightColourScheme = lightColorScheme(
     tertiary = AppColors.tertiaryColor,
     background = AppColors.backgroundColor,
     surfaceBright = AppColors.tgtgColor,
-    onBackground = AppColors.offWhite
+    onBackground = AppColors.offWhite,
+    error = AppColors.redColor
 )
 
 @Composable

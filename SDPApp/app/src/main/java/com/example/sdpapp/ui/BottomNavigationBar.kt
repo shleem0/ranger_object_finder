@@ -42,7 +42,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
         NavigationItem("Home", "home", Icons.Filled.Home),
         NavigationItem("Photos", "photos", Icons.Filled.Face),
         NavigationItem("Settings", "settings", Icons.Filled.Settings),
-        //NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
+        // NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
     )
 
     Scaffold(
@@ -102,7 +102,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
             }
             composable("fullScreenAlert/{alertId}") { backStackEntry ->
                 val alertId = backStackEntry.arguments?.getString("alertId")?.toLong() ?: 0L
-                FullScreenAlertScreen(navController, alertId)
+                FullScreenAlertScreen(navController, alertId, LocalContext.current)
             }
             composable("addItem") { AddItem(navController) }
             composable("deleteItem/{itemName}") { backStackEntry ->

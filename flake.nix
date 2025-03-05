@@ -32,21 +32,27 @@
 
     fps.url = "github:wamserma/flake-programs-sqlite";
     fps.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
-    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, ... }:
+    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, sops-nix
+    , ... }:
     let
       raspiSystem = "aarch64-linux";
+      builderSystem = "x86_64-linux";
       lib = nixpkgs.lib;
       programsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
       raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
+      sops = sops-nix.nixosModules.sops;
       pkgs-hs = system:
         import nixpkgs {
           system = system;
-          overlays = [ haskellNix.overlay ];
+          overlays = [ haskellNix.overlay self.outputs.overlay ];
           inherit (haskellNix) config;
         };
       # Use nixpkgs binary cache for deploy-rs
@@ -63,36 +69,41 @@
         ];
       };
 
-    in {
-      nixosConfigurations.sdp = lib.nixosSystem rec {
+    in rec {
+      nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
+
+      nixosConfigurations.sdp = lib.nixosSystem {
         system = raspiSystem;
         specialArgs = {
           inherit base-home;
-          programsdb = programsdb system;
+          programsdb = programsdb raspiSystem;
         };
         modules = [
           "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ./ranger-nixos/sdp.nix
+          nixosModules.sdp
           raspi-3
-          hm
-          {
-            # TODO: replace with default package
+          sops
+          ./ranger-nixos/wifi.nix
+          ({ lib, ... }: {
+            # Disable zfs (kernel must be built, takes ages)
+            boot.supportedFilesystems.zfs = lib.mkForce false;
             environment.systemPackages = [
-              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${builderSystem}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${raspiSystem}.ranger-object-recognition
             ];
-          }
+          })
         ];
       };
 
       # nix run .#nixosConfigurations.sdp-local.config.system.build.nixos-shell
-      nixosConfigurations.sdp-local = lib.nixosSystem rec {
-        system = "x86_64-linux";
+      nixosConfigurations.sdp-local = lib.nixosSystem {
+        system = builderSystem;
         specialArgs = {
           inherit base-home;
-          programsdb = programsdb system;
+          programsdb = programsdb builderSystem;
         };
         modules = [
-          ./ranger-nixos/sdp.nix
+          nixosModules.sdp
           hm
           nixos-shell.nixosModules.nixos-shell
           {
@@ -100,7 +111,8 @@
             # lol
             networking.hostName = lib.mkForce "nixos";
             environment.systemPackages = [
-              self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${builderSystem}."ranger-daemon:exe:ranger-daemon"
+              self.outputs.packages.${builderSystem}.ranger-object-recognition
             ];
           }
         ];
@@ -115,12 +127,21 @@
             self.nixosConfigurations.sdp;
         };
       };
+
+      # Auxiliary packages
+      overlay = final: prev: {
+        ranger-object-recognition =
+          final.callPackage ./ranger_object_recognition/package.nix { };
+      };
     }
-    # Packages and shells
+    # Shells + daemon
     // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
-        ranger-flake = (import ranger-daemon/project.nix pkgs).flake { };
+
+        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake {
+          crossPlatforms = p: [ p.aarch64-multiplatform ];
+        };
 
         pkgs-ros = import nixpkgs-ros {
           inherit system;
@@ -139,14 +160,16 @@
           inputsFrom = [ devShells.daemon devShells.ros ];
         };
 
-        devShells.daemon = ranger-flake.devShells.default;
+        devShells.daemon = ranger-daemon-flake.devShells.default;
 
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
           buildInputs = ros-packages;
         };
 
-        packages = ranger-flake.packages;
+        packages = ranger-daemon-flake.packages // {
+          inherit (pkgs) ranger-object-recognition;
+        };
       });
 
   nixConfig = {

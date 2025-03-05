@@ -1,6 +1,8 @@
 package com.example.sdpapp.bt
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothGatt
@@ -22,6 +24,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import com.example.sdpapp.R
 import java.lang.IllegalStateException
 
 /**
@@ -37,6 +41,7 @@ private const val TAG = "RangerBluetoothService"
 
 private const val DEMO_SERVICE_UUID = "fbb887fb-3ee3-5315-9716-01ede2358aab"
 private const val IS_DEMO_ACTIVE_UUID = "82e761bc-8508-5f80-90ee-9b3455444798"
+
 
 class RangerBluetoothService : Service() {
 
@@ -62,6 +67,50 @@ class RangerBluetoothService : Service() {
         } else {
             return null
         }
+    }
+
+    public fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Search Progress"
+            val descriptionText = "Notifications for Ranger Search"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun showProgressNotification() {
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.mipmap.appicon)
+            .setContentTitle("Ranger Search")
+            .setContentText("Searching for target...")
+            .setProgress(0, 0, true)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+
+    private fun showFoundNotification() {
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.mipmap.appicon)
+            .setContentTitle("Ranger Alert!")
+            .setContentText("Target found!")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
+    }
+
+    private fun cancelProgressNotification() {
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager.cancel(NOTIFICATION_ID)
     }
 
     override fun onBind(p0: Intent?): IBinder {
@@ -95,6 +144,11 @@ class RangerBluetoothService : Service() {
     private fun broadcastUpdate(action: String) {
         val intent = Intent(action)
         sendBroadcast(intent)
+
+        if (action == ACTION_GATT_READY) {
+            showFoundNotification()
+            cancelProgressNotification()
+        }
     }
 
     private val bluetoothGattCallback = object : BluetoothGattCallback() {
@@ -104,8 +158,8 @@ class RangerBluetoothService : Service() {
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(
                         this@RangerBluetoothService,
-                        "Unable to connect. Make sure device is on and in range",
-                        Toast.LENGTH_SHORT
+                        "Unable to connect. Make sure the robot is turned on and in range",
+                        Toast.LENGTH_LONG
                     ).show()
                 }
                 Log.e(TAG, "GATT connection state change did not return success")
@@ -183,6 +237,7 @@ class RangerBluetoothService : Service() {
 
         if (r == BluetoothStatusCodes.SUCCESS) {
             Log.i(TAG, "Demo started")
+            showProgressNotification()
             return true
         } else {
             Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
@@ -298,5 +353,8 @@ class RangerBluetoothService : Service() {
         const val STATE_DISCONNECTED = 0
         const val STATE_CONNECTED = 2
         const val STATE_READY = 3
+
+        const val CHANNEL_ID = "ranger_search_channel"
+        const val NOTIFICATION_ID = 1
     }
 }

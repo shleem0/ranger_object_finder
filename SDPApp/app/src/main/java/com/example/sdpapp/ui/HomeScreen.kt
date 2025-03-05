@@ -2,8 +2,13 @@
 
 package com.example.sdpapp.ui
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,16 +60,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
+import com.example.sdpapp.MainActivity
 import com.example.sdpapp.R
+import com.example.sdpapp.bt.RangerBluetoothService
 import com.example.sdpapp.ui.theme.SDPAppTheme
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
@@ -82,38 +93,107 @@ fun HomeScreen(navController: NavController) {
         )
 
 
-        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(90.dp),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            Button(
-                onClick = { navController.navigate("search") },
+        Row(modifier = Modifier.fillMaxWidth()){
+            val mainActivity = context as MainActivity
+            if (mainActivity.bluetoothService?.getConnectionState() != RangerBluetoothService.STATE_READY) {
+                Box(
+                    modifier = Modifier
+                        .height(100.dp),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    Button(
+                        onClick = { connectToRobot(context) },
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(155.dp)
+                            .align(Alignment.BottomEnd)
+                            .border(
+                                BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    ) {
+                        Text(
+                            "Connect to Robot",
+                            fontSize = 24.sp,
+                            lineHeight = 30.sp,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+            }
+            else{
+                Box(
+                    modifier = Modifier
+                        .height(100.dp),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    Button(
+                        onClick = { navController.navigate("home") },
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(155.dp)
+                            .align(Alignment.BottomEnd)
+                            .border(
+                                BorderStroke(3.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.onBackground,
+                            contentColor = MaterialTheme.colorScheme.surfaceBright
+                        )
+                    ) {
+                        Text(
+                            "Connected to Robot",
+                            fontSize = 22.sp,
+                            lineHeight = 28.sp,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.surfaceBright
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Box(
                 modifier = Modifier
-                    .height(90.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.BottomEnd)
-                    .border(
-                        BorderStroke(13.dp, MaterialTheme.colorScheme.secondary),
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    contentColor = MaterialTheme.colorScheme.onBackground
-                )
+                    .height(100.dp),
+                contentAlignment = Alignment.BottomCenter
             ) {
-                Text(
-                    "Find Item",
-                    fontSize = 34.sp,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+                Button(
+                    onClick = { navController.navigate("search") },
+                    modifier = Modifier
+                        .height(100.dp)
+                        .width(155.dp)
+                        .align(Alignment.BottomEnd)
+                        .border(
+                            BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
+                            shape = RoundedCornerShape(16.dp)
+                        ),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    )
+                ) {
+                    Text(
+                        "Find Item",
+                        fontSize = 24.sp,
+                        lineHeight = 30.sp,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
         }
 
-        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -170,15 +250,24 @@ fun HomeScreen(navController: NavController) {
                             Spacer(modifier = Modifier.width(15.dp))
                             Text(
                                 text = itemName.replaceFirstChar { it.uppercase() },
+                                modifier = Modifier
+                                    .width(160.dp)
+                                    .padding(top = 10.dp),
                                 fontSize = 30.sp,
-                                color = MaterialTheme.colorScheme.surfaceBright
+                                color = MaterialTheme.colorScheme.surfaceBright,
+                                textAlign = TextAlign.Start,
+                                overflow = TextOverflow.Ellipsis,
+                                lineHeight = 30.sp,
+                                maxLines = 1
                             )
                         }
                         Button(
                             onClick = {
                                 navController.navigate("deleteItem/$itemName")
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
                         ) {
                             Text("Delete", color = Color.White)
                         }
@@ -208,7 +297,7 @@ fun DeleteRow(navController: NavController, itemName: String, context: Context){
                     navController.navigate("home")
                 }
             ) {
-                Text("Delete", color = Color.Red)
+                Text("Delete", color = MaterialTheme.colorScheme.error)
             } },
         dismissButton = { TextButton(onClick = { navController.navigate("home") }) {
                     Text("Cancel") } },
@@ -239,7 +328,7 @@ fun FABWithNotification(notificationCount: Int, navController: NavController) {
                 Box(
                     modifier = Modifier
                         .size(20.dp)
-                        .background(Color.Red, shape = CircleShape)
+                        .background(MaterialTheme.colorScheme.error, shape = CircleShape)
                         .align(Alignment.TopEnd)
                 )
             }
@@ -301,31 +390,35 @@ fun AddItem(navController: NavController){
                 Toast.LENGTH_SHORT).show()
         }
     }
+    TextButton(
+        onClick = { navController.navigate("home") }
+    ) {
+        Text(
+            "< Back",
+            color = MaterialTheme.colorScheme.surfaceBright,
+            fontSize = 18.sp,
+            modifier = Modifier.padding(0.dp)
+        )
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(vertical = 36.dp, horizontal = 16.dp),
     ) {
-        TextButton(
-            onClick = { navController.navigate("home") }
-        ) {
-            Text(
-                "< Back",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(0.dp)
-            )
-        }
         Text("Add Item",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier.padding(bottom = 10.dp))
+
         Text("Item Name",
             color = MaterialTheme.colorScheme.surfaceBright,
             fontSize = 27.sp,
             fontWeight = FontWeight.Bold
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         BasicTextField(
             value = itemName,
             onValueChange = { itemName = it },
@@ -342,36 +435,27 @@ fun AddItem(navController: NavController){
                 .padding(4.dp)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-        Text("Short Description",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 27.sp,
-            fontWeight = FontWeight.Bold
-        )
-        BasicTextField(
-            value = additionalDetails,
-            onValueChange = { additionalDetails = it },
-            textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.tertiary),
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(180.dp)
-                .background(MaterialTheme.colorScheme.onBackground)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                    RoundedCornerShape(4.dp)
+        LazyColumn() {
+            items(
+                listOf(
+                    " - We recommend taking at least 4 photos of the item from different angles.",
+                    " - It's best to take photos of your item right away, so you have them before it goes missing!",
+                    " - Removing an item will also remove all of its photos.",
+                    " - The robot will be sent the photos of the item for processing.",
+                    " - If you item ever looks different from the photos, make sure to update the photos accordingly!"
                 )
-                .padding(4.dp)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text("We recommend taking at least 3 photos of the item from different angles.",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 17.sp,
-            lineHeight = 20.sp
-        )
+            ) { text ->
+                Text(
+                    text = text,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    fontSize = 19.sp,
+                    lineHeight = 20.sp
+                )
+                Spacer(Modifier.padding(bottom = 10.dp))
+            }
+        }
 
         Box(
             contentAlignment = Alignment.BottomCenter,
@@ -392,10 +476,28 @@ fun AddItem(navController: NavController){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    SDPAppTheme {
-        HomeScreen(navController = rememberNavController())
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun connectToRobot(context: Context){
+    val mainActivity = context as MainActivity
+    val s = mainActivity.bluetoothService
+
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(context,
+            "Please wait while connecting.",
+            Toast.LENGTH_SHORT).show()
+        mainActivity.requestBluetoothPermission()
+
+        return
+    }
+
+    mainActivity.registerReceiverSafely()
+
+    if (s == null) {
+        Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+        Log.w("HomeScreen", "can't connect, no service")
+    }
+    else {
+        Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
+        s.connectForDemo()
     }
 }
