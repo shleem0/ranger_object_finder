@@ -92,11 +92,12 @@
           overlays = [ nix-ros-overlay.overlays.default ];
         };
 
-        ros-packages = with pkgs-ros; [
-          colcon
-          (with rosPackages.humble;
-            buildEnv { paths = [ ros-core slam-toolbox ]; })
-        ];
+        ros-packages = pkgs:
+          with pkgs; [
+            colcon
+            (with rosPackages.humble;
+              buildEnv { paths = [ ros-core slam-toolbox ]; })
+          ];
 
       in rec {
         overlays.default = final: prev: {
@@ -118,13 +119,14 @@
             raspi-3
             sops
             ./ranger-nixos/wifi.nix
-            ({ lib, ... }: {
+            ({ pkgs, lib, ... }: {
+              nixpkgs.overlays = [ nix-ros-overlay.overlays.default ];
               # Disable zfs (kernel must be built, takes ages)
               boot.supportedFilesystems.zfs = lib.mkForce false;
               environment.systemPackages = [
                 self.outputs.packages.${system}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${raspiSystem}.ranger-object-recognition
-              ] ++ ros-packages;
+              ] ++ ros-packages pkgs;
             })
           ];
         };
@@ -141,13 +143,14 @@
             hm
             nixos-shell.nixosModules.nixos-shell
             {
+              nixpkgs.overlays = [ nix-ros-overlay.overlays.default ];
               # https://github.com/Mic92/nixos-shell/pull/89
               # lol
               networking.hostName = lib.mkForce "nixos";
               environment.systemPackages = [
                 self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${system}.ranger-object-recognition
-              ] ++ ros-packages;
+              ] ++ ros-packages pkgs;
             }
           ];
         };
@@ -161,7 +164,7 @@
 
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
-          buildInputs = ros-packages;
+          buildInputs = ros-packages pkgs-ros;
         };
 
         packages = ranger-daemon-flake.packages // {
