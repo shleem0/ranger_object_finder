@@ -21,6 +21,10 @@ library
     -- other-extensions:
     build-depends:   base ^>=4.14.0.0
                    , ble
+                   , bytestring
+                   , conduit
+                   , singletons
+                   , sync-monad
     hs-source-dirs:   src
 
 executable ranger-daemon

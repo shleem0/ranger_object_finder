@@ -1,5 +1,5 @@
 packages:
-    ranger-daemon.cabal
+    ranger-daemon/ranger-daemon.cabal
 
 source-repository-package
     type: git

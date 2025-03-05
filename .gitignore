@@ -1,4 +1,5 @@
 .vscode
+dist-newstyle
 .direnv
 .envrc
 target
