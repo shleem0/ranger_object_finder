@@ -141,7 +141,7 @@
             nixosModules.sdp
             hm
             nixos-shell.nixosModules.nixos-shell
-            {
+            ({ pkgs, lib, ... }: {
               nixpkgs.overlays = [ nix-ros-overlay.overlays.default ];
               # https://github.com/Mic92/nixos-shell/pull/89
               # lol
@@ -150,7 +150,7 @@
                 self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${system}.ranger-object-recognition
               ] ++ ros-packages pkgs;
-            }
+            })
           ];
         };
 
