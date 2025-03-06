@@ -16,5 +16,5 @@ source-repository-package
 source-repository-package
     type: git
     location: https://github.com/ryndubei/sync-monad.git
-    tag: b9856a8312cf8d953a2c9da1a4e53172fc316ffc
-    --sha256: 1v67japccydm0dp686jdaa0yqaf9ygdh0znxiid7z0ayzjfnr4mp
+    tag: 93d4e702b4ea45feaed78ffca038c6f2de0237be
+    --sha256: 0z3bfg3kb0hhs2rlxbf1d9g906r2md9mjlifxkak28i9gcmc3p3v
