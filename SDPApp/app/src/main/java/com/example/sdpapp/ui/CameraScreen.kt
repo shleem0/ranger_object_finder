@@ -4,12 +4,12 @@ package com.example.sdpapp.ui
 
 import android.Manifest
 import androidx.compose.foundation.Image
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -18,17 +18,25 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -40,6 +48,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -53,11 +62,24 @@ import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.yalantis.ucrop.UCrop
-import com.yalantis.ucrop.UCrop.REQUEST_CROP
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import com.example.sdpapp.R
+import java.io.File
+import java.io.FileOutputStream
+import java.io.FileWriter
+import java.io.IOException
 
 @Composable
 fun CameraScreen(navController: NavController, name: String) {
@@ -245,7 +267,9 @@ fun CameraPreview(navController: NavController, name: String) {
                                 capturedImageUri = null
                                 capturedFile = null
                             },
-                            modifier = Modifier.padding(8.dp).align(Alignment.Top),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .align(Alignment.Top),
                             colors = ButtonColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -260,9 +284,11 @@ fun CameraPreview(navController: NavController, name: String) {
                         }
                         Button(
                             onClick = {
-                                navController.navigate("photos")
+                                navController.navigate("home")
                             },
-                            modifier = Modifier.padding(8.dp).align(Alignment.Bottom),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .align(Alignment.Bottom),
                             colors = ButtonColors(
                                 containerColor = MaterialTheme.colorScheme.secondary,
                                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -281,6 +307,74 @@ fun CameraPreview(navController: NavController, name: String) {
         }
     }
 }
+
+@Composable
+fun iconSelection(navController: NavController, itemName: String) {
+    val context = LocalContext.current
+    val selectedIconName = remember { mutableStateOf<String?>(null) }
+
+    val pngIcons = listOf(
+        R.drawable.sdpkeys,
+        R.drawable.sdpremote,
+        R.drawable.sdppencil,
+        R.drawable.sdpwallet,
+        R.drawable.sdpstar,
+        R.drawable.sdpheart,
+        R.drawable.sdpphone,
+        R.drawable.sdpuser
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Select an Icon for $itemName",
+            color = MaterialTheme.colorScheme.surfaceBright,
+            fontSize = 27.sp,
+            lineHeight = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(vertical = 15.dp)
+        )
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(pngIcons) { imageResId ->
+                Box(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .clickable {
+                            selectedIconName.value = context.resources.getResourceEntryName(imageResId)
+                            saveSelectedIconName(context, itemName, selectedIconName.value ?: "")
+                            navController.navigate("camera/$itemName")
+                        }
+                        .size(100.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = imageResId),
+                        contentDescription = "Icon for $itemName",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+        }
+    }
+}
+
+fun saveSelectedIconName(context: Context, itemName: String, iconName: String) {
+    val folder = File(context.filesDir, itemName.lowercase())
+    if (!folder.exists()) {
+        folder.mkdirs()
+    }
+
+    val iconFile = File(folder, "icon_name.txt")
+    iconFile.writeText(iconName)
+}
+
 
 private fun captureImage(context: Context, imageCapture: ImageCapture,
                          name: String, onImageCaptured: (Uri, File) -> Unit) {

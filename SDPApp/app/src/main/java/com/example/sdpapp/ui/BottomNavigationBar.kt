@@ -117,6 +117,10 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                     bluetoothService.connectForDemo()
                 }
             }
+            composable("iconSelection/{itemName}") { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
+                iconSelection(navController, itemName)
+            }
         }
     }
 }

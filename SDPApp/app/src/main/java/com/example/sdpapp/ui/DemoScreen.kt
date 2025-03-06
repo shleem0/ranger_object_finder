@@ -1,21 +1,13 @@
 package com.example.sdpapp.ui
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.sdpapp.MainActivity
 import com.example.sdpapp.bt.RangerBluetoothService
@@ -47,7 +37,7 @@ fun DemoScreen(navController: NavController){
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
                 Button(
-                    onClick = { runRanger(navController, context) },
+                    onClick = { runRanger(navController, context, "Choose Item") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(500.dp)
@@ -69,7 +59,7 @@ fun DemoScreen(navController: NavController){
             }
             else{
                 Button(
-                    onClick = { runRanger(navController, context)
+                    onClick = { runRanger(navController, context, "Choose Item")
                               },
                     modifier = Modifier
                         .fillMaxWidth()
