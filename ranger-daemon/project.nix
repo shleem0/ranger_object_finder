@@ -1,8 +1,13 @@
 pkgs:
 
-pkgs.haskell-nix.cabalProject' {
+let
+  asSubdirectory = pkgs.lib.fileset.toSource {
+    fileset = ./../ranger-daemon;
+    root = ./..;
+  };
+in pkgs.haskell-nix.cabalProject' {
   src = pkgs.haskell-nix.cleanSourceHaskell {
-    src = ./.;
+    src = asSubdirectory;
     name = "ranger-daemon-src";
   };
   compiler-nix-name = "ghc8107";
@@ -10,6 +15,8 @@ pkgs.haskell-nix.cabalProject' {
     cabal = { };
     haskell-language-server = { src = pkgs.haskell-nix.sources."hls-2.2"; };
   };
+  cabalProjectFreeze = builtins.readFile ../cabal.project.freeze;
+  cabalProject = builtins.readFile ../cabal.project;
   shell.buildInputs = [
     (pkgs.writeScriptBin "haskell-language-server-wrapper" ''
       #!${pkgs.stdenv.shell}
