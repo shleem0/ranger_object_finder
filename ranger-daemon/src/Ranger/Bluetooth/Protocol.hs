@@ -70,5 +70,6 @@ dispatchFunction = \case
   UpdateObject _ _ -> undefined
   DeleteObject _ -> undefined
   GetObjectPhotos _ -> undefined
+  DownloadNotificationPhoto -> undefined
   PowerOff -> undefined
 

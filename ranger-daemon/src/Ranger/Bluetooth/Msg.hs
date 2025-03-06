@@ -59,6 +59,7 @@ data FunctionCall
   | UpdateObject { objectId :: Text, photoCount :: Int }
   | DeleteObject { objectId :: Text }
   | GetObjectPhotos { objectId :: Text }
+  | DownloadNotificationPhoto
   | PowerOff
 
 data Msg s a where
