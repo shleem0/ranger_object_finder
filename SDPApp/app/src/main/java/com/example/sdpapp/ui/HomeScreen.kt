@@ -78,9 +78,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-//Settings screen???
-//Input Validation on text so it is only letters.
-//Pencil icon get rid of.
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -299,22 +296,6 @@ fun readIconName(context: Context, itemName: String): String? {
     }
 }
 
-fun getIconFromName(iconName: String?): ImageVector? {
-    val iconMap = mapOf(
-        "Home" to Icons.Filled.Home,
-        "Favorite" to Icons.Filled.Favorite,
-        "Settings" to Icons.Filled.Settings,
-        "Search" to Icons.Filled.Search,
-        "Person" to Icons.Filled.Person,
-        "Add" to Icons.Filled.Add,
-        "Email" to Icons.Filled.Email,
-        "Phone" to Icons.Filled.Phone,
-        "Share" to Icons.Filled.Share,
-        "Info" to Icons.Filled.Info
-    )
-    return iconMap[iconName]
-}
-
 @Composable
 fun DeleteRow(navController: NavController, itemName: String, context: Context) {
     AlertDialog(
@@ -388,7 +369,6 @@ fun getItemNames(context: Context): List<String> {
 @Composable
 fun AddItem(navController: NavController) {
     var itemName by remember { mutableStateOf("") }
-    var additionalDetails by remember { mutableStateOf(TextFieldValue()) }
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
@@ -404,7 +384,6 @@ fun AddItem(navController: NavController) {
                     val fileOutputStream = FileOutputStream(itemDataFile)
                     val itemDetails = """
                         Name: ${itemName}
-                        Details: ${additionalDetails.text}
                     """.trimIndent()
                     fileOutputStream.write(itemDetails.toByteArray())
                     fileOutputStream.close()
