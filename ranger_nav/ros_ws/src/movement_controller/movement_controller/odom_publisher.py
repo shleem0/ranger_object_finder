@@ -3,7 +3,7 @@ from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
 
 from geometry_msgs.msg import TransformStamped, PoseStamped
-from nav_msgs.msg import Odometry, Twist, OccupancyGri
+from nav_msgs.msg import Odometry, Twist, OccupancyGrid
 from tf_transformations import quaternion_from_euler
 
 from math import sin, cos, pid
