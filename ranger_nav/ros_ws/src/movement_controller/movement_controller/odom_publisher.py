@@ -36,6 +36,10 @@ class OdometryPublisher(Node):
 
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
+        self.PIN1 = 16
+        self.PIN2 = 5
+        self.encoder1 = GroveOpticalRotaryEncoder(self.PIN1)
+        self.encoder2 = GroveOpticalRotaryEncoder(self.PIN2)
 
         self.last_time = self.get_clock().now()
 
@@ -48,12 +52,10 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
-        f1 = open("motor/motor_data1.txt", "r")
-        f2 = open("motor/motor_data2.txt", "r")
 
-        motor_pos1 = float(f1.read())
-        motor_pos2 = float(f2.read())
-        print(f"Motor pos:{motor_pos1}, {motor_pos2}")
+        motor_pos1 = self.encoder1.position()
+        motor_pos2 = self.encoder2.position()
+
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
