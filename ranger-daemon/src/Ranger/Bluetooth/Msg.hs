@@ -13,8 +13,6 @@ module Ranger.Bluetooth.Msg
     Side(..)
   , FunctionCall(..)
   , Msg(..)
-  , SearchParameters(..)
-  , ObjectId(..)
   -- * Singletons
   , PhoneSym0
   , RangerSym0
@@ -22,19 +20,10 @@ module Ranger.Bluetooth.Msg
   ) where
 
 import Data.Singletons.TH
-import Data.Text (Text)
-import Data.Fixed
-
-data SearchParameters = SearchParameters
-  { timeout :: Maybe Int -- ^ seconds
-  , withReturn :: Bool
-  , maxRadius :: Maybe Centi -- ^ metres
-  }
+import Ranger.Types
+import Data.Word
 
 data Side = Ranger | Phone
-
--- | Short name for an object, maximum size of 16 bytes.
-newtype ObjectId = ObjectId Text
 
 -- | Any functions that may require some physical action from Ranger/prolonged
 -- communication with the phone to execute.
@@ -44,17 +33,22 @@ newtype ObjectId = ObjectId Text
 data FunctionCall
   = StartDemo
   | CancelDemo
-  | StartSearch { objectId :: Text, searchParams :: SearchParameters }
+  | StartSearch { objectId :: ObjectId, searchParams :: SearchParameters }
   | ModifySearchParameters { searchParams :: SearchParameters }
   | CancelSearch
-  | UpdateObject { objectId :: Text, photoCount :: Int }
-  | DeleteObject { objectId :: Text }
-  | GetObjectPhotos { objectId :: Text }
+  | UpdateObject { objectId :: ObjectId, photoCount :: Word8 }
+  | DeleteObject { objectId :: ObjectId }
+  | GetObjectPhotos { objectId :: ObjectId }
   | DownloadNotificationPhoto
   | PowerOff
 
 data Msg s a where
   FunctionCall :: Msg 'Phone FunctionCall
+  StartSearchResult :: Msg 'Ranger Bool
+  AnnounceNFragments :: Msg s Int
+  SendPhotoFragment :: Msg s PhotoFragment 
+  RequestedObjectPhotoCount :: Msg 'Ranger Word8
+  SchedulePowerOffResult :: Msg 'Ranger Bool
 
 $(genSingletons [''Side])
 $(singDecideInstance ''Side)

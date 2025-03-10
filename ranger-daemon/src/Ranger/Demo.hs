@@ -1,12 +1,12 @@
 module Ranger.Demo
-  ( startDemo
-  , cancelDemo
+  ( demoProcedure
+  , cancelDemoProcedure
   ) where
 
 -- | TODO
-startDemo :: IO ()
-startDemo = putStrLn "Demo started"
+demoProcedure :: IO ()
+demoProcedure = putStrLn "Demo started"
 
 -- | TODO
-cancelDemo :: IO ()
-cancelDemo = putStrLn "Demo cancelled"
+cancelDemoProcedure :: IO ()
+cancelDemoProcedure = putStrLn "Demo cancelled"
