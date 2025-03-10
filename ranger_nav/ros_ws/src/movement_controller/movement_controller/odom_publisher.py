@@ -230,6 +230,8 @@ class OdometryPublisher(Node):
 
         self.motor.set_dir(left_dir, right_dir)        
         self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_left / motor_max_rpm) * 100)
+
+        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_left / motor_max_rpm) * 100}")
         
 
 
