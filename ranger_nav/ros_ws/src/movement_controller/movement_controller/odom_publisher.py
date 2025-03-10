@@ -4,8 +4,9 @@ from tf2_ros import TransformBroadcaster
 from geometry_msgs.msg import TransformStamped
 from tf_transformations import quaternion_from_euler
 from math import sin, cos, pi
-from nav_msgs.msg import Odometry
-import os
+from nav_msgs.msg import Odometry, Twist
+from grove.grove_i2c_motor_driver import MotorDriver
+from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 
 class OdometryPublisher(Node):
     def __init__(self):
@@ -16,6 +17,9 @@ class OdometryPublisher(Node):
 
         # Create an odometry publisher
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
+        self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
+
+        self.motor = MotorDriver()
         
         # Initialize position and orientation
         self.x = 0.0
@@ -115,6 +119,37 @@ class OdometryPublisher(Node):
 
         # Save current time for the next iteration
         self.last_time = current_time
+
+
+
+    def cmd_vel_callback(self, msg):
+        # Extract linear and angular velocities
+        linear_velocity = msg.linear.x
+        angular_velocity = msg.angular.z
+        
+        # Robot parameters
+        wheelbase = 0.13  # The distance between the two wheels (meters)
+        motor_max_rpm = 150
+
+        motor_max_speed = 2 * pi * 0.04 * motor_max_rpm
+        
+        # Calculate left and right motor speeds
+        v_left = linear_velocity - (wheelbase / 2) * angular_velocity
+        v_right = linear_velocity + (wheelbase / 2) * angular_velocity
+
+        left_dir = True
+        right_dir = True
+
+        if v_left < 0:
+            left_dir = False
+
+        if v_right < 0:
+            right_dir = False
+
+        self.motor.set_dir(left_dir, right_dir)        
+        self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_left / motor_max_rpm) * 100)
+        
+
 
 def main(args=None):
     rclpy.init(args=args)
