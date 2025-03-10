@@ -27,6 +27,7 @@ class OdometryPublisher(Node):
         self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
 
         self.map_data = None
+        self.motor = MotorDriver()
         
         # Initialize position and orientation
         self.x = 0.0
@@ -221,11 +222,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        f1 = open("motor/motor_input1", "w")
-        f2 = open("motor/motor_input2", "w")
-
-        f1.write(f"{left_dir}, {(v_left / motor_max_rpm) * 100}")
-        f2.write(f"{right_dir}, {(v_right / motor_max_rpm) * 100}")
+        motor.set_dir(left_dir, right_dir)
+        motor.set_speed(v_left / motor_max_speed * 100, v_right / motor_max_speed * 100)
 
 
         
