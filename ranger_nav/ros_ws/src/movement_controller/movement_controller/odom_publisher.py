@@ -17,8 +17,12 @@ class OdometryPublisher(Node):
 
         # Create an odometry publisher
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
-        self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
+        self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
+        self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
+        self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
+
+        self.map_data = None
         self.motor = MotorDriver()
         
         # Initialize position and orientation
@@ -33,6 +37,7 @@ class OdometryPublisher(Node):
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.timer = self.create_timer(0.1, self.timer_callback)
+
 
     def timer_callback(self):
         # Get current time
@@ -119,6 +124,83 @@ class OdometryPublisher(Node):
 
         # Save current time for the next iteration
         self.last_time = current_time
+
+
+    def map_callback(self, msg):
+
+        self.map_data = msg
+
+        if self.map_data:
+            goal_pose = self.find_goal_pose(self.map_data)
+
+            if goal_pose:
+                self.publish_goal_pose(goal_pose)
+
+
+
+    def map_callback(self, msg):
+        # Store map data when the map is received
+        self.map_data = msg
+
+        # Process map data to find a goal pose
+        if self.map_data:
+            goal_pose = self.find_goal_pose(self.map_data)
+            if goal_pose:
+                self.publish_goal_pose(goal_pose)
+    
+
+
+    def find_goal_pose(self, map_data):
+        # Extract the map dimensions and data
+        width = map_data.info.width
+        height = map_data.info.height
+        resolution = map_data.info.resolution  # In meters per cell
+        origin_x = map_data.info.origin.position.x
+        origin_y = map_data.info.origin.position.y
+        
+        # Convert map data (OccupancyGrid) to a numpy array for easier processing
+        map_array = np.array(map_data.data).reshape((height, width))
+
+        # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
+        edge_points = []
+        
+        # Check the edges of the map (first and last rows and columns)
+        for x in range(width):
+            if map_array[0, x] == 0:  # First row
+                edge_points.append((x, 0))
+            if map_array[height-1, x] == 0:  # Last row
+                edge_points.append((x, height-1))
+        for y in range(height):
+            if map_array[y, 0] == 0:  # First column
+                edge_points.append((0, y))
+            if map_array[y, width-1] == 0:  # Last column
+                edge_points.append((width-1, y))
+        
+        # If we found any free edge points, return the first one (or any other strategy)
+        if edge_points:
+            edge_point = edge_points[0]  # Choose the first edge point for simplicity
+            
+            # Convert map coordinates to world coordinates
+            goal_x = origin_x + edge_point[0] * resolution
+            goal_y = origin_y + edge_point[1] * resolution
+            
+            # Create and return the goal pose
+            goal_pose = PoseStamped()
+            goal_pose.header.stamp = self.get_clock().now().to_msg()
+            goal_pose.header.frame_id = "map"
+            goal_pose.pose.position.x = goal_x
+            goal_pose.pose.position.y = goal_y
+            goal_pose.pose.position.z = 0.0
+            goal_pose.pose.orientation.w = 1.0  # Facing "forward"
+            
+            return goal_pose
+        
+        return None
+
+
+
+    def publish_goal_pose(self, goal_pose):
+        self.goal_pose_pub.publish(goal_pose)
 
 
 

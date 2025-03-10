@@ -1,5 +1,3 @@
-import time
-import sys
 import threading
 
 from grove.grove_i2c_motor_driver import MotorDriver
