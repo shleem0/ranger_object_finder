@@ -36,10 +36,6 @@ class OdometryPublisher(Node):
 
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
-        self.PIN1 = 16
-        self.PIN2 = 5
-        self.encoder1 = GroveOpticalRotaryEncoder(self.PIN1)
-        self.encoder2 = GroveOpticalRotaryEncoder(self.PIN2)
 
         self.last_time = self.get_clock().now()
 
@@ -52,9 +48,11 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
+        f1 = open("motor/motor_data1.txt", "r")
+        f2 = open("motor/motor_data2.txt", "r")
 
-        motor_pos1 = self.encoder1.position()
-        motor_pos2 = self.encoder2.position()
+        motor_pos1 = float(f1.read())
+        motor_pos2 = float(f2.read())
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
@@ -70,7 +68,7 @@ class OdometryPublisher(Node):
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
 
-        print(f"{self.x}, {self.y}, {self.theta}\n")
+        print(f"{self.x}, {self.y}, {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
@@ -225,7 +223,7 @@ class OdometryPublisher(Node):
         self.motor.set_dir(left_dir, right_dir)        
         self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_right / motor_max_rpm) * 100)
 
-        #print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
+        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
         
 
 
