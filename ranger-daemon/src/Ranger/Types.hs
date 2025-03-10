@@ -27,7 +27,7 @@ import qualified Data.Vector as V
 -- name for the object, padded with '\NUL' at the end.
 newtype ObjectId = ObjectId { idBytes :: ByteString }
 
--- | 20-byte photo fragment, padded with 0 at the end if necessary.
+-- | 19-byte photo fragment, padded with 0 at the end if necessary.
 newtype PhotoFragment = PhotoFragment { fragmentBytes :: ByteString }
 
 
@@ -43,16 +43,16 @@ padNul l bs = bs <> B.replicate (l - B.length bs) 0
 toFragments :: ByteString -> Vector PhotoFragment
 toFragments bs
   | B.null bs = V.empty
-  | B.length bs < 20 = V.singleton (PhotoFragment $ padNul 20 bs)
+  | B.length bs < 19 = V.singleton (PhotoFragment $ padNul 19 bs)
   | otherwise =
-      let (fragment, rest) = B.splitAt 20 bs
+      let (fragment, rest) = B.splitAt 19 bs
        in V.cons (PhotoFragment fragment) (toFragments rest)
 
 fromFragments :: [PhotoFragment] -> ByteString
 fromFragments = B.dropWhileEnd (== 0) . B.concat . map fragmentBytes
 
 nBytesToNFragments :: Integral a => a -> a
-nBytesToNFragments nBytes = (nBytes `div` 20) + if nBytes `mod` 20 == 0 then 0 else 1
+nBytesToNFragments nBytes = (nBytes `div` 19) + if nBytes `mod` 19 == 0 then 0 else 1
 
 data SearchParameters = SearchParameters
   { timeout :: Word8 -- ^ minutes, 0 interpreted as nothing
@@ -72,4 +72,4 @@ instance S.Serialize ObjectId where
 
 instance S.Serialize PhotoFragment where
   put (PhotoFragment bs) = mapM_ S.put (B.unpack bs)
-  get = PhotoFragment . B.pack <$> replicateM 20 (S.get :: S.Get Word8)
+  get = PhotoFragment . B.pack <$> replicateM 19 (S.get :: S.Get Word8)
