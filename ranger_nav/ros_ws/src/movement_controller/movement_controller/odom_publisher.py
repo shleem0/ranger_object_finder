@@ -6,7 +6,7 @@ from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
 from tf_transformations import quaternion_from_euler
 
-from math import sin, cos, pid
+from math import sin, cos, pi
 import numpy as np
 
 from grove.grove_i2c_motor_driver import MotorDriver
@@ -67,7 +67,7 @@ class OdometryPublisher(Node):
         self.y += linear_velocity * dt * sin(self.theta)
         self.theta += angular_velocity * dt
 
-        print(self.x, self.y, self.theta)
+        print(f"{self.x}, {self.y}, {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
@@ -113,7 +113,7 @@ class OdometryPublisher(Node):
         t_base_laser.header.frame_id = "base_link"
         t_base_laser.child_frame_id = "laser"
         
-        t_base_laser.transform.translation.x = 0.0  # 1 meter ahead of the robot
+        t_base_laser.transform.translation.x = 0.0
         t_base_laser.transform.translation.y = 0.0  # Same height
         t_base_laser.transform.translation.z = 13.5  # Height of laser from ground (adjust as needed)
 
