@@ -26,11 +26,4 @@ def track_position():
             print(f"{position1}, {position2}")
             time.sleep(0.1)
 
-        with open("motor_data1.txt","r") as f1, open("motor_data2.txt","r") as f2:
-
-            f1.read()
-            f2.read()
-
-
-   
 track_position()

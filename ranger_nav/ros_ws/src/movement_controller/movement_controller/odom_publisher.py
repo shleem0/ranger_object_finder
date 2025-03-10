@@ -54,6 +54,8 @@ class OdometryPublisher(Node):
         motor_pos1 = float(f1.read())
         motor_pos2 = float(f2.read())
 
+        print(f"Motor pos from file: {motor_pos1}, {motor_pos2}")
+
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
