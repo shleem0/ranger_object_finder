@@ -1,10 +1,14 @@
 import rclpy
 from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
-from geometry_msgs.msg import TransformStamped
+
+from geometry_msgs.msg import TransformStamped, PoseStamped
+from nav_msgs.msg import Odometry, Twist, OccupancyGri
 from tf_transformations import quaternion_from_euler
-from math import sin, cos, pi
-from nav_msgs.msg import Odometry, Twist
+
+from math import sin, cos, pid
+import numpy as np
+
 from grove.grove_i2c_motor_driver import MotorDriver
 from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 
@@ -36,7 +40,7 @@ class OdometryPublisher(Node):
         self.last_time = self.get_clock().now()
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
-        self.timer = self.create_timer(0.1, self.timer_callback)
+        self.trans_timer = self.create_timer(0.1, self.timer_callback)
 
 
     def timer_callback(self):
@@ -137,19 +141,6 @@ class OdometryPublisher(Node):
                 self.publish_goal_pose(goal_pose)
 
 
-
-    def map_callback(self, msg):
-        # Store map data when the map is received
-        self.map_data = msg
-
-        # Process map data to find a goal pose
-        if self.map_data:
-            goal_pose = self.find_goal_pose(self.map_data)
-            if goal_pose:
-                self.publish_goal_pose(goal_pose)
-    
-
-
     def find_goal_pose(self, map_data):
         # Extract the map dimensions and data
         width = map_data.info.width
@@ -229,9 +220,9 @@ class OdometryPublisher(Node):
             right_dir = False
 
         self.motor.set_dir(left_dir, right_dir)        
-        self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_left / motor_max_rpm) * 100)
+        self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_right / motor_max_rpm) * 100)
 
-        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_left / motor_max_rpm) * 100}")
+        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
         
 
 
