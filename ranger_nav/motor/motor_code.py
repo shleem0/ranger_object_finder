@@ -1,13 +1,11 @@
 import time
 import sys
-import keyboard
 from grove.grove_i2c_motor_driver import MotorDriver
 from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 from multiprocessing import Queue
 
+
 motor = MotorDriver()
-PIN = 5
-encoder = GroveOpticalRotaryEncoder(PIN)
 
 while True:
     command = input("enter your command:" )
@@ -36,7 +34,7 @@ while True:
         motor.set_dir(True, False)
         motor.set_speed(100,100)
 
-    elif command == ' ' :
+    elif command == '' :
         motor.set_speed(0,0)
 
 

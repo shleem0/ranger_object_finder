@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver
+CMAKE_SOURCE_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver
+CMAKE_BINARY_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver
 
 # Include any dependencies generated for this target.
 include CMakeFiles/hlds_laser_publisher.dir/depend.make
@@ -70,18 +70,18 @@ include CMakeFiles/hlds_laser_publisher.dir/progress.make
 include CMakeFiles/hlds_laser_publisher.dir/flags.make
 
 CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o: CMakeFiles/hlds_laser_publisher.dir/flags.make
-CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp
+CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp
 CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o: CMakeFiles/hlds_laser_publisher.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o -MF CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o.d -o CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o -MF CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o.d -o CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp
 
 CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp > CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp > CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.i
 
 CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp -o CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/src/hlds_laser_publisher.cpp -o CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.s
 
 # Object files for target hlds_laser_publisher
 hlds_laser_publisher_OBJECTS = \
@@ -92,7 +92,7 @@ hlds_laser_publisher_EXTERNAL_OBJECTS =
 
 hlds_laser_publisher: CMakeFiles/hlds_laser_publisher.dir/src/hlds_laser_publisher.cpp.o
 hlds_laser_publisher: CMakeFiles/hlds_laser_publisher.dir/build.make
-hlds_laser_publisher: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0
+hlds_laser_publisher: /usr/lib/aarch64-linux-gnu/libboost_system.so.1.74.0
 hlds_laser_publisher: /opt/ros/humble/lib/librclcpp.so
 hlds_laser_publisher: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_c.so
 hlds_laser_publisher: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_cpp.so
@@ -155,7 +155,7 @@ hlds_laser_publisher: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_c.so
 hlds_laser_publisher: /opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_py.so
 hlds_laser_publisher: /opt/ros/humble/lib/libstd_msgs__rosidl_generator_py.so
 hlds_laser_publisher: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_generator_py.so
-hlds_laser_publisher: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+hlds_laser_publisher: /usr/lib/aarch64-linux-gnu/libpython3.10.so
 hlds_laser_publisher: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_c.so
 hlds_laser_publisher: /opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_c.so
 hlds_laser_publisher: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
@@ -172,7 +172,7 @@ hlds_laser_publisher: /opt/ros/humble/lib/librcpputils.so
 hlds_laser_publisher: /opt/ros/humble/lib/librosidl_runtime_c.so
 hlds_laser_publisher: /opt/ros/humble/lib/librcutils.so
 hlds_laser_publisher: CMakeFiles/hlds_laser_publisher.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hlds_laser_publisher"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hlds_laser_publisher"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hlds_laser_publisher.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -184,6 +184,6 @@ CMakeFiles/hlds_laser_publisher.dir/clean:
 .PHONY : CMakeFiles/hlds_laser_publisher.dir/clean
 
 CMakeFiles/hlds_laser_publisher.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles/hlds_laser_publisher.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/CMakeFiles/hlds_laser_publisher.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/hlds_laser_publisher.dir/depend
 

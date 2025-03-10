@@ -1,1 +1,0 @@
-/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/slam_gmapping/slam_gmapping/launch/slam_gmapping.launch.py

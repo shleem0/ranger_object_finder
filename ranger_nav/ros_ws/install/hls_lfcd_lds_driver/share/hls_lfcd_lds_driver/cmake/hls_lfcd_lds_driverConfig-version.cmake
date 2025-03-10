@@ -1,1 +1,1 @@
-/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake
+/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake

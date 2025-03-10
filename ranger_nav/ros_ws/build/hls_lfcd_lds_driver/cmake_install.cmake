@@ -1,8 +1,8 @@
-# Install script for directory: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver
+# Install script for directory: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver")
+  set(CMAKE_INSTALL_PREFIX "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -54,5 +54,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
