@@ -24,7 +24,7 @@ class OdometryPublisher(Node):
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
-        #self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
+        self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
 
         self.map_data = None
         
@@ -52,8 +52,6 @@ class OdometryPublisher(Node):
 
         motor_pos1 = float(f1.read())
         motor_pos2 = float(f2.read())
-
-        print(f"motor pos: {motor_pos1}, {motor_pos2}")
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
