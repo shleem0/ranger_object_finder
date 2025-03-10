@@ -24,10 +24,9 @@ class OdometryPublisher(Node):
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
-        self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
+        #self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
 
         self.map_data = None
-        self.motor = MotorDriver()
         
         # Initialize position and orientation
         self.x = 0.0
@@ -54,8 +53,6 @@ class OdometryPublisher(Node):
         motor_pos1 = float(f1.read())
         motor_pos2 = float(f2.read())
 
-        print(f"Motor pos from file: {motor_pos1}, {motor_pos2}")
-
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
@@ -70,7 +67,7 @@ class OdometryPublisher(Node):
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
 
-        print(f"{self.x}, {self.y}, {self.theta}")
+        print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
@@ -218,14 +215,19 @@ class OdometryPublisher(Node):
 
         if v_left < 0:
             left_dir = False
+            v_left = -v_right
 
         if v_right < 0:
             right_dir = False
+            v_right = -v_right
 
-        self.motor.set_dir(left_dir, right_dir)        
-        self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_right / motor_max_rpm) * 100)
+        f1 = open("motor/motor_input1", "w")
+        f2 = open("motor/motor_input2", "w")
 
-        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
+        f1.write(f"{left_dir}, {(v_left / motor_max_rpm) * 100}")
+        f2.write(f"{right_dir}, {(v_right / motor_max_rpm) * 100}")
+
+
         
 
 

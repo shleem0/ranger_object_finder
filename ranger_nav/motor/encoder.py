@@ -23,7 +23,7 @@ def track_position():
             f2.write(f"{position2}")
             f2.flush()
 
-            print(f"{position1}, {position2}")
+            #print(f"{position1}, {position2}")
             time.sleep(0.1)
 
 track_position()
