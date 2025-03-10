@@ -53,6 +53,7 @@ class OdometryPublisher(Node):
 
         motor_pos1 = float(f1.read())
         motor_pos2 = float(f2.read())
+        print(f"Motor pos:{motor_pos1}, {motor_pos2}")
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
@@ -63,11 +64,9 @@ class OdometryPublisher(Node):
         angular_velocity = (vel1 - vel2) / 0.135  # rad/s (example value)
 
         # Update position and orientation based on velocity
+        self.theta += angular_velocity * dt
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
-        self.theta += angular_velocity * dt
-
-        print(f"{self.x}, {self.y}, {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
@@ -222,7 +221,7 @@ class OdometryPublisher(Node):
         self.motor.set_dir(left_dir, right_dir)        
         self.motor.set_speed((v_left / motor_max_rpm) * 100, (v_right / motor_max_rpm) * 100)
 
-        print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
+        #print(f"Motor speeds: {(v_left / motor_max_rpm) * 100}, {(v_right / motor_max_rpm) * 100}")
         
 
 
