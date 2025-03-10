@@ -8,12 +8,6 @@
 {-# LANGUAGE EmptyCase #-}
 
 -- | Messages that we can send over Bluetooth.
---
--- In a separate module because old HLS versions shrivel up and die
--- with false conflicting instance errors when using singletons-2.7
---
--- You will probably have to restart HLS every time you change this file
--- (vscode: Ctrl+Shift+P -> "Haskell: Restart Haskell LSP server")
 module Ranger.Bluetooth.Msg
   ( -- * Types
     Side(..)
@@ -25,11 +19,8 @@ module Ranger.Bluetooth.Msg
   , PhoneSym0
   , RangerSym0
   , SSide(..)
-  , SMsg(..)
   ) where
 
-import Data.Kind
-import Data.Singletons
 import Data.Singletons.TH
 import Data.Text (Text)
 import Data.Fixed
@@ -63,15 +54,7 @@ data FunctionCall
   | PowerOff
 
 data Msg s a where
-  FunctionCall :: FunctionCall -> Msg 'Phone FunctionCall
-
-data SMsg (a :: Type) where
-  SFunctionCall :: SMsg (Msg 'Phone FunctionCall)
+  FunctionCall :: Msg 'Phone FunctionCall
 
 $(genSingletons [''Side])
 $(singDecideInstance ''Side)
-
-type instance Sing = SMsg
-
-instance SingI (Msg 'Phone FunctionCall) where
-  sing = SFunctionCall
