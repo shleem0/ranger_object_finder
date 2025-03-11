@@ -26,7 +26,7 @@ module Ranger.Effect
 import Effectful
 import Effectful.TH
 import Data.ByteString (ByteString)
-import Ranger.Types
+import Ranger.Bluetooth.Types
 import Data.Vector (Vector)
 
 data RangerControl :: Effect where

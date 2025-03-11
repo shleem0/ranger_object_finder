@@ -1,11 +1,6 @@
-{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE GADTs #-}
-{-# LANGUAGE StandaloneKindSignatures #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE EmptyCase #-}
+{-# LANGUAGE StandaloneDeriving #-}
 
 -- | Messages that we can send over Bluetooth.
 module Ranger.Bluetooth.Msg
@@ -19,11 +14,8 @@ module Ranger.Bluetooth.Msg
   , SSide(..)
   ) where
 
-import Data.Singletons.TH
-import Ranger.Types
+import Ranger.Bluetooth.Types
 import Data.Word
-
-data Side = Ranger | Phone
 
 -- | Any functions that may require some physical action from Ranger/prolonged
 -- communication with the phone to execute.
@@ -50,5 +42,4 @@ data Msg s a where
   RequestedObjectPhotoCount :: Msg 'Ranger Word8
   SchedulePowerOffResult :: Msg 'Ranger Bool
 
-$(genSingletons [''Side])
-$(singDecideInstance ''Side)
+deriving instance Eq (Msg s a)

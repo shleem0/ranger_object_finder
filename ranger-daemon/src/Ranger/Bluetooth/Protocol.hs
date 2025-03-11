@@ -13,10 +13,9 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
-module Ranger.Bluetooth.Protocol (bluetoothProtocol, RPSync, SideM(..)) where
+module Ranger.Bluetooth.Protocol (dispatchFunction, RPSync, SideM(..)) where
 
 import Control.Monad.Sync
-import Conduit
 import Data.Singletons
 import Ranger.Bluetooth.Msg
 import Control.Monad.Trans.Reader
@@ -26,7 +25,7 @@ import Data.Void
 import Ranger.Effect (RangerControl, startDemo, cancelDemo, startSearch, updateSearch, cancelSearch, saveObject, deleteObject, getObjectPhotos, getNotificationPhoto, powerOff)
 import Control.Monad
 import Effectful
-import Ranger.Types
+import Ranger.Bluetooth.Types
 import Data.ByteString (ByteString)
 import Data.Vector (Vector)
 import qualified Data.Vector as V
@@ -52,14 +51,6 @@ deriving instance Monad (SideM 'Phone m)
 
 -- | Ranger-Phone sync
 type RPSync s m = Sync s Msg (SideM s m)
-
-bluetoothProtocol :: RangerControl :> es => RPSync s (Eff es) ()
-bluetoothProtocol = do
-  runConduit
-    $ repeatMC (syncP FunctionCall pseudocode)
-    .| takeWhileC (\case PowerOff -> False; _ -> True)
-    .| mapM_C dispatchFunction
-  dispatchFunction PowerOff
 
 privateR :: m a -> RPSync s m (Private s 'Ranger a)
 privateR a = private SRanger Proxy (SideM a)

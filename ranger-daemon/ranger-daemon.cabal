@@ -18,11 +18,11 @@ library
     import:           warnings
     exposed-modules:  Ranger.Effect
                     , Ranger.Demo
-                    , Ranger.Types
                     , Ranger.Bluetooth
                     , Ranger.Bluetooth.Gatt
                     , Ranger.Bluetooth.Msg
                     , Ranger.Bluetooth.Protocol
+                    , Ranger.Bluetooth.Types
     -- other-modules:
     -- other-extensions:
     build-depends:   base ^>=4.14.0.0
@@ -30,7 +30,7 @@ library
                    , ble
                    , bytestring
                    , cereal
-                   , conduit
+                   --, conduit
                    , effectful
                    , effectful-th
                    , singletons == 2.7

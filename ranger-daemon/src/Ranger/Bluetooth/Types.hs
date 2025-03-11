@@ -1,9 +1,19 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE ApplicativeDo #-}
-module Ranger.Types
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE StandaloneKindSignatures #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE EmptyCase #-}
+module Ranger.Bluetooth.Types
   ( ObjectId(idBytes)
   , PhotoFragment(fragmentBytes)
   , SearchParameters(..)
+  , Side(..)
+  , SSide(..)
+  , PhoneSym0
+  , RangerSym0
   , nBytesToNFragments
   , objectName
   , toObjectId
@@ -22,6 +32,12 @@ import qualified Data.ByteString.Char8 as BC
 import Control.Monad
 import Data.Vector (Vector)
 import qualified Data.Vector as V
+import Data.Singletons.TH
+
+data Side = Ranger | Phone
+
+$(genSingletons [''Side])
+$(singDecideInstance ''Side)
 
 -- | 16-byte (8-bit chars/unicode code points 0-255)
 -- name for the object, padded with '\NUL' at the end.

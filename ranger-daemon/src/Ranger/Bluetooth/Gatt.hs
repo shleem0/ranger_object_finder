@@ -5,7 +5,7 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 -- TODO: use Effectful
-module Ranger.Bluetooth.Gatt (runRangerGatt, RangerBluetoothException(..)) where
+module Ranger.Bluetooth.Gatt (runRangerGatt, RangerBluetoothException(..), RangerComms, SomeMsg(..)) where
 
 import Bluetooth
 import qualified Bluetooth.Internal.Types as Bluetooth
