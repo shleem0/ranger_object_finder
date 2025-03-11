@@ -20,6 +20,7 @@ library
                     , Ranger.Demo
                     , Ranger.Types
                     , Ranger.Bluetooth
+                    , Ranger.Bluetooth.Gatt
                     , Ranger.Bluetooth.Msg
                     , Ranger.Bluetooth.Protocol
     -- other-modules:
