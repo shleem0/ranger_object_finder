@@ -33,6 +33,7 @@ library
                    , conduit
                    , effectful
                    , effectful-th
+                   , hslogger
                    , singletons == 2.7
                    , stm
                    , sync-monad

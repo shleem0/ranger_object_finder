@@ -43,3 +43,4 @@ data Msg s a where
   SchedulePowerOffResult :: Msg 'Ranger Bool
 
 deriving instance Eq (Msg s a)
+deriving instance Show (Msg s a)

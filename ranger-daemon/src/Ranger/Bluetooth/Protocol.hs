@@ -41,17 +41,17 @@ pseudocode :: VoidM a
 pseudocode = VoidM ask >>= absurd
 
 -- | Monad that only exists if the side is 'Ranger'.
-newtype SideM (s :: Side) m a = SideM { unSide :: If (s == 'Ranger) m VoidM a }
+newtype SideM m (s :: Side) a = SideM { unSide :: If (s == 'Ranger) m VoidM a }
 
-deriving instance Functor m => Functor (SideM 'Ranger m)
-deriving instance Applicative m => Applicative (SideM 'Ranger m)
-deriving instance Monad m => Monad (SideM 'Ranger m)
-deriving instance Functor (SideM 'Phone m)
-deriving instance Applicative (SideM 'Phone m)
-deriving instance Monad (SideM 'Phone m)
+deriving instance Functor m => Functor (SideM m 'Ranger)
+deriving instance Applicative m => Applicative (SideM m 'Ranger)
+deriving instance Monad m => Monad (SideM m 'Ranger)
+deriving instance Functor (SideM m 'Phone)
+deriving instance Applicative (SideM m 'Phone)
+deriving instance Monad (SideM m 'Phone)
 
 -- | Ranger-Phone sync
-type RPSync s m = Sync s Msg (SideM s m)
+type RPSync s m = Sync s Msg (SideM m s)
 
 privateR :: m a -> RPSync s m (Private s 'Ranger a)
 privateR a = private SRanger Proxy (SideM a)
