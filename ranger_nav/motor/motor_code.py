@@ -3,6 +3,7 @@ from grove.grove_i2c_motor_driver import MotorDriver
 from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 
 motor = MotorDriver()
+print("motor defined")
 
 while True:
     
@@ -24,7 +25,9 @@ while True:
         right_v = 0
 
     motor.set_dir(left_dir, right_dir)
+    print("direction set")
     motor.set_speed(left_v, right_v)
+    print("speed set")
     print(f"Motor going at {left_v}:{left_dir}, {right_v}:{right_dir}")
     time.sleep(0.1)
 
