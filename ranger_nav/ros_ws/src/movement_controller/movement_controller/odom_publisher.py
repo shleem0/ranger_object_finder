@@ -194,6 +194,7 @@ class OdometryPublisher(Node):
             goal_pose.pose.position.y = goal_y
             goal_pose.pose.position.z = 0.0
             goal_pose.pose.orientation.w = 1.0
+            print("Found goal pose")
             return goal_pose
         
         return None
