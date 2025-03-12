@@ -246,12 +246,8 @@ class OdometryPublisher(Node):
         f1.close()
         f2.close()
 
-        self.motor.set_dir(left_dir, right_dir)
-        self.motor.set_speed(v_left / motor_max_speed * 100, v_right / motor_max_speed * 100)
-
 
         
-
 
 def main(args=None):
     rclpy.init(args=args)
