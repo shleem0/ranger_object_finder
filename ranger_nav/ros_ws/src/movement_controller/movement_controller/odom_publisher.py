@@ -175,6 +175,8 @@ class OdometryPublisher(Node):
                 edge_points.append((0, y))
             if map_array[y, width-1] == 0:  # Last column
                 edge_points.append((width-1, y))
+
+        print("Got edge points")
         
         # If we found any free edge points, return the first one (or any other strategy)
         if edge_points:
@@ -193,6 +195,8 @@ class OdometryPublisher(Node):
             goal_pose.pose.position.y = goal_y
             goal_pose.pose.position.z = 0.0
             goal_pose.pose.orientation.w = 1.0  # Facing "forward"
+
+            print(f"Goal: x:{goal_x}, y:{goal_y}")
             
             return goal_pose
         
