@@ -220,7 +220,7 @@ class OdometryPublisher(Node):
         wheelbase = 0.13  # The distance between the two wheels (meters)
         motor_max_rpm = 150
 
-        motor_max_speed = 2 * pi * 0.04 * motor_max_rpm
+        motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase / 2) * angular_velocity
@@ -239,6 +239,9 @@ class OdometryPublisher(Node):
 
         f1 = open("motor/motor_input1.txt", "w")
         f2 = open("motor/motor_input2.txt", "w")
+
+        print(f"{left_dir} {v_left / motor_max_speed * 100}")
+        print(f"{right_dir} {v_right / motor_max_speed * 100}")
 
         f1.write(f"{left_dir} {v_left / motor_max_speed * 100}")
         f2.write(f"{right_dir} {v_right / motor_max_speed * 100}")
