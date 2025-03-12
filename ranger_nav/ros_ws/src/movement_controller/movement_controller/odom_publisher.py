@@ -240,9 +240,6 @@ class OdometryPublisher(Node):
         f1 = open("motor/motor_input1.txt", "w")
         f2 = open("motor/motor_input2.txt", "w")
 
-        print(f"{left_dir} {v_left / motor_max_speed * 100}")
-        print(f"{right_dir} {v_right / motor_max_speed * 100}")
-
         f1.write(f"{left_dir} {v_left / motor_max_speed * 100}")
         f2.write(f"{right_dir} {v_right / motor_max_speed * 100}")
 

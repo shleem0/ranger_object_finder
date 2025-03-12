@@ -1,5 +1,4 @@
 import time
-
 from grove.grove_i2c_motor_driver import MotorDriver
 from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 
