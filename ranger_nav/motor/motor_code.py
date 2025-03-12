@@ -24,21 +24,12 @@ def control_motors():
             left_v = 0
             right_v = 0
 
-        
-        print(type(left_dir))
-        print(left_dir)
-
-        print(type(right_dir))
-        print(right_dir)
-
         motor.set_dir(left_dir, right_dir)
         motor.set_speed(left_v, right_v)
-        print("speed set")
-        print(f"Motor going at {left_v}:{left_dir}, {right_v}:{right_dir}")
-        time.sleep(0.1)
 
         f1.close()
         f2.close()
+        time.sleep(0.1)
 
 control_motors()
 
