@@ -167,18 +167,20 @@ class OdometryPublisher(Node):
         
         # Check the edges of the map (first and last rows and columns)
         for x in range(width):
-            if map_array[0, x] == 0:  # First row
+            if map_array[0, x] == -1:  # First row
                 edge_points.append((x, 0))
-            if map_array[height-1, x] == 0:  # Last row
+            if map_array[height-1, x] == -1:  # Last row
                 edge_points.append((x, height-1))
         for y in range(height):
-            if map_array[y, 0] == 0:  # First column
+            if map_array[y, 0] == -1:  # First column
                 edge_points.append((0, y))
-            if map_array[y, width-1] == 0:  # Last column
+            if map_array[y, width-1] == -1:  # Last column
                 edge_points.append((width-1, y))
         
         # If we found any free edge points, return the first one (or any other strategy)
         if edge_points:
+
+            print("Got edge points")
             
             edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
             
@@ -205,7 +207,7 @@ class OdometryPublisher(Node):
     def publish_goal_pose(self):
         if self.goal:
             self.goal_pose_pub.publish(self.goal)
-            print (f"Goal pose:\n x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+            print (f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
 
         else:
             print("No goal pose\n")
