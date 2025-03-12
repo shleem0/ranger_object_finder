@@ -6,7 +6,7 @@ from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
 from tf_transformations import quaternion_from_euler
 
-from math import sin, cos, pi
+from math import sin, cos, pi, sqrt
 import numpy as np
 
 from grove.grove_i2c_motor_driver import MotorDriver
@@ -16,10 +16,8 @@ class OdometryPublisher(Node):
     def __init__(self):
         super().__init__('odometry_publisher')
         
-        # Create a TF broadcaster to send the transform
         self.broadcaster = TransformBroadcaster(self)
 
-        # Create an odometry publisher
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
@@ -43,6 +41,8 @@ class OdometryPublisher(Node):
         self.trans_timer = self.create_timer(0.1, self.timer_callback)
 
 
+
+
     def timer_callback(self):
         # Get current time
         current_time = self.get_clock().now()
@@ -51,8 +51,12 @@ class OdometryPublisher(Node):
         f1 = open("motor/motor_data1.txt", "r")
         f2 = open("motor/motor_data2.txt", "r")
 
-        motor_pos1 = float(f1.read())
-        motor_pos2 = float(f2.read())
+        try:
+            motor_pos1 = float(f1.read())
+            motor_pos2 = float(f2.read())
+        except:
+            motor_pos1 = 0.0
+            motor_pos2 = 0.0
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
@@ -131,6 +135,8 @@ class OdometryPublisher(Node):
         self.last_time = current_time
 
 
+
+
     def map_callback(self, msg):
 
         self.map_data = msg
@@ -140,6 +146,8 @@ class OdometryPublisher(Node):
 
             if goal_pose:
                 self.publish_goal_pose(goal_pose)
+
+
 
 
     def find_goal_pose(self, map_data):
@@ -170,7 +178,8 @@ class OdometryPublisher(Node):
         
         # If we found any free edge points, return the first one (or any other strategy)
         if edge_points:
-            edge_point = edge_points[0]  # Choose the first edge point for simplicity
+            
+            edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
             
             # Convert map coordinates to world coordinates
             goal_x = origin_x + edge_point[0] * resolution
@@ -191,8 +200,10 @@ class OdometryPublisher(Node):
 
 
 
+
     def publish_goal_pose(self, goal_pose):
         self.goal_pose_pub.publish(goal_pose)
+
 
 
 

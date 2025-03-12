@@ -12,7 +12,7 @@ encoder2 = GroveOpticalRotaryEncoder(PIN2)
 
 def track_position():
     while True:
-        with open("motor_data1.txt","w") as f1, open("motor_data2.txt","w") as f2:
+        with open("motor/motor_data1.txt","w") as f1, open("motor/motor_data2.txt","w") as f2:
             position1 = encoder1.position()
             f1.seek(0)      
             f1.write(f"{position1}")
