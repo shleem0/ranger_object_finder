@@ -39,9 +39,11 @@ class OdometryPublisher(Node):
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.1, self.timer_callback)
+        self.pos_timer = self.create_timer(10, self.print_pos)
 
 
-
+    def print_pos(self):
+            print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
 
     def timer_callback(self):
         # Get current time
@@ -71,9 +73,6 @@ class OdometryPublisher(Node):
         self.theta += angular_velocity * dt
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
-
-        if dt == 10:
-            print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
