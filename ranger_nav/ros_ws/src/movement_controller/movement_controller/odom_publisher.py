@@ -9,9 +9,6 @@ from tf_transformations import quaternion_from_euler
 from math import sin, cos, pi, sqrt
 import numpy as np
 
-from grove.grove_i2c_motor_driver import MotorDriver
-from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
-
 class OdometryPublisher(Node):
     def __init__(self):
         super().__init__('odometry_publisher')
@@ -26,7 +23,6 @@ class OdometryPublisher(Node):
 
         self.map_data = None
         self.goal = None
-        self.motor = MotorDriver()
         
         # Initialize position and orientation
         self.x = 0.0
