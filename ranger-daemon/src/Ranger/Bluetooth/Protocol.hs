@@ -13,7 +13,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
-module Ranger.Bluetooth.Protocol (dispatchFunction, RPSync, SideM(..)) where
+module Ranger.Bluetooth.Protocol (bluetoothProtocol, RPSync, SideM(..)) where
 
 import Control.Monad.Sync
 import Data.Singletons
@@ -29,6 +29,7 @@ import Ranger.Bluetooth.Types
 import Data.ByteString (ByteString)
 import Data.Vector (Vector)
 import qualified Data.Vector as V
+import Conduit
 import Data.Word
 
 -- | A monad that can never be executed.
@@ -40,17 +41,17 @@ pseudocode :: VoidM a
 pseudocode = VoidM ask >>= absurd
 
 -- | Monad that only exists if the side is 'Ranger'.
-newtype SideM (s :: Side) m a = SideM { unSide :: If (s == 'Ranger) m VoidM a }
+newtype SideM m (s :: Side) a = SideM { unSide :: If (s == 'Ranger) m VoidM a }
 
-deriving instance Functor m => Functor (SideM 'Ranger m)
-deriving instance Applicative m => Applicative (SideM 'Ranger m)
-deriving instance Monad m => Monad (SideM 'Ranger m)
-deriving instance Functor (SideM 'Phone m)
-deriving instance Applicative (SideM 'Phone m)
-deriving instance Monad (SideM 'Phone m)
+deriving instance Functor m => Functor (SideM m 'Ranger)
+deriving instance Applicative m => Applicative (SideM m 'Ranger)
+deriving instance Monad m => Monad (SideM m 'Ranger)
+deriving instance Functor (SideM m 'Phone)
+deriving instance Applicative (SideM m 'Phone)
+deriving instance Monad (SideM m 'Phone)
 
 -- | Ranger-Phone sync
-type RPSync s m = Sync s Msg (SideM s m)
+type RPSync s m = Sync s Msg (SideM m s)
 
 privateR :: m a -> RPSync s m (Private s 'Ranger a)
 privateR a = private SRanger Proxy (SideM a)
@@ -63,6 +64,15 @@ syncR msg a = sync SRanger msg (SideM a)
 
 syncP :: Msg 'Phone a -> VoidM a -> RPSync s m a
 syncP msg a = sync SPhone msg (SideM a)
+
+-- | Phone calls function -> Phone & Ranger carry out the procedure defined in dispatchFunction -> Repeat until desync or successful power off
+bluetoothProtocol :: RangerControl :> es => RPSync s (Eff es) ()
+bluetoothProtocol = do
+  runConduit
+    $ repeatMC (syncP FunctionCall pseudocode)
+    .| takeWhileC (\case PowerOff -> False; _ -> True)
+    .| mapM_C dispatchFunction
+  dispatchFunction PowerOff
 
 dispatchFunction :: RangerControl :> es => FunctionCall -> RPSync s (Eff es) ()
 dispatchFunction = \case

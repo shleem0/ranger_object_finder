@@ -30,9 +30,10 @@ library
                    , ble
                    , bytestring
                    , cereal
-                   --, conduit
+                   , conduit
                    , effectful
                    , effectful-th
+                   , hslogger
                    , singletons == 2.7
                    , stm
                    , sync-monad
