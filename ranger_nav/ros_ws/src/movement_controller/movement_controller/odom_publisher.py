@@ -96,6 +96,7 @@ class OdometryPublisher(Node):
 
         # Broadcast the odom -> base_link transform
         self.broadcaster.sendTransform(t_odom_base)
+        self.tf_buffer.clear()
 
         # Create and publish the Odometry message
         odom_msg = Odometry()
@@ -131,6 +132,7 @@ class OdometryPublisher(Node):
 
         # Broadcast the base_link -> laser transform
         self.broadcaster.sendTransform(t_base_laser)
+        self.tf_buffer.clear()
 
         # Save current time for the next iteration
         self.last_time = current_time
