@@ -1,6 +1,6 @@
-import time
-import sys
+
 from grove.grove_i2c_motor_driver import MotorDriver
+from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 
 motor = MotorDriver()
 
