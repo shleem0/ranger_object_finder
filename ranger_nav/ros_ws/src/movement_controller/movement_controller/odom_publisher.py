@@ -25,6 +25,7 @@ class OdometryPublisher(Node):
         self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
 
         self.map_data = None
+        self.goal = None
         self.motor = MotorDriver()
         
         # Initialize position and orientation
@@ -40,10 +41,11 @@ class OdometryPublisher(Node):
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.1, self.timer_callback)
         self.pos_timer = self.create_timer(10, self.print_pos)
+        self.goal_pub_timer = self.create_timer(5, self.publish_goal_pose)
 
 
     def print_pos(self):
-            print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
+            print(f"Current pos:\nx: {self.x}, y: {self.y}, angle: {self.theta}\n")
 
     def timer_callback(self):
         # Get current time
@@ -142,10 +144,7 @@ class OdometryPublisher(Node):
         self.map_data = msg
 
         if self.map_data:
-            goal_pose = self.find_goal_pose(self.map_data)
-
-            if goal_pose:
-                self.publish_goal_pose(goal_pose)
+            self.goal = self.find_goal_pose(self.map_data)
 
 
 
@@ -175,8 +174,6 @@ class OdometryPublisher(Node):
                 edge_points.append((0, y))
             if map_array[y, width-1] == 0:  # Last column
                 edge_points.append((width-1, y))
-
-        print("Got edge points")
         
         # If we found any free edge points, return the first one (or any other strategy)
         if edge_points:
@@ -194,10 +191,7 @@ class OdometryPublisher(Node):
             goal_pose.pose.position.x = goal_x
             goal_pose.pose.position.y = goal_y
             goal_pose.pose.position.z = 0.0
-            goal_pose.pose.orientation.w = 1.0  # Facing "forward"
-
-            print(f"Goal: x:{goal_x}, y:{goal_y}")
-            
+            goal_pose.pose.orientation.w = 1.0
             return goal_pose
         
         return None
@@ -205,8 +199,9 @@ class OdometryPublisher(Node):
 
 
 
-    def publish_goal_pose(self, goal_pose):
-        self.goal_pose_pub.publish(goal_pose)
+    def publish_goal_pose(self):
+        self.goal_pose_pub.publish(self.goal)
+        print (f"Goal pose:\n x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
 
 
 
