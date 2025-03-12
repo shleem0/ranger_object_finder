@@ -179,8 +179,6 @@ class OdometryPublisher(Node):
         
         # If we found any free edge points, return the first one (or any other strategy)
         if edge_points:
-
-            print("Got edge points")
             
             edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
             
@@ -196,7 +194,6 @@ class OdometryPublisher(Node):
             goal_pose.pose.position.y = goal_y
             goal_pose.pose.position.z = 0.0
             goal_pose.pose.orientation.w = 1.0
-            print("Found goal pose")
             return goal_pose
         
         return None
@@ -241,8 +238,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor.set_dir(left_dir, right_dir)
-        motor.set_speed(v_left / motor_max_speed * 100, v_right / motor_max_speed * 100)
+        self.motor.set_dir(left_dir, right_dir)
+        self.motor.set_speed(v_left / motor_max_speed * 100, v_right / motor_max_speed * 100)
 
 
         
