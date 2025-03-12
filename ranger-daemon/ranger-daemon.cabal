@@ -30,7 +30,7 @@ library
                    , ble
                    , bytestring
                    , cereal
-                   --, conduit
+                   , conduit
                    , effectful
                    , effectful-th
                    , singletons == 2.7

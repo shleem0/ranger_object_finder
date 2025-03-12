@@ -13,7 +13,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
-module Ranger.Bluetooth.Protocol (dispatchFunction, RPSync, SideM(..)) where
+module Ranger.Bluetooth.Protocol (bluetoothProtocol, RPSync, SideM(..)) where
 
 import Control.Monad.Sync
 import Data.Singletons
@@ -29,6 +29,7 @@ import Ranger.Bluetooth.Types
 import Data.ByteString (ByteString)
 import Data.Vector (Vector)
 import qualified Data.Vector as V
+import Conduit
 import Data.Word
 
 -- | A monad that can never be executed.
@@ -63,6 +64,15 @@ syncR msg a = sync SRanger msg (SideM a)
 
 syncP :: Msg 'Phone a -> VoidM a -> RPSync s m a
 syncP msg a = sync SPhone msg (SideM a)
+
+-- | Phone calls function -> Phone & Ranger carry out the procedure defined in dispatchFunction -> Repeat until desync or successful power off
+bluetoothProtocol :: RangerControl :> es => RPSync s (Eff es) ()
+bluetoothProtocol = do
+  runConduit
+    $ repeatMC (syncP FunctionCall pseudocode)
+    .| takeWhileC (\case PowerOff -> False; _ -> True)
+    .| mapM_C dispatchFunction
+  dispatchFunction PowerOff
 
 dispatchFunction :: RangerControl :> es => FunctionCall -> RPSync s (Eff es) ()
 dispatchFunction = \case
