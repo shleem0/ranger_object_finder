@@ -10,7 +10,7 @@ def control_motors():
         f1 = open("motor/motor_input1.txt", "r")
         f2 = open("motor/motor_input2.txt", "r")
 
-        print(f1.read()[0])
+        print(f1.read().split(""))
 
         try:
             left_dir = bool(f1.read().split("")[0])
