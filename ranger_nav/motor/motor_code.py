@@ -10,11 +10,21 @@ def control_motors():
         f1 = open("motor/motor_input1.txt", "r")
         f2 = open("motor/motor_input2.txt", "r")
 
-        left_dir = bool(f1.read().split(" ")[0])
-        right_dir = bool(f2.read().split(" ")[0])
+        print(f1.read())
 
-        left_v = int(f1.read().split(" ")[1])
-        right_v = int(f2.read().split(" ")[1])
+        try:
+            left_dir = bool(f1.read().split(" ")[0])
+            right_dir = bool(f2.read().split(" ")[0])
+        except:
+            left_dir = True
+            right_dir = True
+
+        try:
+            left_v = int(f1.read().split(" ")[1])
+            right_v = int(f2.read().split(" ")[1])
+        except:
+            left_v = 0
+            right_v = 0
 
 
         print(f"Received left v: {left_v}")
