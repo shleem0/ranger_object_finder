@@ -85,7 +85,6 @@ runRangerGatt = evalContT . runExceptT $ do
 
   b <- liftIO . async . forever $ waitDemoStateChange $ \b -> do
     atomically $ writeTVar demoStateVar b
-    hPutStrLn stderr "b: demo state changed, notifying"
     result <- runBluetoothM (triggerNotification registered (demoState state)) conn
     case result of
       Right () -> pure ()
@@ -96,7 +95,6 @@ runRangerGatt = evalContT . runExceptT $ do
     atomically $ do
       p2 <- readTVar poisoned' 
       check (p1 /= p2)
-    hPutStrLn stderr "c: poison state changed, notifying"
     result <- runBluetoothM (triggerNotification registered (isPoisoned state)) conn
     case result of
       Right () -> pure ()
