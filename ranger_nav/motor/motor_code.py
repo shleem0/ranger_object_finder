@@ -10,6 +10,8 @@ def control_motors():
         f1 = open("motor/motor_input1.txt", "r")
         f2 = open("motor/motor_input2.txt", "r")
 
+        print(f1.read()[0])
+
         try:
             left_dir = bool(f1.read().split("")[0])
             right_dir = bool(f2.read().split("")[0])
@@ -24,8 +26,6 @@ def control_motors():
             left_v = 0
             right_v = 0
 
-
-        print(f"Received left v: {left_v}")
         motor.set_dir(left_dir, right_dir)
         motor.set_speed(left_v, right_v)
 
