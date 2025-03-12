@@ -226,8 +226,6 @@ class OdometryPublisher(Node):
         v_left = linear_velocity - (wheelbase / 2) * angular_velocity
         v_right = linear_velocity + (wheelbase / 2) * angular_velocity
 
-        print(v_left, v_right)
-
         left_dir = True
         right_dir = True
 

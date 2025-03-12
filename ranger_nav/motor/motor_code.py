@@ -24,6 +24,8 @@ def control_motors():
             left_v = 0
             right_v = 0
 
+        print(f"Motor set to {left_v}({left_dir}), {right_v}({right_dir})")
+
         motor.set_dir(left_dir, right_dir)
         motor.set_speed(left_v, right_v)
 
