@@ -231,7 +231,7 @@ class OdometryPublisher(Node):
 
         if v_left < 0:
             left_dir = False
-            v_left = -v_right
+            v_left = -v_left
 
         if v_right < 0:
             right_dir = False
