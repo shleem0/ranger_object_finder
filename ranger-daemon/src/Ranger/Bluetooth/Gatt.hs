@@ -92,13 +92,11 @@ runRangerGatt = evalContT . runExceptT $ do
       Left err -> throwIO $ RangerBluetoothException err
 
   c <- liftIO . async . forever $ do
+    p1 <- readTVarIO poisoned'
     atomically $ do
-      p <- readTVar poisoned'
-      check (not p)
-    atomically $ do
-      p <- readTVar poisoned'
-      check p
-    hPutStrLn stderr "c: poison detected, notifying"
+      p2 <- readTVar poisoned' 
+      check (p1 /= p2)
+    hPutStrLn stderr "c: poison state changed, notifying"
     result <- runBluetoothM (triggerNotification registered (isPoisoned state)) conn
     case result of
       Right () -> pure ()
