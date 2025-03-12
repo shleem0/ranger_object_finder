@@ -246,8 +246,6 @@ class OdometryPublisher(Node):
         f1.write(f"{left_dir} {motor1_speed}")
         f2.write(f"{right_dir} {motor2_speed}")
 
-        print(f"{right_dir} {motor2_speed}")
-
         f1.close()
         f2.close()
 

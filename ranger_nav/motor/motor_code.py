@@ -13,15 +13,15 @@ def control_motors():
         print(f1.read().split(""))
 
         try:
-            left_dir = bool(f1.read().split("")[0])
-            right_dir = bool(f2.read().split("")[0])
+            left_dir = bool((f1.read().split(""))[0])
+            right_dir = bool((f2.read().split(""))[0])
         except:
             left_dir = True
             right_dir = True
 
         try:
-            left_v = int(f1.read().split("")[1])
-            right_v = int(f2.read().split("")[1])
+            left_v = int((f1.read().split("")[1]))
+            right_v = int((f2.read().split("")[1]))
         except:
             left_v = 0
             right_v = 0
