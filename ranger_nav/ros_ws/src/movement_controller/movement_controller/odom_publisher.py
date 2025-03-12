@@ -62,6 +62,9 @@ class OdometryPublisher(Node):
             motor_pos1 = 0.0
             motor_pos2 = 0.0
 
+        f1.close()
+        f2.close()
+
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
@@ -237,6 +240,15 @@ class OdometryPublisher(Node):
         if v_right < 0:
             right_dir = False
             v_right = -v_right
+
+        f1 = open("motor/motor_input1.txt", "w")
+        f2 = open("motor/motor_input2.txt", "w")
+
+        f1.write(f"{left_dir} {v_left / motor_max_speed * 100}")
+        f2.write(f"{right_dir} {v_right / motor_max_speed * 100}")
+
+        f1.close()
+        f2.close()
 
         self.motor.set_dir(left_dir, right_dir)
         self.motor.set_speed(v_left / motor_max_speed * 100, v_right / motor_max_speed * 100)

@@ -2,38 +2,24 @@ import time
 import sys
 from grove.grove_i2c_motor_driver import MotorDriver
 
-
 motor = MotorDriver()
 
 while True:
-    command = input("enter your command:" )
+    
+    f1 = open("motor/motor_input1.txt", "r")
+    f2 = open("motor/motor_input2.txt", "r")
 
-    if command == 'w': 
-        motor.set_dir(True,True)
-        motor.set_speed(50,50)
+    left_dir = bool(f1.read().split(" ")[0])
+    right_dir = bool(f2.read().split(" ")[0])
 
-    elif command == "s":
-        motor.set_dir(False,False)
-        motor.set_speed(50,50)
+    left_v = int(f1.read().split(" ")[1])
+    right_v = int(f2.read().split(" ")[1])
 
-    elif command== 'r':
-        motor.set_dir(True,True)
-        motor.set_speed(100,100)
+    motor.set_dir(left_dir, right_dir)
+    motor.set_speed(left_v, right_v)
 
-    elif command == 'q':
-        motor.set_dir(False,False)
-        motor.set_speed(100,100)
-
-    elif command == 'd' :
-        motor.set_dir(False,True)
-        motor.set_speed(100,100)
-
-    elif command == 'a' :
-        motor.set_dir(True, False)
-        motor.set_speed(100,100)
-
-    elif command == '' :
-        motor.set_speed(0,0)
+    f1.close()
+    f2.close()
 
 
 
