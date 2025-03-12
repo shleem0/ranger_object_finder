@@ -72,7 +72,8 @@ class OdometryPublisher(Node):
         self.x += linear_velocity * dt * cos(self.theta)
         self.y += linear_velocity * dt * sin(self.theta)
 
-        print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
+        if dt == 10:
+            print(f"x: {self.x}, y: {self.y}, angle: {self.theta}")
 
         # Convert angle to quaternion for the TF message
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
