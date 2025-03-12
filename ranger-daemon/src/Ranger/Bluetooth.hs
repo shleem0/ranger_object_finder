@@ -52,6 +52,10 @@ runRangerBluetooth = do
             pure (q1, q2)
           let showSomeMsg (SomeMsg (msg, _)) = show msg
           hPutStrLn stderr $ "Rest of queues before flush:" ++ show (bimap (map (second showSomeMsg)) (map showSomeMsg) (q1, q2))
+          runEff. runConcurrent . atomically $ do
+            p <- readTVar (poisoned comms)
+            check (not p)
+          hPutStrLn stderr "Reset."
           go comms
         Nothing -> do
           hPutStrLn stderr "Done"
