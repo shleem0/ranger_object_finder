@@ -202,7 +202,10 @@ class OdometryPublisher(Node):
     def publish_goal_pose(self):
         if self.goal:
             self.goal_pose_pub.publish(self.goal)
-        print (f"Goal pose:\n x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+            print (f"Goal pose:\n x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+
+        else:
+            print("No goal pose\n")
 
 
 
