@@ -101,7 +101,7 @@ class OdometryPublisher(Node):
         odom_msg = Odometry()
         odom_msg.header.stamp = current_time.to_msg()
         odom_msg.header.frame_id = "odom"
-        odom_msg.child_frame_id = "base_scan"
+        odom_msg.child_frame_id = "base_link"
         odom_msg.pose.pose.position.x = self.x
         odom_msg.pose.pose.position.y = self.y
         odom_msg.pose.pose.position.z = 0.0  # Assuming 2D motion
@@ -116,8 +116,8 @@ class OdometryPublisher(Node):
         # Now broadcast the TF from base_link to laser (this is the new part)
         t_base_laser = TransformStamped()
         t_base_laser.header.stamp = current_time.to_msg()
-        t_base_laser.header.frame_id = "base_scan"
-        t_base_laser.child_frame_id = "laser"
+        t_base_laser.header.frame_id = "base_link"
+        t_base_laser.child_frame_id = "base_scan"
         
         t_base_laser.transform.translation.x = 0.0
         t_base_laser.transform.translation.y = 0.0  # Same height
