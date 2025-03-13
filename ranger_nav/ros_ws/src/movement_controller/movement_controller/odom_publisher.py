@@ -117,7 +117,7 @@ class OdometryPublisher(Node):
         t_base_laser = TransformStamped()
         t_base_laser.header.stamp = current_time.to_msg()
         t_base_laser.header.frame_id = "base_link"
-        t_base_laser.child_frame_id = "base_scan"
+        t_base_laser.child_frame_id = "laser"
         
         t_base_laser.transform.translation.x = 0.0
         t_base_laser.transform.translation.y = 0.0  # Same height
