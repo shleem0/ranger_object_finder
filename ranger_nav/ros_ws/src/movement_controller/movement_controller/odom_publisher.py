@@ -35,7 +35,7 @@ class OdometryPublisher(Node):
         self.last_time = self.get_clock().now()
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
-        self.trans_timer = self.create_timer(0.1, self.timer_callback)
+        self.trans_timer = self.create_timer(0.2, self.timer_callback)
         self.pos_timer = self.create_timer(10, self.print_pos)
         self.goal_pub_timer = self.create_timer(5, self.publish_goal_pose)
 
@@ -113,24 +113,42 @@ class OdometryPublisher(Node):
         # Publish the odometry message
         self.odom_publisher.publish(odom_msg)
 
-        # Now broadcast the TF from base_link to laser (this is the new part)
-        t_base_laser = TransformStamped()
-        t_base_laser.header.stamp = current_time.to_msg()
-        t_base_laser.header.frame_id = "base_link"
-        t_base_laser.child_frame_id = "laser"
+        t_base_link_base_scan = TransformStamped()
+        t_base_link_base_scan.header.stamp = current_time.to_msg()
+        t_base_link_base_scan.header.frame_id = "base_link"  # The parent frame
+        t_base_link_base_scan.child_frame_id = "base_scan"  # The child frame (sensor)
+
+        # Define the position and orientation of the sensor relative to base_link
+        # Here we're assuming the laser is 0.1 meters in front of the robot and aligned with the robot's center
+        t_base_link_base_scan.transform.translation.x = 0.0  # 0.1 meters in front of the robot
+        t_base_link_base_scan.transform.translation.y = 0.0  # Aligned with the center of the robot
+        t_base_link_base_scan.transform.translation.z = 0.0  # Assuming it's at ground level
+
+        # Assuming no rotation between the sensor and base_link (sensor is aligned with the robot's body)
+        t_base_link_base_scan.transform.rotation.x = 0.0
+        t_base_link_base_scan.transform.rotation.y = 0.0
+        t_base_link_base_scan.transform.rotation.z = 0.0
+        t_base_link_base_scan.transform.rotation.w = 0.0  # No rotation (identity quaternion)
+
+        # Send the transform from base_link to base_scan
+        self.broadcaster.sendTransform(t_base_link_base_scan)
+
+
+
+        t_base_scan_laser = TransformStamped()
+        t_base_scan_laser.header.stamp = current_time.to_msg()
+        t_base_scan_laser.header.frame_id = "base_scan"  # This could be your sensor frame
+        t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
+
+        t_base_scan_laser.transform.translation.x = 0.0
+        t_base_scan_laser.transform.translation.y = 0.0
+        t_base_scan_laser.transform.translation.z = 0.0
+        t_base_scan_laser.transform.rotation.x = 0.0
+        t_base_scan_laser.transform.rotation.y = 0.0
+        t_base_scan_laser.transform.rotation.z = 0.0
+        t_base_scan_laser.transform.rotation.w = 1.0
         
-        t_base_laser.transform.translation.x = 0.0
-        t_base_laser.transform.translation.y = 0.0  # Same height
-        t_base_laser.transform.translation.z = 13.5  # Height of laser from ground (adjust as needed)
-
-        # Assuming the laser is aligned with the robot (no rotation in this example)
-        t_base_laser.transform.rotation.x = 0.0
-        t_base_laser.transform.rotation.y = 0.0
-        t_base_laser.transform.rotation.z = 0.0
-        t_base_laser.transform.rotation.w = 1.0  # No rotation
-
-        # Broadcast the base_link -> laser transform
-        self.broadcaster.sendTransform(t_base_laser)
+        self.broadcaster.sendTransform(t_base_scan_laser)
 
         # Save current time for the next iteration
         self.last_time = current_time
