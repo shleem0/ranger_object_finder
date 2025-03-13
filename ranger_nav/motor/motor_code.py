@@ -11,12 +11,12 @@ def control_motors():
         f2 = open("motor/motor_input2.txt", "r")
 
         file1 = f1.read().split()
-        file2 = f1.read().split()
+        file2 = f2.read().split()
 
 
         try:
-            left_dir = eval(file1[0])
-            right_dir = eval(file2[0])
+            left_dir = bool(file1[0])
+            right_dir = bool(file2[0])
         except:
             left_dir = True
             right_dir = True
