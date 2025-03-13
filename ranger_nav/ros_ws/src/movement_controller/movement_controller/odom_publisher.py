@@ -128,7 +128,7 @@ class OdometryPublisher(Node):
         t_base_link_base_scan.transform.rotation.x = 0.0
         t_base_link_base_scan.transform.rotation.y = 0.0
         t_base_link_base_scan.transform.rotation.z = 0.0
-        t_base_link_base_scan.transform.rotation.w = 0.0  # No rotation (identity quaternion)
+        t_base_link_base_scan.transform.rotation.w = 1.0  # No rotation (identity quaternion)
 
         # Send the transform from base_link to base_scan
         self.broadcaster.sendTransform(t_base_link_base_scan)
@@ -147,7 +147,7 @@ class OdometryPublisher(Node):
         t_base_scan_laser.transform.rotation.y = 0.0
         t_base_scan_laser.transform.rotation.z = 0.0
         t_base_scan_laser.transform.rotation.w = 1.0
-        
+
         self.broadcaster.sendTransform(t_base_scan_laser)
 
         # Save current time for the next iteration
