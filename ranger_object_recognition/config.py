@@ -8,7 +8,7 @@ MODEL_TFLITE_PATH = os.path.join(BASE_DIR, "ranger_object_recognition/feature_ex
 TARGET_SIZE = (224, 224)
 SIMILARITY_THRESHOLD = 0.4 # Might have to adjust
 MIN_BOX_SIZE = 20
-DOWNSCALE_FACTOR = 0.25
+DOWNSCALE_FACTOR = 0.75
 TOP_K = 5000
 
 # Example reference image paths (used if --ref_dir is not provided)
