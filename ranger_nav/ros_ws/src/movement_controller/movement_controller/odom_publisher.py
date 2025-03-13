@@ -36,7 +36,7 @@ class OdometryPublisher(Node):
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.2, self.timer_callback)
-        self.pos_timer = self.create_timer(10, self.print_pos)
+        self.pos_timer = self.create_timer(5, self.print_pos)
         self.goal_pub_timer = self.create_timer(5, self.publish_goal_pose)
 
 
@@ -117,7 +117,7 @@ class OdometryPublisher(Node):
         t_base_scan_laser = TransformStamped()
         t_base_scan_laser.header.stamp = current_time.to_msg()
         t_base_scan_laser.header.frame_id = "base_link"  # This could be your sensor frame
-        t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
+        t_base_scan_laser.child_frame_id = "base_scan"  # The sensor frame
 
         t_base_scan_laser.transform.translation.x = 0.0
         t_base_scan_laser.transform.translation.y = 0.0
@@ -131,7 +131,6 @@ class OdometryPublisher(Node):
 
         # Save current time for the next iteration
         self.last_time = current_time
-
 
 
 
