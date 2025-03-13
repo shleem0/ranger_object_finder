@@ -113,31 +113,10 @@ class OdometryPublisher(Node):
         # Publish the odometry message
         self.odom_publisher.publish(odom_msg)
 
-        t_base_link_base_scan = TransformStamped()
-        t_base_link_base_scan.header.stamp = current_time.to_msg()
-        t_base_link_base_scan.header.frame_id = "base_link"  # The parent frame
-        t_base_link_base_scan.child_frame_id = "base_scan"  # The child frame (sensor)
-
-        # Define the position and orientation of the sensor relative to base_link
-        # Here we're assuming the laser is 0.1 meters in front of the robot and aligned with the robot's center
-        t_base_link_base_scan.transform.translation.x = 0.0  # 0.1 meters in front of the robot
-        t_base_link_base_scan.transform.translation.y = 0.0  # Aligned with the center of the robot
-        t_base_link_base_scan.transform.translation.z = 0.0  # Assuming it's at ground level
-
-        # Assuming no rotation between the sensor and base_link (sensor is aligned with the robot's body)
-        t_base_link_base_scan.transform.rotation.x = 0.0
-        t_base_link_base_scan.transform.rotation.y = 0.0
-        t_base_link_base_scan.transform.rotation.z = 0.0
-        t_base_link_base_scan.transform.rotation.w = 1.0  # No rotation (identity quaternion)
-
-        # Send the transform from base_link to base_scan
-        self.broadcaster.sendTransform(t_base_link_base_scan)
-
-
 
         t_base_scan_laser = TransformStamped()
         t_base_scan_laser.header.stamp = current_time.to_msg()
-        t_base_scan_laser.header.frame_id = "base_scan"  # This could be your sensor frame
+        t_base_scan_laser.header.frame_id = "base_link"  # This could be your sensor frame
         t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
 
         t_base_scan_laser.transform.translation.x = 0.0
