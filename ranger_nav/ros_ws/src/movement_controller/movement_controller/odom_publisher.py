@@ -101,7 +101,7 @@ class OdometryPublisher(Node):
         odom_msg = Odometry()
         odom_msg.header.stamp = current_time.to_msg()
         odom_msg.header.frame_id = "odom"
-        odom_msg.child_frame_id = "base_link"
+        odom_msg.child_frame_id = "base_scan"
         odom_msg.pose.pose.position.x = self.x
         odom_msg.pose.pose.position.y = self.y
         odom_msg.pose.pose.position.z = 0.0  # Assuming 2D motion
