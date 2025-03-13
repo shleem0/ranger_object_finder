@@ -32,6 +32,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -53,8 +54,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -95,7 +98,7 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        Row(modifier = Modifier.fillMaxWidth()){
+        Row(modifier = Modifier.fillMaxWidth()) {
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() != RangerBluetoothService.STATE_READY) {
                 Box(
@@ -127,8 +130,7 @@ fun HomeScreen(navController: NavController) {
                         )
                     }
                 }
-            }
-            else{
+            } else {
                 Box(
                     modifier = Modifier
                         .height(100.dp),
@@ -211,7 +213,8 @@ fun HomeScreen(navController: NavController) {
             Button(
                 onClick = { navController.navigate("addItem") }
             ) {
-                Text("Add Item",
+                Text(
+                    "Add Item",
                     fontSize = 18.sp,
                     color = MaterialTheme.colorScheme.surfaceBright
                 )
@@ -221,15 +224,15 @@ fun HomeScreen(navController: NavController) {
             Modifier.height(255.dp)
         ) {
             items(itemNames) { itemName ->
-                val imageName = "sdp$itemName"
-                val imageResId = remember {
-                    context.resources.getIdentifier(imageName, "drawable", context.packageName)
-                }
-                val fallbackResId = R.drawable.sdppencil
-                val finalImageResId = if (imageResId != 0) imageResId else fallbackResId
+                val context = LocalContext.current
+
+                val savedIconName = remember { readIconName(context, itemName) }
+                val savedIconResId = savedIconName?.let {
+                    context.resources.getIdentifier(it, "drawable", context.packageName)
+                } ?: R.drawable.sdppencil
+
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
                         modifier = Modifier
@@ -243,7 +246,7 @@ fun HomeScreen(navController: NavController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(id = finalImageResId),
+                                painter = painterResource(id = savedIconResId),
                                 contentDescription = "Icon for $itemName",
                                 modifier = Modifier.size(50.dp)
                             )
@@ -253,11 +256,11 @@ fun HomeScreen(navController: NavController) {
                                 modifier = Modifier
                                     .width(160.dp)
                                     .padding(top = 10.dp),
-                                fontSize = 30.sp,
+                                fontSize = 32.sp,
                                 color = MaterialTheme.colorScheme.surfaceBright,
                                 textAlign = TextAlign.Start,
                                 overflow = TextOverflow.Ellipsis,
-                                lineHeight = 30.sp,
+                                lineHeight = 32.sp,
                                 maxLines = 1
                             )
                         }
@@ -283,8 +286,18 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
+fun readIconName(context: Context, itemName: String): String? {
+    val folder = File(context.filesDir, itemName.lowercase())
+    val iconFile = File(folder, "icon_name.txt")
+    return if (iconFile.exists()) {
+        iconFile.readText().trim()
+    } else {
+        null
+    }
+}
+
 @Composable
-fun DeleteRow(navController: NavController, itemName: String, context: Context){
+fun DeleteRow(navController: NavController, itemName: String, context: Context) {
     AlertDialog(
         onDismissRequest = { },
         confirmButton = {
@@ -298,9 +311,13 @@ fun DeleteRow(navController: NavController, itemName: String, context: Context){
                 }
             ) {
                 Text("Delete", color = MaterialTheme.colorScheme.error)
-            } },
-        dismissButton = { TextButton(onClick = { navController.navigate("home") }) {
-                    Text("Cancel") } },
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { navController.navigate("home") }) {
+                Text("Cancel")
+            }
+        },
         title = { Text("Delete Item?") },
         text = { Text("Are you sure you want to delete $itemName? All photos will be lost.") }
     )
@@ -350,14 +367,15 @@ fun getItemNames(context: Context): List<String> {
 }
 
 @Composable
-fun AddItem(navController: NavController){
-    var itemName by remember { mutableStateOf(TextFieldValue()) }
-    var additionalDetails by remember { mutableStateOf(TextFieldValue()) }
+fun AddItem(navController: NavController) {
+    var itemName by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
-    fun createItemFolderAndSaveData() {
-        if (itemName.text.isNotEmpty()) {
-            val folder = File(context.filesDir, itemName.text.lowercase())
+    fun createItemFolderAndSaveData(): Boolean {
+        Log.d("AddItem", "createItemFolderAndSaveData() called for item: $itemName")
+        if (itemName.isNotEmpty()) {
+            val folder = File(context.filesDir, itemName.lowercase())
             if (!folder.exists()) {
                 folder.mkdirs()
 
@@ -365,29 +383,32 @@ fun AddItem(navController: NavController){
                 try {
                     val fileOutputStream = FileOutputStream(itemDataFile)
                     val itemDetails = """
-                        Name: ${itemName.text}
-                        Icon: R.drawable.sdppencil
-                        Details: ${additionalDetails.text}
+                        Name: ${itemName}
                     """.trimIndent()
-
                     fileOutputStream.write(itemDetails.toByteArray())
                     fileOutputStream.close()
-
-                    Toast.makeText(context,
-                        "Item folder created",
-                        Toast.LENGTH_SHORT).show()
+                    return true
                 } catch (e: IOException) {
-                    e.printStackTrace()
+                    Log.e("AddItem", "Error writing file: ${e.message}")
+                    Toast.makeText(context, "Error saving item", Toast.LENGTH_SHORT).show()
+                    return false
                 }
+
             } else {
-                Toast.makeText(context,
+                Toast.makeText(
+                    context,
                     "Item already exists",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
+                return false
             }
         } else {
-            Toast.makeText(context,
+            Toast.makeText(
+                context,
                 "Item Name cannot be empty",
-                Toast.LENGTH_SHORT).show()
+                Toast.LENGTH_SHORT
+            ).show()
+            return false
         }
     }
     TextButton(
@@ -404,14 +425,22 @@ fun AddItem(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 36.dp, horizontal = 16.dp),
+            .padding(vertical = 36.dp, horizontal = 16.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
-        Text("Add Item",
+        Text(
+            "Add Item",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.tertiary,
-            modifier = Modifier.padding(bottom = 10.dp))
+            modifier = Modifier.padding(bottom = 10.dp)
+        )
 
-        Text("Item Name",
+        Text(
+            "Item Name",
             color = MaterialTheme.colorScheme.surfaceBright,
             fontSize = 27.sp,
             fontWeight = FontWeight.Bold
@@ -421,7 +450,9 @@ fun AddItem(navController: NavController){
 
         BasicTextField(
             value = itemName,
-            onValueChange = { itemName = it },
+            onValueChange = { newValue ->
+                itemName = newValue.filter { it.isLetter() || it.isWhitespace() || it.isDigit() }
+            },
             textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.tertiary),
             modifier = Modifier
                 .fillMaxWidth()
@@ -444,7 +475,7 @@ fun AddItem(navController: NavController){
                     " - It's best to take photos of your item right away, so you have them before it goes missing!",
                     " - Removing an item will also remove all of its photos.",
                     " - The robot will be sent the photos of the item for processing.",
-                    " - If you item ever looks different from the photos, make sure to update the photos accordingly!"
+                    " - If your item ever looks different from the photos, make sure to update the photos accordingly!"
                 )
             ) { text ->
                 Text(
@@ -462,9 +493,14 @@ fun AddItem(navController: NavController){
             modifier = Modifier.fillMaxSize()
         ) {
             Button(
-                onClick = { createItemFolderAndSaveData()
-                          navController.navigate("home")
-                          },
+                onClick = {
+                    val isSuccess = createItemFolderAndSaveData()
+                    if (isSuccess) {
+                        navController.navigate("iconSelection/${itemName}")
+                    } else {
+                        navController.navigate("addItem")
+                    }
+                }
             ) {
                 Text(
                     "Save Item",
@@ -477,14 +513,20 @@ fun AddItem(navController: NavController){
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun connectToRobot(context: Context){
+fun connectToRobot(context: Context) {
     val mainActivity = context as MainActivity
     val s = mainActivity.bluetoothService
 
-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-        Toast.makeText(context,
+    if (ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.BLUETOOTH_CONNECT
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        Toast.makeText(
+            context,
             "Please wait while connecting.",
-            Toast.LENGTH_SHORT).show()
+            Toast.LENGTH_SHORT
+        ).show()
         mainActivity.requestBluetoothPermission()
 
         return
@@ -495,8 +537,7 @@ fun connectToRobot(context: Context){
     if (s == null) {
         Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
         Log.w("HomeScreen", "can't connect, no service")
-    }
-    else {
+    } else {
         Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
         s.connectForDemo()
     }

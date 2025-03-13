@@ -1,4 +1,7 @@
 module Main (main) where
 
-main :: IO ()
-main = undefined
+import Ranger.Bluetooth
+import GHC.Stack
+
+main :: HasCallStack => IO ()
+main = runRangerBluetooth

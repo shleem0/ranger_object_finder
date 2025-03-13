@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sdpapp.SettingsScreen
 import com.example.sdpapp.bt.RangerBluetoothService
@@ -35,30 +36,28 @@ import com.example.sdpapp.ui.theme.ThemeViewModel
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: RangerBluetoothService?) {
-    var navigationSelectedItem by remember { mutableStateOf(0) }
     val navController = rememberNavController()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
 
     val bottomNavigationItems = listOf(
         NavigationItem("Home", "home", Icons.Filled.Home),
         NavigationItem("Photos", "photos", Icons.Filled.Face),
-        NavigationItem("Settings", "settings", Icons.Filled.Settings),
-        // NavigationItem("Demo", "demo", Icons.Filled.ShoppingCart)
+        NavigationItem("Settings", "settings", Icons.Filled.Settings)
     )
 
     Scaffold(
         bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.background
-            ) {
-                bottomNavigationItems.forEachIndexed { index, navigationItem ->
+            NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
+                bottomNavigationItems.forEach { navigationItem ->
                     NavigationBarItem(
-                        selected = index == navigationSelectedItem,
+                        selected = currentRoute?.startsWith(navigationItem.route) == true,
                         label = { Text(navigationItem.label) },
                         icon = {
                             Icon(
                                 navigationItem.icon,
                                 contentDescription = navigationItem.label,
-                                tint = if (index == navigationSelectedItem) {
+                                tint = if (currentRoute?.startsWith(navigationItem.route) == true) {
                                     MaterialTheme.colorScheme.surfaceBright
                                 } else {
                                     MaterialTheme.colorScheme.onSurface
@@ -66,7 +65,6 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                             )
                         },
                         onClick = {
-                            navigationSelectedItem = index
                             navController.navigate(navigationItem.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
@@ -79,7 +77,7 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                 }
             }
         }
-    ) { paddingValues ->
+    )  { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = bottomNavigationItems[0].route,
@@ -116,6 +114,10 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                 if (bluetoothService != null) {
                     bluetoothService.connectForDemo()
                 }
+            }
+            composable("iconSelection/{itemName}") { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
+                iconSelection(navController, itemName)
             }
         }
     }

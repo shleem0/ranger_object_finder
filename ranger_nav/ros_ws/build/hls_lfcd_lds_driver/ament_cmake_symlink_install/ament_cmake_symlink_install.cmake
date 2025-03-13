@@ -23,7 +23,7 @@ function(ament_cmake_symlink_install_directory cmake_current_source_dir)
 
   # make destination absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -123,7 +123,7 @@ function(ament_cmake_symlink_install_files cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -181,7 +181,7 @@ function(ament_cmake_symlink_install_programs cmake_current_source_dir)
 
   # make destination an absolute path and ensure that it exists
   if(NOT IS_ABSOLUTE "${ARG_DESTINATION}")
-    set(ARG_DESTINATION "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
+    set(ARG_DESTINATION "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${ARG_DESTINATION}")
   endif()
   if(NOT EXISTS "${ARG_DESTINATION}")
     file(MAKE_DIRECTORY "${ARG_DESTINATION}")
@@ -251,7 +251,7 @@ function(ament_cmake_symlink_install_targets)
 
     # make destination an absolute path and ensure that it exists
     if(NOT IS_ABSOLUTE "${destination}")
-      set(destination "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${destination}")
+      set(destination "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/install/hls_lfcd_lds_driver/${destination}")
     endif()
     if(NOT EXISTS "${destination}")
       file(MAKE_DIRECTORY "${destination}")
@@ -311,55 +311,55 @@ message(STATUS "Execute custom install script")
 # begin of custom install code
 
 # install(DIRECTORY "launch" "rviz" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_directory("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" DIRECTORY "launch" "rviz" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_directory("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" DIRECTORY "launch" "rviz" "DESTINATION" "share/hls_lfcd_lds_driver")
 
 # install("TARGETS" "hlds_laser_publisher" "RUNTIME_DESTINATION" "lib/hls_lfcd_lds_driver")
-include("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/hls_lfcd_lds_driver/environment")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/hls_lfcd_lds_driver")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/hls_lfcd_lds_driver")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/hls_lfcd_lds_driver")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/hls_lfcd_lds_driver")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/packages/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/packages/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/packages")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/packages/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_index/share/ament_index/resource_index/packages/hls_lfcd_lds_driver" "DESTINATION" "share/ament_index/resource_index/packages")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_dependencies/ament_cmake_export_dependencies-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_export_include_directories/ament_cmake_export_include_directories-extras.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig.cmake" "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig.cmake" "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig.cmake" "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig.cmake" "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/hls_lfcd_lds_driver/ament_cmake_core/hls_lfcd_lds_driverConfig-version.cmake" "DESTINATION" "share/hls_lfcd_lds_driver/cmake")
 
-# install(FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/package.xml" "DESTINATION" "share/hls_lfcd_lds_driver")
-ament_cmake_symlink_install_files("/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/package.xml" "DESTINATION" "share/hls_lfcd_lds_driver")
+# install(FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/package.xml" "DESTINATION" "share/hls_lfcd_lds_driver")
+ament_cmake_symlink_install_files("/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver" FILES "/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/package.xml" "DESTINATION" "share/hls_lfcd_lds_driver")

@@ -1,44 +1,41 @@
 import time
-import sys
-import keyboard
 from grove.grove_i2c_motor_driver import MotorDriver
 from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
-from multiprocessing import Queue
 
 motor = MotorDriver()
-PIN = 5
-encoder = GroveOpticalRotaryEncoder(PIN)
 
-while True:
-    command = input("enter your command:" )
+def control_motors():
+    while True:
+        
+        f1 = open("motor/motor_input1.txt", "r")
+        f2 = open("motor/motor_input2.txt", "r")
 
-    if command == 'w': 
-        motor.set_dir(True,True)
-        motor.set_speed(50,50)
+        file1 = f1.read().split()
+        file2 = f2.read().split()
 
-    elif command == "s":
-        motor.set_dir(False,False)
-        motor.set_speed(50,50)
 
-    elif command== 'r':
-        motor.set_dir(True,True)
-        motor.set_speed(100,100)
+        try:
+            left_dir = bool(file1[0])
+            right_dir = bool(file2[0])
+        except:
+            left_dir = True
+            right_dir = True
 
-    elif command == 'q':
-        motor.set_dir(False,False)
-        motor.set_speed(100,100)
+        try:
+            left_v = int(file1[1])
+            right_v = int(file2[1])
+        except:
+            left_v = 0
+            right_v = 0
 
-    elif command == 'd' :
-        motor.set_dir(False,True)
-        motor.set_speed(100,100)
+        motor.set_dir(left_dir, right_dir)
+        motor.set_speed(left_v, right_v)
 
-    elif command == 'a' :
-        motor.set_dir(True, False)
-        motor.set_speed(100,100)
+        f1.close()
+        f2.close()
+        time.sleep(0.1)
 
-    elif command == ' ' :
-        motor.set_speed(0,0)
-
+control_motors()
 
 
 

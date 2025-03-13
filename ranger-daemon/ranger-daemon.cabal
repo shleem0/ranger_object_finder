@@ -16,11 +16,30 @@ common warnings
 
 library
     import:           warnings
-    exposed-modules:  Ranger.Bluetooth
+    exposed-modules:  Ranger.Effect
+                    , Ranger.Demo
+                    , Ranger.Bluetooth
+                    , Ranger.Bluetooth.Gatt
+                    , Ranger.Bluetooth.Msg
+                    , Ranger.Bluetooth.Protocol
+                    , Ranger.Bluetooth.Types
     -- other-modules:
     -- other-extensions:
     build-depends:   base ^>=4.14.0.0
+                   , async 
                    , ble
+                   , bytestring
+                   , cereal
+                   , conduit
+                   , effectful
+                   , effectful-th
+                   , hslogger
+                   , singletons == 2.7
+                   , stm
+                   , sync-monad
+                   , text
+                   , transformers
+                   , vector
     hs-source-dirs:   src
 
 executable ranger-daemon

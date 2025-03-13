@@ -7,7 +7,7 @@
 
     nixpkgs.follows = "haskellNix/nixpkgs-2411";
 
-    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
 
     nixpkgs-ros.follows = "nix-ros-overlay/nixpkgs";
 
@@ -69,7 +69,17 @@
         ];
       };
 
-    in nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+    in {
+      deploy.nodes.sdp = {
+        hostname = "sdp-ranger";
+        profiles.system = {
+          sshUser = "pi";
+          user = "root";
+          path = deployPkgs.deploy-rs.lib.activate.nixos
+            self.nixosConfigurations.x86_64-linux.sdp;
+        };
+      };
+    } // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = pkgs-hs system;
 
@@ -82,26 +92,16 @@
           overlays = [ nix-ros-overlay.overlays.default ];
         };
 
-        ros-packages = with pkgs-ros; [
-          colcon
-          (with rosPackages.humble;
-            buildEnv { paths = [ ros-core slam-toolbox ]; })
-        ];
+        ros-packages = pkgs:
+          with pkgs; [
+            colcon
+            (with rosPackages.jazzy; buildEnv { paths = [ ros-core ]; })
+          ];
 
       in rec {
         overlays.default = final: prev: {
           ranger-object-recognition =
             final.callPackage ./ranger_object_recognition/package.nix { };
-        };
-
-        deploy.nodes.sdp = {
-          hostname = "sdp-ranger"; # TODO: find appropriate ssh alias definition
-          profiles.system = {
-            sshUser = "pi";
-            user = "root";
-            path = deployPkgs.deploy-rs.lib.activate.nixos
-              self.nixosConfigurations.${system}.sdp;
-          };
         };
 
         nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
@@ -118,13 +118,14 @@
             raspi-3
             sops
             ./ranger-nixos/wifi.nix
-            ({ lib, ... }: {
+            ({ pkgs, lib, ... }: {
+              nixpkgs.overlays = [ nix-ros-overlay.overlays.default ];
               # Disable zfs (kernel must be built, takes ages)
               boot.supportedFilesystems.zfs = lib.mkForce false;
               environment.systemPackages = [
                 self.outputs.packages.${system}."aarch64-unknown-linux-gnu:ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${raspiSystem}.ranger-object-recognition
-              ];
+              ] ++ ros-packages pkgs;
             })
           ];
         };
@@ -140,15 +141,16 @@
             nixosModules.sdp
             hm
             nixos-shell.nixosModules.nixos-shell
-            {
+            ({ pkgs, lib, ... }: {
+              nixpkgs.overlays = [ nix-ros-overlay.overlays.default ];
               # https://github.com/Mic92/nixos-shell/pull/89
               # lol
               networking.hostName = lib.mkForce "nixos";
               environment.systemPackages = [
                 self.outputs.packages.${system}."ranger-daemon:exe:ranger-daemon"
                 self.outputs.packages.${system}.ranger-object-recognition
-              ];
-            }
+              ] ++ ros-packages pkgs;
+            })
           ];
         };
 
@@ -161,7 +163,7 @@
 
         devShells.ros = pkgs-ros.mkShell {
           name = "ROS development";
-          buildInputs = ros-packages;
+          buildInputs = ros-packages pkgs-ros;
         };
 
         packages = ranger-daemon-flake.packages // {

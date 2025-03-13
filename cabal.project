@@ -1,0 +1,20 @@
+packages:
+    ranger-daemon/ranger-daemon.cabal
+
+source-repository-package
+    type: git
+    location: https://github.com/ryndubei/ble.git
+    tag: d743f84c06bf0ea7000be53204a1a0a90aa89616
+    --sha256: 0xaq7qr74y99b9m2cnql4ys1m2ala261354g24sq8lr4djg5s77y
+
+source-repository-package
+    type: git
+    location: https://github.com/Philonous/d-bus.git
+    tag: cf4f37d5cc3a422cf1a63161d7d6224f2b4084d9
+    --sha256: 1iahm9z24gnxp0x6cxl0mndkvnc2r36dr5d3f2wkwigs8b29axwx
+
+source-repository-package
+    type: git
+    location: https://github.com/ryndubei/sync-monad.git
+    tag: e4877a70d34bd1c002531850ca8a35990052922c
+    --sha256: 1n7vqdm5fi3mbsnykhcsil1cmacimbzadyl5caj4kf9p9xdqnyjz
