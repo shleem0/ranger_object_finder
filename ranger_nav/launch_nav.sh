@@ -3,4 +3,4 @@ ros2 launch nav2_bringup navigation_launch.py &
 ros2 launch ld08_driver ld08.launch.py &
 ros2 run movement_controller odom_publisher & 
 sudo python3 motor/encoder.py & 
-sudo python3 motor/motor_data.py
+sudo python3 motor/motor_code.py
