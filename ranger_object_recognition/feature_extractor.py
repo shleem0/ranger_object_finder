@@ -5,7 +5,7 @@
 
 import os
 import tensorflow as tf
-from tensorflow.lite.python.interpreter import Interpreter
+from tflite_runtime.interpreter import Interpreter
 import numpy as np
 
 def load_tflite_model(model_file):
