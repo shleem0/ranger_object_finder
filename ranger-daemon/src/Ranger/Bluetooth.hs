@@ -87,8 +87,8 @@ itp RangerComms{phoneToRanger, rangerToPhone} = Interpreter
       val' <- case (msg, msg') of
         (Msg.FunctionCall, Msg.FunctionCall) -> pure val
         (Msg.FunctionCall, _) -> throwError RangerDesync
-        (Msg.AnnounceNFragments, Msg.AnnounceNFragments) -> pure val
-        (Msg.AnnounceNFragments, _) -> throwError RangerDesync
+        (Msg.AnnounceSizeBytes, Msg.AnnounceSizeBytes) -> pure val
+        (Msg.AnnounceSizeBytes, _) -> throwError RangerDesync
         (Msg.SendPhotoFragment, Msg.SendPhotoFragment) -> pure val
         (Msg.SendPhotoFragment, _) -> throwError RangerDesync
       modify $ const $ PacketIndex (idx + 1)
@@ -99,11 +99,27 @@ runRangerControl :: (HasCallStack, IOE :> es) => Eff (RangerControl : es) a -> E
 runRangerControl = interpret $ \_ -> \case
   StartDemo -> liftIO demoProcedure
   CancelDemo -> liftIO cancelDemoProcedure
-  StartSearch _ _ -> liftIO $ fail "unimplemented"
-  CancelSearch -> liftIO $ fail "unimplemented"
-  UpdateSearch _ -> liftIO $ fail "unimplemented"
-  SaveObject _ _ -> liftIO $ fail "unimplemented"
-  GetObjectPhotos _ -> liftIO $ fail "unimplemented"
-  DeleteObject _ -> liftIO $ fail "unimplemented"
-  GetNotificationPhoto -> liftIO $ fail "unimplemented"
-  PowerOff -> liftIO $ fail "unimplemented"
+  StartSearch oid params -> do
+    liftIO $ putStrLn $ "placeholder: starting search with oid " ++ show oid ++ " and params " ++ show params
+    pure True
+  CancelSearch -> do
+    liftIO $ putStrLn "placeholder: cancelling search"
+    pure ()
+  UpdateSearch params -> do
+    liftIO $ putStrLn $ "placeholder: updating search with params " ++ show params
+    pure ()
+  SaveObject oid _photos -> do
+    liftIO $ putStrLn $ "placeholder: pretending to save photos for " ++ show oid
+    pure ()
+  GetObjectPhotos oid -> do
+    liftIO $ putStrLn $ "placeholder: pretending to have no photos for " ++ show oid
+    pure mempty
+  DeleteObject oid -> do
+    liftIO $ putStrLn $ "placeholder: pretending to delete object " ++ show oid
+    pure ()
+  GetNotificationPhoto -> do
+    liftIO $ putStrLn "placeholder: returning nothing as notification"
+    pure mempty
+  PowerOff -> do
+    liftIO $ putStrLn "placeholder: failing to power off"
+    pure False

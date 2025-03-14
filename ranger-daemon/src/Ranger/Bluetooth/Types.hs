@@ -41,10 +41,10 @@ $(singDecideInstance ''Side)
 
 -- | 16-byte (8-bit chars/unicode code points 0-255)
 -- name for the object, padded with '\NUL' at the end.
-newtype ObjectId = ObjectId { idBytes :: ByteString }
+newtype ObjectId = ObjectId { idBytes :: ByteString } deriving Show
 
 -- | 19-byte photo fragment, padded with 0 at the end if necessary.
-newtype PhotoFragment = PhotoFragment { fragmentBytes :: ByteString }
+newtype PhotoFragment = PhotoFragment { fragmentBytes :: ByteString } deriving Show
 
 
 objectName :: ObjectId -> Text
@@ -64,8 +64,8 @@ toFragments bs
       let (fragment, rest) = B.splitAt 19 bs
        in V.cons (PhotoFragment fragment) (toFragments rest)
 
-fromFragments :: [PhotoFragment] -> ByteString
-fromFragments = B.dropWhileEnd (== 0) . B.concat . map fragmentBytes
+fromFragments :: Int -> [PhotoFragment] -> ByteString
+fromFragments size = B.take size . B.concat . map fragmentBytes
 
 nBytesToNFragments :: Integral a => a -> a
 nBytesToNFragments nBytes = (nBytes `div` 19) + if nBytes `mod` 19 == 0 then 0 else 1
@@ -73,7 +73,7 @@ nBytesToNFragments nBytes = (nBytes `div` 19) + if nBytes `mod` 19 == 0 then 0 e
 data SearchParameters = SearchParameters
   { timeout :: Word8 -- ^ minutes, 0 interpreted as nothing
   , maxRadius :: Word16 -- ^ centimetres, 0 interpreted as nothing
-  }
+  } deriving Show
 
 instance S.Serialize SearchParameters where
   put SearchParameters{timeout, maxRadius} = S.put timeout >> S.put maxRadius

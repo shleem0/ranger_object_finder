@@ -31,6 +31,7 @@ import Data.Vector (Vector)
 import qualified Data.Vector as V
 import Conduit
 import Data.Word
+import qualified Data.ByteString as B
 
 -- | A monad that can never be executed.
 --
@@ -110,14 +111,16 @@ dispatchFunction = \case
 
 phoneUploadsPhoto :: RPSync s m ByteString
 phoneUploadsPhoto = do
-  nFragments <- syncP AnnounceNFragments pseudocode
-  fmap fromFragments . replicateM nFragments $ syncP SendPhotoFragment pseudocode
+  nBytes <- syncP AnnounceSizeBytes pseudocode
+  let nFragments = nBytesToNFragments nBytes
+  fmap (fromFragments nBytes) . replicateM nFragments $ syncP SendPhotoFragment pseudocode
 
 rangerUploadsPhoto :: Applicative m => Private s 'Ranger ByteString -> RPSync s m ByteString
 rangerUploadsPhoto bs = do
   fragments <- private SRanger (Proxy :: Proxy (Vector PhotoFragment)) $
     let bs' = fromPrivate bs
      in pure (toFragments bs')
-  nFragments <- syncR AnnounceNFragments (pure $ V.length (fromPrivate fragments))
+  nBytes <- syncR AnnounceSizeBytes (pure . B.length $ fromPrivate bs)
+  let nFragments = nBytesToNFragments nBytes
   fragments' <- V.generateM nFragments $ \i -> sync SRanger SendPhotoFragment $ pure (fromPrivate fragments V.! i)
-  pure $ fromFragments (V.toList fragments')
+  pure $ fromFragments nBytes (V.toList fragments')
