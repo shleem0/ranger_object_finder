@@ -82,10 +82,26 @@ class OdometryPublisher(Node):
         self.prev_motor_pos1 = motor_pos1
         self.prev_motor_pos2 = motor_pos2
 
+        t_odom_footprint = TransformStamped()
+        t_odom_footprint.header.stamp = current_time.to_msg()
+        t_odom_footprint.header.frame_id = "odom"
+        t_odom_footprint.child_frame_id = "base_footprint"
+
+        t_odom_footprint.transform.translation.x = 0.0
+        t_odom_footprint.transform.translation.y = 0.0
+        t_odom_footprint.transform.translation.z = 0.0
+        t_odom_footprint.transform.rotation.x = 0.0
+        t_odom_footprint.transform.rotation.y = 0.0
+        t_odom_footprint.transform.rotation.z = 0.0
+        t_odom_footprint.transform.rotation.w = 1.0
+
+        self.broadcaster.sendTransform(t_odom_footprint)
+
+
         # Publish the TF transform from odom to base_link
         t_odom_base = TransformStamped()
         t_odom_base.header.stamp = current_time.to_msg()
-        t_odom_base.header.frame_id = "odom"
+        t_odom_base.header.frame_id = "base_footprint"
         t_odom_base.child_frame_id = "base_link"
         t_odom_base.transform.translation.x = self.x
         t_odom_base.transform.translation.y = self.y
@@ -98,11 +114,12 @@ class OdometryPublisher(Node):
         # Broadcast the odom -> base_link transform
         self.broadcaster.sendTransform(t_odom_base)
 
+
         # Create and publish the Odometry message
         odom_msg = Odometry()
         odom_msg.header.stamp = current_time.to_msg()
         odom_msg.header.frame_id = "odom"
-        odom_msg.child_frame_id = "base_link"
+        odom_msg.child_frame_id = "base_footprint"
         odom_msg.pose.pose.position.x = self.x
         odom_msg.pose.pose.position.y = self.y
         odom_msg.pose.pose.position.z = 0.0  # Assuming 2D motion
@@ -117,7 +134,7 @@ class OdometryPublisher(Node):
 
         t_base_scan_laser = TransformStamped()
         t_base_scan_laser.header.stamp = current_time.to_msg()
-        t_base_scan_laser.header.frame_id = "base_link"  # This could be your sensor frame
+        t_base_scan_laser.header.frame_id = "base_footprint"  # This could be your sensor frame
         t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
 
         t_base_scan_laser.transform.translation.x = 0.0
