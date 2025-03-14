@@ -13,8 +13,6 @@ def control_motors():
         file1 = f1.read().split()
         file2 = f2.read().split()
 
-
-
         try:
             left_dir = eval(file1[0])
             right_dir = eval(file2[0])
@@ -28,9 +26,6 @@ def control_motors():
         except:
             left_v = 0
             right_v = 0
-
-        print(left_dir, left_v)
-        print(right_dir, right_v)
 
         motor.set_dir(left_dir, right_dir)
         motor.set_speed(left_v, right_v)
