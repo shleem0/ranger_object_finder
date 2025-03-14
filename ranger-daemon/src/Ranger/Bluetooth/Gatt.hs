@@ -26,7 +26,7 @@ import Control.Monad
 import Control.Exception hiding (Handler)
 import GHC.Stack
 import System.IO
-import Ranger.Bluetooth.Types (PhotoFragment)
+import Ranger.Bluetooth.Types
 
 data SomeMsg s = forall a. SomeMsg (Msg s a, a)
 
@@ -37,6 +37,7 @@ data RangerComms = RangerComms
   { phoneToRanger :: TQueue (Word8, SomeMsg 'Phone)
   , rangerToPhone :: TQueue (SomeMsg 'Ranger)
   , poisoned :: TVar Bool
+  , currIndex :: TVar Word8
   }
 
 newtype RangerBluetoothException = RangerBluetoothException Bluetooth.Error deriving Show
@@ -60,6 +61,7 @@ runRangerGatt = evalContT . runExceptT $ do
   photoFragmentFromRanger <- liftIO $ newTVarIO Nothing
   requestedPhotoCount <- liftIO $ newTVarIO Nothing
   powerOffResult <- liftIO $ newTVarIO Nothing
+  currentMessageIndex <- liftIO $ newTVarIO 0
 
   let state = RangerState { phoneToRanger'
                           , demoStateVar
@@ -69,10 +71,12 @@ runRangerGatt = evalContT . runExceptT $ do
                           , photoFragmentFromRanger
                           , requestedPhotoCount
                           , powerOffResult
+                          , currentMessageIndex
                           }
       comms = RangerComms { phoneToRanger = phoneToRanger'
                           , rangerToPhone
                           , poisoned = poisoned'
+                          , currIndex = currentMessageIndex
                           }
 
   liftIO $ hPutStrLn stderr "Registering GATT application..."
@@ -120,9 +124,20 @@ runRangerGatt = evalContT . runExceptT $ do
       Right () -> pure ()
       Left err -> throwIO $ RangerBluetoothException err
 
-  -- 'a/c' may get blocked if we forget about rangerToPhone, and we don't care
+  d <- liftIO . async . forever $ do
+    p1 <- readTVarIO currentMessageIndex
+    atomically $ do
+      p2 <- readTVar currentMessageIndex
+      check (p1 /= p2)
+    result <- runBluetoothM (triggerNotification registered (rangerExpectedMessageIndex state)) conn
+    case result of
+      Right () -> pure ()
+      Left err -> throwIO $ RangerBluetoothException err
+
+  -- 'a/c/d' may get blocked if we forget about the STM variables, and we don't care
   liftIO $ linkOnly (\e -> isNothing (fromException e :: Maybe BlockedIndefinitelyOnSTM)) a
   liftIO $ linkOnly (\e -> isNothing (fromException e :: Maybe BlockedIndefinitelyOnSTM)) c
+  liftIO $ linkOnly (\e -> isNothing (fromException e :: Maybe BlockedIndefinitelyOnSTM)) d
   liftIO $ link b
 
   pure comms
@@ -136,6 +151,7 @@ data RangerState = RangerState
   , photoFragmentFromRanger :: TVar (Maybe PhotoFragment)
   , requestedPhotoCount :: TVar (Maybe Word8)
   , powerOffResult :: TVar (Maybe Bool)
+  , currentMessageIndex :: TVar Word8
   }
 
 app :: RangerState -> Application
@@ -143,7 +159,7 @@ app c = "/su/ranger/ranger_daemon" & services .~ [rangerService c]
 
 rangerService :: RangerState -> Service 'Local
 rangerService c = "fbb876fb-3ee3-5315-9716-01ede2358aab" & characteristics .~
-  [ startDemo c, cancelDemo c, demoState c, isPoisoned c, resetPoison c
+  [ rangerExpectedMessageIndex c, startDemo c, cancelDemo c, demoState c, isPoisoned c, resetPoison c
   , startSearch c, modifySearchParams c, cancelSearch c, updateObject c
   , deleteObject c, getObjectPhotos c, downloadNotificationPhoto c, poweroff c
   , startSearchResult c, announceSizeBytes c, photoFragment c
@@ -162,6 +178,14 @@ sendMessage RangerState{poisoned', phoneToRanger'} idx msg a = liftIO . atomical
   readTVar poisoned' >>= \case
     True -> pure False
     False -> writeTQueue phoneToRanger' (idx, SomeMsg (msg, a)) >> pure True
+
+-- | Read-only.
+--
+-- Format: Word8
+rangerExpectedMessageIndex :: RangerState -> CharacteristicBS 'Local
+rangerExpectedMessageIndex RangerState{currentMessageIndex} = "4d8c78ba-99a4-5d6e-abb2-bd70f71b5919"
+  & properties .~ [CPRead, CPNotify]
+  & readValue ?~ encodeRead (liftIO $ readTVarIO currentMessageIndex)
 
 -- | Write-only. Function call.
 --
@@ -205,10 +229,11 @@ isPoisoned RangerState{poisoned'} = "286d24e6-5611-51b2-a2b3-6fb9d9aa9566"
 --
 -- Format: anything
 resetPoison :: RangerState -> CharacteristicBS 'Local
-resetPoison RangerState{poisoned'} = "c0d915c8-26b1-50da-951e-d91bc4d3c5e1"
+resetPoison RangerState{poisoned', currentMessageIndex} = "c0d915c8-26b1-50da-951e-d91bc4d3c5e1"
   & properties .~ [CPWrite]
   & writeValue ?~ (\_ -> do
       liftIO . atomically $ writeTVar poisoned' False
+      liftIO . atomically $ writeTVar currentMessageIndex 0
       pure True)
 
 -- | Write-only. Function call.

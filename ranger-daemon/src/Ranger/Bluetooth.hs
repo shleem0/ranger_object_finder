@@ -87,7 +87,7 @@ runRangerProtocol comms = fmap (fmap snd . either Just (const Nothing))
                         $ runSync (itp comms) bluetoothProtocol
 
 itp :: (RangerControl :> es, Error RangerInvalidState :> es, Concurrent :> es, State PacketIndex :> es) => RangerComms -> Interpreter 'Ranger Msg (SideM (Eff es) 'Ranger)
-itp RangerComms{phoneToRanger, rangerToPhone} = Interpreter
+itp RangerComms{phoneToRanger, rangerToPhone, currIndex} = Interpreter
   { side = SRanger
   , Control.Monad.Sync.send = \msg x -> SideM . atomically $ writeTQueue rangerToPhone (SomeMsg (msg, x))
   , recv = \_ SPhone msg -> SideM $ do
@@ -102,6 +102,7 @@ itp RangerComms{phoneToRanger, rangerToPhone} = Interpreter
         (Msg.SendPhotoFragment, Msg.SendPhotoFragment) -> pure val
         (Msg.SendPhotoFragment, _) -> throwError RangerDesync
       modify $ const $ PacketIndex (idx + 1)
+      atomically $ writeTVar currIndex (idx + 1)
       pure val'
   }
 
