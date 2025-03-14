@@ -97,24 +97,6 @@ class OdometryPublisher(Node):
 
         self.broadcaster.sendTransform(t_odom_footprint)
 
-
-        # Publish the TF transform from odom to base_link
-        t_odom_base = TransformStamped()
-        t_odom_base.header.stamp = current_time.to_msg()
-        t_odom_base.header.frame_id = "base_footprint"
-        t_odom_base.child_frame_id = "base_link"
-        t_odom_base.transform.translation.x = self.x
-        t_odom_base.transform.translation.y = self.y
-        t_odom_base.transform.translation.z = 0.0  # Assuming 2D motion
-        t_odom_base.transform.rotation.x = qx
-        t_odom_base.transform.rotation.y = qy
-        t_odom_base.transform.rotation.z = qz
-        t_odom_base.transform.rotation.w = qw
-
-        # Broadcast the odom -> base_link transform
-        self.broadcaster.sendTransform(t_odom_base)
-
-
         # Create and publish the Odometry message
         odom_msg = Odometry()
         odom_msg.header.stamp = current_time.to_msg()
@@ -135,7 +117,7 @@ class OdometryPublisher(Node):
         t_base_scan_laser = TransformStamped()
         t_base_scan_laser.header.stamp = current_time.to_msg()
         t_base_scan_laser.header.frame_id = "base_footprint"  # This could be your sensor frame
-        t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
+        t_base_scan_laser.child_frame_id = "base_scan"  # The sensor frame
 
         t_base_scan_laser.transform.translation.x = 0.0
         t_base_scan_laser.transform.translation.y = 0.0
@@ -146,22 +128,6 @@ class OdometryPublisher(Node):
         t_base_scan_laser.transform.rotation.w = 1.0
 
         self.broadcaster.sendTransform(t_base_scan_laser)
-
-        t_laser_base_scan = TransformStamped()
-        t_laser_base_scan.header.stamp = current_time.to_msg()
-        t_laser_base_scan.header.frame_id = "laser"
-        t_laser_base_scan.child_frame_id = "base_scan"
-
-        t_laser_base_scan.transform.translation.x = 0.0
-        t_laser_base_scan.transform.translation.y = 0.0
-        t_laser_base_scan.transform.translation.z = 0.0
-        t_laser_base_scan.transform.rotation.x = 0.0
-        t_laser_base_scan.transform.rotation.y = 0.0
-        t_laser_base_scan.transform.rotation.z = 0.0
-        t_laser_base_scan.transform.rotation.w = 1.0
-
-        self.broadcaster.sendTransform(t_laser_base_scan)
-
 
         # Save current time for the next iteration
         self.last_time = current_time
