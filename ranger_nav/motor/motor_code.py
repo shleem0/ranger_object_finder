@@ -13,6 +13,8 @@ def control_motors():
         file1 = f1.read().split()
         file2 = f2.read().split()
 
+        print(file1)
+
 
         try:
             left_dir = bool(file1[0])
