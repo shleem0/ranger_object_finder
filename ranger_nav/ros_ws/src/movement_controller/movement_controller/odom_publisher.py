@@ -102,7 +102,7 @@ class OdometryPublisher(Node):
         t_base_scan = TransformStamped()
         t_base_scan.header.stamp = self.get_clock().now().to_msg()
         t_base_scan.header.frame_id = 'base_link'
-        t_base_scan.child_frame_id = 'base_scan'
+        t_base_scan.child_frame_id = 'laser'
 
         # Adjust these values based on where your LiDAR is mounted
         t_base_scan.transform.translation.x = 0.1  # 10 cm in front of base_link
