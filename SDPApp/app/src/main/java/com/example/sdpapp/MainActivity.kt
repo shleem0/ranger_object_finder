@@ -34,6 +34,53 @@ import com.example.sdpapp.ui.theme.ThemeViewModel
 class MainActivity : ComponentActivity() {
     var bluetoothService : RangerBluetoothService? = null
 
+    private val requestFilePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Log.i("MainActivity", "File permission granted")
+            } else {
+                Log.i("MainActivity", "File permission denied")
+            }
+        }
+
+    private fun requestFilePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_IMAGES
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestFilePermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestFilePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                println("Permission granted!")
+            } else {
+                println("Permission denied!")
+            }
+        }
+    }
+
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 100
+    }
+
     private val serviceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(cn: ComponentName?, bnd: IBinder?) {
             Log.d("MainActivity", "Bluetooth service connected")
@@ -139,6 +186,8 @@ class MainActivity : ComponentActivity() {
         }
 
         requestNotificationPermission()
+        requestFilePermissions()
+        requestBluetoothPermission()
 
         val gattServiceIntent = Intent(this, RangerBluetoothService::class.java)
         Log.d("MainActivity", "Binding service")

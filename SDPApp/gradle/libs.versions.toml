@@ -8,6 +8,7 @@ cameraView = "1.2.2"
 coilCompose = "2.4.0"
 coreKtxVersion = "1.15.0"
 gson = "2.8.8"
+imagecompressor = "1.0.1"
 kotlin = "2.0.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -39,6 +40,7 @@ androidx-material3-v100beta03 = { module = "androidx.compose.material3:material3
 androidx-navigation-compose-v240 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+imagecompressor = { module = "com.github.vinodbaste:ImageCompressor", version.ref = "imagecompressor" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

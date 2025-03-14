@@ -119,6 +119,15 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                 val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
                 iconSelection(navController, itemName)
             }
+            composable("upload/{itemName}") { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
+                UploadScreen(navController, itemName)
+            }
+            composable("uploadContent/{itemName}") { backStackEntry ->
+                val itemName = backStackEntry.arguments?.getString("itemName") ?: ""
+                UploadContent(navController, itemName)
+            }
+            composable("deniedPermission") { PermissionDeniedView(LocalContext.current) }
         }
     }
 }

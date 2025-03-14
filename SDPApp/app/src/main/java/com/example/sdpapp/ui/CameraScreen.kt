@@ -66,6 +66,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.items
@@ -161,6 +162,12 @@ fun CameraPreview(navController: NavController, name: String) {
 
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     var capturedFile by remember { mutableStateOf<File?>(null) }
+
+    LaunchedEffect(capturedImageUri) {
+        if (capturedImageUri != null) {
+            Log.d("CameraPreview", "Previewing image at URI: $capturedImageUri")
+        }
+    }
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -375,9 +382,12 @@ fun saveSelectedIconName(context: Context, itemName: String, iconName: String) {
     iconFile.writeText(iconName)
 }
 
-
-private fun captureImage(context: Context, imageCapture: ImageCapture,
-                         name: String, onImageCaptured: (Uri, File) -> Unit) {
+private fun captureImage(
+    context: Context,
+    imageCapture: ImageCapture,
+    name: String,
+    onImageCaptured: (Uri, File) -> Unit
+) {
     val directory = File(context.filesDir, name)
     if (!directory.exists()) {
         directory.mkdirs()
@@ -395,14 +405,26 @@ private fun captureImage(context: Context, imageCapture: ImageCapture,
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                val savedUri: Uri = FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.provider",
-                    photoFile
-                )
-                Log.d("CameraPreview", "Photo saved at: $savedUri")
+                Log.d("CameraPreview", "Photo saved at: ${photoFile.absolutePath}")
 
-                onImageCaptured(savedUri, photoFile)
+                val compressedFile = compressImage(context, photoFile)
+
+                if (compressedFile.exists()) {
+                    val compressedUri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.provider",
+                        compressedFile
+                    )
+
+                    onImageCaptured(compressedUri, compressedFile)
+
+                    if (photoFile.exists()) {
+                        photoFile.delete()
+                        Log.d("FileCleanup", "Deleted original file")
+                    }
+                } else {
+                    Log.e("CameraPreview", "Compressed file does not exist")
+                }
             }
 
             override fun onError(exception: ImageCaptureException) {
@@ -410,4 +432,74 @@ private fun captureImage(context: Context, imageCapture: ImageCapture,
             }
         }
     )
+}
+
+public fun compressImage(context: Context, originalFile: File): File {
+    val originalSize = originalFile.length() / 1024
+    Log.d("OriginalSize", "Original size: $originalSize KB")
+
+    val bitmap = BitmapFactory.decodeFile(originalFile.absolutePath)
+    val fixedBitmap = fixImageRotation(originalFile.absolutePath, bitmap)
+    val squareBitmap = cropToSquare(fixedBitmap)
+    val resizedBitmap = resizeBitmapTo224(squareBitmap)
+
+    val compressedFile = File(originalFile.parent, "COMPRESSED_${originalFile.name}")
+    var quality = 100
+    var compressedSize: Long
+
+    do {
+        val outputStream = FileOutputStream(compressedFile)
+        resizedBitmap.compress(Bitmap.CompressFormat.WEBP, quality, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        compressedSize = compressedFile.length() / 1024
+        Log.d("CompressAttempt", "Quality: $quality, Size: $compressedSize KB")
+
+        if (compressedSize > 12) {
+            quality -= 5
+        }
+
+    } while (compressedSize > 12 && quality > 5)
+
+    Log.d("FinalCompressedSize", "Final size: $compressedSize KB at quality $quality%")
+
+    return compressedFile
+}
+
+
+private fun cropToSquare(bitmap: Bitmap): Bitmap {
+    val width = bitmap.width
+    val height = bitmap.height
+
+    val size = minOf(width, height)
+
+    val xOffset = (width - size) / 2
+    val yOffset = (height - size) / 2
+
+    return Bitmap.createBitmap(bitmap, xOffset, yOffset, size, size)
+}
+
+private fun resizeBitmapTo224(bitmap: Bitmap): Bitmap {
+    return Bitmap.createScaledBitmap(bitmap, 224, 224, true)
+}
+
+private fun fixImageRotation(filePath: String, bitmap: Bitmap): Bitmap {
+    val exif = androidx.exifinterface.media.ExifInterface(filePath)
+    val orientation = exif.getAttributeInt(
+        androidx.exifinterface.media.ExifInterface.TAG_ORIENTATION,
+        androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL
+    )
+
+    return when (orientation) {
+        androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90)
+        androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180)
+        androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270)
+        else -> bitmap
+    }
+}
+
+private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
+    val matrix = android.graphics.Matrix().apply { postRotate(degrees.toFloat()) }
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }

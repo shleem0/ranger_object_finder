@@ -69,4 +69,5 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.androidx.core.ktx.v1150)
     implementation(libs.ucrop.v228)
+    implementation(libs.imagecompressor)
 }
