@@ -56,7 +56,7 @@ runRangerGatt = evalContT . runExceptT $ do
   demoStateVar <- liftIO $ getDemoState >>= newTVarIO
   poisoned' <- liftIO $ newTVarIO False
   startSearchResponse <- liftIO $ newTVarIO Nothing
-  nFragmentsFromRanger <- liftIO $ newTVarIO Nothing
+  nBytesFromRanger <- liftIO $ newTVarIO Nothing
   photoFragmentFromRanger <- liftIO $ newTVarIO Nothing
   requestedPhotoCount <- liftIO $ newTVarIO Nothing
   powerOffResult <- liftIO $ newTVarIO Nothing
@@ -65,7 +65,7 @@ runRangerGatt = evalContT . runExceptT $ do
                           , demoStateVar
                           , poisoned'
                           , startSearchResponse
-                          , nFragmentsFromRanger
+                          , nBytesFromRanger
                           , photoFragmentFromRanger
                           , requestedPhotoCount
                           , powerOffResult
@@ -88,7 +88,7 @@ runRangerGatt = evalContT . runExceptT $ do
         liftIO . atomically $ writeTVar startSearchResponse (Just b)
         triggerNotification registered (startSearchResult state)
       (SomeMsg (AnnounceSizeBytes, i)) -> do
-        liftIO . atomically $ writeTVar nFragmentsFromRanger (Just i)
+        liftIO . atomically $ writeTVar nBytesFromRanger (Just i)
         triggerNotification registered (announceSizeBytes state)
       (SomeMsg (SendPhotoFragment, p)) -> do
         liftIO . atomically $ writeTVar photoFragmentFromRanger (Just p)
@@ -132,7 +132,7 @@ data RangerState = RangerState
   , demoStateVar :: TVar Bool
   , poisoned' :: TVar Bool
   , startSearchResponse :: TVar (Maybe Bool)
-  , nFragmentsFromRanger :: TVar (Maybe Int)
+  , nBytesFromRanger :: TVar (Maybe Word16)
   , photoFragmentFromRanger :: TVar (Maybe PhotoFragment)
   , requestedPhotoCount :: TVar (Maybe Word8)
   , powerOffResult :: TVar (Maybe Bool)
@@ -163,7 +163,7 @@ sendMessage RangerState{poisoned', phoneToRanger'} idx msg a = liftIO . atomical
     True -> pure False
     False -> writeTQueue phoneToRanger' (idx, SomeMsg (msg, a)) >> pure True
 
--- | Write-only.
+-- | Write-only. Function call.
 --
 -- Format: [Word8 message index] ++ arbitrary
 --
@@ -173,7 +173,7 @@ startDemo s = "82e761bc-8508-5f80-90ee-9b3455444798"
   & properties .~ [CPWrite]
   & writeValue ?~ handleIndexedWrite (\idx _ -> sendMessage s idx FunctionCall StartDemo)
 
--- | Write-only.
+-- | Write-only. Function call.
 -- Format: [Word8 message index] ++ arbitrary
 --
 -- Will fail when poisoned.
@@ -201,7 +201,7 @@ isPoisoned RangerState{poisoned'} = "286d24e6-5611-51b2-a2b3-6fb9d9aa9566"
   & properties .~ [CPRead, CPIndicate]
   & readValue ?~ encodeRead (liftIO $ readTVarIO poisoned')
 
--- | Write-only.
+-- | Write-only. Not a function call, but can be written to at any time.
 --
 -- Format: anything
 resetPoison :: RangerState -> CharacteristicBS 'Local
@@ -211,8 +211,9 @@ resetPoison RangerState{poisoned'} = "c0d915c8-26b1-50da-951e-d91bc4d3c5e1"
       liftIO . atomically $ writeTVar poisoned' False
       pure True)
 
--- I won't be documenting the rest of these because you get the idea
-
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ Object id (16 bytes) ++ Search parameters (3 bytes)
 startSearch :: RangerState -> CharacteristicBS 'Local
 startSearch s = "4fc605c8-c03f-59df-8f25-a68b2b3de548"
   & properties .~ [CPWrite]
@@ -220,6 +221,9 @@ startSearch s = "4fc605c8-c03f-59df-8f25-a68b2b3de548"
     encodeWrite (sendMessage s idx FunctionCall . uncurry StartSearch)
   )
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ Search parameters (3 bytes)
 modifySearchParams :: RangerState -> CharacteristicBS 'Local
 modifySearchParams s = "1ee2c3df-769d-5611-998b-d9f2dc22207a"
   & properties .~ [CPWrite]
@@ -227,11 +231,17 @@ modifySearchParams s = "1ee2c3df-769d-5611-998b-d9f2dc22207a"
     encodeWrite (sendMessage s idx FunctionCall . ModifySearchParameters)
   )
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ arbitrary
 cancelSearch :: RangerState -> CharacteristicBS 'Local
 cancelSearch s = "795aa39e-a468-56e4-a501-22bfe3f2c51a"
   & properties .~ [CPWrite]
   & writeValue ?~ handleIndexedWrite (\idx _ -> sendMessage s idx FunctionCall CancelSearch)
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ Object id (16 bytes) ++ Photo count (1 byte)
 updateObject :: RangerState -> CharacteristicBS 'Local
 updateObject s = "11eef0d8-a0ee-54c2-9afc-7aac51056c53"
   & properties .~ [CPWrite]
@@ -239,6 +249,9 @@ updateObject s = "11eef0d8-a0ee-54c2-9afc-7aac51056c53"
     encodeWrite (sendMessage s idx FunctionCall . uncurry UpdateObject)
   )
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ Object id (16 bytes)
 deleteObject :: RangerState -> CharacteristicBS 'Local
 deleteObject s = "b98a3be5-acb7-519c-b15a-b962b617d2dc"
   & properties .~ [CPWrite]
@@ -246,6 +259,9 @@ deleteObject s = "b98a3be5-acb7-519c-b15a-b962b617d2dc"
     encodeWrite (sendMessage s idx FunctionCall . DeleteObject)
   )
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ object id (16 bytes)
 getObjectPhotos :: RangerState -> CharacteristicBS 'Local
 getObjectPhotos s = "89360a5a-9bdd-584a-acdc-f141a0e3b46c"
   & properties .~ [CPWrite]
@@ -253,38 +269,63 @@ getObjectPhotos s = "89360a5a-9bdd-584a-acdc-f141a0e3b46c"
     encodeWrite (sendMessage s idx FunctionCall . GetObjectPhotos)
   )
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ arbitrary
 downloadNotificationPhoto :: RangerState -> CharacteristicBS 'Local
 downloadNotificationPhoto s = "f0fce81f-4128-563f-9842-bde2a490009f"
   & properties .~ [CPWrite]
   & writeValue ?~ handleIndexedWrite (\idx _ -> sendMessage s idx FunctionCall DownloadNotificationPhoto)
 
+-- | Write-only. Function call.
+--
+-- Format: Word8 message index ++ arbitrary
 poweroff :: RangerState -> CharacteristicBS 'Local
 poweroff s = "695aceb7-9558-5293-95ff-cfef7e25b193"
   & properties .~ [CPWrite]
   & writeValue ?~ handleIndexedWrite (\idx _ -> sendMessage s idx FunctionCall PowerOff)
 
+-- | Read-only.
+--
+-- Format: [0/1]
 startSearchResult :: RangerState -> CharacteristicBS 'Local
 startSearchResult RangerState{startSearchResponse} = "dad9f4f1-23e5-56c6-b324-dff8983dba83"
   & properties .~ [CPRead, CPIndicate]
   & readValue ?~ encodeRead (liftIO $ readTVarIO startSearchResponse)
 
+-- | Read-write. Not a function call, so cannot be written to arbitrarily.
+--
+-- Read format: Word16
+--
+-- Write format: Word8 message index ++ Word16
 announceSizeBytes :: RangerState -> CharacteristicBS 'Local
-announceSizeBytes s@RangerState{nFragmentsFromRanger} = "8a091a09-037b-5916-9d47-f1083ded62e4"
+announceSizeBytes s@RangerState{nBytesFromRanger} = "8a091a09-037b-5916-9d47-f1083ded62e4"
   & properties .~ [CPWrite, CPRead, CPIndicate]
-  & readValue ?~ encodeRead (liftIO $ readTVarIO nFragmentsFromRanger)
+  & readValue ?~ encodeRead (liftIO $ readTVarIO nBytesFromRanger)
   & writeValue ?~ handleIndexedWrite (\idx -> encodeWrite (sendMessage s idx AnnounceSizeBytes))
 
+-- | Read-write. Not a function call, so cannot be written to arbitrarily.
+--
+-- Read format: 19-byte photo fragment
+--
+-- Write format: Word8 message index ++ 19-byte photo fragment
 photoFragment :: RangerState -> CharacteristicBS 'Local
 photoFragment s@RangerState{photoFragmentFromRanger} = "4802d29c-63c2-56a8-ab25-2466b1503098"
   & properties .~ [CPWrite, CPRead, CPIndicate]
   & readValue ?~ encodeRead (liftIO $ readTVarIO photoFragmentFromRanger)
   & writeValue ?~ handleIndexedWrite (\idx -> encodeWrite (sendMessage s idx SendPhotoFragment))
 
+-- | Read-only.
+--
+-- Format: Word8
 requestedObjectPhotoCount :: RangerState -> CharacteristicBS 'Local
 requestedObjectPhotoCount RangerState{requestedPhotoCount} = "1d0aeed1-7afe-506f-804c-866f384cc10d"
   & properties .~ [CPRead, CPIndicate]
   & readValue ?~ encodeRead (liftIO $ readTVarIO requestedPhotoCount)
 
+-- | Read-only.
+--
+-- Format: [0/1]
 schedulePowerOffResult :: RangerState -> CharacteristicBS 'Local
 schedulePowerOffResult RangerState{powerOffResult} = "4906c5b7-82bf-5379-87a4-f4edaff16118"
   & properties .~ [CPRead, CPIndicate]

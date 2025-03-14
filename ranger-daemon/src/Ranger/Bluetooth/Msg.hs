@@ -37,7 +37,7 @@ data FunctionCall
 data Msg s a where
   FunctionCall :: Msg 'Phone FunctionCall
   StartSearchResult :: Msg 'Ranger Bool
-  AnnounceSizeBytes :: Msg s Int
+  AnnounceSizeBytes :: Msg s Word16
   SendPhotoFragment :: Msg s PhotoFragment 
   RequestedObjectPhotoCount :: Msg 'Ranger Word8
   SchedulePowerOffResult :: Msg 'Ranger Bool
