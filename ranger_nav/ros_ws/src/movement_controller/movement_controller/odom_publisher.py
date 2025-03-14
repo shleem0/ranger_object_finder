@@ -82,52 +82,40 @@ class OdometryPublisher(Node):
         self.prev_motor_pos1 = motor_pos1
         self.prev_motor_pos2 = motor_pos2
 
-        t_odom_footprint = TransformStamped()
-        t_odom_footprint.header.stamp = current_time.to_msg()
-        t_odom_footprint.header.frame_id = "odom"
-        t_odom_footprint.child_frame_id = "base_footprint"
 
-        t_odom_footprint.transform.translation.x = 0.0
-        t_odom_footprint.transform.translation.y = 0.0
-        t_odom_footprint.transform.translation.z = 0.0
-        t_odom_footprint.transform.rotation.x = 0.0
-        t_odom_footprint.transform.rotation.y = 0.0
-        t_odom_footprint.transform.rotation.z = 0.0
-        t_odom_footprint.transform.rotation.w = 1.0
+        # Transform from odom to base_link
+        t_odom_base = TransformStamped()
+        t_odom_base.header.stamp = self.get_clock().now().to_msg()
+        t_odom_base.header.frame_id = 'odom'
+        t_odom_base.child_frame_id = 'base_link'
 
-        self.broadcaster.sendTransform(t_odom_footprint)
+        # Example values - Replace with actual odometry data
+        t_odom_base.transform.translation.x = 0.0
+        t_odom_base.transform.translation.y = 0.0
+        t_odom_base.transform.translation.z = 0.0
+        t_odom_base.transform.rotation.x = 0.0
+        t_odom_base.transform.rotation.y = 0.0
+        t_odom_base.transform.rotation.z = 0.0
+        t_odom_base.transform.rotation.w = 1.0
 
-        # Create and publish the Odometry message
-        odom_msg = Odometry()
-        odom_msg.header.stamp = current_time.to_msg()
-        odom_msg.header.frame_id = "odom"
-        odom_msg.child_frame_id = "base_footprint"
-        odom_msg.pose.pose.position.x = self.x
-        odom_msg.pose.pose.position.y = self.y
-        odom_msg.pose.pose.position.z = 0.0  # Assuming 2D motion
-        odom_msg.pose.pose.orientation.x = qx
-        odom_msg.pose.pose.orientation.y = qy
-        odom_msg.pose.pose.orientation.z = qz
-        odom_msg.pose.pose.orientation.w = qw
+        # Transform from base_link to base_scan
+        t_base_scan = TransformStamped()
+        t_base_scan.header.stamp = self.get_clock().now().to_msg()
+        t_base_scan.header.frame_id = 'base_link'
+        t_base_scan.child_frame_id = 'base_scan'
 
-        # Publish the odometry message
-        self.odom_publisher.publish(odom_msg)
+        # Adjust these values based on where your LiDAR is mounted
+        t_base_scan.transform.translation.x = 0.1  # 10 cm in front of base_link
+        t_base_scan.transform.translation.y = 0.0
+        t_base_scan.transform.translation.z = 0.15  # LiDAR is 15 cm above base_link
+        t_base_scan.transform.rotation.x = 0.0
+        t_base_scan.transform.rotation.y = 0.0
+        t_base_scan.transform.rotation.z = 0.0
+        t_base_scan.transform.rotation.w = 1.0
 
-
-        t_base_scan_laser = TransformStamped()
-        t_base_scan_laser.header.stamp = current_time.to_msg()
-        t_base_scan_laser.header.frame_id = "base_footprint"  # This could be your sensor frame
-        t_base_scan_laser.child_frame_id = "base_scan"  # The sensor frame
-
-        t_base_scan_laser.transform.translation.x = 0.0
-        t_base_scan_laser.transform.translation.y = 0.0
-        t_base_scan_laser.transform.translation.z = 0.0
-        t_base_scan_laser.transform.rotation.x = 0.0
-        t_base_scan_laser.transform.rotation.y = 0.0
-        t_base_scan_laser.transform.rotation.z = 0.0
-        t_base_scan_laser.transform.rotation.w = 1.0
-
-        self.broadcaster.sendTransform(t_base_scan_laser)
+        # Publish the transforms
+        self.tf_broadcaster.sendTransform(t_odom_base)
+        self.tf_broadcaster.sendTransform(t_base_scan)
 
         # Save current time for the next iteration
         self.last_time = current_time
