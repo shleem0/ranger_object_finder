@@ -41,6 +41,7 @@ $(singDecideInstance ''Side)
 
 -- | 16-byte (8-bit chars/unicode code points 0-255)
 -- name for the object, padded with '\NUL' at the end.
+-- Does not allow '/'.
 newtype ObjectId = ObjectId { idBytes :: ByteString } deriving Show
 
 -- | 19-byte photo fragment, padded with 0 at the end if necessary.
@@ -51,7 +52,7 @@ objectName :: ObjectId -> Text
 objectName (ObjectId bytes) = T.dropWhileEnd (=='\NUL') . T.pack $ BC.unpack bytes
 
 toObjectId :: Text -> ObjectId
-toObjectId = ObjectId . padNul 16 . B.take 16 . T.encodeUtf8
+toObjectId = ObjectId . padNul 16 . B.take 16 . T.encodeUtf8 . T.filter (/='/')
 
 padNul :: Int -> ByteString -> ByteString
 padNul l bs = bs <> B.replicate (l - B.length bs) 0
@@ -84,7 +85,10 @@ instance S.Serialize SearchParameters where
 
 instance S.Serialize ObjectId where
   put (ObjectId bs) = mapM_ S.put (BC.unpack bs)
-  get = ObjectId . B.pack <$> replicateM 16 (S.get :: S.Get Word8)
+  get = do
+    r <- ObjectId . B.pack <$> replicateM 16 (S.get :: S.Get Word8)
+    when (T.filter (=='/') (objectName r) /= T.empty) $ fail "Object name contains '/'"
+    pure r
 
 instance S.Serialize PhotoFragment where
   put (PhotoFragment bs) = mapM_ S.put (B.unpack bs)

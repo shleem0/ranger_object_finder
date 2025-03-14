@@ -28,6 +28,16 @@ import Data.Word
 import Control.Monad
 import System.IO
 import Data.Bifunctor
+import System.Directory
+import System.FilePath
+import qualified Data.Text as T
+import Data.Foldable
+import qualified Data.ByteString as B
+import Data.Traversable
+import qualified Data.Vector as V
+
+rangerDirectory :: IO FilePath
+rangerDirectory = getXdgDirectory XdgData "ranger"
 
 runRangerBluetooth :: HasCallStack => IO ()
 runRangerBluetooth = do
@@ -104,19 +114,24 @@ runRangerControl = interpret $ \_ -> \case
     pure True
   CancelSearch -> do
     liftIO $ putStrLn "placeholder: cancelling search"
-    pure ()
   UpdateSearch params -> do
     liftIO $ putStrLn $ "placeholder: updating search with params " ++ show params
-    pure ()
-  SaveObject oid _photos -> do
-    liftIO $ putStrLn $ "placeholder: pretending to save photos for " ++ show oid
-    pure ()
+  SaveObject oid photos -> do
+    rangerDir <- liftIO rangerDirectory
+    let objectDir = rangerDir </> T.unpack (objectName oid)
+    liftIO $ createDirectoryIfMissing True objectDir
+    for_ (zip [(0 :: Int)..] photos) $ \(i, photo) -> do
+      liftIO $ B.writeFile (objectDir </> show i <.> "webp") photo
   GetObjectPhotos oid -> do
-    liftIO $ putStrLn $ "placeholder: pretending to have no photos for " ++ show oid
-    pure mempty
+    rangerDir <- liftIO rangerDirectory
+    let objectDir = rangerDir </> T.unpack (objectName oid)
+    photosPaths <- liftIO $ listDirectory objectDir
+    fmap V.fromList . for photosPaths $ \photoPath -> do
+      liftIO $ B.readFile (objectDir </> photoPath)
   DeleteObject oid -> do
-    liftIO $ putStrLn $ "placeholder: pretending to delete object " ++ show oid
-    pure ()
+    rangerDir <- liftIO rangerDirectory
+    let objectDir = rangerDir </> T.unpack (objectName oid)
+    liftIO $ removeDirectoryRecursive objectDir
   GetNotificationPhoto -> do
     liftIO $ putStrLn "placeholder: returning nothing as notification"
     pure mempty
