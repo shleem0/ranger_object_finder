@@ -16,8 +16,8 @@ def control_motors():
 
 
         try:
-            left_dir = bool(file1[0])
-            right_dir = bool(file2[0])
+            left_dir = eval(file1[0])
+            right_dir = eval(file2[0])
         except:
             left_dir = True
             right_dir = True
