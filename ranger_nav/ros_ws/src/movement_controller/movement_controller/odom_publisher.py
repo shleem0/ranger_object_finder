@@ -102,7 +102,7 @@ class OdometryPublisher(Node):
 
         # Transform from odom to base_link
         t_odom_base = TransformStamped()
-        t_odom_base.header.stamp = self.get_clock().now().to_msg()
+        t_odom_base.header.stamp = current_time
         t_odom_base.header.frame_id = 'odom'
         t_odom_base.child_frame_id = 'base_link'
 
@@ -117,7 +117,7 @@ class OdometryPublisher(Node):
 
         # Transform from base_link to base_scan
         t_base_scan = TransformStamped()
-        t_base_scan.header.stamp = self.get_clock().now().to_msg()
+        t_base_scan.header.stamp = current_time
         t_base_scan.header.frame_id = 'base_link'
         t_base_scan.child_frame_id = 'laser'
 
