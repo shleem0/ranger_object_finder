@@ -113,14 +113,14 @@ phoneUploadsPhoto :: RPSync s m ByteString
 phoneUploadsPhoto = do
   nBytes <- syncP AnnounceSizeBytes pseudocode
   let nFragments = nBytesToNFragments nBytes
-  fmap (fromFragments nBytes) . replicateM nFragments $ syncP SendPhotoFragment pseudocode
+  fmap (fromFragments (fromIntegral nBytes)) . replicateM (fromIntegral nFragments) $ syncP SendPhotoFragment pseudocode
 
 rangerUploadsPhoto :: Applicative m => Private s 'Ranger ByteString -> RPSync s m ByteString
 rangerUploadsPhoto bs = do
   fragments <- private SRanger (Proxy :: Proxy (Vector PhotoFragment)) $
     let bs' = fromPrivate bs
      in pure (toFragments bs')
-  nBytes <- syncR AnnounceSizeBytes (pure . B.length $ fromPrivate bs)
+  nBytes <- syncR AnnounceSizeBytes (pure . fromIntegral . B.length $ fromPrivate bs)
   let nFragments = nBytesToNFragments nBytes
-  fragments' <- V.generateM nFragments $ \i -> sync SRanger SendPhotoFragment $ pure (fromPrivate fragments V.! i)
-  pure $ fromFragments nBytes (V.toList fragments')
+  fragments' <- V.generateM (fromIntegral nFragments) $ \i -> sync SRanger SendPhotoFragment $ pure (fromPrivate fragments V.! i)
+  pure $ fromFragments (fromIntegral nBytes) (V.toList fragments')
