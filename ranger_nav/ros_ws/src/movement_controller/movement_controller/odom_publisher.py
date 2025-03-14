@@ -43,6 +43,7 @@ class OdometryPublisher(Node):
     def print_pos(self):
             print(f"Current pos:\nx: {self.x}, y: {self.y}, angle: {self.theta}\n")
 
+
     def timer_callback(self):
         # Get current time
         current_time = self.get_clock().now()
@@ -117,7 +118,7 @@ class OdometryPublisher(Node):
         t_base_scan_laser = TransformStamped()
         t_base_scan_laser.header.stamp = current_time.to_msg()
         t_base_scan_laser.header.frame_id = "base_link"  # This could be your sensor frame
-        t_base_scan_laser.child_frame_id = "base_scan"  # The sensor frame
+        t_base_scan_laser.child_frame_id = "laser"  # The sensor frame
 
         t_base_scan_laser.transform.translation.x = 0.0
         t_base_scan_laser.transform.translation.y = 0.0
