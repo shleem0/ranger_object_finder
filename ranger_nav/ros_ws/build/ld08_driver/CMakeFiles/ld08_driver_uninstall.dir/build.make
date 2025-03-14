@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
+CMAKE_SOURCE_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
+CMAKE_BINARY_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
 
 # Utility rule file for ld08_driver_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ld08_driver_uninstall.dir/compiler_depend.make
 include CMakeFiles/ld08_driver_uninstall.dir/progress.make
 
 CMakeFiles/ld08_driver_uninstall:
-	/usr/bin/cmake -P /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 ld08_driver_uninstall: CMakeFiles/ld08_driver_uninstall
 ld08_driver_uninstall: CMakeFiles/ld08_driver_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ld08_driver_uninstall.dir/clean:
 .PHONY : CMakeFiles/ld08_driver_uninstall.dir/clean
 
 CMakeFiles/ld08_driver_uninstall.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles/ld08_driver_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles/ld08_driver_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ld08_driver_uninstall.dir/depend
 

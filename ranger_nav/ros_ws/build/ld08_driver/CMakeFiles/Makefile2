@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
+CMAKE_SOURCE_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
+CMAKE_BINARY_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -83,14 +83,14 @@ clean: CMakeFiles/ld08_driver.dir/clean
 CMakeFiles/uninstall.dir/all: CMakeFiles/ld08_driver_uninstall.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num= "Built target uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num= "Built target uninstall"
 .PHONY : CMakeFiles/uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
 .PHONY : CMakeFiles/uninstall.dir/rule
 
 # Convenience name for target.
@@ -109,14 +109,14 @@ CMakeFiles/uninstall.dir/clean:
 CMakeFiles/ld08_driver_uninstall.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ld08_driver_uninstall.dir/build.make CMakeFiles/ld08_driver_uninstall.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ld08_driver_uninstall.dir/build.make CMakeFiles/ld08_driver_uninstall.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num= "Built target ld08_driver_uninstall"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num= "Built target ld08_driver_uninstall"
 .PHONY : CMakeFiles/ld08_driver_uninstall.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ld08_driver_uninstall.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ld08_driver_uninstall.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
 .PHONY : CMakeFiles/ld08_driver_uninstall.dir/rule
 
 # Convenience name for target.
@@ -135,14 +135,14 @@ CMakeFiles/ld08_driver_uninstall.dir/clean:
 CMakeFiles/ld08_driver.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ld08_driver.dir/build.make CMakeFiles/ld08_driver.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ld08_driver.dir/build.make CMakeFiles/ld08_driver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target ld08_driver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target ld08_driver"
 .PHONY : CMakeFiles/ld08_driver.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ld08_driver.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ld08_driver.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles 0
 .PHONY : CMakeFiles/ld08_driver.dir/rule
 
 # Convenience name for target.

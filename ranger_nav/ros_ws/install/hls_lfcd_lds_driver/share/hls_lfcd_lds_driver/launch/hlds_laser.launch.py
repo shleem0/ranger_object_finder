@@ -1,1 +1,0 @@
-/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/hls_lfcd_lds_driver/launch/hlds_laser.launch.py

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
+CMAKE_SOURCE_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
+CMAKE_BINARY_DIR = /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ld08_driver.dir/depend.make
@@ -70,74 +70,74 @@ include CMakeFiles/ld08_driver.dir/progress.make
 include CMakeFiles/ld08_driver.dir/flags.make
 
 CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o: CMakeFiles/ld08_driver.dir/flags.make
-CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp
+CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp
 CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o: CMakeFiles/ld08_driver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o -MF CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o -MF CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp
 
 CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp > CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp > CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.i
 
 CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp -o CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/cmd_interface_linux.cpp -o CMakeFiles/ld08_driver.dir/src/cmd_interface_linux.cpp.s
 
 CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o: CMakeFiles/ld08_driver.dir/flags.make
-CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp
+CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp
 CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o: CMakeFiles/ld08_driver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o -MF CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o -MF CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/lipkg.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp
 
 CMakeFiles/ld08_driver.dir/src/lipkg.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ld08_driver.dir/src/lipkg.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp > CMakeFiles/ld08_driver.dir/src/lipkg.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp > CMakeFiles/ld08_driver.dir/src/lipkg.cpp.i
 
 CMakeFiles/ld08_driver.dir/src/lipkg.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ld08_driver.dir/src/lipkg.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp -o CMakeFiles/ld08_driver.dir/src/lipkg.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/lipkg.cpp -o CMakeFiles/ld08_driver.dir/src/lipkg.cpp.s
 
 CMakeFiles/ld08_driver.dir/src/main.cpp.o: CMakeFiles/ld08_driver.dir/flags.make
-CMakeFiles/ld08_driver.dir/src/main.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp
+CMakeFiles/ld08_driver.dir/src/main.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp
 CMakeFiles/ld08_driver.dir/src/main.cpp.o: CMakeFiles/ld08_driver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ld08_driver.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/main.cpp.o -MF CMakeFiles/ld08_driver.dir/src/main.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/main.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ld08_driver.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/main.cpp.o -MF CMakeFiles/ld08_driver.dir/src/main.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/main.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp
 
 CMakeFiles/ld08_driver.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ld08_driver.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp > CMakeFiles/ld08_driver.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp > CMakeFiles/ld08_driver.dir/src/main.cpp.i
 
 CMakeFiles/ld08_driver.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ld08_driver.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp -o CMakeFiles/ld08_driver.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/main.cpp -o CMakeFiles/ld08_driver.dir/src/main.cpp.s
 
 CMakeFiles/ld08_driver.dir/src/slbf.cpp.o: CMakeFiles/ld08_driver.dir/flags.make
-CMakeFiles/ld08_driver.dir/src/slbf.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp
+CMakeFiles/ld08_driver.dir/src/slbf.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp
 CMakeFiles/ld08_driver.dir/src/slbf.cpp.o: CMakeFiles/ld08_driver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ld08_driver.dir/src/slbf.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/slbf.cpp.o -MF CMakeFiles/ld08_driver.dir/src/slbf.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/slbf.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ld08_driver.dir/src/slbf.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/slbf.cpp.o -MF CMakeFiles/ld08_driver.dir/src/slbf.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/slbf.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp
 
 CMakeFiles/ld08_driver.dir/src/slbf.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ld08_driver.dir/src/slbf.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp > CMakeFiles/ld08_driver.dir/src/slbf.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp > CMakeFiles/ld08_driver.dir/src/slbf.cpp.i
 
 CMakeFiles/ld08_driver.dir/src/slbf.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ld08_driver.dir/src/slbf.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp -o CMakeFiles/ld08_driver.dir/src/slbf.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/slbf.cpp -o CMakeFiles/ld08_driver.dir/src/slbf.cpp.s
 
 CMakeFiles/ld08_driver.dir/src/transform.cpp.o: CMakeFiles/ld08_driver.dir/flags.make
-CMakeFiles/ld08_driver.dir/src/transform.cpp.o: /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp
+CMakeFiles/ld08_driver.dir/src/transform.cpp.o: /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp
 CMakeFiles/ld08_driver.dir/src/transform.cpp.o: CMakeFiles/ld08_driver.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ld08_driver.dir/src/transform.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/transform.cpp.o -MF CMakeFiles/ld08_driver.dir/src/transform.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/transform.cpp.o -c /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ld08_driver.dir/src/transform.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ld08_driver.dir/src/transform.cpp.o -MF CMakeFiles/ld08_driver.dir/src/transform.cpp.o.d -o CMakeFiles/ld08_driver.dir/src/transform.cpp.o -c /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp
 
 CMakeFiles/ld08_driver.dir/src/transform.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ld08_driver.dir/src/transform.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp > CMakeFiles/ld08_driver.dir/src/transform.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp > CMakeFiles/ld08_driver.dir/src/transform.cpp.i
 
 CMakeFiles/ld08_driver.dir/src/transform.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ld08_driver.dir/src/transform.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp -o CMakeFiles/ld08_driver.dir/src/transform.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver/src/transform.cpp -o CMakeFiles/ld08_driver.dir/src/transform.cpp.s
 
 # Object files for target ld08_driver
 ld08_driver_OBJECTS = \
@@ -218,7 +218,7 @@ ld08_driver: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_c.so
 ld08_driver: /opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_py.so
 ld08_driver: /opt/ros/humble/lib/libstd_msgs__rosidl_generator_py.so
 ld08_driver: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_generator_py.so
-ld08_driver: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+ld08_driver: /usr/lib/aarch64-linux-gnu/libpython3.10.so
 ld08_driver: /opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_c.so
 ld08_driver: /opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_c.so
 ld08_driver: /opt/ros/humble/lib/libbuiltin_interfaces__rosidl_typesupport_c.so
@@ -235,7 +235,7 @@ ld08_driver: /opt/ros/humble/lib/librcpputils.so
 ld08_driver: /opt/ros/humble/lib/librosidl_runtime_c.so
 ld08_driver: /opt/ros/humble/lib/librcutils.so
 ld08_driver: CMakeFiles/ld08_driver.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ld08_driver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ld08_driver"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ld08_driver.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -247,6 +247,6 @@ CMakeFiles/ld08_driver.dir/clean:
 .PHONY : CMakeFiles/ld08_driver.dir/clean
 
 CMakeFiles/ld08_driver.dir/depend:
-	cd /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /afs/inf.ed.ac.uk/user/s22/s2281597/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles/ld08_driver.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/src/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver /home/ubuntu/ranger_object_finder/ranger_nav/ros_ws/build/ld08_driver/CMakeFiles/ld08_driver.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ld08_driver.dir/depend
 
