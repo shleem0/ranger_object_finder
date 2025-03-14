@@ -82,6 +82,23 @@ class OdometryPublisher(Node):
         self.prev_motor_pos1 = motor_pos1
         self.prev_motor_pos2 = motor_pos2
 
+        odom = Odometry()
+        odom.header.stamp = current_time
+        odom.header.frame_id = 'odom'
+        odom.child_frame_id = 'base_link'
+        odom.pose.pose.position.x = self.x
+        odom.pose.pose.position.y = self.y
+        odom.pose.pose.position.z = 0.0
+        odom.pose.pose.orientation.x = qx
+        odom.pose.pose.orientation.y = qy
+        odom.pose.pose.orientation.z = qz
+        odom.pose.pose.orientation.w = qw
+
+        odom.twist.twist.linear.x = linear_velocity
+        odom.twist.twist.angular.z = angular_velocity
+
+        self.odom_publisher.publish(odom)
+
 
         # Transform from odom to base_link
         t_odom_base = TransformStamped()
@@ -90,13 +107,13 @@ class OdometryPublisher(Node):
         t_odom_base.child_frame_id = 'base_link'
 
         # Example values - Replace with actual odometry data
-        t_odom_base.transform.translation.x = 0.0
-        t_odom_base.transform.translation.y = 0.0
-        t_odom_base.transform.translation.z = 0.0
-        t_odom_base.transform.rotation.x = 0.0
-        t_odom_base.transform.rotation.y = 0.0
-        t_odom_base.transform.rotation.z = 0.0
-        t_odom_base.transform.rotation.w = 1.0
+        t_odom_base.transform.translation.x = self.x
+        t_odom_base.transform.translation.y = self.y
+        t_odom_base.transform.translation.z = 00
+        t_odom_base.transform.rotation.x = qx
+        t_odom_base.transform.rotation.y = qy
+        t_odom_base.transform.rotation.z = qz
+        t_odom_base.transform.rotation.w = qw
 
         # Transform from base_link to base_scan
         t_base_scan = TransformStamped()
@@ -105,9 +122,9 @@ class OdometryPublisher(Node):
         t_base_scan.child_frame_id = 'laser'
 
         # Adjust these values based on where your LiDAR is mounted
-        t_base_scan.transform.translation.x = 0.1  # 10 cm in front of base_link
+        t_base_scan.transform.translation.x = 0.0  # 10 cm in front of base_link
         t_base_scan.transform.translation.y = 0.0
-        t_base_scan.transform.translation.z = 0.15  # LiDAR is 15 cm above base_link
+        t_base_scan.transform.translation.z = 0.13  # LiDAR is 15 cm above base_link
         t_base_scan.transform.rotation.x = 0.0
         t_base_scan.transform.rotation.y = 0.0
         t_base_scan.transform.rotation.z = 0.0
