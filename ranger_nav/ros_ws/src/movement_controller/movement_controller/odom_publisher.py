@@ -130,6 +130,22 @@ class OdometryPublisher(Node):
 
         self.broadcaster.sendTransform(t_base_scan_laser)
 
+        t_laser_base_scan = TransformStamped()
+        t_laser_base_scan.header.stamp = current_time.to_msg()
+        t_laser_base_scan.header.frame_id = "laser"
+        t_laser_base_scan.child_frame_id = "base_scan"
+
+        t_laser_base_scan.transform.translation.x = 0.0
+        t_laser_base_scan.transform.translation.y = 0.0
+        t_laser_base_scan.transform.translation.z = 0.0
+        t_laser_base_scan.transform.rotation.x = 0.0
+        t_laser_base_scan.transform.rotation.y = 0.0
+        t_laser_base_scan.transform.rotation.z = 0.0
+        t_laser_base_scan.transform.rotation.w = 1.0
+
+        self.broadcaster.sendTransform(t_laser_base_scan)
+
+
         # Save current time for the next iteration
         self.last_time = current_time
 
