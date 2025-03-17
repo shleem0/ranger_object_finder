@@ -6,12 +6,11 @@ motor = MotorDriver()
 
 def control_motors():
     while True:
-        
-        f1 = open("motor/motor_input1.txt", "r")
-        f2 = open("motor/motor_input2.txt", "r")
 
-        file1 = f1.read().split()
-        file2 = f2.read().split()
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
+        
+            file1 = f1.read().split()
+            file2 = f2.read().split()
 
         try:
             left_dir = eval(file1[0])
@@ -30,8 +29,6 @@ def control_motors():
         motor.set_dir(left_dir, right_dir)
         motor.set_speed(left_v, right_v)
 
-        f1.close()
-        f2.close()
         time.sleep(0.1)
 
 control_motors()
