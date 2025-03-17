@@ -12,6 +12,15 @@ import numpy as np
 class OdometryPublisher(Node):
     def __init__(self):
         super().__init__('odometry_publisher')
+
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f2,\
+        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f4:
+            
+            f1.write("0")
+            f2.write("0")
+
+            f3.write("True 0")
+            f4.write("True 0")
         
         self.broadcaster = TransformBroadcaster(self)
 
@@ -31,15 +40,6 @@ class OdometryPublisher(Node):
 
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
-
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f2,\
-        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f4:
-            
-            f1.write("True 0")
-            f2.write("True 0")
-
-            f3.write("0")
-            f4.write("0")
 
         self.last_time = self.get_clock().now()
 
