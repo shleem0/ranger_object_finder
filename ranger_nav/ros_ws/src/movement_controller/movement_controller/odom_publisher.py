@@ -32,16 +32,25 @@ class OdometryPublisher(Node):
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
 
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2,\
+        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f4:
+            
+            f1.write("True 0")
+            f2.write("True 0")
+
+            f3.write("0")
+            f4.write("0")
+
         self.last_time = self.get_clock().now()
 
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.2, self.timer_callback)
-        self.pos_timer = self.create_timer(5, self.print_pos)
-        self.goal_pub_timer = self.create_timer(5, self.publish_goal_pose)
+        self.pos_timer = self.create_timer(10, self.print_pos)
+        self.goal_pub_timer = self.create_timer(10, self.publish_goal_pose)
 
 
     def print_pos(self):
-            print(f"Current pos:\nx: {self.x}, y: {self.y}, angle: {self.theta}\n")
+            print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
 
 
     def timer_callback(self):
