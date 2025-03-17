@@ -49,18 +49,15 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
-        f1 = open("motor/motor_data1.txt", "r")
-        f2 = open("motor/motor_data2.txt", "r")
+        with open("motor/motor_data1.txt", "r") as f1, open("motor/motor_data2.txt", "r") as f2:
 
-        try:
-            motor_pos1 = float(f1.read())
-            motor_pos2 = float(f2.read())
-        except:
-            motor_pos1 = 0.0
-            motor_pos2 = 0.0
+            try:
+                motor_pos1 = float(f1.read())
+                motor_pos2 = float(f2.read())
+            except:
+                motor_pos1 = 0.0
+                motor_pos2 = 0.0
 
-        f1.close()
-        f2.close()
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
@@ -238,18 +235,13 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        f1 = open("motor/motor_input1.txt", "w")
-        f2 = open("motor/motor_input2.txt", "w")
-
         motor1_speed = int(v_left / motor_max_speed * 100)
         motor2_speed = int(v_right / motor_max_speed * 100)
 
-        f1.write(f"{left_dir} {motor1_speed}")
-        f2.write(f"{right_dir} {motor2_speed}")
+        with open("motor/motor_input1.txt", "w") as f1, open("motor/motor_input2.txt", "w") as f2:
 
-        f1.close()
-        f2.close()
-
+            f1.write(f"{left_dir} {motor1_speed}")
+            f2.write(f"{right_dir} {motor2_speed}")
 
         
 
