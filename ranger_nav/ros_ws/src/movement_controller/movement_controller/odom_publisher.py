@@ -131,8 +131,8 @@ class OdometryPublisher(Node):
         t_base_scan.transform.rotation.w = 1.0
 
         # Publish the transforms
-        self.tf_broadcaster.sendTransform(t_odom_base)
-        self.tf_broadcaster.sendTransform(t_base_scan)
+        self.broadcaster.sendTransform(t_odom_base)
+        self.broadcaster.sendTransform(t_base_scan)
 
         # Save current time for the next iteration
         self.last_time = current_time
