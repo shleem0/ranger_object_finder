@@ -32,7 +32,7 @@ class OdometryPublisher(Node):
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
 
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2,\
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f2,\
         open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f4:
             
             f1.write("True 0")
