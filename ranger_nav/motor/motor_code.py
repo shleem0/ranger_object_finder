@@ -5,6 +5,12 @@ from grove.grove_optical_rotary_encoder import GroveOpticalRotaryEncoder
 motor = MotorDriver()
 
 def control_motors():
+
+    with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
+
+        f1.write("True 0")
+        f2.write("True 0")
+
     while True:
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "r") as f2:

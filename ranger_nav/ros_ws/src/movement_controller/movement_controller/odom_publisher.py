@@ -13,15 +13,11 @@ class OdometryPublisher(Node):
     def __init__(self):
         super().__init__('odometry_publisher')
 
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2,\
-        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f4:
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
             
             self.prev_motor_pos1 = float(f1.read())
             self.prev_motor_pos2 = float(f2.read())
 
-            f3.write("True 0")
-            f4.write("True 0")
-        
         self.broadcaster = TransformBroadcaster(self)
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
