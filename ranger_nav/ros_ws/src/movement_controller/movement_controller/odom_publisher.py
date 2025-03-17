@@ -218,7 +218,7 @@ class OdometryPublisher(Node):
         
         # Robot parameters
         wheelbase = 0.13  # The distance between the two wheels (meters)
-        motor_max_rpm = 100
+        motor_max_rpm = 120
 
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
         
