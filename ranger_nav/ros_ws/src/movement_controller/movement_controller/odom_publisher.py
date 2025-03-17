@@ -109,7 +109,7 @@ class OdometryPublisher(Node):
         # Example values - Replace with actual odometry data
         t_odom_base.transform.translation.x = self.x
         t_odom_base.transform.translation.y = self.y
-        t_odom_base.transform.translation.z = 00
+        t_odom_base.transform.translation.z = 0.0
         t_odom_base.transform.rotation.x = qx
         t_odom_base.transform.rotation.y = qy
         t_odom_base.transform.rotation.z = qz
