@@ -235,7 +235,7 @@ class OdometryPublisher(Node):
         motor1_speed = int(v_left / motor_max_speed * 100)
         motor2_speed = int(v_right / motor_max_speed * 100)
 
-        with open("home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
             f1.write(f"{left_dir} {motor1_speed}")
             f2.write(f"{right_dir} {motor2_speed}")
