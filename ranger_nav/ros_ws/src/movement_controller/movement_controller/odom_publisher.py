@@ -14,7 +14,7 @@ class OdometryPublisher(Node):
         super().__init__('odometry_publisher')
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f2,\
-        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "w") as f4:
+        open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f3, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f4:
             
             f1.write("0")
             f2.write("0")
