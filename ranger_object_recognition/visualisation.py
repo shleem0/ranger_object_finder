@@ -12,6 +12,9 @@ def visualise_matches(scene_img, matches):
     for (box, sim) in matches:
         x, y, w, h = box
         cv2.rectangle(img_to_show, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+        center_x = x + w // 2
+        center_y = y + h // 2
         cv2.putText(img_to_show, f"{sim:.2f}", (x, y-10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
     plt.figure(figsize=(10, 10))
