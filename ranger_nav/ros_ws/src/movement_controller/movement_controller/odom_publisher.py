@@ -112,11 +112,11 @@ class OdometryPublisher(Node):
         t_odom_base.transform.rotation.z = qz
         t_odom_base.transform.rotation.w = qw
 
-        '''# Transform from base_link to base_scan
+        # Transform from base_link to base_scan
         t_base_scan = TransformStamped()
         t_base_scan.header.stamp = current_time.to_msg()
         t_base_scan.header.frame_id = 'base_link'
-        t_base_scan.child_frame_id = 'laser'
+        t_base_scan.child_frame_id = 'base_scan'
 
         # Adjust these values based on where your LiDAR is mounted
         t_base_scan.transform.translation.x = 0.0  # 10 cm in front of base_link
@@ -125,11 +125,11 @@ class OdometryPublisher(Node):
         t_base_scan.transform.rotation.x = 0.0
         t_base_scan.transform.rotation.y = 0.0
         t_base_scan.transform.rotation.z = 0.0
-        t_base_scan.transform.rotation.w = 1.0'''
+        t_base_scan.transform.rotation.w = 1.0
 
         # Publish the transforms
         self.broadcaster.sendTransform(t_odom_base)
-        #self.broadcaster.sendTransform(t_base_scan)
+        self.broadcaster.sendTransform(t_base_scan)
 
         # Save current time for the next iteration
         self.last_time = current_time
