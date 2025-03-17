@@ -7,7 +7,7 @@ motor = MotorDriver()
 def control_motors():
     while True:
 
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "r") as f2:
         
             file1 = f1.read().split()
             file2 = f2.read().split()
