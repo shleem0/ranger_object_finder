@@ -51,7 +51,8 @@ class OdometryPublisher(Node):
 
     def print_pos(self):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
-            print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+            if self.goal:
+                print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
 
 
     def timer_callback(self):
