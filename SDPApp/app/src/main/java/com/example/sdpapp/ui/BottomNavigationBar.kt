@@ -65,12 +65,17 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
                             )
                         },
                         onClick = {
-                            navController.navigate(navigationItem.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+                            if (currentRoute == navigationItem.route) {
+                                navController.popBackStack(navigationItem.route, inclusive = true)
+                                navController.navigate(navigationItem.route)
+                            } else {
+                                navController.navigate(navigationItem.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
                         },
                     )

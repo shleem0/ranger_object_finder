@@ -127,10 +127,18 @@ fun UploadContent(navController: NavController, itemName: String) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 80.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-
+                .padding(bottom = 80.dp)
         ) {
+            TextButton(
+                onClick = { navController.navigate("home") }
+            ) {
+                Text(
+                    "< Back",
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(0.dp)
+                )
+            }
             Button(
                 onClick = { imagePickerLauncher.launch("image/*") },
                 modifier = Modifier

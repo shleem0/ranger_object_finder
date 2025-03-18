@@ -80,11 +80,8 @@ fun getAlertsFromSharedPreferences(context: Context): List<Alert> {
 fun AlertsScreen(navController: NavController) {
     val context = LocalContext.current
 
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
-    val parsedDate = dateFormat.parse("2025-02-10")!!
-    saveAlertsToSharedPreferences(
-        context,
-        listOf(Alert(0, parsedDate, "Example Alert", "Description of example alert that will contain informative information and can be opened in full screen if the text runs over the allocated space like this one does.")))
+    // val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
+    // val parsedDate = dateFormat.parse("2025-02-10")!!
     val alerts = remember { getAlertsFromSharedPreferences(context) }
 
     Column(
