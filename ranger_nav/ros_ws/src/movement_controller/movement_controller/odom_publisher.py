@@ -15,8 +15,12 @@ class OdometryPublisher(Node):
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
             
-            self.prev_motor_pos1 = float(f1.read())
-            self.prev_motor_pos2 = float(f2.read())
+            try:
+                self.prev_motor_pos1 = float(f1.read())
+                self.prev_motor_pos2 = float(f2.read())
+            except:
+                self.prev_motor_pos1 = 0
+                self.prev_motor_pos2 = 0
 
         self.broadcaster = TransformBroadcaster(self)
 
