@@ -47,6 +47,7 @@ class OdometryPublisher(Node):
 
     def print_pos(self):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
+            print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
 
 
     def timer_callback(self):
@@ -187,11 +188,10 @@ class OdometryPublisher(Node):
             goal_pose.pose.position.x = goal_x
             goal_pose.pose.position.y = goal_y
             goal_pose.pose.position.z = 0.0
-            goal_pose.pose.orientation.w = 1.0
+            goal_pose.pose.orientation.w = self.theta
             return goal_pose
         
         return None
-
 
 
 
@@ -200,11 +200,9 @@ class OdometryPublisher(Node):
 
         if self.goal:
             self.goal_pose_pub.publish(self.goal)
-            print (f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
 
         else:
             print("No goal pose\n")
-
 
 
 
@@ -220,8 +218,8 @@ class OdometryPublisher(Node):
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
         
         # Calculate left and right motor speeds
-        v_left = linear_velocity - (wheelbase / 2) * angular_velocity
-        v_right = linear_velocity + (wheelbase / 2) * angular_velocity
+        v_left = linear_velocity - (wheelbase * angular_velocity) / 2
+        v_right = linear_velocity + (wheelbase * angular_velocity) / 2
 
         left_dir = True
         right_dir = True
@@ -234,8 +232,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(v_left / motor_max_speed * 441)
-        motor2_speed = int(v_right / motor_max_speed * 441)
+        motor1_speed = int(v_left / motor_max_speed * 501 * 1.2)
+        motor2_speed = int(v_right / motor_max_speed * 501 * 1.2)
 
         if motor1_speed != 0:
             motor1_speed += 60
