@@ -61,6 +61,7 @@ fun PermissionsSettingsScreen(navController: NavController) {
         CameraPermissionSwitch(navController)
         BluetoothPermissionSwitch(navController)
         NotificationPermissionSwitch(navController)
+        FileAccessPermissionSwitch(navController)
     }
 }
 
@@ -74,7 +75,9 @@ fun CameraPermissionSwitch(navController: NavController) {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -120,7 +123,9 @@ fun BluetoothPermissionSwitch(navController: NavController) {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -178,7 +183,9 @@ fun NotificationPermissionSwitch(navController: NavController) {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -222,6 +229,60 @@ fun NotificationPermissionSwitch(navController: NavController) {
     Text("We recommend keeping notifications on to receive important alerts.",
         modifier = Modifier
             .fillMaxWidth(),
+        fontSize = 16.sp,
+        color = MaterialTheme.colorScheme.surfaceBright,
+        textAlign = TextAlign.Start,
+        lineHeight = 19.sp
+    )
+}
+
+@Composable
+fun FileAccessPermissionSwitch(navController: NavController) {
+    // Create a single permission state based on SDK version
+    val filePermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberPermissionState(Manifest.permission.READ_MEDIA_IMAGES)
+    } else {
+        rememberPermissionState(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    // Use the permission state directly to control the switch
+    val isGranted = filePermissionState.status.isGranted
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "File Access",
+            fontSize = 26.sp,
+            color = MaterialTheme.colorScheme.surfaceBright
+        )
+
+        Switch(
+            checked = isGranted,
+            onCheckedChange = { newCheckedState ->
+                if (newCheckedState && !isGranted) {
+                    // Launch the permission request if turning on and permission not yet granted.
+                    filePermissionState.launchPermissionRequest()
+                } else if (!newCheckedState) {
+                    // If turning off, navigate to app settings.
+                    navController.navigate("openAppSettings")
+                }
+            },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.onBackground,
+                checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
+                uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
+            )
+        )
+    }
+
+    Text(
+        text = "File access is needed if you want to upload photos of the item.",
+        modifier = Modifier.fillMaxWidth(),
         fontSize = 16.sp,
         color = MaterialTheme.colorScheme.surfaceBright,
         textAlign = TextAlign.Start,
