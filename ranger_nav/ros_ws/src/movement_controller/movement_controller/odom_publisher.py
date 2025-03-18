@@ -42,7 +42,7 @@ class OdometryPublisher(Node):
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.2, self.timer_callback)
         self.pos_timer = self.create_timer(10, self.print_pos)
-        self.goal_pub_timer = self.create_timer(10, self.publish_goal_pose)
+        self.goal_pub_timer = self.create_timer(8, self.publish_goal_pose)
 
 
     def print_pos(self):
@@ -142,11 +142,6 @@ class OdometryPublisher(Node):
 
         self.map_data = msg
 
-        if self.map_data:
-            self.goal = self.find_goal_pose(self.map_data)
-        else:
-            print("No map")
-
 
 
 
@@ -201,6 +196,8 @@ class OdometryPublisher(Node):
 
 
     def publish_goal_pose(self):
+        self.goal = self.find_goal_pose(self.map_data)
+
         if self.goal:
             self.goal_pose_pub.publish(self.goal)
             print (f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
@@ -237,8 +234,14 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(v_left / motor_max_speed * 501)
-        motor2_speed = int(v_right / motor_max_speed * 501)
+        motor1_speed = int(v_left / motor_max_speed * 441)
+        motor2_speed = int(v_right / motor_max_speed * 441)
+
+        if motor1_speed != 0:
+            motor1_speed += 60
+
+        if motor2_speed != 0:
+            motor2_speed += 60
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
