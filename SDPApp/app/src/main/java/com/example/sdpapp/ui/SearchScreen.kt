@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.sdpapp.MainActivity
+import com.example.sdpapp.PermissionManager
 import com.example.sdpapp.bt.RangerBluetoothService
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -248,12 +249,13 @@ fun SearchScreen(navController: NavController) {
 fun runRanger(navController: NavController, context: Context, selectedOption: String) {
     Log.i("DemoScreen", "Start demooo")
     val mainActivity = context as MainActivity
+    val permissionManager = context as PermissionManager
 
     if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
         Toast.makeText(context,
             "Please wait while connecting.",
             Toast.LENGTH_SHORT).show()
-        mainActivity.requestBluetoothPermission()
+        permissionManager.requestBluetoothPermission()
         Log.i("DemoScreen", "Start demo0")
 
         return

@@ -1,6 +1,7 @@
 package com.example.sdpapp.ui
 
 import android.os.Build
+import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -29,13 +30,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.sdpapp.PermissionManager
 import com.example.sdpapp.SettingsScreen
 import com.example.sdpapp.bt.RangerBluetoothService
 import com.example.sdpapp.ui.theme.ThemeViewModel
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: RangerBluetoothService?) {
+fun BottomNavigationBar(
+    themeViewModel: ThemeViewModel,
+    bluetoothService: RangerBluetoothService?,
+    permissionManager: PermissionManager
+){
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
@@ -93,7 +99,9 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
             composable("settings") { SettingsScreen(navController) }
             composable("about") { AboutSettingsScreen(navController) }
             composable("display") { DisplaySettingsScreen(navController, themeViewModel) }
-            composable("permissions") { PermissionsSettingsScreen(navController) }
+            composable("permissions") {
+                PermissionsSettingsScreen(navController, permissionManager = permissionManager)
+            }
             composable("alerts") { AlertsScreen(navController) }
             composable("camera/{name}") { backStackEntry ->
                 val name = backStackEntry.arguments?.getString("name") ?: ""
@@ -114,7 +122,6 @@ fun BottomNavigationBar(themeViewModel: ThemeViewModel, bluetoothService: Ranger
             }
             composable("search") { SearchScreen(navController) }
             composable("demo") { DemoScreen(navController) }
-            composable("openAppSettings") { openAppSettings() }
             composable("connectForDemo") {
                 if (bluetoothService != null) {
                     bluetoothService.connectForDemo()

@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.example.sdpapp.MainActivity
+import com.example.sdpapp.PermissionManager
 import com.example.sdpapp.R
 import com.example.sdpapp.bt.RangerBluetoothService
 import com.example.sdpapp.ui.theme.SDPAppTheme
@@ -516,6 +517,7 @@ fun AddItem(navController: NavController) {
 fun connectToRobot(context: Context) {
     val mainActivity = context as MainActivity
     val s = mainActivity.bluetoothService
+    val permissionManager = context as PermissionManager
 
     if (ContextCompat.checkSelfPermission(
             context,
@@ -527,7 +529,7 @@ fun connectToRobot(context: Context) {
             "Please wait while connecting.",
             Toast.LENGTH_SHORT
         ).show()
-        mainActivity.requestBluetoothPermission()
+        permissionManager.requestBluetoothPermission()
 
         return
     }

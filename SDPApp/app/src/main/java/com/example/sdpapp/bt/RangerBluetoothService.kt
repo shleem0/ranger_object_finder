@@ -35,7 +35,8 @@ import java.lang.IllegalStateException
 *
 * see example https://github.com/bluez/bluer/blob/master/bluer/examples/gatt_client.rs
 */
-private const val RANGER_DEMO_ADDRESS = "90:32:4B:8F:FC:D6"
+// private val RANGER_DEMO_ADDRESS = "90:32:4B:8F:FC:D6"
+private val RANGER_DEMO_ADDRESS = "B8:27:EB:02:F7:BB"
 
 private const val TAG = "RangerBluetoothService"
 
@@ -311,7 +312,7 @@ class RangerBluetoothService : Service() {
                 val device = adapter.getRemoteDevice(address)
 
                 // Permission check boilerplate
-                // pani, TODO: app-wide PermissionManager class for this that shows the user a prompt
+//                 pani, TODO: app-wide PermissionManager class for this that shows the user a prompt
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         Manifest.permission.BLUETOOTH_CONNECT

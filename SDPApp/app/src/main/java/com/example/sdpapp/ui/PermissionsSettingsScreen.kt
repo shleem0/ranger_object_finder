@@ -2,15 +2,6 @@
 
 package com.example.sdpapp.ui
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,18 +21,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.example.sdpapp.PermissionManager
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
-fun PermissionsSettingsScreen(navController: NavController) {
+fun PermissionsSettingsScreen(
+    navController: NavController,
+    permissionManager: PermissionManager
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,20 +48,19 @@ fun PermissionsSettingsScreen(navController: NavController) {
             color = MaterialTheme.colorScheme.tertiary,
         )
 
-        CameraPermissionSwitch(navController)
-        BluetoothPermissionSwitch(navController)
-        NotificationPermissionSwitch(navController)
-        FileAccessPermissionSwitch(navController)
+        CameraPermissionSwitch(permissionManager)
+        BluetoothPermissionSwitch(permissionManager)
+        NotificationPermissionSwitch(permissionManager)
+        FileAccessPermissionSwitch(permissionManager)
     }
 }
 
 @Composable
-fun CameraPermissionSwitch(navController: NavController) {
-    val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-    var checked by remember { mutableStateOf(cameraPermissionState.status.isGranted) }
+fun CameraPermissionSwitch(permissionManager: PermissionManager) {
+    var isGranted by remember { mutableStateOf(permissionManager.isCameraPermissionGranted()) }
 
-    LaunchedEffect(cameraPermissionState.status.isGranted) {
-        checked = cameraPermissionState.status.isGranted
+    LaunchedEffect(Unit) {
+        isGranted = permissionManager.isCameraPermissionGranted()
     }
 
     Row(
@@ -87,13 +76,14 @@ fun CameraPermissionSwitch(navController: NavController) {
         )
 
         Switch(
-            checked = checked,
+            checked = isGranted,
             onCheckedChange = { newCheckedState ->
                 if (newCheckedState) {
-                    cameraPermissionState.launchPermissionRequest()
+                    permissionManager.requestCameraPermission()
                 } else {
-                    navController.navigate("openAppSettings")
+                    permissionManager.openAppSettings()
                 }
+                isGranted = permissionManager.isCameraPermissionGranted()
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.onBackground,
@@ -103,23 +93,22 @@ fun CameraPermissionSwitch(navController: NavController) {
             )
         )
     }
-    Text("The camera is needed for you to take photos of your items.",
-        modifier = Modifier
-            .fillMaxWidth(),
+
+    Text(
+        "The camera is needed for you to take photos of your items.",
+        modifier = Modifier.fillMaxWidth(),
         fontSize = 16.sp,
         color = MaterialTheme.colorScheme.surfaceBright,
-        textAlign = TextAlign.Start,
-        lineHeight = 19.sp
+        lineHeight = 18.sp
     )
 }
 
 @Composable
-fun BluetoothPermissionSwitch(navController: NavController) {
-    val bluetoothPermissionState = rememberPermissionState(Manifest.permission.BLUETOOTH_CONNECT)
-    var checked by remember { mutableStateOf(bluetoothPermissionState.status.isGranted) }
+fun BluetoothPermissionSwitch(permissionManager: PermissionManager) {
+    var isGranted by remember { mutableStateOf(permissionManager.isBluetoothPermissionGranted()) }
 
-    LaunchedEffect(bluetoothPermissionState.status.isGranted) {
-        checked = bluetoothPermissionState.status.isGranted
+    LaunchedEffect(Unit) {
+        isGranted = permissionManager.isBluetoothPermissionGranted()
     }
 
     Row(
@@ -135,13 +124,14 @@ fun BluetoothPermissionSwitch(navController: NavController) {
         )
 
         Switch(
-            checked = checked,
+            checked = isGranted,
             onCheckedChange = { newCheckedState ->
                 if (newCheckedState) {
-                    bluetoothPermissionState.launchPermissionRequest()
+                    permissionManager.requestBluetoothPermission()
                 } else {
-                    navController.navigate("openAppSettings")
+                    permissionManager.openAppSettings()
                 }
+                isGranted = permissionManager.isBluetoothPermissionGranted()
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.onBackground,
@@ -151,35 +141,22 @@ fun BluetoothPermissionSwitch(navController: NavController) {
             )
         )
     }
-    Text("Bluetooth is used to connect to the robot.",
-        modifier = Modifier
-            .fillMaxWidth(),
+
+    Text(
+        "Bluetooth is used to connect to the robot.",
+        modifier = Modifier.fillMaxWidth(),
         fontSize = 16.sp,
         color = MaterialTheme.colorScheme.surfaceBright,
-        textAlign = TextAlign.Start,
-        lineHeight = 19.sp
+        lineHeight = 18.sp
     )
 }
 
 @Composable
-fun NotificationPermissionSwitch(navController: NavController) {
-    val context = LocalContext.current
-    var checked by remember { mutableStateOf(false) }
-
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        checked = isGranted
-        if (!isGranted) {
-            Toast.makeText(context, "Enable notifications in settings", Toast.LENGTH_SHORT).show()
-        }
-    }
+fun NotificationPermissionSwitch(permissionManager: PermissionManager) {
+    var isGranted by remember { mutableStateOf(permissionManager.isNotificationPermissionGranted()) }
 
     LaunchedEffect(Unit) {
-        checked = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
+        isGranted = permissionManager.isNotificationPermissionGranted()
     }
 
     Row(
@@ -195,58 +172,35 @@ fun NotificationPermissionSwitch(navController: NavController) {
         )
 
         Switch(
-            checked = checked,
+            checked = isGranted,
             onCheckedChange = { newCheckedState ->
                 if (newCheckedState) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        if (ContextCompat.checkSelfPermission(
-                                context, Manifest.permission.POST_NOTIFICATIONS
-                            ) == PackageManager.PERMISSION_GRANTED
-                        ) {
-                            checked = true
-                        } else {
-                            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        }
-                    } else {
-                        checked = true
-                    }
+                    permissionManager.requestNotificationPermission()
                 } else {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.fromParts("package", context.packageName, null)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    context.startActivity(intent)
+                    permissionManager.openAppSettings()
                 }
+                isGranted = permissionManager.isNotificationPermissionGranted()
             },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.onBackground,
-                checkedTrackColor = MaterialTheme.colorScheme.secondary,
-                uncheckedThumbColor = MaterialTheme.colorScheme.surfaceBright,
-                uncheckedTrackColor = MaterialTheme.colorScheme.onBackground,
-            )
+            colors = SwitchDefaults.colors()
         )
     }
-    Text("We recommend keeping notifications on to receive important alerts.",
-        modifier = Modifier
-            .fillMaxWidth(),
+
+    Text(
+        "We recommend keeping notifications on to receive important alerts.",
+        modifier = Modifier.fillMaxWidth(),
         fontSize = 16.sp,
         color = MaterialTheme.colorScheme.surfaceBright,
-        textAlign = TextAlign.Start,
-        lineHeight = 19.sp
+        lineHeight = 18.sp
     )
 }
 
 @Composable
-fun FileAccessPermissionSwitch(navController: NavController) {
-    // Create a single permission state based on SDK version
-    val filePermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        rememberPermissionState(Manifest.permission.READ_MEDIA_IMAGES)
-    } else {
-        rememberPermissionState(Manifest.permission.READ_EXTERNAL_STORAGE)
-    }
+fun FileAccessPermissionSwitch(permissionManager: PermissionManager) {
+    var isGranted by remember { mutableStateOf(permissionManager.isFilePermissionGranted()) }
 
-    // Use the permission state directly to control the switch
-    val isGranted = filePermissionState.status.isGranted
+    LaunchedEffect(Unit) {
+        isGranted = permissionManager.isFilePermissionGranted()
+    }
 
     Row(
         modifier = Modifier
@@ -263,13 +217,12 @@ fun FileAccessPermissionSwitch(navController: NavController) {
         Switch(
             checked = isGranted,
             onCheckedChange = { newCheckedState ->
-                if (newCheckedState && !isGranted) {
-                    // Launch the permission request if turning on and permission not yet granted.
-                    filePermissionState.launchPermissionRequest()
-                } else if (!newCheckedState) {
-                    // If turning off, navigate to app settings.
-                    navController.navigate("openAppSettings")
+                if (newCheckedState) {
+                    permissionManager.requestFilePermissions()
+                } else {
+                    permissionManager.openAppSettings()
                 }
+                isGranted = permissionManager.isFilePermissionGranted()
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.onBackground,
@@ -281,21 +234,10 @@ fun FileAccessPermissionSwitch(navController: NavController) {
     }
 
     Text(
-        text = "File access is needed if you want to upload photos of the item.",
+        "File access is recommended to upload photos. You can enable it later if needed.",
         modifier = Modifier.fillMaxWidth(),
         fontSize = 16.sp,
         color = MaterialTheme.colorScheme.surfaceBright,
-        textAlign = TextAlign.Start,
-        lineHeight = 19.sp
+        lineHeight = 18.sp
     )
-}
-
-@Composable
-fun openAppSettings() {
-    val context = LocalContext.current
-    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-        data = Uri.fromParts("package", context.packageName, null)
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    context.startActivity(intent)
 }

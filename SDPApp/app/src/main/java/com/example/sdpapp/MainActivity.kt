@@ -10,15 +10,15 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.NotificationManager.*
 import android.os.Build
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.app.ActivityCompat
@@ -29,62 +29,71 @@ import com.example.sdpapp.ui.BottomNavigationBar
 import com.example.sdpapp.ui.ThemeViewModelFactory
 import com.example.sdpapp.ui.theme.SDPAppTheme
 import com.example.sdpapp.ui.theme.ThemeViewModel
+import kotlinx.coroutines.delay
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MainActivity : ComponentActivity() {
-    var bluetoothService : RangerBluetoothService? = null
+    var bluetoothService: RangerBluetoothService? = null
+    private lateinit var permissionManager: PermissionManager
 
-    private val requestFilePermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                Log.i("MainActivity", "File permission granted")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        permissionManager = PermissionManager(this)
+
+        setContent {
+            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext))
+            val darkTheme by themeViewModel.darkTheme.collectAsState()
+
+            SDPAppTheme(darkTheme = darkTheme) {
+                BottomNavigationBar(themeViewModel, bluetoothService, permissionManager)
+            }
+
+            // Keep checking and requesting permissions
+            LaunchedEffect(Unit) {
+                ensurePermissionsGranted()
+            }
+        }
+
+        bindBluetoothService()
+    }
+
+    private suspend fun ensurePermissionsGranted() {
+        while (true) {
+            delay(1000) // Retry every 1 second
+
+            if (!hasRequiredPermissions()) {
+                requestAllPermissions()
             } else {
-                Log.i("MainActivity", "File permission denied")
-            }
-        }
-
-    private fun requestFilePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.READ_MEDIA_IMAGES
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestFilePermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-            }
-        } else {
-            if (ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestFilePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                Log.i("MainActivity", "All permissions granted ✅")
+                break
             }
         }
     }
 
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                println("Permission granted!")
-            } else {
-                println("Permission denied!")
-            }
-        }
+    private fun hasRequiredPermissions(): Boolean {
+        return ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.BLUETOOTH_CONNECT
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
-    companion object {
-        private const val PERMISSION_REQUEST_CODE = 100
+    private fun requestAllPermissions() {
+        permissionManager.requestNotificationPermission()
+        permissionManager.requestBluetoothPermission()
     }
 
-    private val serviceConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(cn: ComponentName?, bnd: IBinder?) {
-            Log.d("MainActivity", "Bluetooth service connected")
-            bluetoothService = (bnd as RangerBluetoothService.LocalBinder).getService()
+    private fun bindBluetoothService() {
+        val gattServiceIntent = Intent(this, RangerBluetoothService::class.java)
+        bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            bluetoothService = (service as RangerBluetoothService.LocalBinder).getService()
             bluetoothService?.let { bluetooth ->
                 if (!bluetooth.initialize()) {
                     Log.e("MainActivity", "Unable to initialize Bluetooth")
@@ -93,133 +102,72 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        override fun onServiceDisconnected(cn: ComponentName?) {
-            Log.e("MainActivity", "Bluetooth service disconnected")
+        override fun onServiceDisconnected(name: ComponentName?) {
             bluetoothService = null
         }
     }
 
-    private val requestNotificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                Log.i("MainActivity", "Notification permission granted")
-            } else {
-                Log.i("MainActivity", "Notification permission denied")
-            }
-        }
-
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    Log.i("MainActivity", "Notification permission already granted")
+    private val bluetoothReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                BluetoothDevice.ACTION_ACL_CONNECTED -> {
+                    Log.i("MainActivity", "Bluetooth device connected")
                 }
-                else -> {
-                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
+                    Log.i("MainActivity", "Bluetooth device disconnected")
+                }
+                BluetoothAdapter.ACTION_STATE_CHANGED -> {
+                    val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
+                    when (state) {
+                        BluetoothAdapter.STATE_ON -> Log.i("MainActivity", "Bluetooth is ON")
+                        BluetoothAdapter.STATE_OFF -> Log.i("MainActivity", "Bluetooth is OFF")
+                    }
                 }
             }
         }
     }
 
-
-    public val gattUpdateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(ctx: Context, intent: Intent) {
-            when (intent.action) {
-                RangerBluetoothService.ACTION_GATT_CONNECTED -> {
-                    Log.i("MainActivity", "Connected to GATT device")
-                }
-                RangerBluetoothService.ACTION_GATT_DISCONNECTED -> {
-                    Log.w("MainActivity", "Disconnected from GATT device")
-                    // Only reconnect if needed
-                }
-                RangerBluetoothService.ACTION_GATT_READY -> {
-                    Log.i("MainActivity", "GATT device ready for startDemo command")
-                    // Now, the user should manually press "Start Demo"
-                }
-            }
+    fun registerReceiverSafely() {
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+            addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+            addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        registerReceiverSafely()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unregisterReceiver(gattUpdateReceiver)
-    }
-
-    internal fun registerReceiverSafely() {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter(), Context.RECEIVER_NOT_EXPORTED)
-            } else {
-                registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
-            }
+            registerReceiver(bluetoothReceiver, filter)
+            Log.i("MainActivity", "Bluetooth receiver registered ✅")
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to register Bluetooth receiver: ${e.message}")
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Register the Bluetooth broadcast receiver
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+            addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+            addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        }
+
+        try {
+            registerReceiver(bluetoothReceiver, filter)
+            Log.i("MainActivity", "Bluetooth receiver registered ✅")
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to register Bluetooth receiver: ${e.message}")
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        try {
+            unregisterReceiver(bluetoothReceiver)
+            Log.i("MainActivity", "Bluetooth receiver unregistered ✅")
         } catch (e: IllegalArgumentException) {
-            Log.e("MainActivity", "Receiver already registered or error: ${e.message}")
-        }
-    }
-
-    public fun makeGattUpdateIntentFilter(): IntentFilter {
-        return IntentFilter().apply {
-            addAction(RangerBluetoothService.ACTION_GATT_CONNECTED)
-            addAction(RangerBluetoothService.ACTION_GATT_DISCONNECTED)
-            addAction(RangerBluetoothService.ACTION_GATT_READY)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bluetoothService?.createNotificationChannel()
-        setContent {
-            val themeViewModel: ThemeViewModel = viewModel(factory = ThemeViewModelFactory(applicationContext))
-            val darkTheme by themeViewModel.darkTheme.collectAsState()
-
-            SDPAppTheme(darkTheme = darkTheme) {
-                BottomNavigationBar(themeViewModel, bluetoothService)
-            }
-        }
-
-        requestNotificationPermission()
-        requestFilePermissions()
-        requestBluetoothPermission()
-
-        val gattServiceIntent = Intent(this, RangerBluetoothService::class.java)
-        Log.d("MainActivity", "Binding service")
-        val b = bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
-        Log.d("MainActivity", "Bluetooth service binding result: $b")
-    }
-
-    private val requestBluetoothPermissionLauncher =
-
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                Log.i("MainActivity", "Bluetooth permission granted")
-                bluetoothService?.connectForDemo()
-            } else {
-                Log.i("MainActivity", "Bluetooth permission denied")
-            }
-        }
-
-    public fun requestBluetoothPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                Log.i("MainActivity", "Bluetooth permission already granted")
-                bluetoothService?.connectForDemo()
-            }
-            else -> {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 4444444)
-                requestBluetoothPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
-            }
+            Log.e("MainActivity", "Failed to unregister Bluetooth receiver: ${e.message}")
         }
     }
 }
