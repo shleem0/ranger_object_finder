@@ -255,14 +255,14 @@ class OdometryPublisher(Node):
             v_left = min(40, v_left)
             v_right = min(40, v_right)
 
-        motor1_speed = int(v_left / motor_max_speed * 100 * weight_factor)
-        motor2_speed = int(v_right / motor_max_speed * 100 * weight_factor)
+        motor1_speed = int(max(v_left / motor_max_speed * 100 * weight_factor, 100))
+        motor2_speed = int(max(v_right / motor_max_speed * 100 * weight_factor, 100))
 
         if motor1_speed != 0:
-            motor1_speed = min(40, motor1_speed)
+            motor1_speed = max(40, motor1_speed)
 
         if motor2_speed != 0:
-            motor2_speed = min(40, motor2_speed)
+            motor2_speed = max(40, motor2_speed)
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
