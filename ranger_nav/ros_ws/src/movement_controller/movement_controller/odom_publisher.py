@@ -257,10 +257,10 @@ class OdometryPublisher(Node):
         motor2_speed = min(max(motor1_speed, 0), 501)
 
         if motor1_speed != 0:
-            motor1_speed += 60
+            motor1_speed += 90
 
         if motor2_speed != 0:
-            motor2_speed += 60
+            motor2_speed += 90
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
