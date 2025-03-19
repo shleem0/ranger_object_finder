@@ -218,9 +218,11 @@ class OdometryPublisher(Node):
         
         # Robot parameters
         wheelbase = 0.13  # The distance between the two wheels (meters)
-        motor_max_rpm = 120
-
+        motor_max_rpm = 150
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
+
+        robot_weight = 2.2
+        weight_factor = 1 + (robot_weight - 1) * 0.2
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase * angular_velocity) / 2
@@ -237,8 +239,11 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(v_left / motor_max_speed * 501 * 1.2)
-        motor2_speed = int(v_right / motor_max_speed * 501 * 1.2)
+        motor1_speed = int(v_left / motor_max_speed * 501 * weight_factor)
+        motor2_speed = int(v_right / motor_max_speed * 501 * weight_factor)
+
+        motor1_speed = min(max(motor1_speed, 0), 501)
+        motor2_speed = min(max(motor1_speed, 0), 501)
 
         if motor1_speed != 0:
             motor1_speed += 60
