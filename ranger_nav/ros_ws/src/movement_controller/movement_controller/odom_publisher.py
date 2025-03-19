@@ -215,6 +215,8 @@ class OdometryPublisher(Node):
         # Extract linear and angular velocities
         linear_velocity = msg.linear.x
         angular_velocity = msg.angular.z
+
+        print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
         
         # Robot parameters
         wheelbase = 0.13  # The distance between the two wheels (meters)
@@ -222,7 +224,7 @@ class OdometryPublisher(Node):
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
         robot_weight = 2.2
-        weight_factor = 1 + (robot_weight - 1) * 0.2
+        weight_factor = 1 + (robot_weight - 1) * 0.5
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase * angular_velocity) / 2
