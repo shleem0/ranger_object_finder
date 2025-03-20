@@ -4,7 +4,6 @@ from tf2_ros import TransformBroadcaster
 
 from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
-from nav2_msgs.
 from tf_transformations import quaternion_from_euler
 
 from math import sin, cos, pi, sqrt
