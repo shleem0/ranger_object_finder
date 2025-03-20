@@ -31,8 +31,8 @@ python -m ranger_object_recognition.integration
 ```
 
 ### Arguments
-- `--scene` - Provide filepath of a scene image to run object detection on. Default in [example images](example images/keys_scene.jpeg)
-- `--ref_dir` - Provide filepath of a directory containing the reference images taken on the mobile app. Default in [example images](example images/keys_ref)
+- `--scene` - Provide filepath of a scene image to run object detection on. Default in [example images](example%20images/keys_scene.jpeg)
+- `--ref_dir` - Provide filepath of a directory containing the reference images taken on the mobile app. Default in [example images](example%20images/keys_ref)
 - `--feat_model` - Provide filepath of the tensorflow feature vector model if needed
 - `--yolo_model` - Provide filepath of the YOLOv5 TFLite model if needed
 - `--visualise` - Optional visualisation of any detected items in the scene image post-inference
