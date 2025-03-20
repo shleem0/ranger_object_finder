@@ -46,7 +46,7 @@ class OdometryPublisher(Node):
         # Create a timer to publish at a fixed rate (e.g., every 0.1 seconds)
         self.trans_timer = self.create_timer(0.2, self.timer_callback)
         self.pos_timer = self.create_timer(10, self.print_pos)
-        self.goal_pub_timer = self.create_timer(15, self.publish_goal_pose)
+        self.goal_pub_timer = self.create_timer(8, self.publish_goal_pose)
 
 
     def print_pos(self):
@@ -212,8 +212,6 @@ class OdometryPublisher(Node):
         # Extract linear and angular velocities
         linear_velocity = msg.linear.x
         angular_velocity = msg.angular.z
-
-        print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
         
         # Robot parameters
         wheelbase = 0.13  # The distance between the two wheels (meters)
