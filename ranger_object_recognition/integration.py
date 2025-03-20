@@ -9,6 +9,8 @@ import time
 import concurrent.futures
 import math
 from ranger_object_recognition import config, utils, proposals, feature_extractor, matching, visualisation
+import cv2
+import numpy as np
 
 def process_candidate_chunk(candidate_chunk, scene_img, ref_vectors):
     """
@@ -97,10 +99,124 @@ def find_item_in_scene():
     print(f"Matches after NMS: {len(matches)}")
     print(f"Total processing time: {time.time() - start_time:.2f} seconds")
     
-    # visualisation.visualise_matches(scene_img, matches)
-    # return matches
+    # --- New Visualization Variant: Drawing rulers on the scene image ---
     
-    print(matches) # Prints list of matches as tuples and simlarities
+    # Initial parameters for vertical axis (in cm)
+    ruler_position_top = 50    # Topmost ruler mark (in cm)
+    ruler_position_bottom = 10  # Bottommost ruler mark (in cm)
+
+    # Vertical axis functions
+
+    def pixels_to_cm(y_pixel, height):
+        """
+        Map y_pixel (0 at bottom, height at top) to cm range [ruler_position_bottom, ruler_position_top].
+        """
+        return ruler_position_bottom + (ruler_position_top - ruler_position_bottom) * (height - y_pixel) / float(height)
+
+
+    def ruler_spacing_at_position(y_pixel, height):
+        """
+        Calculate spacing between ticks for the vertical axis.
+        Larger at the bottom, smaller at the top.
+        """
+        max_spacing = 50
+        min_spacing = 10
+        fraction = y_pixel / float(height)
+        spacing = max_spacing * fraction
+        if spacing < min_spacing:
+            spacing = min_spacing
+        return spacing
+
+    # Horizontal axis functions
+
+    H_MIN_CM = -14
+    H_MAX_CM = 14
+
+    def x_pixel_to_cm(x_pixel, width):
+        """
+        Map x_pixel in [0, width] -> cm in [H_MIN_CM, H_MAX_CM].
+        The center of the image (x = width/2) corresponds to 0 cm.
+        """
+        return H_MIN_CM + (H_MAX_CM - H_MIN_CM) * (x_pixel / float(width))
+
+
+    def x_cm_to_pixel(x_cm, width):
+        """
+        Inverse: map cm in [H_MIN_CM, H_MAX_CM] -> x_pixel in [0, width].
+        """
+        return int((x_cm - H_MIN_CM) / (H_MAX_CM - H_MIN_CM) * width)
+
+    # Mouse click event: print coordinates using the rulers
+
+    def click_event(event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            height = param["height"]
+            width = param["width"]
+            horizontal_cm = x_pixel_to_cm(x, width)
+            vertical_cm = pixels_to_cm(y, height)
+            print(f"Clicked at (pixels): X = {x} px, Y = {y} px")
+            print(f"Coordinates from rulers: X = {horizontal_cm:.2f} cm, Y = {vertical_cm:.2f} cm\n")
+
+    # Function to process and display the image with rulers
+
+    def processImg(image, matches):
+        frame = image.copy()
+        height, width, _ = frame.shape
+
+        # 1) Draw the vertical ruler on the left
+        y_position = 0
+        while y_position < height:
+            cm_value = pixels_to_cm(y_position, height)
+            spacing = ruler_spacing_at_position(y_position, height)
+            y_position_int = int(y_position)
+            cv2.line(frame, (10, y_position_int), (30, y_position_int), (0, 255, 0), 2)
+            cv2.putText(frame, f"{cm_value:.1f} cm", (35, y_position_int + 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+            y_position += spacing
+
+        # 2) Draw the horizontal ruler across the middle
+        y_center = height // 2
+        for cm_h in np.arange(H_MIN_CM, H_MAX_CM + 0.1, 2.0):
+            x_pos = x_cm_to_pixel(cm_h, width)
+            cv2.line(frame, (x_pos, y_center - 10), (x_pos, y_center + 10), (0, 0, 255), 2)
+            cv2.putText(frame, f"{cm_h:.1f}", (x_pos - 10, y_center - 15),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+
+        # 3) Draw bounding boxes for matches
+        for (box, sim) in matches:
+            # Each box: (x, y, w, h)
+            x, y, w, h = box
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+            # Calculate centre of bounding box in pixels
+            center_x_px = x + w // 2
+            center_y_px = y + h // 2
+
+            # Convert centre to cm
+            center_x_cm = x_pixel_to_cm(center_x_px, width)
+            center_y_cm = pixels_to_cm(center_y_px, height)
+
+            # Draw a small circle at the centre
+            cv2.circle(frame, (center_x_px, center_y_px), 4, (255, 0, 0), -1)
+
+            # Print text
+            print(f"Bounding box center (pixels): ({center_x_px}, {center_y_px})")
+            print(f"Bounding box center (cm): ({center_x_cm:.1f}, {center_y_cm:.1f})")
+
+        # 4) Set up mouse callback for the ruler-based coords
+        window_name = "Camera Feed with Rulers"
+        cv2.namedWindow(window_name)
+        cv2.setMouseCallback(window_name, click_event, param={"width": width, "height": height})
+
+        return frame
+
+    # Display the scene image with both the ruler overlay and bounding boxes until a key is pressed
+    processed_img = processImg(scene_img, matches)
+    cv2.imshow("Camera Feed with Rulers", processed_img)
+    cv2.waitKey(0)  # Wait indefinitely until a key is pressed
+    cv2.destroyAllWindows()
+
+    print(matches)  # Prints list of matches as tuples and similarities
 
 if __name__ == "__main__":
     find_item_in_scene()
