@@ -164,24 +164,19 @@ class OdometryPublisher(Node):
             map_array = np.array(map_data.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
-            edge_points = []
+            empty_points = []
             
             # Check the edges of the map (first and last rows and columns)
             for x in range(width):
-                if map_array[0, x] == 0:  # First row
-                    edge_points.append((x, 0))
-                if map_array[height-1, x] == 0:  # Last row
-                    edge_points.append((x, height-1))
-            for y in range(height):
-                if map_array[y, 0] == 0:  # First column
-                    edge_points.append((0, y))
-                if map_array[y, width-1] == 0:  # Last column
-                    edge_points.append((width-1, y))
+                for y in range(height):
+
+                    if map_array[y,x] == 0:  # First column
+                        empty_points.append((x, y))
             
             # If we found any free edge points, return the first one (or any other strategy)
-            if edge_points:
+            if empty_points:
                 
-                edge_point = max(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
+                empty_point = max(empty_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
                 
                 # Convert map coordinates to world coordinates
                 goal_x = origin_x + edge_point[0] * resolution
