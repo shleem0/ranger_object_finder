@@ -79,6 +79,16 @@ def capture_camera_image():
     cv2.destroyAllWindows()
     return scene_img
 
+def encode_image_for_ros(image):
+    """
+    Encode image for ros
+    """
+    success, encoded_image = cv2.imencode('.jpg', image)
+    if not success:
+        raise ValueError("Failed to encode image")
+    return encoded_image.tobytes()
+
+
 
 
 
