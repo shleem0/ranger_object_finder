@@ -153,55 +153,57 @@ class OdometryPublisher(Node):
 
     def find_goal_pose(self, map_data):
         # Extract the map dimensions and data
-        width = map_data.info.width
-        height = map_data.info.height
-        resolution = map_data.info.resolution  # In meters per cell
-        origin_x = map_data.info.origin.position.x
-        origin_y = map_data.info.origin.position.y
-        
-        # Convert map data (OccupancyGrid) to a numpy array for easier processing
-        map_array = np.array(map_data.data).reshape((height, width))
+        if map_data:
+            width = map_data.info.width
+            height = map_data.info.height
+            resolution = map_data.info.resolution  # In meters per cell
+            origin_x = map_data.info.origin.position.x
+            origin_y = map_data.info.origin.position.y
+            
+            # Convert map data (OccupancyGrid) to a numpy array for easier processing
+            map_array = np.array(map_data.data).reshape((height, width))
 
-        # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
-        edge_points = []
-        
-        # Check the edges of the map (first and last rows and columns)
-        for x in range(width):
-            if map_array[0, x] == -1:  # First row
-                edge_points.append((x, 0))
-            if map_array[height-1, x] == -1:  # Last row
-                edge_points.append((x, height-1))
-        for y in range(height):
-            if map_array[y, 0] == -1:  # First column
-                edge_points.append((0, y))
-            if map_array[y, width-1] == -1:  # Last column
-                edge_points.append((width-1, y))
-        
-        # If we found any free edge points, return the first one (or any other strategy)
-        if edge_points:
+            # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
+            edge_points = []
             
-            edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
+            # Check the edges of the map (first and last rows and columns)
+            for x in range(width):
+                if map_array[0, x] == -1:  # First row
+                    edge_points.append((x, 0))
+                if map_array[height-1, x] == -1:  # Last row
+                    edge_points.append((x, height-1))
+            for y in range(height):
+                if map_array[y, 0] == -1:  # First column
+                    edge_points.append((0, y))
+                if map_array[y, width-1] == -1:  # Last column
+                    edge_points.append((width-1, y))
             
-            # Convert map coordinates to world coordinates
-            goal_x = origin_x + edge_point[0] * resolution
-            goal_y = origin_y + edge_point[1] * resolution
+            # If we found any free edge points, return the first one (or any other strategy)
+            if edge_points:
+                
+                edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
+                
+                # Convert map coordinates to world coordinates
+                goal_x = origin_x + edge_point[0] * resolution
+                goal_y = origin_y + edge_point[1] * resolution
+                
+                # Create and return the goal pose
+                goal_pose = PoseStamped()
+                goal_pose.header.stamp = self.get_clock().now().to_msg()
+                goal_pose.header.frame_id = "map"
+                goal_pose.pose.position.x = goal_x
+                goal_pose.pose.position.y = goal_y
+                goal_pose.pose.position.z = 0.0
+                goal_pose.pose.orientation.w = self.theta
+                return goal_pose
             
-            # Create and return the goal pose
-            goal_pose = PoseStamped()
-            goal_pose.header.stamp = self.get_clock().now().to_msg()
-            goal_pose.header.frame_id = "map"
-            goal_pose.pose.position.x = goal_x
-            goal_pose.pose.position.y = goal_y
-            goal_pose.pose.position.z = 0.0
-            goal_pose.pose.orientation.w = self.theta
-            return goal_pose
-        
         return None
 
 
 
     def publish_goal_pose(self):
-        self.goal = self.find_goal_pose(self.map_data)
+        if self.map_data:
+            self.goal = self.find_goal_pose(self.map_data)
 
         if self.goal:
             self.goal_pose_pub.publish(self.goal)
