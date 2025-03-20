@@ -4,6 +4,7 @@ from tf2_ros import TransformBroadcaster
 
 from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
+from nav2_msgs.
 from tf_transformations import quaternion_from_euler
 
 from math import sin, cos, pi, sqrt
@@ -168,20 +169,20 @@ class OdometryPublisher(Node):
             
             # Check the edges of the map (first and last rows and columns)
             for x in range(width):
-                if map_array[0, x] == -1:  # First row
+                if map_array[0, x] == 0:  # First row
                     edge_points.append((x, 0))
-                if map_array[height-1, x] == -1:  # Last row
+                if map_array[height-1, x] == 0:  # Last row
                     edge_points.append((x, height-1))
             for y in range(height):
-                if map_array[y, 0] == -1:  # First column
+                if map_array[y, 0] == 0:  # First column
                     edge_points.append((0, y))
-                if map_array[y, width-1] == -1:  # Last column
+                if map_array[y, width-1] == 0:  # Last column
                     edge_points.append((width-1, y))
             
             # If we found any free edge points, return the first one (or any other strategy)
             if edge_points:
                 
-                edge_point = min(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose closest edge point
+                edge_point = max(edge_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
                 
                 # Convert map coordinates to world coordinates
                 goal_x = origin_x + edge_point[0] * resolution
@@ -198,7 +199,7 @@ class OdometryPublisher(Node):
                 return goal_pose
             
         return None
-
+        
 
 
     def publish_goal_pose(self):
