@@ -17,6 +17,8 @@ common warnings
 library
     import:           warnings
     exposed-modules:  Ranger.Effect
+                    , Ranger.CApi
+                    , Ranger.CApi.Types
                     , Ranger.Demo
                     , Ranger.Bluetooth
                     , Ranger.Bluetooth.Gatt
@@ -43,6 +45,7 @@ library
                    , transformers
                    , vector
     hs-source-dirs:   src
+    include-dirs: cbits
 
 executable ranger-daemon
     import:           warnings
