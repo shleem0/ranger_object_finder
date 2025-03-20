@@ -224,7 +224,7 @@ class OdometryPublisher(Node):
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
         robot_weight = 2.2
-        weight_factor = 1 + (robot_weight - 1) * 0.5
+        weight_factor = 1 + (robot_weight - 1) * 0.7
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase * angular_velocity) / 2
@@ -242,22 +242,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(((v_left * weight_factor)/ motor_max_speed) * 100)
-        motor2_speed = int(((v_right * weight_factor)/ motor_max_speed) * 100)
-
-        if angular_velocity == 0 and linear_velocity != 0:
-            motor1_speed = min(40, motor1_speed)
-            motor2_speed = min(40, motor2_speed)
-
-        if linear_velocity == 0 and angular_velocity != 0:
-
-            if angular_velocity > 0:
-                motor1_speed = int(motor2_speed * 2.5)
-                left_dir = False
-
-            elif angular_velocity < 0:
-                motor2_speed = int(motor1_speed * 2.5)
-                right_dir = False
+        motor1_speed = int((v_left / motor_max_speed * weight_factor) * 100)
+        motor2_speed = int((v_right / motor_max_speed * weight_factor) * 100)
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
