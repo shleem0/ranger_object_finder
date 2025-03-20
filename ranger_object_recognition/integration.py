@@ -6,7 +6,7 @@ import glob
 import os
 import argparse
 import time
-from ranger_object_recognition import config, utils, feature_extractor, matching
+from ranger_object_recognition import config, or_utils, feature_extractor, matching
 import cv2
 import numpy as np
 from .detect import run_detection
@@ -26,12 +26,16 @@ def find_item_in_scene():
     invalid_crops_dir = "invalid_crops"  # Directory to save invalid crops for debugging
     if not os.path.exists(invalid_crops_dir):
         os.makedirs(invalid_crops_dir)
+    or_utils.clear_directory(valid_crops_dir)
+    or_utils.clear_directory(invalid_crops_dir)
+
 
         # Parsing command line arguments
     parser = argparse.ArgumentParser(description="Run object recognition pipeline")
     parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
     parser.add_argument("--scene", type=str, help="Path to scene image")
     parser.add_argument("--model", type=str, help="Path to TFLite model")
+    parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
     args = parser.parse_args()
 
     # Overriding default paths if provided via command line
@@ -50,11 +54,11 @@ def find_item_in_scene():
 
     # Use YOLO model to detect potential items in the scene
     start_time = time.time()
-    cropped_regions = run_detection(
+    cropped_regions, boxes_list = run_detection(
         weights=config.YOLO_MODEL_PATH, source=config.SCENE_IMAGE_PATH, data=config.DATA_YAML_PATH, imgsz=(640, 640),
         conf_thres=config.YOLO_SIMILARITY_THRESHOLD, iou_thres=0.45, max_det=1000, device="",
         view_img=False, save_txt=False, save_format=0, save_csv=False, save_conf=False,
-        save_crop=True, nosave=True, classes=None, agnostic_nms=False,
+        save_crop=False, nosave=True, classes=None, agnostic_nms=False,
         augment=False, visualize=False, update=False, project="runs/detect",
         name="exp", exist_ok=False, line_thickness=3, hide_labels=False,
         hide_conf=False, half=False, dnn=False, vid_stride=1
@@ -76,6 +80,7 @@ def find_item_in_scene():
     ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
 
     # Compare each crop feature to the reference features
+    valid_indices = []
     for idx, crop_vector in enumerate(crop_features):
         max_sim = 0
         for ref_path, ref_vector in ref_features.items():
@@ -84,6 +89,7 @@ def find_item_in_scene():
         print(f"Crop {idx} max similarity: {max_sim:.2f}")
         if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
             print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).")
+            valid_indices.append(idx)
             # Save the valid crop to disk
             save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
@@ -96,6 +102,30 @@ def find_item_in_scene():
             print(f"Saved invalid crop {idx} to {save_path}")
     end_time = time.time()
 
+    # Optional visualisation if you want to see the annotated image
+    if args.visualise:
+        if valid_indices:
+            # Load the full scene image
+            full_img = cv2.imread(config.SCENE_IMAGE_PATH)
+            if full_img is None:
+                print("Error: Could not load full scene image for annotation.")
+            else:
+                # Create a copy for annotation
+                annotated_img = full_img.copy()
+                # Iterate over valid indices and draw their bounding boxes (from boxes_list)
+                for idx in valid_indices:
+                    # Assume boxes_list contains coordinates [x1, y1, x2, y2] corresponding to each crop
+                    box = boxes_list[idx]
+                    x1, y1, x2, y2 = map(int, box)
+                    cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                # Display the annotated image in a popup window
+                cv2.imshow("Valid Detections on Full Scene", annotated_img)
+                cv2.waitKey(0)
+                cv2.destroyAllWindows()
+        else:
+            print("No valid detections to annotate on the full scene image.")
     print(f"Processing time: {end_time - start_time:.2f} seconds.")
 
 if __name__ == "__main__":
