@@ -179,8 +179,8 @@ class OdometryPublisher(Node):
                 empty_point = max(empty_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
                 
                 # Convert map coordinates to world coordinates
-                goal_x = origin_x + edge_point[0] * resolution
-                goal_y = origin_y + edge_point[1] * resolution
+                goal_x = origin_x + empty_point[0] * resolution
+                goal_y = origin_y + empty_point[1] * resolution
                 
                 # Create and return the goal pose
                 goal_pose = PoseStamped()
