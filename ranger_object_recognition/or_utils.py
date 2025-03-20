@@ -1,10 +1,10 @@
 # utils.py
 
 # Utility functions for loading and preprocessing images
-from ranger_object_recognition.config import TARGET_SIZE, MIN_BOX_SIZE, TOP_K
 import cv2
 import numpy as np
-
+import os
+import shutil
 
 
 def load_image_uint8(image_path, scale=1.0):
@@ -33,25 +33,6 @@ def preprocess_image_for_tflite(img, target_size):
     img_uint8 = img_resized.astype(np.uint8)
     return np.expand_dims(img_uint8, axis=0)
 
-def extract_region(image, box):
-    """Extracts a region from the image based on the given box coordinates."""
-    if not is_valid_box(box):
-        return None
-    x, y, w, h = box
-    region = image[y:y+h, x:x+w].copy()
-    if region.size == 0:
-        return None
-    return preprocess_image_for_tflite(region, target_size=TARGET_SIZE)
-
-def is_valid_box(box, min_size=MIN_BOX_SIZE):
-    """Checks if the box is valid based on the minimum size constraints."""
-    x, y, w, h = box
-    return w >= min_size and h >= min_size
-
-def filter_top_k_boxes(boxes, k=TOP_K):
-    sorted_boxes = sorted(boxes, key=lambda b: b[2]*b[3], reverse=True)
-    return sorted_boxes[:k]
-
 def capture_camera_image():
     """Capture an image from the webcam when 's' is pressed."""
     cap = cv2.VideoCapture(1)  # 0 usually refers to the default webcam
@@ -78,6 +59,28 @@ def capture_camera_image():
     cap.release()
     cv2.destroyAllWindows()
     return scene_img
+
+def encode_image_for_ros(image):
+    """
+    Encode image for ros
+    """
+    success, encoded_image = cv2.imencode('.jpg', image)
+    if not success:
+        raise ValueError("Failed to encode image")
+    return encoded_image.tobytes()
+
+def clear_directory(directory):
+    """Remove all files and subdirectories in the given directory."""
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
+
 
 
 
