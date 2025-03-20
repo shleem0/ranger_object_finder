@@ -2,12 +2,14 @@
 
 # Main API function for object detection
 
+import glob
 import os
+import argparse
 import time
 from ranger_object_recognition import config, utils, feature_extractor, matching
 import cv2
 import numpy as np
-from detect import run_detection
+from .detect import run_detection
 import time
 
 def find_item_in_scene():
@@ -25,7 +27,28 @@ def find_item_in_scene():
     if not os.path.exists(invalid_crops_dir):
         os.makedirs(invalid_crops_dir)
 
-    # 1. Run detection to get cropped regions (and optionally detection info)
+        # Parsing command line arguments
+    parser = argparse.ArgumentParser(description="Run object recognition pipeline")
+    parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
+    parser.add_argument("--scene", type=str, help="Path to scene image")
+    parser.add_argument("--model", type=str, help="Path to TFLite model")
+    args = parser.parse_args()
+
+    # Overriding default paths if provided via command line
+    if args.model:
+        # Load tfLite model
+        config.MODEL_TFLITE_PATH = args.model
+
+    if args.ref_dir:
+        # Use glob to find all image files in the directory
+        config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
+        if not config.REFERENCE_IMAGE_PATHS:
+            print(f"Warning: No images found in {args.ref_dir}")
+
+    if args.scene:
+        config.SCENE_IMAGE_PATH = args.scene
+
+    # Use YOLO model to detect potential items in the scene
     start_time = time.time()
     cropped_regions = run_detection(
         weights=config.YOLO_MODEL_PATH, source=config.SCENE_IMAGE_PATH, data=config.DATA_YAML_PATH, imgsz=(640, 640),
@@ -38,10 +61,10 @@ def find_item_in_scene():
     )
     print(f"Collected {len(cropped_regions)} cropped regions from detection.")
 
-    # 2. Load the feature extraction model
+    # Load the feature extraction model
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
 
-    # 3. Process each cropped region: Preprocess and extract features
+    # Process each cropped region from YOLO: Preprocess and extract features
     crop_features = []
     for idx, crop in enumerate(cropped_regions):
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
@@ -49,10 +72,10 @@ def find_item_in_scene():
         crop_features.append(vector)
         print(f"Extracted feature vector for crop {idx}.")
 
-    # 4. Load reference images and extract their feature vectors
+    # Load reference images and extract features
     ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
 
-    # 5. Compare each crop against the reference images using cosine similarity
+    # Compare each crop feature to the reference features
     for idx, crop_vector in enumerate(crop_features):
         max_sim = 0
         for ref_path, ref_vector in ref_features.items():

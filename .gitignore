@@ -13,3 +13,4 @@ ranger_nav/ros_ws/src/slam_gmapping
 /invalid_crops
 /valid_crops
 /runs
+/ranger_object_recognition/local_test_images
