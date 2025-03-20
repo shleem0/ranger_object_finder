@@ -1,7 +1,7 @@
 # integration.py
 
 # Main API function for object detection
-
+import sys
 import glob
 import os
 import argparse
@@ -47,7 +47,7 @@ def find_item_in_scene():
         # Use glob to find all image files in the directory
         config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
         if not config.REFERENCE_IMAGE_PATHS:
-            print(f"Warning: No images found in {args.ref_dir}")
+            print(f"Warning: No images found in {args.ref_dir}", file=sys.stderr)
 
     if args.scene:
         config.SCENE_IMAGE_PATH = args.scene
@@ -63,7 +63,7 @@ def find_item_in_scene():
         name="exp", exist_ok=False, line_thickness=3, hide_labels=False,
         hide_conf=False, half=False, dnn=False, vid_stride=1
     )
-    print(f"Collected {len(cropped_regions)} cropped regions from detection.")
+    print(f"Collected {len(cropped_regions)} cropped regions from detection.", file=sys.stderr)
 
     # Load the feature extraction model
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
@@ -74,7 +74,7 @@ def find_item_in_scene():
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
         vector = feature_extractor.extract_feature_vector(feature_model, crop_input)
         crop_features.append(vector)
-        print(f"Extracted feature vector for crop {idx}.")
+        print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
 
     # Load reference images and extract features
     ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
@@ -86,20 +86,16 @@ def find_item_in_scene():
         for ref_path, ref_vector in ref_features.items():
             sim = matching.cosine_similarity(crop_vector, ref_vector)
             max_sim = max(max_sim, sim)
-        print(f"Crop {idx} max similarity: {max_sim:.2f}")
+        print(f"Crop {idx} max similarity: {max_sim:.2f}",file=sys.stderr)
         if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
             print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).")
             valid_indices.append(idx)
             # Save the valid crop to disk
             save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
-            print(f"Saved valid crop {idx} to {save_path}")
-        else:
-            print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).")
-            # Save the invalid crop to disk for debugging
+            print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
             save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
-            print(f"Saved invalid crop {idx} to {save_path}")
     end_time = time.time()
 
     # Optional visualisation if you want to see the annotated image
@@ -108,7 +104,7 @@ def find_item_in_scene():
             # Load the full scene image
             full_img = cv2.imread(config.SCENE_IMAGE_PATH)
             if full_img is None:
-                print("Error: Could not load full scene image for annotation.")
+                print("Error: Could not load full scene image for annotation.", file=sys.stderr)
             else:
                 # Create a copy for annotation
                 annotated_img = full_img.copy()
@@ -125,8 +121,8 @@ def find_item_in_scene():
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
         else:
-            print("No valid detections to annotate on the full scene image.")
-    print(f"Processing time: {end_time - start_time:.2f} seconds.")
+            print("No valid detections to annotate on the full scene image.", file=sys.stderr)
+    print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
 
 if __name__ == "__main__":
     find_item_in_scene()

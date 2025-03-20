@@ -9,6 +9,7 @@ from tensorflow.lite.python.interpreter import Interpreter
 import numpy as np
 import glob
 import cv2
+import sys
 
 
 
@@ -42,14 +43,14 @@ def load_feature_extractor(model_path):
     Adjust 'call_endpoint' if needed (should prolly be 'serving_default').
     """
     feature_layer = tf.keras.layers.TFSMLayer(model_path, call_endpoint='serving_default')
-    print(f"Loaded feature extractor from {model_path} as a TFSMLayer.")
+    print(f"Loaded feature extractor from {model_path} as a TFSMLayer.", file=sys.stderr)
     return feature_layer
 
 def extract_feature_vector(model, crop_input):
     """Runs the crop through the model and returns a flattened feature vector."""
     out = model(crop_input, training=False)
     # Print out the keys to debug (optional)
-    print("Feature model output keys:", list(out.keys()))
+    print("Feature model output keys:", list(out.keys()), file=sys.stderr)
     key = list(out.keys())[0]  # take the first key available
     features = out[key]
     return features.numpy().flatten()
@@ -66,7 +67,7 @@ def load_reference_features(model, ref_dir, target_size=(224, 224)):
         crop_input = preprocess_crop(img, target_size)
         ref_vector = extract_feature_vector(model, crop_input)
         ref_features[ref_path] = ref_vector
-    print(f"Extracted features from {len(ref_features)} reference images.")
+    print(f"Extracted features from {len(ref_features)} reference images.", file=sys.stderr)
     return ref_features
 
 def preprocess_crop(crop, target_size=(224, 224)):
