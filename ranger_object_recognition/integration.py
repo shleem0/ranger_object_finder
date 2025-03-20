@@ -86,16 +86,20 @@ def find_item_in_scene():
         for ref_path, ref_vector in ref_features.items():
             sim = matching.cosine_similarity(crop_vector, ref_vector)
             max_sim = max(max_sim, sim)
-        print(f"Crop {idx} max similarity: {max_sim:.2f}",file=sys.stderr)
+        # print(f"Crop {idx} max similarity: {max_sim:.2f}", file=sys.stderr)
         if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
-            print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).")
+            print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).", file=sys.stderr)
             valid_indices.append(idx)
             # Save the valid crop to disk
             save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
-            print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
+            print(f"Saved valid crop {idx} to {save_path}")
+        else:
+            print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).", file=sys.stderr)
+            # Save the invalid crop to disk for debugging
             save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
+            print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
     end_time = time.time()
 
     # Optional visualisation if you want to see the annotated image
