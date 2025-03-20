@@ -12,6 +12,7 @@ from ranger_object_recognition import config, utils, feature_extractor, matching
 import cv2
 import numpy as np
 from detect import run_detection
+import time
 
 def find_item_in_scene():
     # Set paths and thresholds
@@ -29,6 +30,7 @@ def find_item_in_scene():
         os.makedirs(invalid_crops_dir)
 
     # 1. Run detection to get cropped regions (and optionally detection info)
+    start_time = time.time()
     cropped_regions = run_detection(
         weights=config.YOLO_MODEL_PATH, source=config.SCENE_IMAGE_PATH, data=config.DATA_YAML_PATH, imgsz=(640, 640),
         conf_thres=config.YOLO_SIMILARITY_THRESHOLD, iou_thres=0.45, max_det=1000, device="",
@@ -73,7 +75,9 @@ def find_item_in_scene():
             save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
             cv2.imwrite(save_path, cropped_regions[idx])
             print(f"Saved invalid crop {idx} to {save_path}")
+    end_time = time.time()
 
+    print(f"Processing time: {end_time - start_time:.2f} seconds.")
 
 if __name__ == "__main__":
     find_item_in_scene()
