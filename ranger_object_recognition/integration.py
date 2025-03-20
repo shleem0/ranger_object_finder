@@ -102,6 +102,10 @@ def find_item_in_scene():
             print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
     end_time = time.time()
 
+    print("Bounding box coordinates for valid crops:", file=sys.stderr)
+    for idx in valid_indices:
+        print(boxes_list[idx])
+
     # Optional visualisation if you want to see the annotated image
     if args.visualise:
         if valid_indices:
