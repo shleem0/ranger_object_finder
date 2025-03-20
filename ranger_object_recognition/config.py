@@ -7,8 +7,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 YOLO_MODEL_PATH = os.path.join(BASE_DIR, "best-fp16.tflite")
 FEATURE_MODEL_PATH = os.path.join(BASE_DIR, "mobilenet-v3-tensorflow2-small-075-224-feature-vector-v1")
 TARGET_SIZE = (224, 224)
-YOLO_SIMILARITY_THRESHOLD = 0.2 # Might have to adjust
-FEATURE_SIMILARITY_THRESHOLD = 0.3 # Might have to adjust
+YOLO_SIMILARITY_THRESHOLD = 0.01 # Might have to adjust
+FEATURE_SIMILARITY_THRESHOLD = 0.25 # Might have to adjust
 DATA_YAML_PATH = os.path.join(BASE_DIR, "data.yaml")
 
 
