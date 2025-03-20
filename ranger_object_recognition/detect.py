@@ -204,6 +204,7 @@ def run(
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(device=device), Profile(device=device), Profile(device=device))
     cropped_regions_list = []
+    bounding_boxes_list = []
 
     for path, im, im0s, vid_cap, s in dataset:
         with dt[0]:
@@ -274,6 +275,7 @@ def run(
                     x1, y1, x2, y2 = map(int, xyxy)
                     crop_img = imc[y1:y2, x1:x2].copy()
                     cropped_regions_list.append(crop_img)
+                    bounding_boxes_list.append((x1, y1, x2, y2))
 
                     if save_txt:  # Write to file
                         if save_format == 0:
@@ -334,7 +336,7 @@ def run(
         LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
-    return cropped_regions_list
+    return cropped_regions_list, bounding_boxes_list
 
 
 def parse_opt():
