@@ -2,12 +2,8 @@
 
 # Main API function for object detection
 
-import glob
 import os
-import argparse
 import time
-import concurrent.futures
-import math
 from ranger_object_recognition import config, utils, feature_extractor, matching
 import cv2
 import numpy as np
