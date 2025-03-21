@@ -67,16 +67,16 @@ class OdometryPublisher(Node):
         initial_pose.header.frame_id = "map"  # Frame of reference for the map
         
         # Set position (x, y) and orientation (quaternion)
-        initial_pose.pose.pose.position.x = self.x
-        initial_pose.pose.pose.position.y = self.y
-        initial_pose.pose.pose.position.z = 0.0
+        initial_pose.pose.position.x = self.x
+        initial_pose.pose.position.y = self.y
+        initial_pose.pose.position.z = 0.0
         
         # Set orientation using quaternion
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
-        initial_pose.pose.pose.orientation.x = qx
-        initial_pose.pose.pose.orientation.y = qy
-        initial_pose.pose.pose.orientation.z = qz
-        initial_pose.pose.pose.orientation.w = qw
+        initial_pose.pose.orientation.x = qx
+        initial_pose.pose.orientation.y = qy
+        initial_pose.pose.orientation.z = qz
+        initial_pose.pose.orientation.w = qw
         
         # Publish the initial pose
         self.initial_pose_pub.publish(initial_pose)
