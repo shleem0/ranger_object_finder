@@ -26,7 +26,7 @@ class OdometryPublisher(Node):
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
 
-        self.initial_pose_pub = self.create_publisher(PoseWithCovarianceStamped, '/initialpose', 10)
+        self.initial_pose_pub = self.create_publisher(PoseStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
@@ -60,7 +60,7 @@ class OdometryPublisher(Node):
 
 
     def publish_initial_pose(self):
-        initial_pose = PoseWithCovarianceStamped()
+        initial_pose = PoseStamped()
         
         # Initial position and orientation of the robot
         initial_pose.header.stamp = self.get_clock().now().to_msg()
@@ -77,11 +77,6 @@ class OdometryPublisher(Node):
         initial_pose.pose.pose.orientation.y = qy
         initial_pose.pose.pose.orientation.z = qz
         initial_pose.pose.pose.orientation.w = qw
-        
-        # Set covariance (uncertainty about the initial position)
-        initial_pose.pose.covariance[0] = 1e-6  # Position covariance
-        initial_pose.pose.covariance[7] = 1e-6
-        initial_pose.pose.covariance[35] = 0.2  # Orientation covariance
         
         # Publish the initial pose
         self.initial_pose_pub.publish(initial_pose)
