@@ -67,8 +67,8 @@ class OdometryPublisher(Node):
         initial_pose.header.frame_id = "map"  # Frame of reference for the map
         
         # Set position (x, y) and orientation (quaternion)
-        initial_pose.pose.position.x = self.x
-        initial_pose.pose.position.y = self.y
+        initial_pose.pose.position.x = 0.0
+        initial_pose.pose.position.y = 0.0
         initial_pose.pose.position.z = 0.0
         
         # Set orientation using quaternion
@@ -80,6 +80,7 @@ class OdometryPublisher(Node):
         
         # Publish the initial pose
         self.initial_pose_pub.publish(initial_pose)
+
 
 
     def timer_callback(self):
@@ -193,7 +194,6 @@ class OdometryPublisher(Node):
 
 
 
-
     def find_goal_pose(self, map_data):
         # Extract the map dimensions and data
         if map_data:
@@ -211,10 +211,17 @@ class OdometryPublisher(Node):
             
             # Check the edges of the map (first and last rows and columns)
             for x in range(width):
-                for y in range(height):
+                if map_array[0, x] == 0:  # Top row
+                    empty_points.append((x, 0))
+                if map_array[height-1, x] == 0:  # Bottom row
+                    empty_points.append((x, height-1))
 
-                    if map_array[y,x] == 0:  # First column
-                        empty_points.append((x, y))
+            # Check left and right columns
+            for y in range(height):
+                if map_array[y, 0] == 0:  # Left column
+                    empty_points.append((0, y))
+                if map_array[y, width-1] == 0:  # Right column
+                    empty_points.append((width-1, y))
             
             # If we found any free edge points, return the first one (or any other strategy)
             if empty_points:
@@ -285,17 +292,17 @@ class OdometryPublisher(Node):
 
         if linear_velocity == 0:
             if angular_velocity > 0:
-                motor2_speed = 70
+                motor2_speed = 100
                 right_dir = True
 
-                motor1_speed = 70
+                motor1_speed = 100
                 left_dir = False
 
             if angular_velocity < 0:
-                motor1_speed = 70
+                motor1_speed = 100
                 left_dir = True
 
-                motor2_speed = 70
+                motor2_speed = 100
                 right_dir = False
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
