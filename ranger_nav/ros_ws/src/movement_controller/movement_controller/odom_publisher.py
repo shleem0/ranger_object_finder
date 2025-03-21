@@ -94,8 +94,8 @@ class OdometryPublisher(Node):
                 motor_pos1 = float(f1.read())
                 motor_pos2 = float(f2.read())
             except:
-                motor_pos1 = 0.0
-                motor_pos2 = 0.0
+                motor_pos1 = self.prev_motor_pos1
+                motor_pos2 = self.prev_motor_pos2
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
@@ -104,7 +104,7 @@ class OdometryPublisher(Node):
         vel2 = 0.04 * (angle_dif2 / dt)
 
         linear_velocity = (vel1 + vel2) / 2
-        angular_velocity = (vel1 - vel2) / 0.295
+        angular_velocity = (vel2 - vel1) / 0.295
 
         self.theta += angular_velocity * dt
         self.x += linear_velocity * dt * cos(self.theta)
