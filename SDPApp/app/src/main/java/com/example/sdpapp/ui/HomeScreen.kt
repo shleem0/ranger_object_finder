@@ -452,7 +452,7 @@ fun AddItem(navController: NavController) {
         BasicTextField(
             value = itemName,
             onValueChange = { newValue ->
-                itemName = newValue.filter { it.isLetter() || it.isWhitespace() || it.isDigit() }
+                itemName = newValue.filter { it.isLetter() || it.isDigit() }
             },
             textStyle = TextStyle(fontSize = 20.sp, color = MaterialTheme.colorScheme.tertiary),
             modifier = Modifier
