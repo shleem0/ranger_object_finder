@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
 
-from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
+from geometry_msgs.msg import TransformStamped, PoseStamped, PoseWithCovarianceStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
 from tf_transformations import quaternion_from_euler
 
@@ -25,6 +25,8 @@ class OdometryPublisher(Node):
         self.broadcaster = TransformBroadcaster(self)
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
+
+        self.initial_pose_pub = self.create_publisher(PoseWithCovarianceStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
@@ -37,6 +39,8 @@ class OdometryPublisher(Node):
         self.x = 0.0
         self.y = 0.0
         self.theta = 0.0
+
+        self.publish_initial_pose()
 
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
@@ -53,6 +57,34 @@ class OdometryPublisher(Node):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
             if self.goal:
                 print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+
+
+    def publish_initial_pose(self):
+        initial_pose = PoseWithCovarianceStamped()
+        
+        # Initial position and orientation of the robot
+        initial_pose.header.stamp = self.get_clock().now().to_msg()
+        initial_pose.header.frame_id = "map"  # Frame of reference for the map
+        
+        # Set position (x, y) and orientation (quaternion)
+        initial_pose.pose.pose.position.x = self.x
+        initial_pose.pose.pose.position.y = self.y
+        initial_pose.pose.pose.position.z = 0.0
+        
+        # Set orientation using quaternion
+        qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+        initial_pose.pose.pose.orientation.x = qx
+        initial_pose.pose.pose.orientation.y = qy
+        initial_pose.pose.pose.orientation.z = qz
+        initial_pose.pose.pose.orientation.w = qw
+        
+        # Set covariance (uncertainty about the initial position)
+        initial_pose.pose.covariance[0] = 1e-6  # Position covariance
+        initial_pose.pose.covariance[7] = 1e-6
+        initial_pose.pose.covariance[35] = 0.2  # Orientation covariance
+        
+        # Publish the initial pose
+        self.initial_pose_pub.publish(initial_pose)
 
 
     def timer_callback(self):
