@@ -1,43 +1,38 @@
-# Object Recognition
+# Ranger Object Finder
+
+A simple pipeline for detecting specific objects in a scene image by comparing them to reference images.
 
 ## How It Works
 
-The object recognition system follows these steps:
+1. **Reference Images**:  
+   Take reference photos of your target item (e.g., keys) from multiple angles through the Ranger™ mobile app
 
-### **1. Reference Image Processing**  
-- Multiple reference images of the item (e.g., keys) are captured at different angles (via the app).  
-- These images are processed through a [TFLite model](feature_extractor_int8.tflite), which extracts a feature vector representing the item's visual characteristics.
+2. **Scene Analysis**:  
+   Capture a scene photo where the object might be located.
 
-### **2. Scene Image Analysis**  
-- The Ranger robot periodically captures a scene image while searching for the lost item.  
-- Will probable downscale scene image to improve processing efficiency.
+3. **Object Detection (YOLOv5)**:  
+   Use a YOLOv5 TFLite model to detect candidate regions in the scene image.
 
-### **3. Generating Candidate Regions**  
-- The scene image undergoes selective search to identify candidate regions that may contain the item.
+4. **Feature Extraction**:  
+   Each detected region is passed through a MobileNetV3-based feature extraction model to obtain a feature vector.
 
-### **4. Feature Extraction & Matching**  
-- Each candidate region is cropped and passed through the [TFLite model](feature_extractor_int8.tflite) to generate its feature vector.  
-- Cosine similarity is computed between the candidate feature vector and each reference feature vector.  
-- If a candidate exceeds a set similarity threshold, it is flagged as a potential match and sent to the app for confirmation (app part to be implemented).
+5. **Similarity Matching**:  
+   Compare each candidate feature vector with the reference feature vectors using cosine similarity. Regions exceeding a set similarity threshold are marked as valid matches.
 
-### **5. Non-Maximum Suppression (NMS)**  
-- To eliminate overlapping detections, NMS merges duplicate bounding boxes, retaining only the most confident detection.
+6. **Results**:  
+   Valid matches are saved and visually confirmed via bounding boxes drawn on the original scene image.
 
----
+## Usage
 
-## **Testing the Object Recognition System**
-To test the object detection pipeline normally (with the default demo reference/scene images and model path), run the following command:
+To run the object recognition pipeline with default settings:
 
 ```bash
-python -m ranger_object_recognition.integration 
+python -m ranger_object_recognition.integration
 ```
 
-### **Testing with Custom Reference and/or scene images and model path**
-To override the default reference, scene images and model path use the `--ref_dir`, `--scene` and `--model` arguments to provide a reference image directory, scene image and model path respectively. Example:
-
-```bash
-python -m ranger_object_recognition.integration \
-    --ref_dir "ranger_object_recognition/local_test_stuff/wallet_refs" \
-    --scene "ranger_object_recognition/local_test_stuff/wallet_scene1.jpeg" \
-    --model "path/to/feature_extractor_int8.tflite"
-```
+### Arguments
+- `--scene` - Provide filepath of a scene image to run object detection on. Default in [example images](example%20images/keys_scene.jpeg)
+- `--ref_dir` - Provide filepath of a directory containing the reference images taken on the mobile app. Default in [example images](example%20images/keys_ref)
+- `--feat_model` - Provide filepath of the tensorflow feature vector model if needed
+- `--yolo_model` - Provide filepath of the YOLOv5 TFLite model if needed
+- `--visualise` - Optional visualisation of any detected items in the scene image post-inference

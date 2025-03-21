@@ -8,3 +8,9 @@ nixos.qcow2
 result
 *.img
 ranger_nav/ros_ws/src/slam_gmapping
+
+# Files generated from object recognition testing
+/invalid_crops
+/valid_crops
+/runs
+/ranger_object_recognition/local_test_images
