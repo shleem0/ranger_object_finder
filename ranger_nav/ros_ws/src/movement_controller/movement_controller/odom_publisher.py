@@ -97,7 +97,6 @@ class OdometryPublisher(Node):
                 motor_pos1 = 0.0
                 motor_pos2 = 0.0
 
-
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
@@ -264,7 +263,7 @@ class OdometryPublisher(Node):
         angular_velocity = msg.angular.z
         
         # Robot parameters
-        wheelbase = 0.13  # The distance between the two wheels (meters)
+        wheelbase = 0.295  # The distance between the two wheels (meters)
         motor_max_rpm = 150
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
