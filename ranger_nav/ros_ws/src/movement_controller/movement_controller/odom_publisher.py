@@ -73,11 +73,11 @@ class OdometryPublisher(Node):
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
 
-        vel1 = 0.08 * angle_dif1 / 0.1
-        vel2 = 0.08 * angle_dif2 / 0.1
+        vel1 = 0.04 * (angle_dif1 / dt)
+        vel2 = 0.04 * (angle_dif2 / dt)
 
         linear_velocity = (vel1 + vel2) / 2
-        angular_velocity = (vel1 - vel2) / 0.135 
+        angular_velocity = (vel1 - vel2) / 0.295
 
         self.theta += angular_velocity * dt
         self.x += linear_velocity * dt * cos(self.theta)
@@ -128,7 +128,7 @@ class OdometryPublisher(Node):
         t_base_scan.header.frame_id = 'base_link'
         t_base_scan.child_frame_id = 'base_scan'
 
-        t_base_scan.transform.translation.x = 0.0  # 10 cm in front of base_link
+        t_base_scan.transform.translation.x = 0.0
         t_base_scan.transform.translation.y = 0.0
         t_base_scan.transform.translation.z = 0.13  # LiDAR is 15 cm above base_link
         t_base_scan.transform.rotation.x = 0.0
