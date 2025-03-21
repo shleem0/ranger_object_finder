@@ -261,6 +261,8 @@ class OdometryPublisher(Node):
         # Extract linear and angular velocities
         linear_velocity = msg.linear.x
         angular_velocity = msg.angular.z
+
+        print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
         
         # Robot parameters
         wheelbase = 0.295  # The distance between the two wheels (meters)

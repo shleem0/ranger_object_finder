@@ -13,7 +13,7 @@ def track_position():
     while True:
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f2:
             position1 = encoder1.position()
-            f1.seek(0)      
+            f1.seek(0)
             f1.write(f"{position1}")
             f1.flush()
 
