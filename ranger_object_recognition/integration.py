@@ -53,7 +53,7 @@ def find_item_in_scene():
         config.SCENE_IMAGE_PATH = args.scene
 
     # Use YOLO model to detect potential items in the scene
-    start_time = time.time()
+    # start_time = time.time()
     cropped_regions, boxes_list = run_detection(
         weights=config.YOLO_MODEL_PATH, source=config.SCENE_IMAGE_PATH, data=config.DATA_YAML_PATH, imgsz=(640, 640),
         conf_thres=config.YOLO_SIMILARITY_THRESHOLD, iou_thres=0.45, max_det=1000, device="",
@@ -67,7 +67,7 @@ def find_item_in_scene():
 
     # Load the feature extraction model
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
-
+    start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
     crop_features = []
     for idx, crop in enumerate(cropped_regions):
