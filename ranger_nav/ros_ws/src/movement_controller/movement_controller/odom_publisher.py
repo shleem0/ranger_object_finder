@@ -34,6 +34,7 @@ class OdometryPublisher(Node):
 
         self.map_data = None
         self.goal = None
+        self.published_init = False
         
         # Initialize position and orientation
         self.x = 0.0
@@ -94,8 +95,11 @@ class OdometryPublisher(Node):
         self.theta = 0.0
         
         # Publish the initial pose
-        self.initial_pose_pub.publish(initial_pose)
-        print(f"Initial pose: {self.x}, {self.y}")
+        if not self.published_init:
+            self.initial_pose_pub.publish(initial_pose)
+            self.published_init = True
+            print(f"Initial pose: {self.x}, {self.y}")
+
 
 
 
