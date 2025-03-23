@@ -206,8 +206,6 @@ class OdometryPublisher(Node):
     def map_callback(self, msg):
 
         self.map_data = msg
-        print(f"Map origin: {self.map_data.info.origin.position.x}, {self.map_data.info.origin.position.y}")
-
         self.publish_initial_pose()
 
 
