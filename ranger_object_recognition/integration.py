@@ -11,6 +11,7 @@ import cv2
 import numpy as np
 from .detect import run_detection
 import time
+from . import measurements
 
 def find_item_in_scene(scene_path):
     # Set paths and thresholds
@@ -97,12 +98,24 @@ def find_item_in_scene(scene_path):
     print("Bounding box coordinates for valid crops:", file=sys.stderr)
     for idx in valid_indices:
         print(boxes_list[idx])
+    full_img = cv2.imread(config.SCENE_IMAGE_PATH)
+    if full_img is not None:
+        full_height = full_img.shape[0]
+        print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
+        for idx in valid_indices:
+            # Each box in boxes_list is assumed to be [x1, y1, x2, y2]
+            box = boxes_list[idx]
+            center_y = (box[1] + box[3]) / 2.0  # Calculate center y coordinate
+            # Convert the center y coordinate (pixel value) to cm using the measurements function.
+            distance_cm = measurements.pixels_to_cm(center_y, full_height)
+            print(f"Crop {idx} center is at {distance_cm:.2f} cm from camera.", file=sys.stderr)
+    else:
+        print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
     # Optional visualisation if you want to see the annotated image
     if args.visualise:
         if valid_indices:
             # Load the full scene image
-            full_img = cv2.imread(config.SCENE_IMAGE_PATH)
             if full_img is None:
                 print("Error: Could not load full scene image for annotation.", file=sys.stderr)
             else:

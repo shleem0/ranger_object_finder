@@ -36,3 +36,14 @@ python -m ranger_object_recognition.integration
 - `--feat_model` - Provide filepath of the tensorflow feature vector model if needed
 - `--yolo_model` - Provide filepath of the YOLOv5 TFLite model if needed
 - `--visualise` - Optional visualisation of any detected items in the scene image post-inference
+
+## Running live with queue and camera
+
+```bash
+python -m ranger_object_recognition.queue_worker --queue "ranger_object_recognition/image_queue"
+```
+
+### Arguments
+- `--queue` - Provide filepath to a directory to store the images for the queue
+- `--interval` - Interval in seconds to take photos (default 10)
+- `--max_files` - Maximum number of images to have in the queue at one time (default 10)
