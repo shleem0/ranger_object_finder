@@ -25,7 +25,6 @@ class OdometryPublisher(Node):
         self.broadcaster = TransformBroadcaster(self)
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
-
         self.initial_pose_pub = self.create_publisher(PoseStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
@@ -54,52 +53,51 @@ class OdometryPublisher(Node):
 
     def print_pos(self):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
-            if self.goal:
+            if self.goal is not None:
                 print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
-            else:
-                print("No goal pose")
 
 
     def publish_initial_pose(self):
 
-        if not self.map_data:
+        if self.map_data is None:
             print("No map, not setting initial pose")
             return
 
-        map_width = self.map_data.info.width
-        map_height = self.map_data.info.height
-        resolution = self.map_data.info.resolution
-        origin_x = self.map_data.info.origin.position.x
-        origin_y = self.map_data.info.origin.position.y
+        else:
+            map_width = self.map_data.info.width
+            map_height = self.map_data.info.height
+            resolution = self.map_data.info.resolution
+            origin_x = self.map_data.info.origin.position.x
+            origin_y = self.map_data.info.origin.position.y
 
-        # Compute the center of the map in world coordinates
-        center_x = origin_x + (map_width * resolution) / 2
-        center_y = origin_y + (map_height * resolution) / 2
+            # Compute the center of the map in world coordinates
+            center_x = origin_x + (map_width * resolution) / 2
+            center_y = origin_y + (map_height * resolution) / 2
 
-        initial_pose = PoseStamped()
-        initial_pose.header.stamp = self.get_clock().now().to_msg()
-        initial_pose.header.frame_id = "map"  # Frame of reference for the map
-            
-        # Set position (x, y) and orientation (quaternion)
-        initial_pose.pose.position.x = center_x
-        initial_pose.pose.position.y = center_y
-        initial_pose.pose.position.z = 0.0
-            
-            # Set orientation using quaternion
-        qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
-        initial_pose.pose.orientation.x = qx
-        initial_pose.pose.orientation.y = qy
-        initial_pose.pose.orientation.z = qz
-        initial_pose.pose.orientation.w = qw
+            initial_pose = PoseStamped()
+            initial_pose.header.stamp = self.get_clock().now().to_msg()
+            initial_pose.header.frame_id = "map"  # Frame of reference for the map
+                
+            # Set position (x, y) and orientation (quaternion)
+            initial_pose.pose.position.x = center_x
+            initial_pose.pose.position.y = center_y
+            initial_pose.pose.position.z = 0.0
+                
+                # Set orientation using quaternion
+            qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+            initial_pose.pose.orientation.x = qx
+            initial_pose.pose.orientation.y = qy
+            initial_pose.pose.orientation.z = qz
+            initial_pose.pose.orientation.w = qw
 
-        self.x = center_x
-        self.y = center_y
-        self.theta = 0.0
-            
-        # Publish the initial pose
-        self.initial_pose_pub.publish(initial_pose)
-        self.published_init = True
-        print(f"Initial pose: {self.x}, {self.y}")
+            self.x = center_x
+            self.y = center_y
+            self.theta = 0.0
+                
+            # Publish the initial pose
+            self.initial_pose_pub.publish(initial_pose)
+            self.published_init = True
+            print(f"Initial pose: {self.x}, {self.y}")
 
 
 
@@ -209,7 +207,6 @@ class OdometryPublisher(Node):
 
 
     def map_callback(self, msg):
-
         self.map_data = msg
         self.publish_initial_pose()
 
@@ -269,13 +266,13 @@ class OdometryPublisher(Node):
 
     def publish_goal_pose(self):
         if self.map_data:
-            self.goal = self.find_goal_pose(self.map_data)
+            self.goal = self.find_goal_pose(self.map)
 
             if self.goal:
                 self.goal_pose_pub.publish(self.goal)
 
         else:
-            print("No goal pose\n")
+            print("Cannot get goal pose from map\n")
 
 
 
