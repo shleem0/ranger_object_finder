@@ -72,7 +72,13 @@ def load_reference_features(model, ref_dir, target_size=(224, 224)):
 
 def preprocess_crop(crop, target_size=(224, 224)):
     """Resize and normalize the crop from YOLO for the feature extractor."""
-    crop_resized = cv2.resize(crop, target_size)
+    if crop is None or crop.size == 0:
+        print("Warning: encountered an empty crop. Skipping this crop.", file=sys.stderr)
+        return None
+    try:
+        crop_resized = cv2.resize(crop, target_size)
+    except Exception as e:
+        print(f"Error resizing crop: {e}", file=sys.stderr)
+        return None
     crop_normalized = crop_resized.astype(np.float32) / 255.0
-    # If the feature extractor expects a batch dimension, add it.
     return np.expand_dims(crop_normalized, axis=0)

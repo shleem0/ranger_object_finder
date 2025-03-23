@@ -12,7 +12,7 @@ import numpy as np
 from .detect import run_detection
 import time
 
-def find_item_in_scene():
+def find_item_in_scene(scene_path):
     # Set paths and thresholds
     # yolo_weights = "best-fp16.tflite" 
     # source = "test_images/keys_scene/keys_scene5.jpeg"  # Scene images directory (or a single image)
@@ -28,32 +28,21 @@ def find_item_in_scene():
         os.makedirs(invalid_crops_dir)
     or_utils.clear_directory(valid_crops_dir)
     or_utils.clear_directory(invalid_crops_dir)
-
+    config.SCENE_IMAGE_PATH = scene_path
 
         # Parsing command line arguments
-    parser = argparse.ArgumentParser(description="Run object recognition pipeline")
-    parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
-    parser.add_argument("--scene", type=str, help="Path to scene image")
-    parser.add_argument("--model", type=str, help="Path to TFLite model")
-    parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(description="Run object recognition pipeline")
+    # parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
+    # parser.add_argument("--model", type=str, help="Path to TFLite model")
+    # parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
+    # args = parser.parse_args()
 
-    # Overriding default paths if provided via command line
-    if args.model:
-        # Load tfLite model
-        config.MODEL_TFLITE_PATH = args.model
 
-    if args.ref_dir:
-        # Use glob to find all image files in the directory
-        config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
-        if not config.REFERENCE_IMAGE_PATHS:
-            print(f"Warning: No images found in {args.ref_dir}", file=sys.stderr)
-
-    if args.scene:
-        config.SCENE_IMAGE_PATH = args.scene
-
+    if __name__ != "__main__":
+        args = argparse.Namespace()
+        args.visualise = False
     # Use YOLO model to detect potential items in the scene
-    # start_time = time.time()
+    start_time = time.time()
     cropped_regions, boxes_list = run_detection(
         weights=config.YOLO_MODEL_PATH, source=config.SCENE_IMAGE_PATH, data=config.DATA_YAML_PATH, imgsz=(640, 640),
         conf_thres=config.YOLO_SIMILARITY_THRESHOLD, iou_thres=0.45, max_det=1000, device="",
@@ -67,11 +56,14 @@ def find_item_in_scene():
 
     # Load the feature extraction model
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
-    start_time = time.time()
+    # start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
     crop_features = []
     for idx, crop in enumerate(cropped_regions):
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
+        if crop_input is None:
+            print(f"Skipping crop {idx} due to empty or invalid crop.", file=sys.stderr)
+            continue
         vector = feature_extractor.extract_feature_vector(feature_model, crop_input)
         crop_features.append(vector)
         print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
@@ -133,4 +125,22 @@ def find_item_in_scene():
     print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
 
 if __name__ == "__main__":
-    find_item_in_scene()
+    parser = argparse.ArgumentParser(description="Run object recognition pipeline")
+    parser.add_argument("--scene", type=str, help="Path to scene image")
+    parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
+    parser.add_argument("--model", type=str, help="Path to TFLite model")
+    parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
+    args = parser.parse_args()
+
+        # Overriding default paths if provided via command line
+    if args.model:
+        # Load tfLite model
+        config.MODEL_TFLITE_PATH = args.model
+        
+    if args.ref_dir:
+        # Use glob to find all image files in the directory
+        config.REFERENCE_IMAGE_PATHS = glob.glob(os.path.join(args.ref_dir, "*.*"))
+        if not config.REFERENCE_IMAGE_PATHS:
+            print(f"Warning: No images found in {args.ref_dir}", file=sys.stderr)
+
+    find_item_in_scene(args.scene)
