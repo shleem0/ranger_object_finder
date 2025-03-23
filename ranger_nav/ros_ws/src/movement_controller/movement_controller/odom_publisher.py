@@ -178,9 +178,25 @@ class OdometryPublisher(Node):
         t_base_scan.transform.rotation.z = 0.0
         t_base_scan.transform.rotation.w = 1.0
 
+        # Transform from base_scan to map
+        t_scan_map = TransformStamped()
+        t_scan_map.header.stamp = current_time.to_msg()
+        t_scan_map.header.frame_id = 'base_scan'
+        t_scan_map.child_frame_id = 'map'
+
+        # Set the translation and rotation values here to match the sensor's position relative to the map
+        t_scan_map.transform.translation.x = 0.0
+        t_scan_map.transform.translation.y = 0.0
+        t_scan_map.transform.translation.z = 0.0
+        t_scan_map.transform.rotation.x = 0.0
+        t_scan_map.transform.rotation.y = 0.0
+        t_scan_map.transform.rotation.z = 0.0
+        t_scan_map.transform.rotation.w = 1.0
+
         # Publish the transforms
         self.broadcaster.sendTransform(t_odom_base)
         self.broadcaster.sendTransform(t_base_scan)
+        self.broadcaster.sendTransform(t_scan_map)
 
         self.last_time = current_time
 
