@@ -36,9 +36,9 @@ class OdometryPublisher(Node):
         self.goal = None
         
         # Initialize position and orientation
-        self.x = None
-        self.y = None
-        self.theta = None
+        self.x = 0.0
+        self.y = 0.0
+        self.theta = 0.0
 
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
