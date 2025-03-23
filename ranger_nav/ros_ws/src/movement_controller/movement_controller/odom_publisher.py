@@ -173,7 +173,7 @@ class OdometryPublisher(Node):
 
         t_base_scan.transform.translation.x = 0.0
         t_base_scan.transform.translation.y = 0.0
-        t_base_scan.transform.translation.z = 0.13  # LiDAR is 15 cm above base_link
+        t_base_scan.transform.translation.z = 0.0  # LiDAR is 15 cm above base_link
         t_base_scan.transform.rotation.x = 0.0
         t_base_scan.transform.rotation.y = 0.0
         t_base_scan.transform.rotation.z = 0.0
