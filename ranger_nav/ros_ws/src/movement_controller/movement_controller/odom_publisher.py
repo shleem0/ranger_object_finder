@@ -265,9 +265,11 @@ class OdometryPublisher(Node):
 
     def publish_goal_pose(self):
         if self.map_data:
+            print("Getting goal")
             self.goal = self.find_goal_pose(self.map_data)
 
             if  self.goal:
+                print("Publishing goal")
                 self.goal_pose_pub.publish(self.goal)
 
         else:
