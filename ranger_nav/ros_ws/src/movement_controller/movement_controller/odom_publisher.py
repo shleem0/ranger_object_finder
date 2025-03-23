@@ -56,6 +56,8 @@ class OdometryPublisher(Node):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
             if self.goal:
                 print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+            else:
+                print("No goal pose")
 
 
     def publish_initial_pose(self):
@@ -64,41 +66,40 @@ class OdometryPublisher(Node):
             print("No map, not setting initial pose")
             return
 
-        if not self.published_init:
-            map_width = self.map_data.info.width
-            map_height = self.map_data.info.height
-            resolution = self.map_data.info.resolution
-            origin_x = self.map_data.info.origin.position.x
-            origin_y = self.map_data.info.origin.position.y
+        map_width = self.map_data.info.width
+        map_height = self.map_data.info.height
+        resolution = self.map_data.info.resolution
+        origin_x = self.map_data.info.origin.position.x
+        origin_y = self.map_data.info.origin.position.y
 
-            # Compute the center of the map in world coordinates
-            center_x = origin_x + (map_width * resolution) / 2
-            center_y = origin_y + (map_height * resolution) / 2
+        # Compute the center of the map in world coordinates
+        center_x = origin_x + (map_width * resolution) / 2
+        center_y = origin_y + (map_height * resolution) / 2
 
-            initial_pose = PoseStamped()
-            initial_pose.header.stamp = self.get_clock().now().to_msg()
-            initial_pose.header.frame_id = "map"  # Frame of reference for the map
+        initial_pose = PoseStamped()
+        initial_pose.header.stamp = self.get_clock().now().to_msg()
+        initial_pose.header.frame_id = "map"  # Frame of reference for the map
             
-            # Set position (x, y) and orientation (quaternion)
-            initial_pose.pose.position.x = center_x
-            initial_pose.pose.position.y = center_y
-            initial_pose.pose.position.z = 0.0
+        # Set position (x, y) and orientation (quaternion)
+        initial_pose.pose.position.x = center_x
+        initial_pose.pose.position.y = center_y
+        initial_pose.pose.position.z = 0.0
             
             # Set orientation using quaternion
-            qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
-            initial_pose.pose.orientation.x = qx
-            initial_pose.pose.orientation.y = qy
-            initial_pose.pose.orientation.z = qz
-            initial_pose.pose.orientation.w = qw
+        qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+        initial_pose.pose.orientation.x = qx
+        initial_pose.pose.orientation.y = qy
+        initial_pose.pose.orientation.z = qz
+        initial_pose.pose.orientation.w = qw
 
-            self.x = center_x
-            self.y = center_y
-            self.theta = 0.0
+        self.x = center_x
+        self.y = center_y
+        self.theta = 0.0
             
-            # Publish the initial pose
-            self.initial_pose_pub.publish(initial_pose)
-            self.published_init = True
-            print(f"Initial pose: {self.x}, {self.y}")
+        # Publish the initial pose
+        self.initial_pose_pub.publish(initial_pose)
+        self.published_init = True
+        print(f"Initial pose: {self.x}, {self.y}")
 
 
 
@@ -210,21 +211,21 @@ class OdometryPublisher(Node):
     def map_callback(self, msg):
 
         self.map_data = msg
-        self.publish_initial_pose()
+        self.publish_initial_pose(self.map_data)
 
 
 
-    def find_goal_pose(self):
+    def find_goal_pose(self, map):
         # Extract the map dimensions and data
-        if self.map_data:
-            width = self.map_data.info.width
-            height = self.map_data.info.height
-            resolution = self.map_data.info.resolution  # In meters per cell
-            origin_x = self.map_data.info.origin.position.x
-            origin_y = self.map_data.info.origin.position.y
+        if map:
+            width = map.info.width
+            height = map.info.height
+            resolution = map.info.resolution  # In meters per cell
+            origin_x = map.info.origin.position.x
+            origin_y = map.info.origin.position.y
             
             # Convert map data (OccupancyGrid) to a numpy array for easier processing
-            map_array = np.array(self.map_data.data).reshape((height, width))
+            map_array = np.array(map.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
