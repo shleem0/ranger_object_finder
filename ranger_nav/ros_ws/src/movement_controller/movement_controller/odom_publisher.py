@@ -211,17 +211,17 @@ class OdometryPublisher(Node):
 
 
 
-    def find_goal_pose(self, map_data):
+    def find_goal_pose(self):
         # Extract the map dimensions and data
-        if map_data:
-            width = map_data.info.width
-            height = map_data.info.height
-            resolution = map_data.info.resolution  # In meters per cell
-            origin_x = map_data.info.origin.position.x
-            origin_y = map_data.info.origin.position.y
+        if self.map_data:
+            width = self.map_data.info.width
+            height = self.map_data.info.height
+            resolution = self.map_data.info.resolution  # In meters per cell
+            origin_x = self.map_data.info.origin.position.x
+            origin_y = self.map_data.info.origin.position.y
             
             # Convert map data (OccupancyGrid) to a numpy array for easier processing
-            map_array = np.array(map_data.data).reshape((height, width))
+            map_array = np.array(self.map_data.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
@@ -269,7 +269,7 @@ class OdometryPublisher(Node):
             self.goal = self.find_goal_pose(self.map_data)
 
             if  self.goal:
-                print("Publishing goal")
+                print("Publishing")
                 self.goal_pose_pub.publish(self.goal)
 
         else:
