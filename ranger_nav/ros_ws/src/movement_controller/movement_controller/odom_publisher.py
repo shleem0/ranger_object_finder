@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from tf2_ros import TransformBroadcaster
 
-from geometry_msgs.msg import TransformStamped, PoseStamped, Twist
+from geometry_msgs.msg import TransformStamped, PoseStamped, PoseWithCovarianceStamped, Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
 from tf_transformations import quaternion_from_euler
 
@@ -25,6 +25,7 @@ class OdometryPublisher(Node):
         self.broadcaster = TransformBroadcaster(self)
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
+        self.initial_pose_pub = self.create_publisher(PoseStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
@@ -32,6 +33,7 @@ class OdometryPublisher(Node):
 
         self.map_data = None
         self.goal = None
+        self.published_init = False
         
         # Initialize position and orientation
         self.x = 0.0
@@ -51,8 +53,53 @@ class OdometryPublisher(Node):
 
     def print_pos(self):
             print(f"Current pos: x: {self.x}, y: {self.y}, angle: {self.theta}\n")
-            if self.goal:
+            if self.goal is not None:
                 print(f"Goal pose: x:{self.goal.pose.position.x}, y:{self.goal.pose.position.y}\n")
+
+
+    def publish_initial_pose(self):
+
+        if self.map_data is None:
+            print("No map, not setting initial pose")
+            return
+
+        else:
+            map_width = self.map_data.info.width
+            map_height = self.map_data.info.height
+            resolution = self.map_data.info.resolution
+            origin_x = self.map_data.info.origin.position.x
+            origin_y = self.map_data.info.origin.position.y
+
+            # Compute the center of the map in world coordinates
+            center_x = origin_x + (map_width * resolution) / 2
+            center_y = origin_y + (map_height * resolution) / 2
+
+            initial_pose = PoseStamped()
+            initial_pose.header.stamp = self.get_clock().now().to_msg()
+            initial_pose.header.frame_id = "map"  # Frame of reference for the map
+                
+            # Set position (x, y) and orientation (quaternion)
+            initial_pose.pose.position.x = center_x
+            initial_pose.pose.position.y = center_y
+            initial_pose.pose.position.z = 0.0
+                
+                # Set orientation using quaternion
+            qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+            initial_pose.pose.orientation.x = qx
+            initial_pose.pose.orientation.y = qy
+            initial_pose.pose.orientation.z = qz
+            initial_pose.pose.orientation.w = qw
+
+            self.x = center_x
+            self.y = center_y
+            self.theta = 0.0
+                
+            # Publish the initial pose
+            self.initial_pose_pub.publish(initial_pose)
+            self.published_init = True
+            print(f"Initial pose: {self.x}, {self.y}")
+
+
 
 
     def timer_callback(self):
@@ -66,9 +113,8 @@ class OdometryPublisher(Node):
                 motor_pos1 = float(f1.read())
                 motor_pos2 = float(f2.read())
             except:
-                motor_pos1 = 0.0
-                motor_pos2 = 0.0
-
+                motor_pos1 = self.prev_motor_pos1
+                motor_pos2 = self.prev_motor_pos2
 
         angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
         angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
@@ -77,7 +123,7 @@ class OdometryPublisher(Node):
         vel2 = 0.04 * (angle_dif2 / dt)
 
         linear_velocity = (vel1 + vel2) / 2
-        angular_velocity = (vel1 - vel2) / 0.295
+        angular_velocity = (vel2 - vel1) / 0.295
 
         self.theta += angular_velocity * dt
         self.x += linear_velocity * dt * cos(self.theta)
@@ -130,7 +176,7 @@ class OdometryPublisher(Node):
 
         t_base_scan.transform.translation.x = 0.0
         t_base_scan.transform.translation.y = 0.0
-        t_base_scan.transform.translation.z = 0.13  # LiDAR is 15 cm above base_link
+        t_base_scan.transform.translation.z = 0.0  # LiDAR is 15 cm above base_link
         t_base_scan.transform.rotation.x = 0.0
         t_base_scan.transform.rotation.y = 0.0
         t_base_scan.transform.rotation.z = 0.0
@@ -161,33 +207,39 @@ class OdometryPublisher(Node):
 
 
     def map_callback(self, msg):
-
         self.map_data = msg
+        self.publish_initial_pose()
 
 
 
-
-    def find_goal_pose(self, map_data):
+    def find_goal_pose(self, map):
         # Extract the map dimensions and data
-        if map_data:
-            width = map_data.info.width
-            height = map_data.info.height
-            resolution = map_data.info.resolution  # In meters per cell
-            origin_x = map_data.info.origin.position.x
-            origin_y = map_data.info.origin.position.y
+        if map:
+            width = map.info.width
+            height = map.info.height
+            resolution = map.info.resolution  # In meters per cell
+            origin_x = map.info.origin.position.x
+            origin_y = map.info.origin.position.y
             
             # Convert map data (OccupancyGrid) to a numpy array for easier processing
-            map_array = np.array(map_data.data).reshape((height, width))
+            map_array = np.array(map.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
             
             # Check the edges of the map (first and last rows and columns)
             for x in range(width):
-                for y in range(height):
+                if map_array[0, x] == 0:  # Top row
+                    empty_points.append((x, 0))
+                if map_array[height-1, x] == 0:  # Bottom row
+                    empty_points.append((x, height-1))
 
-                    if map_array[y,x] == 0:  # First column
-                        empty_points.append((x, y))
+            # Check left and right columns
+            for y in range(height):
+                if map_array[y, 0] == 0:  # Left column
+                    empty_points.append((0, y))
+                if map_array[y, width-1] == 0:  # Right column
+                    empty_points.append((width-1, y))
             
             # If we found any free edge points, return the first one (or any other strategy)
             if empty_points:
@@ -214,13 +266,13 @@ class OdometryPublisher(Node):
 
     def publish_goal_pose(self):
         if self.map_data:
-            self.goal = self.find_goal_pose(self.map_data)
+            self.goal = self.find_goal_pose(self.map)
 
-        if self.goal:
-            self.goal_pose_pub.publish(self.goal)
+            if self.goal:
+                self.goal_pose_pub.publish(self.goal)
 
         else:
-            print("No goal pose\n")
+            print("Cannot get goal pose from map\n")
 
 
 
@@ -228,9 +280,11 @@ class OdometryPublisher(Node):
         # Extract linear and angular velocities
         linear_velocity = msg.linear.x
         angular_velocity = msg.angular.z
+
+        print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
         
         # Robot parameters
-        wheelbase = 0.13  # The distance between the two wheels (meters)
+        wheelbase = 0.295  # The distance between the two wheels (meters)
         motor_max_rpm = 150
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
@@ -258,17 +312,17 @@ class OdometryPublisher(Node):
 
         if linear_velocity == 0:
             if angular_velocity > 0:
-                motor2_speed = 70
+                motor2_speed = 100
                 right_dir = True
 
-                motor1_speed = 70
+                motor1_speed = 100
                 left_dir = False
 
             if angular_velocity < 0:
-                motor1_speed = 70
+                motor1_speed = 100
                 left_dir = True
 
-                motor2_speed = 70
+                motor2_speed = 100
                 right_dir = False
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
