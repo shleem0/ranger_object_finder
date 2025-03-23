@@ -268,7 +268,9 @@ class OdometryPublisher(Node):
             print("Getting goal")
             self.goal = self.find_goal_pose()
 
-            if  self.goal:
+            print(self.goal)
+
+            if self.goal:
                 print("Publishing")
                 self.goal_pose_pub.publish(self.goal)
 
