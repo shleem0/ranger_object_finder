@@ -40,8 +40,6 @@ class OdometryPublisher(Node):
         self.y = 0.0
         self.theta = 0.0
 
-        self.publish_initial_pose()
-
         self.prev_motor_pos1 = 0.0
         self.prev_motor_pos2 = 0.0
 
@@ -60,15 +58,28 @@ class OdometryPublisher(Node):
 
 
     def publish_initial_pose(self):
+
+        if not self.map_data:
+            print("No map, not setting initial pose")
+            return
+
+        map_width = self.map_data.info.width
+        map_height = self.map_data.info.height
+        resolution = self.map_data.info.resolution
+        origin_x = self.map_data.info.origin.position.x
+        origin_y = self.map_data.info.origin.position.y
+
+        # Compute the center of the map in world coordinates
+        center_x = origin_x + (map_width * resolution) / 2
+        center_y = origin_y + (map_height * resolution) / 2
+
         initial_pose = PoseStamped()
-        
-        # Initial position and orientation of the robot
         initial_pose.header.stamp = self.get_clock().now().to_msg()
         initial_pose.header.frame_id = "map"  # Frame of reference for the map
         
         # Set position (x, y) and orientation (quaternion)
-        initial_pose.pose.position.x = 0.0
-        initial_pose.pose.position.y = 0.0
+        initial_pose.pose.position.x = center_x
+        initial_pose.pose.position.y = center_y
         initial_pose.pose.position.z = 0.0
         
         # Set orientation using quaternion
@@ -77,6 +88,10 @@ class OdometryPublisher(Node):
         initial_pose.pose.orientation.y = qy
         initial_pose.pose.orientation.z = qz
         initial_pose.pose.orientation.w = qw
+
+        self.x = center_x
+        self.y = center_y
+        self.theta = 0.0
         
         # Publish the initial pose
         self.initial_pose_pub.publish(initial_pose)
@@ -175,6 +190,8 @@ class OdometryPublisher(Node):
 
         self.map_data = msg
         print(f"Map origin: {self.map_data.info.origin.position.x}, {self.map_data.info.origin.position.y}")
+
+        self.publish_initial_pose()
 
 
 
