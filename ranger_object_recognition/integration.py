@@ -21,10 +21,10 @@ def find_item_in_scene(scene_path, visualise = False):
     # feature_model_path = "mobilenet-v3-tensorflow2-small-075-224-feature-vector-v1"  
     # reference_dir = "test_images/keys_ref"  # Directory with reference images
     # similarity_threshold = 0.3
-    valid_crops_dir = "valid_crops"  # Directory to save valid crops
+    valid_crops_dir = config.VALID_CROP_DIR  # Directory to save valid crops
     if not os.path.exists(valid_crops_dir):
         os.makedirs(valid_crops_dir)
-    invalid_crops_dir = "invalid_crops"  # Directory to save invalid crops for debugging
+    invalid_crops_dir = config.INVALID_CROP_DIR  # Directory to save invalid crops for debugging
     if not os.path.exists(invalid_crops_dir):
         os.makedirs(invalid_crops_dir)
     or_utils.clear_directory(valid_crops_dir)
@@ -59,7 +59,10 @@ def find_item_in_scene(scene_path, visualise = False):
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
     # start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
-    crop_features = []
+    # Process each cropped region from YOLO: Preprocess and extract features
+    valid_cropped_regions = []   # New list for valid (non-empty) cropped images
+    valid_boxes_list = []        # New list for bounding boxes corresponding to valid crops
+    crop_features = []           # Feature vectors for valid crops
     for idx, crop in enumerate(cropped_regions):
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
         if crop_input is None:
@@ -67,47 +70,74 @@ def find_item_in_scene(scene_path, visualise = False):
             continue
         vector = feature_extractor.extract_feature_vector(feature_model, crop_input)
         crop_features.append(vector)
+        valid_cropped_regions.append(crop)
+        valid_boxes_list.append(boxes_list[idx])
         print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
-
     # Load reference images and extract features
     ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
 
-    # Compare each crop feature to the reference features
-    valid_indices = []
+    # # Compare each crop feature to the reference features
+    # valid_indices = [] 
+    # for idx, crop_vector in enumerate(crop_features):
+    #     max_sim = 0
+    #     for ref_path, ref_vector in ref_features.items():
+    #         sim = matching.cosine_similarity(crop_vector, ref_vector)
+    #         max_sim = max(max_sim, sim)
+    #     if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
+    #         print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).", file=sys.stderr)
+    #         valid_indices.append(idx)
+    #         # Save the valid crop to disk
+    #         save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
+    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
+    #         print(f"Saved valid crop {idx} to {save_path}")
+    #     else:
+    #         print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).", file=sys.stderr)
+    #         # Save the invalid crop to disk for debugging
+    #         save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
+    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
+    #         print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
+    # Keeping only the highest similarity crop for final version
+        # Compare each crop feature to the reference features and select the best valid crop
+    best_idx = None
+    best_sim = -1
     for idx, crop_vector in enumerate(crop_features):
         max_sim = 0
         for ref_path, ref_vector in ref_features.items():
             sim = matching.cosine_similarity(crop_vector, ref_vector)
             max_sim = max(max_sim, sim)
-        # print(f"Crop {idx} max similarity: {max_sim:.2f}", file=sys.stderr)
-        if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
-            print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).", file=sys.stderr)
-            valid_indices.append(idx)
-            # Save the valid crop to disk
-            save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
-            cv2.imwrite(save_path, cropped_regions[idx])
-            print(f"Saved valid crop {idx} to {save_path}")
-        else:
-            print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).", file=sys.stderr)
-            # Save the invalid crop to disk for debugging
-            save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
-            cv2.imwrite(save_path, cropped_regions[idx])
-            print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
-    end_time = time.time()
+        print(f"Crop {idx} max similarity: {max_sim:.2f}", file=sys.stderr)
+        if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD and max_sim > best_sim:
+            best_sim = max_sim
+            best_idx = idx
 
+    if best_idx is not None:
+        print(f"Crop {best_idx} is considered the best valid crop (similarity {best_sim:.2f}).", file=sys.stderr)
+        # Save the best valid crop to disk
+        save_path = os.path.join(valid_crops_dir, f"crop_best.jpg")
+        cv2.imwrite(save_path, valid_cropped_regions[best_idx])
+        print(f"Saved best valid crop {best_idx} to {save_path}", file=sys.stderr)
+        # Only keep this best crop for subsequent measurement and annotation steps
+        valid_indices = [best_idx]
+    else:
+        print("No valid crops found.", file=sys.stderr)
+        valid_indices = []
+    end_time = time.time()
+    
     print("Bounding box coordinates for valid crops:", file=sys.stderr)
     for idx in valid_indices:
         print(boxes_list[idx])
     full_img = cv2.imread(config.SCENE_IMAGE_PATH)
     if full_img is not None:
-        full_height = full_img.shape[0]
+        full_height, full_width = full_img.shape[:2]
         print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
         for idx in valid_indices:
-            box = boxes_list[idx]
-            center_y = (box[1] + box[3]) / 2.0  # Calculate center y coordinate
-            # Convert the center y coordinate (pixel value) to cm using measurements function
-            distance_cm = measurements.pixels_to_cm(center_y, full_height)
-            print(f"Crop {idx} center is at {distance_cm:.2f} cm from camera.", file=sys.stderr)
+            box = valid_boxes_list[idx]  # box = [x1, y1, x2, y2]
+            center_x = (box[0] + box[2]) / 2.0
+            center_y = (box[1] + box[3]) / 2.0
+            # Convert x and y pixel coordinates to cm using your measurements functions:
+            distance_x_cm = measurements.x_pixel_to_cm(center_x, full_width)
+            distance_y_cm = measurements.pixels_to_cm(center_y, full_height)
+            print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
     else:
         print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
