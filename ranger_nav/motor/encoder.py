@@ -10,6 +10,12 @@ encoder1 = GroveOpticalRotaryEncoder(PIN1)
 encoder2 = GroveOpticalRotaryEncoder(PIN2)
 
 def track_position():
+
+    with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f2:
+
+        f1.write(0)
+        f2.write(0)
+
     while True:
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt","w") as f2:
             position1 = encoder1.position()
