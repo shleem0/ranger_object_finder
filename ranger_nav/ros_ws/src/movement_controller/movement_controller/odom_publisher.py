@@ -225,7 +225,9 @@ class OdometryPublisher(Node):
                     empty_points.append((0, y))
                 if map_array[y, width-1] == 0:  # Right column
                     empty_points.append((width-1, y))
-            
+
+            print(empty_points)
+    
             # If we found any free edge points, return the first one (or any other strategy)
             if empty_points:
                 
