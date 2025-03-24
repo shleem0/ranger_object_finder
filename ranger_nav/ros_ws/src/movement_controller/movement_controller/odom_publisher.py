@@ -207,7 +207,7 @@ class OdometryPublisher(Node):
             origin_y = self.map_data.info.origin.position.y
             
             # Convert self.map data (OccupancyGrid) to a numpy array for easier processing
-            map_array = np.array(self.map.data).reshape((height, width))
+            map_array = np.array(self.map_data.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
