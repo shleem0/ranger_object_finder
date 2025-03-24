@@ -20,11 +20,11 @@ try:
     P_z = -20.0
 
     # Format and send data
-    data = f"{P_x},{P_y},{P_z}"
+    data = f"{P_x},{P_y},{P_z}\n"
     print(data)
-    arduino.write(data.encode())
-    ascii_data = data.encode('ascii')
-    print("ASCII bytes being sent:", list(ascii_data))
+    arduino.write(data.encode('ascii'))
+    # ascii_data = data.encode('ascii')
+    # print("ASCII bytes being sent:", list(ascii_data))
     print(f"Sent: {data}")
 
     # Wait for Arduino response
