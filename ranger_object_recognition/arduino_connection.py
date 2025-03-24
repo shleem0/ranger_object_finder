@@ -5,7 +5,7 @@ import time
 # Common options:
 # - Built-in UART: "/dev/ttyAMA0" or "/dev/serial0"
 # - USB-to-serial adapter: "/dev/ttyUSB0"
-SERIAL_PORT = "/dev/ttyUSB0"  # Update this based on your setup
+SERIAL_PORT = "/dev/ttyACM0"  # Update this based on your setup
 BAUD_RATE = 9600  # Must match Serial.begin(9600); in your Arduino code
 TIMEOUT = 1  # Optional timeout for safety
 
