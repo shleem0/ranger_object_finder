@@ -270,17 +270,17 @@ class OdometryPublisher(Node):
 
         move = Twist()
         move.linear.x = linear_velocity
-        move.angular.z = 0
+        move.angular.z = 0.0
         self.vel_calculation(move)
         time.sleep(1)
 
         move.angular.z = angular_velocity
-        move.linear.x = 0
+        move.linear.x = 0.0
         self.vel_calculation(move)
         time.sleep(1)
 
-        move.linear.x = 0
-        move.angular.z = 0
+        move.linear.x = 0.0
+        move.angular.z = 0.0
         self.vel_calculation(move)
 
 
