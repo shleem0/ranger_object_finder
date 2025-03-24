@@ -83,7 +83,11 @@
       let
         pkgs = pkgs-hs system;
 
-        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake {
+        ranger-daemon-project = import ranger-daemon/project.nix pkgs;
+
+        ranger-daemon-compiler = ranger-daemon-project.ghcWithPackages;
+
+        ranger-daemon-flake = ranger-daemon-project.flake {
           crossPlatforms = p: [ p.aarch64-multiplatform ];
         };
 
@@ -99,11 +103,6 @@
           ];
 
       in rec {
-        overlays.default = final: prev: {
-          ranger-object-recognition =
-            final.callPackage ./ranger_object_recognition/package.nix { };
-        };
-
         nixosModules.sdp = { imports = [ ./ranger-nixos/sdp.nix hm ]; };
 
         nixosConfigurations.sdp = lib.nixosSystem {
@@ -166,8 +165,19 @@
           buildInputs = ros-packages pkgs-ros;
         };
 
+        overlays.default = final: prev: {
+          ranger-object-recognition =
+            final.callPackage ./ranger_object_recognition/package.nix { };
+          ranger-daemon-ffi-test =
+            final.callPackage ./ranger-daemon-ffi-test/package.nix {
+              ranger-lib =
+                ranger-daemon-flake.packages."ranger-daemon:lib:ranger-daemon";
+              inherit ranger-daemon-compiler;
+            };
+        };
+
         packages = ranger-daemon-flake.packages // {
-          inherit (pkgs) ranger-object-recognition;
+          inherit (pkgs) ranger-object-recognition ranger-daemon-ffi-test;
         };
       });
 

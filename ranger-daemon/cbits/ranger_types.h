@@ -1,5 +1,8 @@
+#pragma once
+
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #define OBJECT_ID_LEN 16 // no null terminator!
 
