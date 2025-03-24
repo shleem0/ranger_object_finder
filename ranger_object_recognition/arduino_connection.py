@@ -21,6 +21,7 @@ try:
 
     # Format and send data
     data = f"{P_x},{P_y},{P_z}"
+    print(data)
     arduino.write(data.encode())
     print(f"Sent: {data.strip()}")
 
