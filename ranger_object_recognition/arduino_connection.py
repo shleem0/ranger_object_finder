@@ -30,7 +30,7 @@ try:
 
     # Read and print response (optional)
     while arduino.in_waiting:
-        print(arduino.readline().decode('ascii', errors='replace').strip())
+        print(arduino.readline().decode('latin-1', errors='replace').strip())
 
     # Close connection
     # arduino.close()
