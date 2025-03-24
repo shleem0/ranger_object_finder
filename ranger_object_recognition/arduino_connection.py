@@ -1,9 +1,12 @@
 import serial
 import time
 
-# Replace with your actual serial port (run `ls /dev/tty.*` to check)
-SERIAL_PORT = "/dev/tty.usbmodem11401"  # Change this based on your Mac's device
-BAUD_RATE = 9600  # Must match `Serial.begin(9600);` in Arduino
+# For Raspberry Pi, change the serial port accordingly.
+# Common options:
+# - Built-in UART: "/dev/ttyAMA0" or "/dev/serial0"
+# - USB-to-serial adapter: "/dev/ttyUSB0"
+SERIAL_PORT = "/dev/ttyACM0"  # Update this based on your setup
+BAUD_RATE = 9600  # Must match Serial.begin(9600); in your Arduino code
 TIMEOUT = 1  # Optional timeout for safety
 
 try:
@@ -26,7 +29,7 @@ try:
 
     # Read and print response (optional)
     while arduino.in_waiting:
-        print(arduino.readline().decode().strip())
+        print(arduino.readline().decode('utf-8', errors='replace').strip())
 
     # Close connection
     arduino.close()
