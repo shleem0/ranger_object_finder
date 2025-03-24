@@ -212,7 +212,6 @@ class OdometryPublisher(Node):
             
             # Convert self.map data (OccupancyGrid) to a numpy array for easier processing
             map_array = np.array(self.map_data.data).reshape((height, width))
-            print(map_array)
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
@@ -222,8 +221,6 @@ class OdometryPublisher(Node):
                 for y in range(height):
                     if map_array[y, x] == 0:
                         empty_points.append((x, y))
-
-            print(empty_points)
     
             # If we found any free edge points, return the first one (or any other strategy)
             if empty_points:
