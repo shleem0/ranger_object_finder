@@ -200,6 +200,8 @@ class OdometryPublisher(Node):
     def find_goal_pose(self):
         # Extract the self.map dimensions and data
         if self.map_data is not None:
+
+            print("Getting goal pose")
             width = self.map_data.info.width
             height = self.map_data.info.height
             resolution = self.map_data.info.resolution  # In meters per cell
@@ -208,6 +210,7 @@ class OdometryPublisher(Node):
             
             # Convert self.map data (OccupancyGrid) to a numpy array for easier processing
             map_array = np.array(self.map_data.data).reshape((height, width))
+            print(map_array)
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
@@ -217,13 +220,6 @@ class OdometryPublisher(Node):
                 for y in range(height):
                     if map_array[x, y] == 0:
                         empty_points.append((x, y))
-
-            # Check left and right columns
-            for y in range(height):
-                if map_array[y, 0] == 0:  # Left column
-                    empty_points.append((0, y))
-                if map_array[y, width-1] == 0:  # Right column
-                    empty_points.append((width-1, y))
 
             print(empty_points)
     
