@@ -39,6 +39,7 @@ library
                    , effectful-th
                    , filepath
                    , hslogger
+                   , process
                    , singletons == 2.7
                    , stm
                    , sync-monad

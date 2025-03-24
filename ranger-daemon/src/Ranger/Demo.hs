@@ -6,34 +6,61 @@ module Ranger.Demo
   ) where
 import System.IO.Unsafe
 import Control.Concurrent.STM
+import System.Process
+import Data.Maybe
 
-{-# NOINLINE demoState #-}
--- | ugly temporary testing trick, represents data provided by other ROS nodes
-demoState :: TVar Bool
-demoState = unsafePerformIO $ newTVarIO False
+demoScript :: CreateProcess
+demoScript = (shell "~/DEMO/demo_script.sh") { cwd = Just "~/DEMO" }
 
--- | TODO
+{-# NOINLINE demoScriptHandle #-}
+demoScriptHandle :: TVar (Int, Maybe ProcessHandle)
+demoScriptHandle = unsafePerformIO $ newTVarIO (0, Nothing)
+
 demoProcedure :: IO ()
 demoProcedure = do
-  atomically $ writeTVar demoState True
-  putStrLn "Demo started"
+  alreadyRunning <- getDemoState
+  if alreadyRunning
+    then putStrLn "Demo already running!"
+    else do
+      (_,_,_,h) <- createProcess demoScript
+      earlyExit <- isJust <$> getProcessExitCode h
+      if earlyExit
+        then putStrLn "(!!!) Failed to start demo"
+        else do
+          atomically $ modifyTVar' demoScriptHandle (\(i, _) -> (i + 1, Just h))
+          putStrLn "Demo started"
 
--- | TODO
 getDemoState :: IO Bool
-getDemoState = readTVarIO demoState
+getDemoState = readTVarIO demoScriptHandle >>= maybe (pure False) (fmap isNothing . getProcessExitCode) . snd
 
--- | TODO
 waitDemoStateChange :: (Bool -> IO a) -> IO a
 waitDemoStateChange f = do
-  s1 <- readTVarIO demoState
-  s2 <- atomically $ do
-    s <- readTVar demoState
-    check (s /= s1)
-    pure s
-  f s2 
+  mh <- readTVarIO demoScriptHandle
 
--- | TODO
+  case mh of
+    (_, Nothing) -> do
+      atomically $ do
+        (_, mh') <- readTVar demoScriptHandle
+        check (isJust mh')
+      f True
+    (i, Just h) -> do
+      me <- getProcessExitCode h
+      case me of
+        Nothing -> do
+          _ <- waitForProcess h
+          f False
+        Just _ -> do
+          atomically $ do
+            i' <- fst <$> readTVar demoScriptHandle
+            check (i /= i')
+          f True
+
 cancelDemoProcedure :: IO ()
 cancelDemoProcedure = do
-  atomically $ writeTVar demoState False
-  putStrLn "Demo cancelled"
+  (_, mh) <- readTVarIO demoScriptHandle
+  runningH <- maybe (pure Nothing) (\h -> getProcessExitCode h >>= \e -> pure (h <$ e)) mh
+  case runningH of
+    Nothing -> putStrLn "Cancel request: Demo already not running!"
+    Just h -> do
+      cleanupProcess (Nothing, Nothing, Nothing, h)
+      putStrLn "Demo cancelled"
