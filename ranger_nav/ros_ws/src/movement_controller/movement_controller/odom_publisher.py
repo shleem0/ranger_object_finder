@@ -28,7 +28,7 @@ class OdometryPublisher(Node):
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
         self.initial_pose_pub = self.create_publisher(PoseStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
-        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', queue_size=10)
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
         self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
