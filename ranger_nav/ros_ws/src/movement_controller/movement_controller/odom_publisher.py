@@ -8,6 +8,7 @@ from tf_transformations import quaternion_from_euler
 
 from math import sin, cos, pi, sqrt
 import numpy as np
+import time
 
 class OdometryPublisher(Node):
     def __init__(self):
@@ -27,6 +28,7 @@ class OdometryPublisher(Node):
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
         self.initial_pose_pub = self.create_publisher(PoseStamped, '/initialpose', 10)
         self.goal_pose_pub = self.create_publisher(PoseStamped, '/goal_pose', 10)
+        self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', queue_size=10)
 
         self.cmd_vel_subscriber = self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
         self.map_subscriber = self.create_subscription(OccupancyGrid, '/map', self.map_callback, 10)
@@ -265,7 +267,30 @@ class OdometryPublisher(Node):
         angular_velocity = msg.angular.z
 
         print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
-        
+
+        move = Twist()
+        move.linear.x = linear_velocity
+        move.angular.z = 0
+        self.vel_calculation(move)
+        time.sleep(1)
+
+        move.angular.z = angular_velocity
+        move.linear.x = 0
+        self.vel_calculation(move)
+        time.sleep(1)
+
+        move.linear.x = 0
+        move.angular.z = 0
+        self.vel_calculation(move)
+
+
+
+
+    def vel_calculation(self, msg):
+
+        linear_velocity = msg.linear.x
+        angular_velocity = msg.angular.z
+
         # Robot parameters
         wheelbase = 0.295  # The distance between the two wheels (meters)
         motor_max_rpm = 150
