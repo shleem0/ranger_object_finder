@@ -99,20 +99,22 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() != RangerBluetoothService.STATE_READY) {
                 Box(
-                    modifier = Modifier
-                        .height(100.dp),
+                    modifier = Modifier.height(100.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
                         onClick = { connectToRobot(context) },
                         modifier = Modifier
                             .height(100.dp)
-                            .width(155.dp)
-                            .align(Alignment.BottomEnd)
+                            .width(150.dp)
                             .border(
                                 BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
                                 shape = RoundedCornerShape(16.dp)
@@ -133,16 +135,16 @@ fun HomeScreen(navController: NavController) {
                 }
             } else {
                 Box(
-                    modifier = Modifier
-                        .height(100.dp),
+                    modifier = Modifier.height(100.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
+                    var showDialog by remember { mutableStateOf(false) }
+
                     Button(
-                        onClick = { navController.navigate("home") },
+                        onClick = { showDialog = true },
                         modifier = Modifier
                             .height(100.dp)
-                            .width(155.dp)
-                            .align(Alignment.BottomEnd)
+                            .width(150.dp)
                             .border(
                                 BorderStroke(3.dp, MaterialTheme.colorScheme.secondary),
                                 shape = RoundedCornerShape(16.dp)
@@ -160,22 +162,44 @@ fun HomeScreen(navController: NavController) {
                             color = MaterialTheme.colorScheme.surfaceBright
                         )
                     }
+
+                    if (showDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showDialog = false },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        disconnectFromRobot(context)
+                                        showDialog = false
+                                        navController.navigate("home")
+                                    }
+                                ) {
+                                    Text("Disconnect", color = MaterialTheme.colorScheme.error)
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showDialog = false }) {
+                                    Text("Cancel")
+                                }
+                            },
+                            title = { Text("Disconnect robot?") },
+                            text = { Text("Are you sure you want to disconnect the robot? Any running processes will be cancelled.") }
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.width(10.dp))
 
             Box(
-                modifier = Modifier
-                    .height(100.dp),
+                modifier = Modifier.height(100.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
                     onClick = { navController.navigate("search") },
                     modifier = Modifier
                         .height(100.dp)
-                        .width(155.dp)
-                        .align(Alignment.BottomEnd)
+                        .width(150.dp)
                         .border(
                             BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
                             shape = RoundedCornerShape(16.dp)
@@ -286,6 +310,7 @@ fun HomeScreen(navController: NavController) {
         )
     }
 }
+
 
 fun readIconName(context: Context, itemName: String): String? {
     val folder = File(context.filesDir, itemName.lowercase())
@@ -517,7 +542,7 @@ fun AddItem(navController: NavController) {
 fun connectToRobot(context: Context) {
     val mainActivity = context as MainActivity
     val s = mainActivity.bluetoothService
-    val permissionManager = context as PermissionManager
+    val permissionManager = mainActivity.permissionManager
 
     if (ContextCompat.checkSelfPermission(
             context,
@@ -529,7 +554,9 @@ fun connectToRobot(context: Context) {
             "Please wait while connecting.",
             Toast.LENGTH_SHORT
         ).show()
-        permissionManager.requestBluetoothPermission()
+
+        permissionManager?.requestBluetoothPermission()
+            ?: Log.e("connectToRobot", "PermissionManager is null. Cannot request permission.")
 
         return
     }
@@ -542,5 +569,26 @@ fun connectToRobot(context: Context) {
     } else {
         Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
         s.connectForDemo()
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun disconnectFromRobot(context: Context) {
+    val mainActivity = context as MainActivity
+    val s = mainActivity.bluetoothService
+
+    if (s == null) {
+        Toast.makeText(context, "No active connection to disconnect.", Toast.LENGTH_SHORT).show()
+        Log.w("HomeScreen", "can't disconnect, no service")
+    } else {
+        val success = s.cancelDemo()
+        if (success) {
+            Toast.makeText(context, "Disconnected from robot.", Toast.LENGTH_SHORT).show()
+            Log.i("HomeScreen", "Successfully disconnected from robot")
+        } else {
+            Toast.makeText(context, "Failed to disconnect. Please try again.", Toast.LENGTH_SHORT)
+                .show()
+            Log.e("HomeScreen", "Failed to disconnect from robot")
+        }
     }
 }
