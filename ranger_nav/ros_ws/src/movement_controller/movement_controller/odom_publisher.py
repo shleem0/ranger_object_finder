@@ -271,14 +271,14 @@ class OdometryPublisher(Node):
         move.linear.x = 0.0
         self.vel_calculation(move)
 
-        time.sleep(1.0)
+        time.sleep(0.3)
 
         #carrying out linear velocity
         move.linear.x = linear_velocity
         move.angular.z = 0.0
         self.vel_calculation(move)
 
-        time.sleep(1.0)
+        time.sleep(0.3)
 
         '''move.linear.x = 0.0
         move.angular.z = 0.0
