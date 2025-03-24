@@ -17,9 +17,10 @@ in pkgs.haskell-nix.cabalProject' {
   };
   modules = [{
     packages.ranger-daemon.postInstall = ''
+      ${pkgs.tree}/bin/tree
       mkdir -p $out/include/Ranger
-      cp dist/build/Ranger/CApi_stub.h $out/include/Ranger
-      cp cbits/ranger_types.h $out/include
+      cp dist/build/Ranger/CApi_stub.h $out/include/Ranger || true
+      cp cbits/ranger_types.h $out/include || true
     '';
   }];
   cabalProjectFreeze = builtins.readFile ../cabal.project.freeze;
