@@ -218,7 +218,7 @@ class OdometryPublisher(Node):
             # Check the edges of the self.map (first and last rows and columns)
             for x in range(width):
                 for y in range(height):
-                    if map_array[x, y] == 0:
+                    if map_array[y, x] == 0:
                         empty_points.append((x, y))
 
             print(empty_points)
