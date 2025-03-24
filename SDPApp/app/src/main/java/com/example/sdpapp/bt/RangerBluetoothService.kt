@@ -279,6 +279,42 @@ class RangerBluetoothService : Service() {
         return is_demo_active_char
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun cancelDemo(): Boolean {
+        val gatt = bluetoothGatt
+        if (gatt == null) {
+            Log.e(TAG, "Can't cancel Ranger demo, no connection")
+            return false
+        }
+        val ch = isDemoActiveCharacteristic
+        if (ch == null) {
+            Log.e(TAG, "Don't have demo characteristic yet, can't write to it")
+            return false
+        }
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.e(TAG, "Can't cancel demo, lost BLUETOOTH_CONNECT permissions")
+            return false
+        }
+
+        val stopSignal = "STOP".encodeToByteArray()
+        val r = gatt.writeCharacteristic(ch, stopSignal, BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+
+        return if (r == BluetoothStatusCodes.SUCCESS) {
+            Log.i(TAG, "Demo cancelled, disconnecting...")
+            close()
+            cancelProgressNotification()
+            true
+        } else {
+            Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
+            false
+        }
+    }
+
     private fun close() {
         bluetoothGatt?.let { gatt ->
 

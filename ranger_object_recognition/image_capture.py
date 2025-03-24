@@ -6,8 +6,8 @@ def capture_image(queue_dir, capture_interval = 10):
         # Create queue directory if it doesn't exist
     if not os.path.exists(queue_dir):
         os.makedirs(queue_dir)
-    # Open the default camera (device 0)
-    cap = cv2.VideoCapture(1)
+    # Open camera, should be 0 for default
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Error: Could not open camera.")
         return

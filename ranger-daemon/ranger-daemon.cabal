@@ -10,6 +10,7 @@ maintainer:         114586905+ryndubei@users.noreply.github.com
 -- copyright:
 category:           System
 build-type:         Simple
+extra-source-files: cbits/*.h
 
 common warnings
     ghc-options: -Wall

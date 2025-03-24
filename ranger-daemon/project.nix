@@ -15,6 +15,14 @@ in pkgs.haskell-nix.cabalProject' {
     cabal = { };
     haskell-language-server = { src = pkgs.haskell-nix.sources."hls-2.2"; };
   };
+  modules = [{
+    packages.ranger-daemon.postInstall = ''
+      ${pkgs.tree}/bin/tree
+      mkdir -p $out/include/Ranger
+      cp dist/build/Ranger/CApi_stub.h $out/include/Ranger || true
+      cp cbits/ranger_types.h $out/include || true
+    '';
+  }];
   cabalProjectFreeze = builtins.readFile ../cabal.project.freeze;
   cabalProject = builtins.readFile ../cabal.project;
   shell.buildInputs = [
