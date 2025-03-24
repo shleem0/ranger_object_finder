@@ -163,6 +163,7 @@ def find_item_in_scene(scene_path, visualise = False):
         else:
             print("No valid detections to annotate on the full scene image.", file=sys.stderr)
     print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
+    return valid_cropped_regions, valid_boxes_list, valid_indices
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run object recognition pipeline")

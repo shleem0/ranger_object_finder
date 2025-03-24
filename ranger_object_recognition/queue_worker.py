@@ -5,12 +5,11 @@ from ranger_object_recognition.image_capture import capture_image
 from ranger_object_recognition.image_queue_processor import process_queue
 
 def main(queue_dir, capture_interval, max_files):
-    # Create and start a thread for capturing images
-    capture_thread = threading.Thread(target=capture_image, args=(queue_dir, capture_interval))
-    # Create and start a thread for processing the queue
-    process_thread = threading.Thread(target=process_queue, args=(queue_dir, max_files))
+    stop_event = threading.Event()
+
+    capture_thread = threading.Thread(target=capture_image, args=(queue_dir, capture_interval, stop_event))
+    process_thread = threading.Thread(target=process_queue, args=(queue_dir, max_files, stop_event))
     
-    # Set threads as daemon so they exit when the main program exits
     capture_thread.daemon = True
     process_thread.daemon = True
     
@@ -19,13 +18,13 @@ def main(queue_dir, capture_interval, max_files):
     
     print("Camera capture and queue processing started. Press Ctrl+C to exit.")
     
-    # Keep the main thread alive until interrupted
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Shutting down...")
-
+    # Wait for stop_event to be set. This will return as soon as stop_event is set.
+    stop_event.wait()
+    
+    capture_thread.join()
+    process_thread.join()
+    print("All threads stopped. Exiting program.")
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run camera capture and queue processing concurrently")
     parser.add_argument("--queue", type=str, required=True, help="Path to the directory for queued images")
