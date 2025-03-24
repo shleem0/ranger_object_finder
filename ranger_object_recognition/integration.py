@@ -13,7 +13,7 @@ from .detect import run_detection
 import time
 from . import measurements
 
-def find_item_in_scene(scene_path):
+def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
     # yolo_weights = "best-fp16.tflite" 
     # source = "test_images/keys_scene/keys_scene5.jpeg"  # Scene images directory (or a single image)
@@ -39,9 +39,9 @@ def find_item_in_scene(scene_path):
     # args = parser.parse_args()
 
 
-    if __name__ != "__main__":
-        args = argparse.Namespace()
-        args.visualise = False
+    # if __name__ != "__main__":
+    #     args = argparse.Namespace()
+    #     args.visualise = False
     # Use YOLO model to detect potential items in the scene
     start_time = time.time()
     cropped_regions, boxes_list = run_detection(
@@ -103,17 +103,16 @@ def find_item_in_scene(scene_path):
         full_height = full_img.shape[0]
         print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
         for idx in valid_indices:
-            # Each box in boxes_list is assumed to be [x1, y1, x2, y2]
             box = boxes_list[idx]
             center_y = (box[1] + box[3]) / 2.0  # Calculate center y coordinate
-            # Convert the center y coordinate (pixel value) to cm using the measurements function.
+            # Convert the center y coordinate (pixel value) to cm using measurements function
             distance_cm = measurements.pixels_to_cm(center_y, full_height)
             print(f"Crop {idx} center is at {distance_cm:.2f} cm from camera.", file=sys.stderr)
     else:
         print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
     # Optional visualisation if you want to see the annotated image
-    if args.visualise:
+    if visualise:
         if valid_indices:
             # Load the full scene image
             if full_img is None:
@@ -121,9 +120,7 @@ def find_item_in_scene(scene_path):
             else:
                 # Create a copy for annotation
                 annotated_img = full_img.copy()
-                # Iterate over valid indices and draw their bounding boxes (from boxes_list)
                 for idx in valid_indices:
-                    # Assume boxes_list contains coordinates [x1, y1, x2, y2] corresponding to each crop
                     box = boxes_list[idx]
                     x1, y1, x2, y2 = map(int, box)
                     cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
@@ -144,6 +141,7 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, help="Path to TFLite model")
     parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
     args = parser.parse_args()
+    
 
         # Overriding default paths if provided via command line
     if args.model:
@@ -156,4 +154,4 @@ if __name__ == "__main__":
         if not config.REFERENCE_IMAGE_PATHS:
             print(f"Warning: No images found in {args.ref_dir}", file=sys.stderr)
 
-    find_item_in_scene(args.scene)
+    find_item_in_scene(args.scene, args.visualise)
