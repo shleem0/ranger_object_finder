@@ -35,7 +35,7 @@ import kotlinx.coroutines.delay
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MainActivity : ComponentActivity() {
     var bluetoothService: RangerBluetoothService? = null
-    private lateinit var permissionManager: PermissionManager
+    lateinit var permissionManager: PermissionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
