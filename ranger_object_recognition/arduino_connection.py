@@ -2,7 +2,7 @@ import serial
 import time
 
 # Replace with your actual serial port (run `ls /dev/tty.*` to check)
-SERIAL_PORT = "/dev/tty.usbmodem14101"  # Change this based on your Mac's device
+SERIAL_PORT = "/dev/tty.usbmodem11401"  # Change this based on your Mac's device
 BAUD_RATE = 9600  # Must match `Serial.begin(9600);` in Arduino
 TIMEOUT = 1  # Optional timeout for safety
 
