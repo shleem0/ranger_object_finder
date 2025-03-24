@@ -60,7 +60,7 @@ class OdometryPublisher(Node):
     def publish_initial_pose(self):
 
         if self.map_data is None:
-            print("No self.map, not setting initial pose")
+            print("No map, not setting initial pose")
         
         else:
             map_width = self.map_data.info.width
@@ -69,13 +69,13 @@ class OdometryPublisher(Node):
             origin_x = self.map_data.info.origin.position.x
             origin_y = self.map_data.info.origin.position.y
 
-            # Compute the center of the self.map in world coordinates
+            # Compute the center of the map in world coordinates
             center_x = origin_x + (map_width * resolution) / 2
             center_y = origin_y + (map_height * resolution) / 2
 
             initial_pose = PoseStamped()
             initial_pose.header.stamp = self.get_clock().now().to_msg()
-            initial_pose.header.frame_id = "self.map"  # Frame of reference for the self.map
+            initial_pose.header.frame_id = "map"  # Frame of reference for the map
                 
             # Set position (x, y) and orientation (quaternion)
             initial_pose.pose.position.x = center_x
@@ -199,12 +199,12 @@ class OdometryPublisher(Node):
 
     def find_goal_pose(self):
         # Extract the self.map dimensions and data
-        if self.map is not None:
-            width = self.map.info.width
-            height = self.map.info.height
-            resolution = self.map.info.resolution  # In meters per cell
-            origin_x = self.map.info.origin.position.x
-            origin_y = self.map.info.origin.position.y
+        if self.map_data is not None:
+            width = self.map_data.info.width
+            height = self.map_data.info.height
+            resolution = self.map_data.info.resolution  # In meters per cell
+            origin_x = self.map_data.info.origin.position.x
+            origin_y = self.map_data.info.origin.position.y
             
             # Convert self.map data (OccupancyGrid) to a numpy array for easier processing
             map_array = np.array(self.map.data).reshape((height, width))
@@ -231,7 +231,7 @@ class OdometryPublisher(Node):
                 
                 empty_point = max(empty_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
                 
-                # Convert self.map coordinates to world coordinates
+                # Convert map coordinates to world coordinates
                 goal_x = origin_x + empty_point[0] * resolution
                 goal_y = origin_y + empty_point[1] * resolution
                 
