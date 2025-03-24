@@ -321,17 +321,17 @@ class OdometryPublisher(Node):
 
         if linear_velocity == 0:
             if angular_velocity > 0:
-                motor2_speed = max(75, motor2_speed)
+                motor2_speed = 100
                 right_dir = True
 
-                motor1_speed = motor2_speed
+                motor1_speed = 75
                 left_dir = False
 
             if angular_velocity < 0:
-                motor1_speed = max(75, motor1_speed)
+                motor1_speed = 100
                 left_dir = True
 
-                motor2_speed = motor1_speed
+                motor2_speed = 75
                 right_dir = False
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
