@@ -30,7 +30,8 @@ try:
 
     # Read and print response (optional)
     while arduino.in_waiting:
-        print(arduino.readline().decode('CP850', errors='replace').strip())
+        # print(arduino.readline().decode('CP850', errors='replace').strip())
+        print(arduino.readline().strip())
 
     # Close connection
     # arduino.close()
