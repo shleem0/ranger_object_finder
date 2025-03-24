@@ -324,14 +324,14 @@ class OdometryPublisher(Node):
                 motor2_speed = 100
                 right_dir = True
 
-                motor1_speed = 75
+                motor1_speed = 100
                 left_dir = False
 
             if angular_velocity < 0:
                 motor1_speed = 100
                 left_dir = True
 
-                motor2_speed = 75
+                motor2_speed = 100
                 right_dir = False
 
         elif angular_velocity == 0:
