@@ -265,24 +265,21 @@ class OdometryPublisher(Node):
 
         print(f"Velocity: {linear_velocity}m/s, {angular_velocity}rad/s")
 
+        move.angular.z = angular_velocity
+        move.linear.x = 0.0
+        self.vel_calculation(move)
+
+        time.sleep(1.0)
+
         #carrying out linear velocity
         move = Twist()
         move.linear.x = linear_velocity
         move.angular.z = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.7)
-
-        #moving in angular velocity
-        move.angular.z = angular_velocity
-        move.linear.x = 0.0
-        self.vel_calculation(move)
-
-        time.sleep(0.7)
-
-        move.linear.x = 0.0
+        '''move.linear.x = 0.0
         move.angular.z = 0.0
-        self.vel_calculation(move)
+        self.vel_calculation(move)'''
 
 
 
