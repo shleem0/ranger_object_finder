@@ -271,14 +271,14 @@ class OdometryPublisher(Node):
         move.linear.x = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.3)
+        time.sleep(0.8)
 
         #carrying out linear velocity
         move.linear.x = linear_velocity
         move.angular.z = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.3)
+        time.sleep(0.8)
 
         '''move.linear.x = 0.0
         move.angular.z = 0.0
@@ -333,6 +333,13 @@ class OdometryPublisher(Node):
 
                 motor2_speed = 75
                 right_dir = False
+
+        elif angular_velocity == 0:
+
+            motor1_speed = max(motor1_speed, 75)
+            motor2_speed = motor1_speed
+
+
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input1.txt", "w") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_input2.txt", "w") as f2:
 
