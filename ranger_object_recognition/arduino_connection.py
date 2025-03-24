@@ -23,7 +23,8 @@ try:
     data = f"{P_x},{P_y},{P_z}"
     print(data)
     arduino.write(data.encode())
-    print(data.encode())
+    ascii_data = data.encode('ascii')
+    print("ASCII bytes being sent:", list(ascii_data))
     print(f"Sent: {data}")
 
     # Wait for Arduino response
