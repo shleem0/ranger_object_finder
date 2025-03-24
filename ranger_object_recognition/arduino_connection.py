@@ -20,7 +20,7 @@ try:
     P_z = -20.0
 
     # Format and send data
-    data = f"{P_x},{P_y},{P_z}\n"
+    data = f"{P_x},{P_y},{P_z}"
     arduino.write(data.encode())
     print(f"Sent: {data.strip()}")
 
@@ -32,8 +32,8 @@ try:
         print(arduino.readline().decode('utf-8', errors='replace').strip())
 
     # Close connection
-    arduino.close()
-    print("Disconnected.")
+    # arduino.close()
+    # print("Disconnected.")
 
 except Exception as e:
     print(f"Error: {e}")
