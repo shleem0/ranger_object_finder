@@ -271,14 +271,14 @@ class OdometryPublisher(Node):
         move.angular.z = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.5)
+        time.sleep(0.7)
 
         #moving in angular velocity
         move.angular.z = angular_velocity
         move.linear.x = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.5)
+        time.sleep(0.7)
 
         move.linear.x = 0.0
         move.angular.z = 0.0
