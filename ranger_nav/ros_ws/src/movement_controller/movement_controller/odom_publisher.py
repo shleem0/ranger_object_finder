@@ -60,42 +60,42 @@ class OdometryPublisher(Node):
     def publish_initial_pose(self):
 
         if self.map_data is None:
-            print("No map, not setting initial pose")
-            return
+            print("No self.map, not setting initial pose")
+        
+        else:
+            map_width = self.map_data.info.width
+            map_height = self.map_data.info.height
+            resolution = self.map_data.info.resolution
+            origin_x = self.map_data.info.origin.position.x
+            origin_y = self.map_data.info.origin.position.y
 
-        map_width = self.map_data.info.width
-        map_height = self.map_data.info.height
-        resolution = self.map_data.info.resolution
-        origin_x = self.map_data.info.origin.position.x
-        origin_y = self.map_data.info.origin.position.y
+            # Compute the center of the self.map in world coordinates
+            center_x = origin_x + (map_width * resolution) / 2
+            center_y = origin_y + (map_height * resolution) / 2
 
-        # Compute the center of the map in world coordinates
-        center_x = origin_x + (map_width * resolution) / 2
-        center_y = origin_y + (map_height * resolution) / 2
+            initial_pose = PoseStamped()
+            initial_pose.header.stamp = self.get_clock().now().to_msg()
+            initial_pose.header.frame_id = "self.map"  # Frame of reference for the self.map
+                
+            # Set position (x, y) and orientation (quaternion)
+            initial_pose.pose.position.x = center_x
+            initial_pose.pose.position.y = center_y
+            initial_pose.pose.position.z = 0.0
+                
+                # Set orientation using quaternion
+            qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
+            initial_pose.pose.orientation.x = qx
+            initial_pose.pose.orientation.y = qy
+            initial_pose.pose.orientation.z = qz
+            initial_pose.pose.orientation.w = qw
 
-        initial_pose = PoseStamped()
-        initial_pose.header.stamp = self.get_clock().now().to_msg()
-        initial_pose.header.frame_id = "map"  # Frame of reference for the map
-            
-        # Set position (x, y) and orientation (quaternion)
-        initial_pose.pose.position.x = center_x
-        initial_pose.pose.position.y = center_y
-        initial_pose.pose.position.z = 0.0
-            
-            # Set orientation using quaternion
-        qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
-        initial_pose.pose.orientation.x = qx
-        initial_pose.pose.orientation.y = qy
-        initial_pose.pose.orientation.z = qz
-        initial_pose.pose.orientation.w = qw
-
-        self.x = center_x
-        self.y = center_y
-        self.theta = 0.0
-            
-        # Publish the initial pose
-        self.initial_pose_pub.publish(initial_pose)
-        print(f"Initial pose: {self.x}, {self.y}")
+            self.x = center_x
+            self.y = center_y
+            self.theta = 0.0
+                
+            # Publish the initial pose
+            self.initial_pose_pub.publish(initial_pose)
+            print(f"Initial pose: {self.x}, {self.y}")
 
 
 
@@ -174,7 +174,7 @@ class OdometryPublisher(Node):
 
         t_base_scan.transform.translation.x = 0.0
         t_base_scan.transform.translation.y = 0.0
-        t_base_scan.transform.translation.z = 0.0  # LiDAR is 15 cm above base_link
+        t_base_scan.transform.translation.z = 0.13  # LiDAR is 15 cm above base_link
         t_base_scan.transform.rotation.x = 0.0
         t_base_scan.transform.rotation.y = 0.0
         t_base_scan.transform.rotation.z = 0.0
@@ -197,22 +197,22 @@ class OdometryPublisher(Node):
 
 
 
-    def find_goal_pose(self, map):
-        # Extract the map dimensions and data
-        if map:
-            width = map.info.width
-            height = map.info.height
-            resolution = map.info.resolution  # In meters per cell
-            origin_x = map.info.origin.position.x
-            origin_y = map.info.origin.position.y
+    def find_goal_pose(self):
+        # Extract the self.map dimensions and data
+        if self.map is not None:
+            width = self.map.info.width
+            height = self.map.info.height
+            resolution = self.map.info.resolution  # In meters per cell
+            origin_x = self.map.info.origin.position.x
+            origin_y = self.map.info.origin.position.y
             
-            # Convert map data (OccupancyGrid) to a numpy array for easier processing
-            map_array = np.array(map.data).reshape((height, width))
+            # Convert self.map data (OccupancyGrid) to a numpy array for easier processing
+            map_array = np.array(self.map.data).reshape((height, width))
 
             # Find the edge of the free space (value 0 corresponds to free space in OccupancyGrid)
             empty_points = []
             
-            # Check the edges of the map (first and last rows and columns)
+            # Check the edges of the self.map (first and last rows and columns)
             for x in range(width):
                 if map_array[0, x] == 0:  # Top row
                     empty_points.append((x, 0))
@@ -231,7 +231,7 @@ class OdometryPublisher(Node):
                 
                 empty_point = max(empty_points, key = lambda d: sqrt((self.x - d[0]) * (self.x - d[0]) + (self.y - d[1]) * (self.y - d[1]))) # Choose furthest explored edge point
                 
-                # Convert map coordinates to world coordinates
+                # Convert self.map coordinates to world coordinates
                 goal_x = origin_x + empty_point[0] * resolution
                 goal_y = origin_y + empty_point[1] * resolution
                 
@@ -244,14 +244,15 @@ class OdometryPublisher(Node):
                 goal_pose.pose.position.z = 0.0
                 goal_pose.pose.orientation.w = self.theta
                 return goal_pose
-            
-        return None
+        else:
+            print("Failed to get goal")
+            return None
         
 
 
     def publish_goal_pose(self):
         if self.map_data:
-            self.goal = self.find_goal_pose(self.map_data)
+            self.goal = self.find_goal_pose()
 
             if self.goal:
                 self.goal_pose_pub.publish(self.goal)
