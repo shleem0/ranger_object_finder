@@ -2,7 +2,7 @@ import os
 import cv2
 import time
 
-def capture_image(queue_dir, capture_interval = 10):
+def capture_image(queue_dir, capture_interval = 10, stop_event = None):
         # Create queue directory if it doesn't exist
     if not os.path.exists(queue_dir):
         os.makedirs(queue_dir)
@@ -13,8 +13,12 @@ def capture_image(queue_dir, capture_interval = 10):
         return
 
     print("Camera opened successfully. Starting to capture photos every {} seconds...".format(capture_interval))
+    time.sleep(2)  # Let camera warm up
     try:
         while True:
+            # Check if the stop event is set
+            if stop_event and stop_event.is_set():
+                break
             ret, frame = cap.read()
             if not ret:
                 print("Error: Failed to capture frame.")
