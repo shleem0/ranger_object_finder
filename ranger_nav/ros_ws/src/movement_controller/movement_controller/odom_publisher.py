@@ -327,8 +327,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(min((v_left / motor_max_speed * weight_factor) * 100, 100))
-        motor2_speed = int(min((v_right / motor_max_speed * weight_factor) * 100, 100))
+        motor1_speed = int(max(min((v_left / motor_max_speed * weight_factor) * 100, 100)), 40)
+        motor2_speed = int(max(min((v_right / motor_max_speed * weight_factor) * 100, 100)), 40)
 
         if linear_velocity == 0:
             if angular_velocity > 0:
@@ -344,6 +344,10 @@ class OdometryPublisher(Node):
 
                 motor2_speed = 100
                 right_dir = False
+
+        if angular_velocity == 0:
+            motor1_speed = max(motor1_speed, 65)
+            motor2_speed = max(motor2_speed, 65)
 
 
 
