@@ -15,6 +15,7 @@ from . import measurements
 from .arduino_connection import send_coordinates
 
 REF_FEATURES = None
+FEATURE_MODEL = None
 
 def get_reference_features(feature_model, target_size=(224, 224)):
     global REF_FEATURES
@@ -22,6 +23,13 @@ def get_reference_features(feature_model, target_size=(224, 224)):
         REF_FEATURES = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=target_size)
         print(f"Extracted features from {len(REF_FEATURES)} reference images.")
     return REF_FEATURES
+
+def get_feature_model():
+    global FEATURE_MODEL
+    if FEATURE_MODEL is None:
+        FEATURE_MODEL = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
+        print("Feature model loaded.")
+    return FEATURE_MODEL
 
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
@@ -49,7 +57,7 @@ def find_item_in_scene(scene_path, visualise = False):
     print(f"Collected {len(cropped_regions)} cropped regions from detection.", file=sys.stderr)
 
     # Load the feature extraction model
-    feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
+    feature_model = get_feature_model()
     # start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
     valid_cropped_regions = []
