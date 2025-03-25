@@ -309,7 +309,7 @@ class OdometryPublisher(Node):
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
         robot_weight = 2.2
-        weight_factor = 1 + (robot_weight - 1) * 3
+        weight_factor = 1 + (robot_weight - 1) * 4
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase * angular_velocity) / 2
@@ -344,11 +344,6 @@ class OdometryPublisher(Node):
 
                 motor2_speed = 100
                 right_dir = False
-
-        elif angular_velocity == 0:
-
-            motor1_speed = max(motor1_speed, 75)
-            motor2_speed = motor1_speed
 
 
 
