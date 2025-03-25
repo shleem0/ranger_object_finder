@@ -6,6 +6,8 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -76,6 +78,7 @@ import com.example.sdpapp.PermissionManager
 import com.example.sdpapp.R
 import com.example.sdpapp.bt.RangerBluetoothService
 import com.example.sdpapp.ui.theme.SDPAppTheme
+import kotlinx.coroutines.delay
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -85,6 +88,19 @@ import java.io.IOException
 fun HomeScreen(navController: NavController) {
     val context = LocalContext.current
     val itemNames = getItemNames(context)
+
+    val mainActivity = context as MainActivity
+    val bluetoothService = mainActivity.bluetoothService
+
+    // Create a mutable state to track the connection state
+    val connectionState = remember { mutableStateOf(bluetoothService?.getConnectionState() ?: RangerBluetoothService.STATE_DISCONNECTED) }
+
+    // Set a listener on the Bluetooth service to update the state when the connection changes
+    LaunchedEffect(bluetoothService) {
+        bluetoothService?.setConnectionStateListener { newState ->
+            connectionState.value = newState
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -97,7 +113,6 @@ fun HomeScreen(navController: NavController) {
             contentDescription = stringResource(id = R.string.logo_description)
         )
 
-
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
         Row(
@@ -105,8 +120,7 @@ fun HomeScreen(navController: NavController) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val mainActivity = context as MainActivity
-            if (mainActivity.bluetoothService?.getConnectionState() != RangerBluetoothService.STATE_READY) {
+            if (connectionState.value != RangerBluetoothService.STATE_READY) {
                 Box(
                     modifier = Modifier.height(100.dp),
                     contentAlignment = Alignment.BottomCenter
@@ -147,11 +161,11 @@ fun HomeScreen(navController: NavController) {
                             .height(100.dp)
                             .width(150.dp)
                             .border(
-                                BorderStroke(13.dp, MaterialTheme.colorScheme.secondary),
+                                BorderStroke(4.dp, MaterialTheme.colorScheme.secondary),
                                 shape = RoundedCornerShape(16.dp)
                             ),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.onBackground,
+                            containerColor = MaterialTheme.colorScheme.background,
                             contentColor = MaterialTheme.colorScheme.surfaceBright
                         )
                     ) {
@@ -587,7 +601,12 @@ fun disconnectFromRobot(context: Context) {
     } else {
         val success = s.cancelDemo()
         if (success) {
-            s.close()
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                   s.close()
+                },
+                500
+            )
             Toast.makeText(context, "Disconnected from robot.", Toast.LENGTH_SHORT).show()
             Log.i("HomeScreen", "Successfully disconnected from robot")
         } else {

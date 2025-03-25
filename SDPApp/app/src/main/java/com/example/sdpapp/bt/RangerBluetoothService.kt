@@ -52,8 +52,19 @@ class RangerBluetoothService : Service() {
 
     private var writeIndex = UByte.MIN_VALUE
 
+    private var connectionStateListener: ((Int) -> Unit)? = null
+
     fun getConnectionState(): Int {
         return connectionState
+    }
+
+    fun setConnectionStateListener(listener: (Int) -> Unit) {
+        connectionStateListener = listener
+    }
+
+    private fun updateConnectionState(newState: Int) {
+        connectionState = newState
+        connectionStateListener?.invoke(newState) // Notify UI of state change
     }
 
     private var connectionState = STATE_DISCONNECTED
@@ -326,12 +337,15 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Can't cancel demo, lost BLUETOOTH_CONNECT permissions")
             return false
         }
-        val r = gatt.writeCharacteristic(ch, byteArrayOf(writeIndex.toByte()) + "item".encodeToByteArray(), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+
+        Log.d(TAG, "Attempting to write characteristic to cancel demo")
+        val r = gatt.writeCharacteristic(ch, byteArrayOf(writeIndex.toByte()) + "item".encodeToByteArray(), BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE)
         incWriteIndex()
 
         return if (r == BluetoothStatusCodes.SUCCESS) {
             Log.i(TAG, "Demo cancelled!!!")
             //cancelProgressNotification()
+            Log.d(TAG, "returning true huhghe")
             true
         } else {
             Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
