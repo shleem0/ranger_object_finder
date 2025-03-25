@@ -31,6 +31,30 @@ def get_feature_model():
         print("Feature model loaded.")
     return FEATURE_MODEL
 
+def og_visualise_no_rulers(visualise, valid_indices, full_img, boxes_list, valid_crops_dir = config.VALID_CROP_DIR):
+        if visualise:
+            if valid_indices:
+            # Load the full scene image
+                if full_img is None:
+                    print("Error: Could not load full scene image for annotation.", file=sys.stderr)
+                else:
+                    # Create a copy for annotation
+                    annotated_img = full_img.copy()
+
+                    for idx in valid_indices:
+
+                        box = boxes_list[idx]
+                        x1, y1, x2, y2 = map(int, box)
+                        cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    # Display the annotated image in a popup window
+                save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
+                cv2.imwrite(save_path, annotated_img)
+                print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
+        else:
+            print("No valid detections to annotate on the full scene image.", file=sys.stderr)
+
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
     valid_crops_dir = config.VALID_CROP_DIR  # Directory to save valid crops
@@ -114,7 +138,7 @@ def find_item_in_scene(scene_path, visualise = False):
             center_y = (box[1] + box[3]) / 2.0
             # Convert x and y pixel coordinates to cm using your measurements functions:
             distance_x_cm = measurements.x_pixel_to_cm(center_x, full_width)
-            distance_y_cm = measurements.pixels_to_cm(center_y, full_height)
+            distance_y_cm = measurements.pixels_to_cm(center_y, full_height) - 5
             print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
             # send_coordinates(distance_x_cm, distance_y_cm) 
             send_coordinates(distance_y_cm, distance_x_cm) # Swapped x and y for arduino
@@ -122,77 +146,78 @@ def find_item_in_scene(scene_path, visualise = False):
         print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
     # Optional visualisation if you want to see the annotated image
-    if visualise:
-        if valid_indices:
-            # Load the full scene image if not already loaded
-            if full_img is None:
-                full_img = cv2.imread(config.SCENE_IMAGE_PATH)
-            if full_img is None:
-                print("Error: Could not load full scene image for annotation.", file=sys.stderr)
-            else:
-                # Create a copy for annotation
-                annotated_img = full_img.copy()
-                # Draw vertical ruler on the left side
-                height, width, _ = annotated_img.shape
-                y = 0
-                while y < height:
-                    cm_value = measurements.pixels_to_cm(y, height)
-                    spacing = measurements.ruler_spacing_at_position(y, height)
-                    y_int = int(y)
-                    # Make tick lines thicker and longer
-                    cv2.line(annotated_img, (10, y_int), (50, y_int), (0, 255, 0), 3)
+    og_visualise_no_rulers(visualise, valid_indices, full_img, valid_boxes_list)
+    # if visualise:
+    #     if valid_indices:
+    #         # Load the full scene image if not already loaded
+    #         if full_img is None:
+    #             full_img = cv2.imread(config.SCENE_IMAGE_PATH)
+    #         if full_img is None:
+    #             print("Error: Could not load full scene image for annotation.", file=sys.stderr)
+    #         else:
+    #             # Create a copy for annotation
+    #             annotated_img = full_img.copy()
+    #             # Draw vertical ruler on the left side
+    #             height, width, _ = annotated_img.shape
+    #             y = 0
+    #             while y < height:
+    #                 cm_value = measurements.pixels_to_cm(y, height)
+    #                 spacing = measurements.ruler_spacing_at_position(y, height)
+    #                 y_int = int(y)
+    #                 # Make tick lines thicker and longer
+    #                 cv2.line(annotated_img, (10, y_int), (50, y_int), (0, 255, 0), 3)
                     
-                    # Create text label
-                    text = f"{cm_value:.1f} cm"
-                    font_scale = 1.0
-                    thickness = 2
-                    color = (0, 255, 0)
-                    font = cv2.FONT_HERSHEY_SIMPLEX
+    #                 # Create text label
+    #                 text = f"{cm_value:.1f} cm"
+    #                 font_scale = 1.0
+    #                 thickness = 2
+    #                 color = (0, 255, 0)
+    #                 font = cv2.FONT_HERSHEY_SIMPLEX
                     
-                    # Get text size to draw a background rectangle
-                    (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
-                    rect_x1, rect_y1 = (55, y_int - text_h // 2 - 5)
-                    rect_x2, rect_y2 = (55 + text_w + 10, y_int + text_h // 2 + 5)
+    #                 # Get text size to draw a background rectangle
+    #                 (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
+    #                 rect_x1, rect_y1 = (55, y_int - text_h // 2 - 5)
+    #                 rect_x2, rect_y2 = (55 + text_w + 10, y_int + text_h // 2 + 5)
                     
 
-                    # Then draw the text on top
-                    text_org = (rect_x1 + 5, y_int + text_h // 2 - 2)
-                    cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
+    #                 # Then draw the text on top
+    #                 text_org = (rect_x1 + 5, y_int + text_h // 2 - 2)
+    #                 cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
                     
-                    y += spacing
+    #                 y += spacing
                 
-                # Draw horizontal ruler along the bottom
-                for cm_val in np.arange(measurements.H_MIN_CM, measurements.H_MAX_CM + 0.1, 2.0):
-                    x_pixel = measurements.x_cm_to_pixel(cm_val, width)
-                    # Thicker and longer tick marks
-                    cv2.line(annotated_img, (x_pixel, height - 60), (x_pixel, height - 10), (0, 0, 255), 3)
+    #             # Draw horizontal ruler along the bottom
+    #             for cm_val in np.arange(measurements.H_MIN_CM, measurements.H_MAX_CM + 0.1, 2.0):
+    #                 x_pixel = measurements.x_cm_to_pixel(cm_val, width)
+    #                 # Thicker and longer tick marks
+    #                 cv2.line(annotated_img, (x_pixel, height - 60), (x_pixel, height - 10), (0, 0, 255), 3)
                     
-                    # Create text label
-                    text = f"{cm_val:.1f}"
-                    font_scale = 1.0
-                    thickness = 2
-                    color = (0, 0, 255)
-                    font = cv2.FONT_HERSHEY_SIMPLEX
+    #                 # Create text label
+    #                 text = f"{cm_val:.1f}"
+    #                 font_scale = 1.0
+    #                 thickness = 2
+    #                 color = (0, 0, 255)
+    #                 font = cv2.FONT_HERSHEY_SIMPLEX
                     
-                    # Get text size to draw a background rectangle
-                    (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
-                    rect_x1, rect_y1 = (x_pixel - text_w // 2 - 5, height - 65 - text_h)
-                    rect_x2, rect_y2 = (x_pixel + text_w // 2 + 5, height - 65)
+    #                 # Get text size to draw a background rectangle
+    #                 (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
+    #                 rect_x1, rect_y1 = (x_pixel - text_w // 2 - 5, height - 65 - text_h)
+    #                 rect_x2, rect_y2 = (x_pixel + text_w // 2 + 5, height - 65)
                     
-                    # Then draw the text on top
-                    text_org = (rect_x1 + 5, rect_y2 - 5)
-                    cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
-                # # Display the annotated image with rulers
+    #                 # Then draw the text on top
+    #                 text_org = (rect_x1 + 5, rect_y2 - 5)
+    #                 cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
+    #             # # Display the annotated image with rulers
                 # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
                 # cv2.waitKey(0)
                 # cv2.destroyAllWindows()
                 # Instead saving the annotated image to disk
-                save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
-                cv2.imwrite(save_path, annotated_img)
-                print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
-        else:
-            print("No valid detections to annotate on the full scene image.", file=sys.stderr)
-    print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
+                # save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
+                # cv2.imwrite(save_path, annotated_img)
+                # print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
+    #     else:
+    #         print("No valid detections to annotate on the full scene image.", file=sys.stderr)
+    # print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
     return valid_cropped_regions, valid_boxes_list, valid_indices
 
 if __name__ == "__main__":
