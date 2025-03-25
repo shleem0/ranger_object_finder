@@ -57,3 +57,4 @@ executable ranger-daemon
     build-depends:   base ^>=4.14.0.0
                    , ranger-daemon
     hs-source-dirs:   app
+    ghc-options: -threaded
