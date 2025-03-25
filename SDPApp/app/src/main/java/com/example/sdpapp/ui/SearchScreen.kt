@@ -139,7 +139,7 @@ fun SearchScreen(navController: NavController) {
             }
             items(
                 listOf(
-                    " - The robot can take up to 6 minutes to find an item.",
+                    " - The robot can take a while to find the item.",
                     " - The robot will only be able to find the item in an enclosed area.",
                     " - The robot will grab the item, so it is not suitable for fragile objects.",
                     " - The robot will be sent the photos of the item for processing"
@@ -165,10 +165,10 @@ fun SearchScreen(navController: NavController) {
         ) {
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-                if (options.contains(selectedOption)) {
+                if (!options.contains(selectedOption)) {
                     Button(
                         onClick = {
-                            runRanger(context)
+                            runDemo(context, selectedOption)
                             navController.navigate("home")
                         },
                         modifier = Modifier
@@ -277,4 +277,11 @@ fun runRanger(context: Context) {
         Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
         s.connectForDemo()
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun runDemo(context: Context, itemName: String){
+    val mainActivity = context as MainActivity
+    val s = mainActivity.bluetoothService
+    s?.startDemo(itemName)
 }

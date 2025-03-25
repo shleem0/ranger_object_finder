@@ -147,7 +147,7 @@ fun HomeScreen(navController: NavController) {
                             .height(100.dp)
                             .width(150.dp)
                             .border(
-                                BorderStroke(3.dp, MaterialTheme.colorScheme.secondary),
+                                BorderStroke(13.dp, MaterialTheme.colorScheme.secondary),
                                 shape = RoundedCornerShape(16.dp)
                             ),
                         colors = ButtonDefaults.buttonColors(
@@ -157,8 +157,8 @@ fun HomeScreen(navController: NavController) {
                     ) {
                         Text(
                             "Connected to Robot",
-                            fontSize = 22.sp,
-                            lineHeight = 28.sp,
+                            fontSize = 21.sp,
+                            lineHeight = 25.sp,
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.surfaceBright
                         )
@@ -587,6 +587,7 @@ fun disconnectFromRobot(context: Context) {
     } else {
         val success = s.cancelDemo()
         if (success) {
+            s.close()
             Toast.makeText(context, "Disconnected from robot.", Toast.LENGTH_SHORT).show()
             Log.i("HomeScreen", "Successfully disconnected from robot")
         } else {
