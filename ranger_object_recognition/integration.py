@@ -25,12 +25,6 @@ def get_reference_features(feature_model, target_size=(224, 224)):
 
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
-    # yolo_weights = "best-fp16.tflite" 
-    # source = "test_images/keys_scene/keys_scene5.jpeg"  # Scene images directory (or a single image)
-    # data_yaml = "data.yaml"
-    # feature_model_path = "mobilenet-v3-tensorflow2-small-075-224-feature-vector-v1"  
-    # reference_dir = "test_images/keys_ref"  # Directory with reference images
-    # similarity_threshold = 0.3
     valid_crops_dir = config.VALID_CROP_DIR  # Directory to save valid crops
     if not os.path.exists(valid_crops_dir):
         os.makedirs(valid_crops_dir)
@@ -41,17 +35,6 @@ def find_item_in_scene(scene_path, visualise = False):
     or_utils.clear_directory(invalid_crops_dir)
     config.SCENE_IMAGE_PATH = scene_path
 
-        # Parsing command line arguments
-    # parser = argparse.ArgumentParser(description="Run object recognition pipeline")
-    # parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
-    # parser.add_argument("--model", type=str, help="Path to TFLite model")
-    # parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
-    # args = parser.parse_args()
-
-
-    # if __name__ != "__main__":
-    #     args = argparse.Namespace()
-    #     args.visualise = False
     # Use YOLO model to detect potential items in the scene
     start_time = time.time()
     cropped_regions, boxes_list = run_detection(
@@ -69,10 +52,9 @@ def find_item_in_scene(scene_path, visualise = False):
     feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
     # start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
-    # Process each cropped region from YOLO: Preprocess and extract features
-    valid_cropped_regions = []   # New list for valid (non-empty) cropped images
-    valid_boxes_list = []        # New list for bounding boxes corresponding to valid crops
-    crop_features = []           # Feature vectors for valid crops
+    valid_cropped_regions = []
+    valid_boxes_list = []
+    crop_features = []
     for idx, crop in enumerate(cropped_regions):
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
         if crop_input is None:
@@ -85,28 +67,7 @@ def find_item_in_scene(scene_path, visualise = False):
         print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
     # Load reference images and extract features
     ref_features = get_reference_features(feature_model, target_size=(224, 224))
-    # # Compare each crop feature to the reference features
-    # valid_indices = [] 
-    # for idx, crop_vector in enumerate(crop_features):
-    #     max_sim = 0
-    #     for ref_path, ref_vector in ref_features.items():
-    #         sim = matching.cosine_similarity(crop_vector, ref_vector)
-    #         max_sim = max(max_sim, sim)
-    #     if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
-    #         print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).", file=sys.stderr)
-    #         valid_indices.append(idx)
-    #         # Save the valid crop to disk
-    #         save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
-    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
-    #         print(f"Saved valid crop {idx} to {save_path}")
-    #     else:
-    #         print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).", file=sys.stderr)
-    #         # Save the invalid crop to disk for debugging
-    #         save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
-    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
-    #         print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
-    # Keeping only the highest similarity crop for final version
-        # Compare each crop feature to the reference features and select the best valid crop
+    # Compare each crop feature to the reference features and select the best valid crop
     best_idx = None
     best_sim = -1
     for idx, crop_vector in enumerate(crop_features):
@@ -233,7 +194,6 @@ if __name__ == "__main__":
     parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
     args = parser.parse_args()
     
-
         # Overriding default paths if provided via command line
     if args.model:
         # Load tfLite model
