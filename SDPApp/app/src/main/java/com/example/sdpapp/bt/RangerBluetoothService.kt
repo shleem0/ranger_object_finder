@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.BluetoothGattService
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
@@ -28,6 +29,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.example.sdpapp.R
 import java.lang.IllegalStateException
+import java.util.UUID
 
 /**
 * placeholder, **should replace this with the Raspberry Pi's address**
@@ -44,8 +46,8 @@ private const val TAG = "RangerBluetoothService"
 private const val DEMO_SERVICE_UUID = "fbb876fb-3ee3-5315-9716-01ede2358aab"
 private const val START_DEMO_UUID = "82e761bc-8508-5f80-90ee-9b3455444798"
 private const val CANCEL_DEMO_UUID = "19a368f7-b27f-557b-81c5-be1130a406f5"
-private const val POISON_STATE_UUID = "foo"
-private const val RESET_POISON_UUID = "bar"
+private const val POISON_STATE_UUID = "286d24e6-5611-51b2-a2b3-6fb9d9aa9566"
+private const val RESET_POISON_UUID = "c0d915c8-26b1-50da-951e-d91bc4d3c5e1"
 
 
 class RangerBluetoothService : Service() {
@@ -77,7 +79,9 @@ class RangerBluetoothService : Service() {
 
     private var demoCancelChar: BluetoothGattCharacteristic? = null
 
-    private var poisonStateUuid: BluetoothGattCharacteristic? = null
+    private var poisonStateChar: BluetoothGattCharacteristic? = null
+
+    private var resetPoisonChar: BluetoothGattCharacteristic? = null
 
     private val binder = LocalBinder()
 
@@ -174,6 +178,20 @@ class RangerBluetoothService : Service() {
     }
 
     private val bluetoothGattCallback = object : BluetoothGattCallback() {
+        override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?) {
+            super.onCharacteristicChanged(gatt, characteristic)
+
+            if (characteristic?.uuid.toString() == POISON_STATE_UUID) {
+                val value = characteristic?.value
+                if (value != null) {
+                    if (value.isNotEmpty() && value[0] == 1.toByte()) {
+                        Log.w(TAG, "Poison state active! Attempting to reset...")
+                        resetPoison()
+                    }
+                }
+            }
+        }
+
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             Log.d(TAG, "Connection state change")
             if (status != BluetoothGatt.GATT_SUCCESS) {
@@ -230,6 +248,16 @@ class RangerBluetoothService : Service() {
                        Log.i(TAG, "Found demo cancel characteristic")
                        demoCancelChar = c
                    }
+                    if (c.uuid.toString() == POISON_STATE_UUID) {
+                        Log.i(TAG, "Found poison state characteristic")
+                        poisonStateChar = c
+                        setPoisonCharacteristicNotification(c, true) // Enable notifications
+                    }
+                    if (c.uuid.toString() == RESET_POISON_UUID) {
+                        Log.i(TAG, "Found reset poison characteristic")
+                        resetPoisonChar = c
+                    }
+
                 }
 
                 if (demoStartChar == null || demoCancelChar == null) {
@@ -392,6 +420,8 @@ class RangerBluetoothService : Service() {
     fun close() {
         bluetoothGatt?.let { gatt ->
 
+            poisonStateChar = null
+            resetPoisonChar = null
             bluetoothGatt = null
             demoStartChar = null
             demoCancelChar = null
@@ -454,6 +484,29 @@ class RangerBluetoothService : Service() {
         }
     }
 
+    private fun resetPoison() {
+        val gatt = bluetoothGatt
+        val ch = resetPoisonChar
+        if (gatt == null || ch == null) {
+            Log.e(TAG, "Cannot reset poison: GATT or characteristic is null")
+            return
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "No BLUETOOTH_CONNECT permission to reset poison")
+            return
+        }
+
+        ch.value = byteArrayOf(0x00)
+        val success = gatt.writeCharacteristic(ch)
+        if (success) {
+            Log.i(TAG, "Poison reset sent ✅")
+        } else {
+            Log.e(TAG, "Failed to send poison reset ❌")
+        }
+    }
+
+
     companion object {
         const val ACTION_GATT_CONNECTED =
             "com.example.sdpapp.bt.ACTION_GATT_CONNECTED"
@@ -468,5 +521,47 @@ class RangerBluetoothService : Service() {
 
         const val CHANNEL_ID = "ranger_search_channel"
         const val NOTIFICATION_ID = 1
+    }
+
+    private fun setPoisonCharacteristicNotification(characteristic: BluetoothGattCharacteristic, enabled: Boolean) {
+        val gatt = bluetoothGatt
+        if (gatt == null) {
+            Log.e(TAG, "BluetoothGatt not initialized")
+            return
+        }
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            Log.e(TAG, "No BLUETOOTH_CONNECT permission, can't set characteristic notification")
+            return
+        }
+
+        val success = gatt.setCharacteristicNotification(characteristic, enabled)
+        if (!success) {
+            Log.e(TAG, "Failed to setCharacteristicNotification for ${characteristic.uuid}")
+            return
+        }
+
+        val descriptor = characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+        if (descriptor == null) {
+            Log.e(TAG, "Descriptor not found for ${characteristic.uuid}")
+            return
+        }
+
+        descriptor.value = if (enabled) {
+            BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+        } else {
+            BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
+        }
+
+        val writeSuccess = gatt.writeDescriptor(descriptor)
+        if (!writeSuccess) {
+            Log.e(TAG, "Failed to write descriptor for ${characteristic.uuid}")
+        } else {
+            Log.i(TAG, "Notifications ${if (enabled) "enabled" else "disabled"} for ${characteristic.uuid}")
+        }
     }
 }
