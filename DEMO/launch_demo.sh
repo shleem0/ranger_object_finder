@@ -1,0 +1,1 @@
+.\..\ranger_nav\launch_nav.sh &
