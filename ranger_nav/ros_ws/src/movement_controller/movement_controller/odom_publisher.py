@@ -291,10 +291,6 @@ class OdometryPublisher(Node):
 
         time.sleep(1.0)
 
-        move.linear.x = 0.0
-        move.angular.z = 0.0
-        self.vel_calculation(move)
-
 
 
 
