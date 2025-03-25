@@ -6,7 +6,7 @@ import numpy as np
 #cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)  # Change index if needed
 
 # Initial parameters for vertical axis (in cm)
-ruler_position_top = 50    # Topmost ruler mark (in cm)
+ruler_position_top = 40    # Topmost ruler mark (in cm)
 ruler_position_bottom = 10  # Bottommost ruler mark (in cm)
 
 # ---------------------------
