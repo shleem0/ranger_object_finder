@@ -37,7 +37,7 @@ fun DemoScreen(navController: NavController){
             val mainActivity = context as MainActivity
             if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
                 Button(
-                    onClick = { runRanger(navController, context, "Choose Item") },
+                    onClick = { runRanger(context) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(500.dp)
@@ -59,7 +59,7 @@ fun DemoScreen(navController: NavController){
             }
             else{
                 Button(
-                    onClick = { runRanger(navController, context, "Choose Item")
+                    onClick = { runRanger(context)
                               },
                     modifier = Modifier
                         .fillMaxWidth()

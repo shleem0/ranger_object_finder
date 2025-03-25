@@ -337,7 +337,7 @@ fun iconSelection(navController: NavController, itemName: String) {
             .padding(16.dp)
     ) {
         Text(
-            text = "Select an Icon for $itemName",
+            text = "Select an Icon for ${itemName.replaceFirstChar { it.uppercase() }}",
             color = MaterialTheme.colorScheme.surfaceBright,
             fontSize = 27.sp,
             lineHeight = 30.sp,

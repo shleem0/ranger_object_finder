@@ -139,7 +139,7 @@ fun SearchScreen(navController: NavController) {
             }
             items(
                 listOf(
-                    " - The robot can take up to n minutes to find an item.",
+                    " - The robot can take up to 6 minutes to find an item.",
                     " - The robot will only be able to find the item in an enclosed area.",
                     " - The robot will grab the item, so it is not suitable for fragile objects.",
                     " - The robot will be sent the photos of the item for processing"
@@ -168,7 +168,7 @@ fun SearchScreen(navController: NavController) {
                 if (options.contains(selectedOption)) {
                     Button(
                         onClick = {
-                            runRanger(navController, context, selectedOption)
+                            runRanger(context)
                             navController.navigate("home")
                         },
                         modifier = Modifier
@@ -220,7 +220,7 @@ fun SearchScreen(navController: NavController) {
             else{
                 Button(
                     onClick = {
-                        runRanger(navController, context, selectedOption)
+                        runRanger(context)
                     },
                     modifier = Modifier
                         .height(70.dp)
@@ -246,40 +246,35 @@ fun SearchScreen(navController: NavController) {
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun runRanger(navController: NavController, context: Context, selectedOption: String) {
-    Log.i("DemoScreen", "Start demooo")
+fun runRanger(context: Context) {
     val mainActivity = context as MainActivity
-    val permissionManager = context as PermissionManager
+    val s = mainActivity.bluetoothService
+    val permissionManager = mainActivity.permissionManager
 
-    if (ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-        Toast.makeText(context,
+    if (ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.BLUETOOTH_CONNECT
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        Toast.makeText(
+            context,
             "Please wait while connecting.",
-            Toast.LENGTH_SHORT).show()
-        permissionManager.requestBluetoothPermission()
-        Log.i("DemoScreen", "Start demo0")
+            Toast.LENGTH_SHORT
+        ).show()
+
+        permissionManager?.requestBluetoothPermission()
+            ?: Log.e("connectToRobot", "PermissionManager is null. Cannot request permission.")
 
         return
     }
 
-    if (mainActivity.bluetoothService?.getConnectionState() == RangerBluetoothService.STATE_READY) {
-        Log.i("DemoScreen", "Start demoo1")
-        mainActivity.bluetoothService?.startDemo(selectedOption)
+    mainActivity.registerReceiverSafely()
 
+    if (s == null) {
+        Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+        Log.w("HomeScreen", "can't connect, no service")
     } else {
-        mainActivity.registerReceiverSafely()
-        Log.i("DemoScreen", "Start demooo2")
-
-        val s = mainActivity.bluetoothService
-        if (s == null) {
-            Toast.makeText(context,
-                "Please try again",
-                Toast.LENGTH_SHORT).show()
-            Log.w("DemoScreen", "can't connect, no service")
-        } else {
-            Toast.makeText(context,
-                "Please wait while connecting.",
-                Toast.LENGTH_SHORT).show()
-            s.connectForDemo()
-        }
+        Toast.makeText(context, "Please wait while connecting.", Toast.LENGTH_SHORT).show()
+        s.connectForDemo()
     }
 }
