@@ -58,7 +58,7 @@ waitDemoStateChange f = do
 cancelDemoProcedure :: IO ()
 cancelDemoProcedure = do
   (_, mh) <- readTVarIO demoScriptHandle
-  runningH <- maybe (pure Nothing) (\h -> getProcessExitCode h >>= \e -> pure (h <$ e)) mh
+  runningH <- maybe (pure Nothing) (\h -> getProcessExitCode h <&> (\case Nothing -> Just h; Just _ -> Nothing) ) mh
   case runningH of
     Nothing -> putStrLn "Cancel request: Demo already not running!"
     Just h -> do

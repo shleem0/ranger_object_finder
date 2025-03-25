@@ -48,6 +48,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.contentColorFor
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -345,7 +346,7 @@ fun DeleteRow(navController: NavController, itemName: String, context: Context) 
             }
         },
         title = { Text("Delete Item?") },
-        text = { Text("Are you sure you want to delete $itemName? All photos will be lost.") }
+        text = { Text("Are you sure you want to delete ${itemName.replaceFirstChar { it.uppercase() }}? All photos will be lost.") }
     )
 }
 
@@ -404,28 +405,25 @@ fun AddItem(navController: NavController) {
             val folder = File(context.filesDir, itemName.lowercase())
             if (!folder.exists()) {
                 folder.mkdirs()
-
                 val itemDataFile = File(folder, "item_details.txt")
-                try {
-                    val fileOutputStream = FileOutputStream(itemDataFile)
-                    val itemDetails = """
-                        Name: ${itemName}
-                    """.trimIndent()
-                    fileOutputStream.write(itemDetails.toByteArray())
-                    fileOutputStream.close()
-                    return true
-                } catch (e: IOException) {
-                    Log.e("AddItem", "Error writing file: ${e.message}")
-                    Toast.makeText(context, "Error saving item", Toast.LENGTH_SHORT).show()
+                if (!itemDataFile.exists()) {
+                    try {
+                        val fileOutputStream = FileOutputStream(itemDataFile)
+                        val itemDetails = "Name: $itemName"
+                        fileOutputStream.write(itemDetails.toByteArray())
+                        fileOutputStream.close()
+                        return true
+                    } catch (e: IOException) {
+                        Log.e("AddItem", "Error writing file: ${e.message}")
+                        Toast.makeText(context, "Error saving item", Toast.LENGTH_SHORT).show()
+                        return false
+                    }
+                } else {
+                    Log.e("AddItem", "Item data file already exists!")
                     return false
                 }
-
             } else {
-                Toast.makeText(
-                    context,
-                    "Item already exists",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Item already exists", Toast.LENGTH_SHORT).show()
                 return false
             }
         } else {
@@ -437,6 +435,7 @@ fun AddItem(navController: NavController) {
             return false
         }
     }
+
     TextButton(
         onClick = { navController.navigate("home") }
     ) {
@@ -518,16 +517,21 @@ fun AddItem(navController: NavController) {
             contentAlignment = Alignment.BottomCenter,
             modifier = Modifier.fillMaxSize()
         ) {
+            val isSuccess = remember { mutableStateOf(false) }
             Button(
                 onClick = {
-                    val isSuccess = createItemFolderAndSaveData()
-                    if (isSuccess) {
-                        navController.navigate("iconSelection/${itemName}")
-                    } else {
-                        navController.navigate("addItem")
+                    if (!isSuccess.value) {
+                        isSuccess.value = createItemFolderAndSaveData()
+                        if (isSuccess.value) {
+                            itemName = itemName.lowercase()
+                            navController.navigate("iconSelection/${itemName}")
+                        } else {
+                            navController.navigate("addItem")
+                        }
                     }
                 }
-            ) {
+            )
+            {
                 Text(
                     "Save Item",
                     fontSize = 25.sp,
