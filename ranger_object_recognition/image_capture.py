@@ -13,7 +13,7 @@ def capture_image(queue_dir, capture_interval = 10, stop_event = None):
         return
 
     print("Camera opened successfully. Starting to capture photos every {} seconds...".format(capture_interval))
-    time.sleep(2)  # Let camera warm up
+    time.sleep(3)  # Let camera warm up
     try:
         while True:
             # Check if the stop event is set

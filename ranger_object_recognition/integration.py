@@ -166,8 +166,8 @@ def find_item_in_scene(scene_path, visualise = False):
                     
                     # Create text label
                     text = f"{cm_value:.1f} cm"
-                    font_scale = 1.2
-                    thickness = 3
+                    font_scale = 1.0
+                    thickness = 2
                     color = (0, 255, 0)
                     font = cv2.FONT_HERSHEY_SIMPLEX
                     
@@ -176,8 +176,7 @@ def find_item_in_scene(scene_path, visualise = False):
                     rect_x1, rect_y1 = (55, y_int - text_h // 2 - 5)
                     rect_x2, rect_y2 = (55 + text_w + 10, y_int + text_h // 2 + 5)
                     
-                    # Draw black rectangle behind the text for contrast
-                    cv2.rectangle(annotated_img, (rect_x1, rect_y1), (rect_x2, rect_y2), (0, 0, 0), -1)
+
                     # Then draw the text on top
                     text_org = (rect_x1 + 5, y_int + text_h // 2 - 2)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
@@ -192,8 +191,8 @@ def find_item_in_scene(scene_path, visualise = False):
                     
                     # Create text label
                     text = f"{cm_val:.1f}"
-                    font_scale = 1.2
-                    thickness = 3
+                    font_scale = 1.0
+                    thickness = 2
                     color = (0, 0, 255)
                     font = cv2.FONT_HERSHEY_SIMPLEX
                     
@@ -202,15 +201,17 @@ def find_item_in_scene(scene_path, visualise = False):
                     rect_x1, rect_y1 = (x_pixel - text_w // 2 - 5, height - 65 - text_h)
                     rect_x2, rect_y2 = (x_pixel + text_w // 2 + 5, height - 65)
                     
-                    # Draw black rectangle behind the text
-                    cv2.rectangle(annotated_img, (rect_x1, rect_y1), (rect_x2, rect_y2), (0, 0, 0), -1)
                     # Then draw the text on top
                     text_org = (rect_x1 + 5, rect_y2 - 5)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
-                # Display the annotated image with rulers
-                cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
-                cv2.waitKey(0)
-                cv2.destroyAllWindows()
+                # # Display the annotated image with rulers
+                # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
+                # cv2.waitKey(0)
+                # cv2.destroyAllWindows()
+                # Instead saving the annotated image to disk
+                save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
+                cv2.imwrite(save_path, annotated_img)
+                print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
         else:
             print("No valid detections to annotate on the full scene image.", file=sys.stderr)
     print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)

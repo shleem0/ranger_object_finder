@@ -14,6 +14,8 @@ def process_queue(queue_dir, max_files=10, stop_event = None):
     # Clear image_queue before running
     for file in os.listdir(queue_dir):
         os.remove(os.path.join(queue_dir, file))
+    # Give time for camera to start up and take first photo
+    time.sleep(6)
     while True:
         # Check if the stop event is set
         if stop_event and stop_event.is_set():
@@ -35,7 +37,7 @@ def process_queue(queue_dir, max_files=10, stop_event = None):
             print(f"Processing image: {file_path}", file=sys.stderr)
             # Call find_item_in_scene and capture its return values.
             # Assumes find_item_in_scene returns (cropped_regions, boxes_list, valid_indices)
-            cropped_regions, boxes_list, valid_indices = find_item_in_scene(file_path)
+            cropped_regions, boxes_list, valid_indices = find_item_in_scene(file_path, visualise=False) # Can set to true for debugging
             if valid_indices:
                 print("Valid crop found. Stopping queue processing.", file=sys.stderr)
                 if stop_event:
