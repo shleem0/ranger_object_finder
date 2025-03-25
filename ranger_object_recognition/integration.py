@@ -14,6 +14,15 @@ import time
 from . import measurements
 from .arduino_connection import send_coordinates
 
+REF_FEATURES = None
+
+def get_reference_features(feature_model, target_size=(224, 224)):
+    global REF_FEATURES
+    if REF_FEATURES is None:
+        REF_FEATURES = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=target_size)
+        print(f"Extracted features from {len(REF_FEATURES)} reference images.")
+    return REF_FEATURES
+
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
     # yolo_weights = "best-fp16.tflite" 
@@ -75,8 +84,7 @@ def find_item_in_scene(scene_path, visualise = False):
         valid_boxes_list.append(boxes_list[idx])
         print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
     # Load reference images and extract features
-    ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
-
+    ref_features = get_reference_features(feature_model, target_size=(224, 224))
     # # Compare each crop feature to the reference features
     # valid_indices = [] 
     # for idx, crop_vector in enumerate(crop_features):
