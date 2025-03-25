@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 module Ranger.Demo
   ( demoProcedure
   , getDemoState
@@ -8,9 +9,14 @@ import System.IO.Unsafe
 import Control.Concurrent.STM
 import System.Process
 import Data.Maybe
+import System.Directory
+import System.FilePath
+import Data.Functor
 
-demoScript :: CreateProcess
-demoScript = (shell "~/DEMO/demo_script.sh") { cwd = Just "~/DEMO" }
+demoScript :: IO CreateProcess
+demoScript = do
+  d <- getHomeDirectory 
+  pure (shell $ d </> "DEMO" </> "demo_script.sh") { cwd = Just $ d </> "DEMO" }
 
 {-# NOINLINE demoScriptHandle #-}
 demoScriptHandle :: TVar (Int, Maybe ProcessHandle)
@@ -18,11 +24,12 @@ demoScriptHandle = unsafePerformIO $ newTVarIO (0, Nothing)
 
 demoProcedure :: IO ()
 demoProcedure = do
+  s <- demoScript
   alreadyRunning <- getDemoState
   if alreadyRunning
     then putStrLn "Demo already running!"
     else do
-      (_,_,_,h) <- createProcess demoScript
+      (_,_,_,h) <- createProcess s
       earlyExit <- isJust <$> getProcessExitCode h
       if earlyExit
         then putStrLn "(!!!) Failed to start demo"
