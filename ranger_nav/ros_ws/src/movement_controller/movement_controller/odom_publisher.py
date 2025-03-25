@@ -345,7 +345,7 @@ class OdometryPublisher(Node):
                 motor2_speed = 100
                 right_dir = False
 
-        if angular_velocity == 0:
+        if angular_velocity == 0 and linear_velocity != 0:
             motor1_speed = max(motor1_speed, 65)
             motor2_speed = max(motor2_speed, 65)
 
