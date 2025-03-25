@@ -282,7 +282,7 @@ class OdometryPublisher(Node):
         move.linear.x = 0.0
         self.vel_calculation(move)
 
-        time.sleep(0.7)
+        time.sleep(0.4)
 
         #carrying out linear velocity
         move.linear.x = linear_velocity
@@ -290,10 +290,6 @@ class OdometryPublisher(Node):
         self.vel_calculation(move)
 
         time.sleep(1.0)
-
-        '''move.linear.x = 0.0
-        move.angular.z = 0.0
-        self.vel_calculation(move)'''
 
 
 
@@ -309,7 +305,7 @@ class OdometryPublisher(Node):
         motor_max_speed = 2 * pi * 0.04 * (motor_max_rpm / 60)
 
         robot_weight = 2.2
-        weight_factor = 1 + (robot_weight - 1) * 3
+        weight_factor = 1 + (robot_weight - 1) * 4
         
         # Calculate left and right motor speeds
         v_left = linear_velocity - (wheelbase * angular_velocity) / 2
@@ -327,8 +323,8 @@ class OdometryPublisher(Node):
             right_dir = False
             v_right = -v_right
 
-        motor1_speed = int(min((v_left / motor_max_speed * weight_factor) * 100, 100))
-        motor2_speed = int(min((v_right / motor_max_speed * weight_factor) * 100, 100))
+        motor1_speed = int(max(min((v_left / motor_max_speed * weight_factor) * 100, 100), 20))
+        motor2_speed = int(max(min((v_right / motor_max_speed * weight_factor) * 100, 100), 20))
 
         if linear_velocity == 0:
             if angular_velocity > 0:
@@ -345,10 +341,9 @@ class OdometryPublisher(Node):
                 motor2_speed = 100
                 right_dir = False
 
-        elif angular_velocity == 0:
-
-            motor1_speed = max(motor1_speed, 75)
-            motor2_speed = motor1_speed
+        if angular_velocity == 0 and linear_velocity != 0:
+            motor1_speed = max(motor1_speed, 65)
+            motor2_speed = max(motor2_speed, 65)
 
 
 
