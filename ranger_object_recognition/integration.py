@@ -208,6 +208,15 @@ def find_item_in_scene(scene_path, visualise = False):
                     # Then draw the text on top
                     text_org = (rect_x1 + 5, rect_y2 - 5)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
+                
+                # Draw bounding boxes for valid detections
+                for idx in valid_indices:
+                    box = valid_boxes_list[idx]
+                    x1, y1, x2, y2 = map(int, box)
+                    cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+
                 # # Display the annotated image with rulers
                 # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
                 # cv2.waitKey(0)
