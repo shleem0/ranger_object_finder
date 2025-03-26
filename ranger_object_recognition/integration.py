@@ -209,9 +209,9 @@ def find_item_in_scene(scene_path, visualise = False):
                     text_org = (rect_x1 + 5, rect_y2 - 5)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
                 # # Display the annotated image with rulers
-                cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
-                cv2.waitKey(0)
-                cv2.destroyAllWindows()
+                # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
+                # cv2.waitKey(0)
+                # cv2.destroyAllWindows()
                 # Instead saving the annotated image to disk
                 save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
                 cv2.imwrite(save_path, annotated_img)
