@@ -14,14 +14,49 @@ import time
 from . import measurements
 from .arduino_connection import send_coordinates
 
+REF_FEATURES = None
+FEATURE_MODEL = None
+
+def get_reference_features(feature_model, target_size=(224, 224)):
+    global REF_FEATURES
+    if REF_FEATURES is None:
+        REF_FEATURES = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=target_size)
+        print(f"Extracted features from {len(REF_FEATURES)} reference images.")
+    return REF_FEATURES
+
+def get_feature_model():
+    global FEATURE_MODEL
+    if FEATURE_MODEL is None:
+        FEATURE_MODEL = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
+        print("Feature model loaded.")
+    return FEATURE_MODEL
+
+def og_visualise_no_rulers(visualise, valid_indices, full_img, boxes_list, valid_crops_dir = config.VALID_CROP_DIR):
+        if visualise:
+            if valid_indices:
+            # Load the full scene image
+                if full_img is None:
+                    print("Error: Could not load full scene image for annotation.", file=sys.stderr)
+                else:
+                    # Create a copy for annotation
+                    annotated_img = full_img.copy()
+
+                    for idx in valid_indices:
+
+                        box = boxes_list[idx]
+                        x1, y1, x2, y2 = map(int, box)
+                        cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 4)
+                        cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    # Display the annotated image in a popup window
+                save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
+                cv2.imwrite(save_path, annotated_img)
+                print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
+        else:
+            print("No valid detections to annotate on the full scene image.", file=sys.stderr)
+
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
-    # yolo_weights = "best-fp16.tflite" 
-    # source = "test_images/keys_scene/keys_scene5.jpeg"  # Scene images directory (or a single image)
-    # data_yaml = "data.yaml"
-    # feature_model_path = "mobilenet-v3-tensorflow2-small-075-224-feature-vector-v1"  
-    # reference_dir = "test_images/keys_ref"  # Directory with reference images
-    # similarity_threshold = 0.3
     valid_crops_dir = config.VALID_CROP_DIR  # Directory to save valid crops
     if not os.path.exists(valid_crops_dir):
         os.makedirs(valid_crops_dir)
@@ -32,17 +67,6 @@ def find_item_in_scene(scene_path, visualise = False):
     or_utils.clear_directory(invalid_crops_dir)
     config.SCENE_IMAGE_PATH = scene_path
 
-        # Parsing command line arguments
-    # parser = argparse.ArgumentParser(description="Run object recognition pipeline")
-    # parser.add_argument("--ref_dir", type=str, help="Directory containing reference images")
-    # parser.add_argument("--model", type=str, help="Path to TFLite model")
-    # parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
-    # args = parser.parse_args()
-
-
-    # if __name__ != "__main__":
-    #     args = argparse.Namespace()
-    #     args.visualise = False
     # Use YOLO model to detect potential items in the scene
     start_time = time.time()
     cropped_regions, boxes_list = run_detection(
@@ -57,13 +81,12 @@ def find_item_in_scene(scene_path, visualise = False):
     print(f"Collected {len(cropped_regions)} cropped regions from detection.", file=sys.stderr)
 
     # Load the feature extraction model
-    feature_model = feature_extractor.load_feature_extractor(config.FEATURE_MODEL_PATH)
+    feature_model = get_feature_model()
     # start_time = time.time()
     # Process each cropped region from YOLO: Preprocess and extract features
-    # Process each cropped region from YOLO: Preprocess and extract features
-    valid_cropped_regions = []   # New list for valid (non-empty) cropped images
-    valid_boxes_list = []        # New list for bounding boxes corresponding to valid crops
-    crop_features = []           # Feature vectors for valid crops
+    valid_cropped_regions = []
+    valid_boxes_list = []
+    crop_features = []
     for idx, crop in enumerate(cropped_regions):
         crop_input = feature_extractor.preprocess_crop(crop, target_size=(224, 224))
         if crop_input is None:
@@ -75,30 +98,8 @@ def find_item_in_scene(scene_path, visualise = False):
         valid_boxes_list.append(boxes_list[idx])
         print(f"Extracted feature vector for crop {idx}.", file=sys.stderr)
     # Load reference images and extract features
-    ref_features = feature_extractor.load_reference_features(feature_model, config.REFERENCE_IMAGE_DIRECTORY, target_size=(224, 224))
-
-    # # Compare each crop feature to the reference features
-    # valid_indices = [] 
-    # for idx, crop_vector in enumerate(crop_features):
-    #     max_sim = 0
-    #     for ref_path, ref_vector in ref_features.items():
-    #         sim = matching.cosine_similarity(crop_vector, ref_vector)
-    #         max_sim = max(max_sim, sim)
-    #     if max_sim >= config.FEATURE_SIMILARITY_THRESHOLD:
-    #         print(f"Crop {idx} is considered valid (similarity {max_sim:.2f}).", file=sys.stderr)
-    #         valid_indices.append(idx)
-    #         # Save the valid crop to disk
-    #         save_path = os.path.join(valid_crops_dir, f"crop_{idx}.jpg")
-    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
-    #         print(f"Saved valid crop {idx} to {save_path}")
-    #     else:
-    #         print(f"Crop {idx} is filtered out (similarity {max_sim:.2f}).", file=sys.stderr)
-    #         # Save the invalid crop to disk for debugging
-    #         save_path = os.path.join(invalid_crops_dir, f"crop_{idx}.jpg")
-    #         cv2.imwrite(save_path, valid_cropped_regions[idx])
-    #         print(f"Saved invalid crop {idx} to {save_path}", file=sys.stderr)
-    # Keeping only the highest similarity crop for final version
-        # Compare each crop feature to the reference features and select the best valid crop
+    ref_features = get_reference_features(feature_model, target_size=(224, 224))
+    # Compare each crop feature to the reference features and select the best valid crop
     best_idx = None
     best_sim = -1
     for idx, crop_vector in enumerate(crop_features):
@@ -116,7 +117,7 @@ def find_item_in_scene(scene_path, visualise = False):
         # Save the best valid crop to disk
         save_path = os.path.join(valid_crops_dir, f"crop_best.jpg")
         cv2.imwrite(save_path, valid_cropped_regions[best_idx])
-        print(f"Saved best valid crop {best_idx} to {save_path}", file=sys.stderr)
+        # print(f"Saved best valid crop {best_idx} to {save_path}", file=sys.stderr)
         # Only keep this best crop for subsequent measurement and annotation steps
         valid_indices = [best_idx]
     else:
@@ -124,26 +125,29 @@ def find_item_in_scene(scene_path, visualise = False):
         valid_indices = []
     end_time = time.time()
     
-    print("Bounding box coordinates for valid crops:", file=sys.stderr)
+    # print("Bounding box coordinates for valid crops:", file=sys.stderr)
     for idx in valid_indices:
         print(boxes_list[idx])
     full_img = cv2.imread(config.SCENE_IMAGE_PATH)
     if full_img is not None:
         full_height, full_width = full_img.shape[:2]
-        print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
+        # print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
         for idx in valid_indices:
             box = valid_boxes_list[idx]  # box = [x1, y1, x2, y2]
             center_x = (box[0] + box[2]) / 2.0
             center_y = (box[1] + box[3]) / 2.0
             # Convert x and y pixel coordinates to cm using your measurements functions:
             distance_x_cm = measurements.x_pixel_to_cm(center_x, full_width)
-            distance_y_cm = measurements.pixels_to_cm(center_y, full_height)
-            print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
-            send_coordinates(distance_x_cm, distance_y_cm)
+            distance_y_cm = measurements.pixels_to_cm(center_y, full_height) - 5
+            # print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
+            # send_coordinates(distance_x_cm, distance_y_cm) 
+            send_coordinates(distance_y_cm, distance_x_cm) # Swapped x and y for arduino
     else:
         print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
     # Optional visualisation if you want to see the annotated image
+    # og_visualise_no_rulers(visualise, valid_indices, full_img, valid_boxes_list)
+
     if visualise:
         if valid_indices:
             # Load the full scene image if not already loaded
@@ -204,6 +208,15 @@ def find_item_in_scene(scene_path, visualise = False):
                     # Then draw the text on top
                     text_org = (rect_x1 + 5, rect_y2 - 5)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
+                
+                # Draw bounding boxes for valid detections
+                for idx in valid_indices:
+                    box = valid_boxes_list[idx]
+                    x1, y1, x2, y2 = map(int, box)
+                    cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+
                 # # Display the annotated image with rulers
                 # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
                 # cv2.waitKey(0)
@@ -214,7 +227,7 @@ def find_item_in_scene(scene_path, visualise = False):
                 print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
         else:
             print("No valid detections to annotate on the full scene image.", file=sys.stderr)
-    print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
+    # print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
     return valid_cropped_regions, valid_boxes_list, valid_indices
 
 if __name__ == "__main__":
@@ -225,7 +238,6 @@ if __name__ == "__main__":
     parser.add_argument("--visualise", action="store_true", help="Visualise the annotated image")
     args = parser.parse_args()
     
-
         # Overriding default paths if provided via command line
     if args.model:
         # Load tfLite model

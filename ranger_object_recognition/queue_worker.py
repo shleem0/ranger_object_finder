@@ -5,7 +5,11 @@ from ranger_object_recognition.image_capture import capture_image
 from ranger_object_recognition.image_queue_processor import process_queue
 
 def main(queue_dir, capture_interval, max_files):
+    print("Initialising object recognition system, please wait...")
+
     stop_event = threading.Event()
+
+    input("Press Enter to start camera capture and queue processing...")
 
     capture_thread = threading.Thread(target=capture_image, args=(queue_dir, capture_interval, stop_event))
     process_thread = threading.Thread(target=process_queue, args=(queue_dir, max_files, stop_event))

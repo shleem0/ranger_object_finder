@@ -9,12 +9,13 @@ SERIAL_PORT = "/dev/ttyACM0"  # Update this based on your setup
 BAUD_RATE = 9600  # Must match Serial.begin(9600) in your Arduino code
 TIMEOUT = 1  # Optional timeout for safety
 
-def send_coordinates(P_x, P_y, P_z = -20.0):
+def send_coordinates(P_x, P_y, P_z = -25.0):
     """
     Sends the given coordinates (in cm) to the Arduino over a serial connection.
     """
     try:
         # Open serial connection
+        print("Trying to send values x = {} y = {} z = {} to arduino".format(P_x, P_y, P_z))
         arduino = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=TIMEOUT)
         time.sleep(2)  # Allow time for Arduino to reset
 
