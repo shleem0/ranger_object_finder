@@ -165,6 +165,11 @@
           buildInputs = ros-packages pkgs-ros;
         };
 
+        devShells.bare = pkgs.mkShell {
+          name = "Shell for manual compilation";
+          buildInputs = with pkgs; [ zlib dbus haskell.compiler.ghc810 cabal-install ];
+        };
+
         overlays.default = final: prev: {
           ranger-object-recognition =
             final.callPackage ./ranger_object_recognition/package.nix { };
