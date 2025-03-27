@@ -125,19 +125,9 @@ class OdometryPublisher(Node):
         linear_velocity = (vel1 + vel2) / 2
         angular_velocity = (vel2 - vel1) / 0.295
 
-        pivot_offset = 0.055  # Distance from center to front wheels (adjust as needed)
-        if angular_velocity != 0:
-            icr_x = self.x - pivot_offset * sin(self.theta)  # Instantaneous center of rotation
-            icr_y = self.y + pivot_offset * cos(self.theta)
-
-            # Compute new pose considering pivoting motion
-            self.theta += angular_velocity * dt
-            self.x = icr_x + pivot_offset * sin(self.theta)
-            self.y = icr_y - pivot_offset * cos(self.theta)
-        else:
-            # Normal straight-line motion
-            self.x += linear_velocity * dt * cos(self.theta)
-            self.y += linear_velocity * dt * sin(self.theta)
+        # Normal straight-line motion
+        self.x += linear_velocity * dt * cos(self.theta)
+        self.y += linear_velocity * dt * sin(self.theta)
 
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
 
