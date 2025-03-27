@@ -1,4 +1,4 @@
-{ pkgs, base-home, programsdb, ... }:
+{ pkgs, base-home, programsdb, lib, ... }:
 
 let
   # TODO: more SSH keys
@@ -64,16 +64,37 @@ in {
 
   hardware.bluetooth.enable = true;
 
-  # https://wiki.nixos.org/wiki/NixOS_on_ARM/Raspberry_Pi_3#Bluetooth
+  # https://github.com/NixOS/nixos-hardware/blob/master/raspberry-pi/3/default.nix
+  nixpkgs.overlays = [
+    (_final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    })
+  ];
+
+  boot.loader.grub.enable = false;
+
+  boot.loader.generic-extlinux-compatible.enable = true;
+
+  hardware.enableRedistributableFirmware = true;
+
+  boot.kernelParams = lib.mkForce [ "console=ttyS0,115200n8" "console=tty0" ];
+
+  hardware.deviceTree.enable = true;
+  hardware.deviceTree.filter = "bcm2837-rpi-3-b-plus.dtb";
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi3;
+
   systemd.services.btattach = {
     before = [ "bluetooth.service" ];
-    after = [ "dev-ttyAMA0.device" ];
+    after = [ "dev-ttyS1.device" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart =
-        "${pkgs.bluez}/bin/btattach -B /dev/ttyAMA0 -P bcm -S 3000000";
+      ExecStart = "${pkgs.bluez}/bin/btattach -B /dev/ttyS1 -P bcm -S 3000000";
     };
   };
+
+  # Enable magic sysrq reboot
+  boot.kernel.sysctl."kernel.sysrq" = 176;
 
   system.stateVersion = "24.05";
 

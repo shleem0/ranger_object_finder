@@ -14,8 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,13 +34,12 @@
   };
 
   outputs = { self, nixpkgs, haskellNix, nix-ros-overlay, fps, nixos-user
-    , home-manager, nixos-hardware, deploy-rs, nixos-shell, sops-nix, ... }:
+    , home-manager, deploy-rs, nixos-shell, sops-nix, ... }:
     let
       raspiSystem = "aarch64-linux";
       lib = nixpkgs.lib;
       mkProgramsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
-      raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
       sops = sops-nix.nixosModules.sops;
       mkPkgs = system:
@@ -105,7 +102,6 @@
           modules = [
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
             nixosModules.sdp
-            raspi-3
             sops
             ./ranger-nixos/wifi.nix
             ({ pkgs, lib, ... }: {

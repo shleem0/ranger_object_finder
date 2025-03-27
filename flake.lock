@@ -536,21 +536,6 @@
         "type": "github"
       }
     },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1740387674,
-        "narHash": "sha256-pGk/aA0EBvI6o4DeuZsr05Ig/r4uMlSaf5EWUZEWM10=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "d58f642ddb23320965b27beb0beba7236e9117b5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "type": "github"
-      }
-    },
     "nixos-shell": {
       "inputs": {
         "nixpkgs": [
@@ -735,7 +720,6 @@
         "haskellNix": "haskellNix",
         "home-manager": "home-manager",
         "nix-ros-overlay": "nix-ros-overlay",
-        "nixos-hardware": "nixos-hardware",
         "nixos-shell": "nixos-shell",
         "nixos-user": "nixos-user",
         "nixpkgs": [
