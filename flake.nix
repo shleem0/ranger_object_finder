@@ -167,7 +167,12 @@
 
         devShells.bare = pkgs.mkShell {
           name = "Shell for manual compilation";
-          buildInputs = with pkgs; [ zlib dbus haskell.compiler.ghc810 cabal-install ];
+          buildInputs = with pkgs; [
+            zlib
+            dbus
+            haskell.compiler.ghc810
+            cabal-install
+          ];
         };
 
         overlays.default = final: prev: {
