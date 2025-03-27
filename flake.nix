@@ -9,8 +9,6 @@
 
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
 
-    nixpkgs-ros.follows = "nix-ros-overlay/nixpkgs";
-
     home-manager = {
       url = "home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,22 +35,24 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs-ros, nixpkgs, haskellNix, nix-ros-overlay, fps
-    , nixos-user, home-manager, nixos-hardware, deploy-rs, nixos-shell, sops-nix
-    , ... }:
+  outputs = { self, nixpkgs, haskellNix, nix-ros-overlay, fps, nixos-user
+    , home-manager, nixos-hardware, deploy-rs, nixos-shell, sops-nix, ... }:
     let
       raspiSystem = "aarch64-linux";
       lib = nixpkgs.lib;
-      programsdb = system: fps.packages.${system}.programs-sqlite;
+      mkProgramsdb = system: fps.packages.${system}.programs-sqlite;
       hm = home-manager.nixosModules.home-manager;
       raspi-3 = nixos-hardware.nixosModules.raspberry-pi-3;
       base-home = nixos-user.nixosModules.cli;
       sops = sops-nix.nixosModules.sops;
-      pkgs-hs = system:
+      mkPkgs = system:
         import nixpkgs {
           system = system;
-          overlays =
-            [ haskellNix.overlay self.outputs.overlays.${system}.default ];
+          overlays = [
+            haskellNix.overlay
+            nix-ros-overlay.overlays.default
+            self.outputs.overlays.${system}.default
+          ];
           inherit (haskellNix) config;
         };
       # Use nixpkgs binary cache for deploy-rs
@@ -62,7 +62,7 @@
           deploy-rs.overlay
           (self: super: {
             deploy-rs = {
-              inherit (pkgs-hs raspiSystem) deploy-rs;
+              inherit (mkPkgs raspiSystem) deploy-rs;
               lib = super.deploy-rs.lib;
             };
           })
@@ -81,19 +81,10 @@
       };
     } // nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = pkgs-hs system;
+        pkgs = mkPkgs system;
 
-        ranger-daemon-project = import ranger-daemon/project.nix pkgs;
-
-        ranger-daemon-compiler = ranger-daemon-project.ghcWithPackages;
-
-        ranger-daemon-flake = ranger-daemon-project.flake {
+        ranger-daemon-flake = (import ranger-daemon/project.nix pkgs).flake {
           crossPlatforms = p: [ p.aarch64-multiplatform ];
-        };
-
-        pkgs-ros = import nixpkgs-ros {
-          inherit system;
-          overlays = [ nix-ros-overlay.overlays.default ];
         };
 
         ros-packages = pkgs:
@@ -109,11 +100,11 @@
           system = raspiSystem;
           specialArgs = {
             inherit base-home;
-            programsdb = programsdb raspiSystem;
+            programsdb = mkProgramsdb raspiSystem;
           };
           modules = [
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            self.outputs.nixosModules.${system}.sdp
+            nixosModules.sdp
             raspi-3
             sops
             ./ranger-nixos/wifi.nix
@@ -134,7 +125,7 @@
           inherit system;
           specialArgs = {
             inherit base-home;
-            programsdb = programsdb system;
+            programsdb = mkProgramsdb system;
           };
           modules = [
             nixosModules.sdp
@@ -160,9 +151,9 @@
 
         devShells.daemon = ranger-daemon-flake.devShells.default;
 
-        devShells.ros = pkgs-ros.mkShell {
+        devShells.ros = pkgs.mkShell {
           name = "ROS development";
-          buildInputs = ros-packages pkgs-ros;
+          buildInputs = ros-packages pkgs;
         };
 
         devShells.bare = pkgs.mkShell {
@@ -182,7 +173,6 @@
             final.callPackage ./ranger-daemon-ffi-test/package.nix {
               ranger-lib =
                 ranger-daemon-flake.packages."ranger-daemon:lib:ranger-daemon";
-              inherit ranger-daemon-compiler;
             };
         };
 

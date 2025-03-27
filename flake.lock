@@ -742,10 +742,6 @@
           "haskellNix",
           "nixpkgs-2411"
         ],
-        "nixpkgs-ros": [
-          "nix-ros-overlay",
-          "nixpkgs"
-        ],
         "sops-nix": "sops-nix"
       }
     },
