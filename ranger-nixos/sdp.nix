@@ -13,22 +13,6 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICE9odlcW4pwlwfPu2dfr6JRr4TUp56v2O+9sptC7Q7s kiandehmahdi3@gmail.com"
   ];
 
-  adminUser = name: {
-    users.users.${name} = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = ssh-keys;
-      password = "group13";
-      linger = true;
-    };
-    home-manager.users.${name} = { ... }: {
-      imports = [ base-home ];
-      home.username = name;
-      home.homeDirectory = "/home/${name}";
-      home.stateVersion = "24.05";
-      programs.home-manager.enable = true;
-    };
-  };
 in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -87,5 +71,20 @@ in {
     "nixos-laptop:FKieHCOcy6GVQkjgs+aZahQI2HYAYfq5NDtBVMiz8qY="
   ];
 
-} // (adminUser "pi")
+  users.users.pi = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = ssh-keys;
+    password = "group13";
+    linger = true;
+  };
+
+  home-manager.users.pi = { ... }: {
+    imports = [ base-home ];
+    home.username = "pi";
+    home.homeDirectory = "/home/pi";
+    home.stateVersion = "24.05";
+    programs.home-manager.enable = true;
+  };
+}
 
