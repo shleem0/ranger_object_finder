@@ -96,6 +96,7 @@ in {
     home.homeDirectory = "/home/pi";
     home.stateVersion = "24.05";
     programs.home-manager.enable = true;
+    home.file."DEMO/launch_demo.sh".source = ../DEMO/launch_demo.sh;
   };
 }
 
