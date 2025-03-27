@@ -64,6 +64,17 @@ in {
 
   hardware.bluetooth.enable = true;
 
+  # https://wiki.nixos.org/wiki/NixOS_on_ARM/Raspberry_Pi_3#Bluetooth
+  systemd.services.btattach = {
+    before = [ "bluetooth.service" ];
+    after = [ "dev-ttyAMA0.device" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart =
+        "${pkgs.bluez}/bin/btattach -B /dev/ttyAMA0 -P bcm -S 3000000";
+    };
+  };
+
   system.stateVersion = "24.05";
 
   nix.settings.trusted-public-keys = [
