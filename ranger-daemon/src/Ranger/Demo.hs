@@ -28,7 +28,7 @@ demoScript = do
   d <- getHomeDirectory
   let demoDir = d </> "DEMO"
   createDirectoryIfMissing True demoDir
-  pure (shell $ demoDir </> "demo_script.sh") { cwd = Just demoDir}
+  pure (shell $ demoDir </> "launch_demo.sh") { cwd = Just demoDir}
 
 {-# NOINLINE demoScriptHandle #-}
 demoScriptHandle :: TVar (Int, Maybe DemoHandle)

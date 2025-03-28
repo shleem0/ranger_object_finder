@@ -6,7 +6,7 @@ import numpy as np
 #cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)  # Change index if needed
 
 # Initial parameters for vertical axis (in cm)
-ruler_position_top = 40    # Topmost ruler mark (in cm)
+ruler_position_top = 16    # Topmost ruler mark (in cm)
 ruler_position_bottom = 10  # Bottommost ruler mark (in cm)
 
 # ---------------------------
@@ -38,8 +38,8 @@ def ruler_spacing_at_position(y_pixel, height):
 # ---------------------------
 # We want the horizontal axis at y_center = height//2,
 # mapping x in [0, width] -> cm in [-14, +14].
-H_MIN_CM = -14
-H_MAX_CM = 14
+H_MIN_CM = -10
+H_MAX_CM = 10
 
 def x_pixel_to_cm(x_pixel, width):
     """

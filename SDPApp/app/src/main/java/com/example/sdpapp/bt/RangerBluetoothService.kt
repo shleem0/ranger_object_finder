@@ -38,8 +38,9 @@ import java.util.UUID
 *
 * see example https://github.com/bluez/bluer/blob/master/bluer/examples/gatt_client.rs
 */
-private val RANGER_DEMO_ADDRESS = "90:32:4B:8F:FC:D6"
+// private val RANGER_DEMO_ADDRESS = "90:32:4B:8F:FC:D6"
 // private val RANGER_DEMO_ADDRESS = "B8:27:EB:02:F7:BB"
+private val RANGER_DEMO_ADDRESS = "43:45:C0:00:1F:AC"
 
 private const val TAG = "RangerBluetoothService"
 
@@ -93,50 +94,6 @@ class RangerBluetoothService : Service() {
         } else {
             return null
         }
-    }
-
-//    public fun createNotificationChannel() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val name = "Search Progress"
-//            val descriptionText = "Notifications for Ranger Search"
-//            val importance = NotificationManager.IMPORTANCE_HIGH
-//            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-//                description = descriptionText
-//            }
-//            val notificationManager: NotificationManager =
-//                getSystemService(NotificationManager::class.java)
-//            notificationManager.createNotificationChannel(channel)
-//        }
-//    }
-//
-//    private fun showProgressNotification() {
-//        val notificationManager = getSystemService(NotificationManager::class.java)
-//        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setSmallIcon(R.mipmap.appicon)
-//            .setContentTitle("Ranger Search")
-//            .setContentText("Searching for target...")
-//            .setProgress(0, 0, true)
-//            .setOngoing(true)
-//            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//
-//        notificationManager.notify(NOTIFICATION_ID, builder.build())
-//    }
-//
-//    private fun showFoundNotification() {
-//        val notificationManager = getSystemService(NotificationManager::class.java)
-//        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setSmallIcon(R.mipmap.appicon)
-//            .setContentTitle("Ranger Alert!")
-//            .setContentText("Target found!")
-//            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setAutoCancel(true)
-//
-//        notificationManager.notify(NOTIFICATION_ID, builder.build())
-//    }
-
-    private fun cancelProgressNotification() {
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.cancel(NOTIFICATION_ID)
     }
 
     override fun onBind(p0: Intent?): IBinder {
@@ -260,7 +217,7 @@ class RangerBluetoothService : Service() {
 
                 }
 
-                if (demoStartChar == null || demoCancelChar == null) {
+                if (demoStartChar == null || demoCancelChar == null || poisonStateChar == null || resetPoisonChar == null) {
                     Log.e(TAG, "Found demo service, but service did not have expected characteristics, disconnecting")
                     close()
                     return
@@ -379,42 +336,7 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
             false
         }
-    }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun cancelDemo1(): Boolean {
-        val gatt = bluetoothGatt
-        if (gatt == null) {
-            Log.e(TAG, "Can't cancel Ranger demo, no connection")
-            return false
-        }
-        val ch = demoCancelChar
-        if (ch == null) {
-            Log.e(TAG, "Don't have demo characteristic yet, can't write to it")
-            return false
-        }
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BLUETOOTH_CONNECT
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            Log.e(TAG, "Can't cancel demo, lost BLUETOOTH_CONNECT permissions")
-            return false
-        }
-
-        Log.d(TAG, "writing to cancel:" + byteArrayOf(writeIndex.toByte()).contentToString())
-        val r = gatt.writeCharacteristic(ch, byteArrayOf(writeIndex.toByte()), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
-        incWriteIndex()
-
-        return if (r == BluetoothStatusCodes.SUCCESS) {
-            Log.i(TAG, "Demo cancelled!!!")
-            //cancelProgressNotification()
-            true
-        } else {
-            Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
-            false
-        }
     }
 
     fun close() {
@@ -552,7 +474,7 @@ class RangerBluetoothService : Service() {
         }
 
         descriptor.value = if (enabled) {
-            BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+            BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
         } else {
             BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
         }

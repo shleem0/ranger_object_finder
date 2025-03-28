@@ -1,4 +1,4 @@
-{ pkgs, base-home, programsdb, ... }:
+{ pkgs, base-home, programsdb, lib, ... }:
 
 let
   # TODO: more SSH keys
@@ -13,22 +13,6 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICE9odlcW4pwlwfPu2dfr6JRr4TUp56v2O+9sptC7Q7s kiandehmahdi3@gmail.com"
   ];
 
-  adminUser = name: {
-    users.users.${name} = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = ssh-keys;
-      password = "group13";
-      linger = true;
-    };
-    home-manager.users.${name} = { ... }: {
-      imports = [ base-home ];
-      home.username = name;
-      home.homeDirectory = "/home/${name}";
-      home.stateVersion = "24.05";
-      programs.home-manager.enable = true;
-    };
-  };
 in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -80,6 +64,38 @@ in {
 
   hardware.bluetooth.enable = true;
 
+  # https://github.com/NixOS/nixos-hardware/blob/master/raspberry-pi/3/default.nix
+  nixpkgs.overlays = [
+    (_final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    })
+  ];
+
+  boot.loader.grub.enable = false;
+
+  boot.loader.generic-extlinux-compatible.enable = true;
+
+  hardware.enableRedistributableFirmware = true;
+
+  boot.kernelParams = lib.mkForce [ "console=ttyS0,115200n8" "console=tty0" ];
+
+  hardware.deviceTree.enable = true;
+  hardware.deviceTree.filter = "bcm2837-rpi-3-b-plus.dtb";
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_rpi3;
+
+  systemd.services.btattach = {
+    before = [ "bluetooth.service" ];
+    after = [ "dev-ttyS1.device" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.bluez}/bin/btattach -B /dev/ttyS1 -P bcm -S 3000000";
+    };
+  };
+
+  # Enable magic sysrq reboot
+  boot.kernel.sysctl."kernel.sysrq" = 176;
+
   system.stateVersion = "24.05";
 
   nix.settings.trusted-public-keys = [
@@ -87,5 +103,21 @@ in {
     "nixos-laptop:FKieHCOcy6GVQkjgs+aZahQI2HYAYfq5NDtBVMiz8qY="
   ];
 
-} // (adminUser "pi")
+  users.users.pi = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = ssh-keys;
+    password = "group13";
+    linger = true;
+  };
+
+  home-manager.users.pi = { ... }: {
+    imports = [ base-home ];
+    home.username = "pi";
+    home.homeDirectory = "/home/pi";
+    home.stateVersion = "24.05";
+    programs.home-manager.enable = true;
+    home.file."DEMO/launch_demo.sh".source = ../DEMO/launch_demo.sh;
+  };
+}
 

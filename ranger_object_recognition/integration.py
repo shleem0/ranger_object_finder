@@ -31,6 +31,30 @@ def get_feature_model():
         print("Feature model loaded.")
     return FEATURE_MODEL
 
+def og_visualise_no_rulers(visualise, valid_indices, full_img, boxes_list, valid_crops_dir = config.VALID_CROP_DIR):
+        if visualise:
+            if valid_indices:
+            # Load the full scene image
+                if full_img is None:
+                    print("Error: Could not load full scene image for annotation.", file=sys.stderr)
+                else:
+                    # Create a copy for annotation
+                    annotated_img = full_img.copy()
+
+                    for idx in valid_indices:
+
+                        box = boxes_list[idx]
+                        x1, y1, x2, y2 = map(int, box)
+                        cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 4)
+                        cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    # Display the annotated image in a popup window
+                save_path = os.path.join(valid_crops_dir, "annotated_scene.jpg")
+                cv2.imwrite(save_path, annotated_img)
+                print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
+        else:
+            print("No valid detections to annotate on the full scene image.", file=sys.stderr)
+
 def find_item_in_scene(scene_path, visualise = False):
     # Set paths and thresholds
     valid_crops_dir = config.VALID_CROP_DIR  # Directory to save valid crops
@@ -93,7 +117,7 @@ def find_item_in_scene(scene_path, visualise = False):
         # Save the best valid crop to disk
         save_path = os.path.join(valid_crops_dir, f"crop_best.jpg")
         cv2.imwrite(save_path, valid_cropped_regions[best_idx])
-        print(f"Saved best valid crop {best_idx} to {save_path}", file=sys.stderr)
+        # print(f"Saved best valid crop {best_idx} to {save_path}", file=sys.stderr)
         # Only keep this best crop for subsequent measurement and annotation steps
         valid_indices = [best_idx]
     else:
@@ -101,26 +125,29 @@ def find_item_in_scene(scene_path, visualise = False):
         valid_indices = []
     end_time = time.time()
     
-    print("Bounding box coordinates for valid crops:", file=sys.stderr)
+    # print("Bounding box coordinates for valid crops:", file=sys.stderr)
     for idx in valid_indices:
         print(boxes_list[idx])
     full_img = cv2.imread(config.SCENE_IMAGE_PATH)
     if full_img is not None:
         full_height, full_width = full_img.shape[:2]
-        print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
+        # print("Distance (cm) of valid detections (center of bounding box):", file=sys.stderr)
         for idx in valid_indices:
             box = valid_boxes_list[idx]  # box = [x1, y1, x2, y2]
             center_x = (box[0] + box[2]) / 2.0
             center_y = (box[1] + box[3]) / 2.0
             # Convert x and y pixel coordinates to cm using your measurements functions:
             distance_x_cm = measurements.x_pixel_to_cm(center_x, full_width)
-            distance_y_cm = measurements.pixels_to_cm(center_y, full_height)
-            print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
-            send_coordinates(distance_x_cm, distance_y_cm)
+            distance_y_cm = measurements.pixels_to_cm(center_y, full_height) - 5
+            # print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
+            # send_coordinates(distance_x_cm, distance_y_cm) 
+            send_coordinates(distance_y_cm, distance_x_cm) # Swapped x and y for arduino
     else:
         print("Error: Could not load full scene image for measurement calculations.", file=sys.stderr)
 
     # Optional visualisation if you want to see the annotated image
+    # og_visualise_no_rulers(visualise, valid_indices, full_img, valid_boxes_list)
+
     if visualise:
         if valid_indices:
             # Load the full scene image if not already loaded
@@ -181,6 +208,15 @@ def find_item_in_scene(scene_path, visualise = False):
                     # Then draw the text on top
                     text_org = (rect_x1 + 5, rect_y2 - 5)
                     cv2.putText(annotated_img, text, text_org, font, font_scale, color, thickness)
+                
+                # Draw bounding boxes for valid detections
+                for idx in valid_indices:
+                    box = valid_boxes_list[idx]
+                    x1, y1, x2, y2 = map(int, box)
+                    cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 0, 0), 3)
+                    cv2.putText(annotated_img, f"Crop {idx}", (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+
                 # # Display the annotated image with rulers
                 # cv2.imshow("Valid Detections on Full Scene with Rulers", annotated_img)
                 # cv2.waitKey(0)
@@ -191,7 +227,7 @@ def find_item_in_scene(scene_path, visualise = False):
                 print(f"Saved annotated image with rulers to {save_path}", file=sys.stderr)
         else:
             print("No valid detections to annotate on the full scene image.", file=sys.stderr)
-    print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
+    # print(f"Processing time: {end_time - start_time:.2f} seconds.", file=sys.stderr)
     return valid_cropped_regions, valid_boxes_list, valid_indices
 
 if __name__ == "__main__":
