@@ -379,8 +379,8 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
             false
         }
-
     }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun cancelDemo1(): Boolean {
         val gatt = bluetoothGatt
