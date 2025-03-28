@@ -52,7 +52,7 @@ runRangerBluetooth = do
     go comms = do
       result <- runEff . runConcurrent . runRangerControl $ runRangerProtocol comms
       case result of
-        Just err -> do
+        Left err -> do
           hPutStrLn stderr $ "Ranger protocol error: " ++ show err
           -- will freeze up until we get a new value in the queues/state is no longer poisoned
           (q1, q2) <- runEff . runConcurrent $ atomically $ do
@@ -67,8 +67,8 @@ runRangerBluetooth = do
             check (not p)
           hPutStrLn stderr "Reset."
           go comms
-        Nothing -> do
-          hPutStrLn stderr "Done"
+        Right b -> do
+          hPutStrLn stderr $ "image matches expected: " ++ show b
           pure ()
 
 data RangerInvalidState = RangerDesync | RangerPacketIndexError deriving Show
@@ -76,15 +76,12 @@ data RangerInvalidState = RangerDesync | RangerPacketIndexError deriving Show
 newtype PacketIndex = PacketIndex Word8
 
 -- | Runs Ranger's bluetooth protocol until failure or power off
-runRangerProtocol
-  :: (RangerControl :> es, Concurrent :> es)
-  => RangerComms
-  -> Eff es (Maybe RangerInvalidState)
-runRangerProtocol comms = fmap (fmap snd . either Just (const Nothing))
+runRangerProtocol :: (RangerControl :> es, Concurrent :> es) => RangerComms -> Eff es (Either RangerInvalidState Bool)
+runRangerProtocol comms = fmap (bimap snd fst)
                         . runError
-                        . evalState (PacketIndex 0)
+                        . runState (PacketIndex 0)
                         . unSide
-                        $ runSync (itp comms) bluetoothProtocol
+                        $ runSync (itp comms) (test 10000)
 
 itp :: (RangerControl :> es, Error RangerInvalidState :> es, Concurrent :> es, State PacketIndex :> es) => RangerComms -> Interpreter 'Ranger Msg (SideM (Eff es) 'Ranger)
 itp RangerComms{phoneToRanger, rangerToPhone, currIndex} = Interpreter

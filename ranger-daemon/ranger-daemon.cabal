@@ -40,6 +40,7 @@ library
                    , filepath
                    , hslogger
                    , process
+                   , random
                    , singletons == 2.7
                    , stm
                    , sync-monad
@@ -58,3 +59,19 @@ executable ranger-daemon
                    , ranger-daemon
     hs-source-dirs:   app
     ghc-options: -threaded
+
+executable ranger-client-test
+    import:           warnings
+    main-is:          Client.hs
+    -- other-modules:
+    -- other-extensions:
+    build-depends:   base ^>=4.14.0.0
+                   , ranger-daemon
+                   , ble
+                   , sync-monad
+                   , stm
+                   , effectful
+                   , async
+    hs-source-dirs:   app
+    ghc-options: -threaded
+
