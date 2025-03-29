@@ -258,6 +258,8 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Can't start demo, lost BLUETOOTH_CONNECT permissions")
             return false
         }
+//        val r = gatt.writeCharacteristic(ch, byteArrayOf(100), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+
         val r = gatt.writeCharacteristic(ch, byteArrayOf(writeIndex.toByte()) + item.encodeToByteArray(), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
         incWriteIndex()
 
