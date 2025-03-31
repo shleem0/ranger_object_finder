@@ -1,8 +1,6 @@
-from machine import I2C
 from LSM6DS3 import *
 import time
 
-i2c = I2C(0, scl=13, sda=12)
 sensor = LSM6DS3(ACC_ODR=ACC_ODR_1_66_KHz,
                  GYRO_ODR=GYRO_ODR_1_66_KHS,
                  enable_acc=ENABLE_ACC_ALL_AXIS,
