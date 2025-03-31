@@ -10,7 +10,9 @@ def read_angle():
 
     while True:
         raw_data = bus.read_i2c_block_data(AS5600_ADDR, AS5600_ANG, 2)
+        print(raw_data)
         angle = (raw_data[0] << 8) + raw_data[1]
+        print(angle)
 
         angle_deg = (angle / 4096) * 360
         print(angle_deg)
