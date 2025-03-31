@@ -203,7 +203,7 @@ class RangerBluetoothService : Service() {
                     if (c.uuid.toString() == POISON_STATE_UUID) {
                         Log.i(TAG, "Found poison state characteristic")
                         poisonStateChar = c
-                        setPoisonCharacteristicNotification(c, true) // Enable notifications
+                        setPoisonCharacteristicIndication(c, true) // Enable notifications
                     }
                     if (c.uuid.toString() == RESET_POISON_UUID) {
                         Log.i(TAG, "Found reset poison characteristic")
@@ -393,6 +393,7 @@ class RangerBluetoothService : Service() {
                 val connected = bg.connect()
                 Log.d(TAG, "Connection status: $connected")
                 bluetoothGatt = bg
+                resetPoison()
                 return connected
             } catch (exception: IllegalArgumentException) {
                 Log.e(TAG, "Device not found with the provided address $address")
@@ -422,8 +423,11 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "No BLUETOOTH_CONNECT permission to reset poison")
             return
         }
-
         ch.value = byteArrayOf(0x00)
+        for (writes in 0..10) {
+            gatt.writeCharacteristic(ch)
+        }
+        //ch.value = byteArrayOf(0x00)
         val success = gatt.writeCharacteristic(ch)
         if (success) {
             Log.i(TAG, "Poison reset sent ✅")
@@ -449,7 +453,7 @@ class RangerBluetoothService : Service() {
         const val NOTIFICATION_ID = 1
     }
 
-    private fun setPoisonCharacteristicNotification(characteristic: BluetoothGattCharacteristic, enabled: Boolean) {
+    private fun setPoisonCharacteristicIndication(characteristic: BluetoothGattCharacteristic, enabled: Boolean) {
         val gatt = bluetoothGatt
         if (gatt == null) {
             Log.e(TAG, "BluetoothGatt not initialized")
