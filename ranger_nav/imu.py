@@ -1,16 +1,15 @@
 import smbus
 import time
-from grove.grove_6_axis_accel_gyro_bmi088 import GroveAccelGyroBMI088
+from grove.grove_6_axis_acc_compass import lsm303d
 
-sensor = GroveAccelGyroBMI088()
-bus = smbus.SMBus(1)
+sensor = lsm303d.lsm303d()
 
 def read_angle():
 
     while True:
-        a_data = sensor.get_accel()
+        a_data = sensor.getAccel()
 
-        print(a_data['x'], a_data['y'])
+        print(a_data)
         time.sleep(0.2)
 
 read_angle()
