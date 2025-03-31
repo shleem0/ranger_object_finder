@@ -33,8 +33,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -46,10 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,7 +53,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -65,23 +60,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import androidx.navigation.compose.rememberNavController
 import com.example.sdpapp.MainActivity
-import com.example.sdpapp.PermissionManager
 import com.example.sdpapp.R
 import com.example.sdpapp.bt.RangerBluetoothService
-import com.example.sdpapp.ui.theme.SDPAppTheme
-import kotlinx.coroutines.delay
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+
+var demoStarted = false
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -153,10 +144,10 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.height(100.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
-                    var showDialog by remember { mutableStateOf(false) }
+                    var showDisconnectDialog by remember { mutableStateOf(false) }
 
                     Button(
-                        onClick = { showDialog = true },
+                        onClick = { showDisconnectDialog = true },
                         modifier = Modifier
                             .height(100.dp)
                             .width(150.dp)
@@ -178,14 +169,14 @@ fun HomeScreen(navController: NavController) {
                         )
                     }
 
-                    if (showDialog) {
+                    if (showDisconnectDialog) {
                         AlertDialog(
-                            onDismissRequest = { showDialog = false },
+                            onDismissRequest = { showDisconnectDialog = false },
                             confirmButton = {
                                 TextButton(
                                     onClick = {
                                         disconnectFromRobot(context)
-                                        showDialog = false
+                                        showDisconnectDialog = false
                                         navController.navigate("home")
                                     }
                                 ) {
@@ -193,7 +184,7 @@ fun HomeScreen(navController: NavController) {
                                 }
                             },
                             dismissButton = {
-                                TextButton(onClick = { showDialog = false }) {
+                                TextButton(onClick = { showDisconnectDialog = false }) {
                                     Text("Cancel")
                                 }
                             },
@@ -206,31 +197,91 @@ fun HomeScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Box(
-                modifier = Modifier.height(100.dp),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                Button(
-                    onClick = { navController.navigate("search") },
-                    modifier = Modifier
-                        .height(100.dp)
-                        .width(150.dp)
-                        .border(
-                            BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
-                            shape = RoundedCornerShape(16.dp)
-                        ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onBackground
-                    )
+            if (!demoStarted) {
+                Box(
+                    modifier = Modifier.height(100.dp),
+                    contentAlignment = Alignment.BottomCenter
                 ) {
-                    Text(
-                        "Find Item",
-                        fontSize = 24.sp,
-                        lineHeight = 30.sp,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+                    Button(
+                        onClick = { navController.navigate("search") },
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(150.dp)
+                            .border(
+                                BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    ) {
+                        Text(
+                            "Find Item",
+                            fontSize = 24.sp,
+                            lineHeight = 30.sp,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+            }
+            else{
+                Box(
+                    modifier = Modifier.height(100.dp),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    var showCancelSearchDialog by remember { mutableStateOf(false) }
+
+                    Button(
+                        onClick = { showCancelSearchDialog = true },
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(150.dp)
+                            .border(
+                                BorderStroke(14.dp, MaterialTheme.colorScheme.secondary),
+                                shape = RoundedCornerShape(16.dp)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    ) {
+                        Text(
+                            "Cancel Search",
+                            fontSize = 24.sp,
+                            lineHeight = 30.sp,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+
+                    if (showCancelSearchDialog) {
+                        val mainActivity = context as MainActivity
+                        val s = mainActivity.bluetoothService
+
+                        AlertDialog(
+                            onDismissRequest = { showCancelSearchDialog = false },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        s?.cancelDemo()
+                                        showCancelSearchDialog = false
+                                        navController.navigate("home")
+                                    }
+                                ) {
+                                    Text("Disconnect", color = MaterialTheme.colorScheme.error)
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showCancelSearchDialog = false }) {
+                                    Text("Cancel")
+                                }
+                            },
+                            title = { Text("Cancel Search?") },
+                            text = { Text("Are you sure you want to cancel the search?") }
+                        )
+                    }
                 }
             }
         }
@@ -615,4 +666,8 @@ fun disconnectFromRobot(context: Context) {
             Log.e("HomeScreen", "Failed to disconnect from robot")
         }
     }
+}
+
+fun demoStartedFunction(){
+    demoStarted = true
 }

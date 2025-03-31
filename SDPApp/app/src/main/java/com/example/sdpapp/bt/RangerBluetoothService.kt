@@ -1,8 +1,6 @@
 package com.example.sdpapp.bt
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothGatt
@@ -23,11 +21,8 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import com.example.sdpapp.R
+import com.example.sdpapp.ui.demoStartedFunction
 import java.lang.IllegalStateException
 import java.util.UUID
 
@@ -223,6 +218,12 @@ class RangerBluetoothService : Service() {
                     return
                 }
 
+                Toast.makeText(
+                    this@RangerBluetoothService,
+                    "Connected to Robot.",
+                    Toast.LENGTH_LONG
+                ).show()
+
                 Log.d(TAG, "cancel characteristic is " + demoCancelChar.toString())
 
                 connectionState = STATE_READY
@@ -258,12 +259,15 @@ class RangerBluetoothService : Service() {
             Log.e(TAG, "Can't start demo, lost BLUETOOTH_CONNECT permissions")
             return false
         }
+//        val r = gatt.writeCharacteristic(ch, byteArrayOf(100), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+
         val r = gatt.writeCharacteristic(ch, byteArrayOf(writeIndex.toByte()) + item.encodeToByteArray(), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
         incWriteIndex()
 
         if (r == BluetoothStatusCodes.SUCCESS) {
             Log.i(TAG, "Demo started")
             //showProgressNotification()
+            demoStartedFunction()
             return true
         } else {
             Log.e(TAG, "Failed to write characteristic: writeCharacteristic returned $r")
