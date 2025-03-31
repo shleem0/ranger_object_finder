@@ -14,15 +14,6 @@ class OdometryPublisher(Node):
     def __init__(self):
         super().__init__('odometry_publisher')
 
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
-            
-            try:
-                self.prev_motor_pos1 = float(f1.read())
-                self.prev_motor_pos2 = float(f2.read())
-            except:
-                self.prev_motor_pos1 = 0
-                self.prev_motor_pos2 = 0
-
         self.broadcaster = TransformBroadcaster(self)
 
         self.odom_publisher = self.create_publisher(Odometry, '/odom', 10)
@@ -42,8 +33,9 @@ class OdometryPublisher(Node):
         self.y = 0.0
         self.theta = 0.0
 
-        self.prev_motor_pos1 = 0.0
-        self.prev_motor_pos2 = 0.0
+        self.prev_linear_vel_x = 0.0
+        self.prev_linear_vel_y = 0.0
+        self.prev_angular_vel = 0.0
 
         self.last_time = self.get_clock().now()
 
@@ -107,32 +99,32 @@ class OdometryPublisher(Node):
         current_time = self.get_clock().now()
         dt = (current_time - self.last_time).nanoseconds / 1e9  # Time difference in seconds
 
-        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data1.txt", "r") as f1, open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/motor_data2.txt", "r") as f2:
+        with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt", "r") as f:
 
             try:
-                motor_pos1 = float(f1.read())
-                motor_pos2 = float(f2.read())
+                info = f.read().split(" ")
+                accel_x = float(info[0])
+                accel_y = float(info[1])
+                angular_vel = float(info[2])
+
             except:
-                motor_pos1 = self.prev_motor_pos1
-                motor_pos2 = self.prev_motor_pos2
+                accel_x = 0.0
+                accel_y = 0.0
+                angular_vel = 0.0
 
-        angle_dif1 = (motor_pos1 - self.prev_motor_pos1) * pi / 180
-        angle_dif2 = (motor_pos2 - self.prev_motor_pos2) * pi / 180
-
-        vel1 = 0.04 * (angle_dif1 / dt)
-        vel2 = 0.04 * (angle_dif2 / dt)
-
-        linear_velocity = (vel1 + vel2) / 2
-        angular_velocity = (vel2 - vel1) / 0.295
+        linear_vel_x = self.prev_linear_vel_x + accel_x * dt
+        linear_vel_y = self.prev_linear_vel_y + accel_y * dt
 
         # Normal straight-line motion
-        self.x += linear_velocity * dt * cos(self.theta)
-        self.y += linear_velocity * dt * sin(self.theta)
+        self.x += linear_vel_x * dt
+        self.y += linear_vel_y * dt
+        self.theta += angular_vel * dt
 
         qx, qy, qz, qw = quaternion_from_euler(0, 0, self.theta)
 
-        self.prev_motor_pos1 = motor_pos1
-        self.prev_motor_pos2 = motor_pos2
+        self.prev_linear_vel_x = linear_vel_x
+        self.prev_linear_vel_y = linear_vel_y
+        self.prev_angular_vel = angular_vel
 
 
         #odometry message
@@ -148,7 +140,8 @@ class OdometryPublisher(Node):
         odom.pose.pose.orientation.z = qz
         odom.pose.pose.orientation.w = qw
 
-        odom.twist.twist.linear.x = linear_velocity
+        odom.twist.twist.linear.x = linear_vel_x
+        odom.twist.twist.linear.y = linear_vel_y
         odom.twist.twist.angular.z = angular_velocity
 
         self.odom_publisher.publish(odom)
