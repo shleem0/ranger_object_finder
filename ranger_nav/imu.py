@@ -1,15 +1,14 @@
 import smbus
 import time
-from mpu6050 import mpu6050
+from grove.grove_6_axis_accel_gyro_bmi088 import GroveAccelGyroBMI088
 
-sensor = mpu6050(0x6A)
+sensor = GroveAccelGyroBMI088()
 bus = smbus.SMBus(1)
 
 def read_angle():
 
     while True:
-        a_data = sensor.get_accel_data()
-        gyro = sensor.get_gyro_data()
+        a_data = sensor.get_accel()
 
         print(a_data['x'], a_data['y'])
         time.sleep(0.2)
