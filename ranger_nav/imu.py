@@ -1,15 +1,16 @@
-import smbus
 import time
-from grove.grove_6axis_acc_compass import lsm303d
+import adafruit_lsm303_accel
+import board
 
-sensor = lsm303d.lsm303d()
+i2c = board.I2C()
+sensor = adafruit_lsm303_accel.LSM303_Accel(i2c)
 
 def read_angle():
 
     while True:
-        a_data = sensor.getAccel()
+        acc_x, acc_y = sensor.acceleration
 
-        print(a_data)
+        print(acc_x, acc_y)
         time.sleep(0.2)
 
 read_angle()
