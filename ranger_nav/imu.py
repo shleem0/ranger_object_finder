@@ -1,6 +1,6 @@
 import smbus
 import time
-from grove.grove_6_axis_acc_compass import lsm303d
+from grove.grove_6axis_acc_compass import lsm303d
 
 sensor = lsm303d.lsm303d()
 
