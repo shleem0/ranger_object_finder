@@ -34,7 +34,11 @@ demoScript = do
   demoDir <- getDemoDir
   createDirectoryIfMissing True demoDir
   let scriptPath = demoDir </> "launch_demo.sh"
+  putStrLn $ "Running script at " ++ scriptPath
   scriptExists <- doesFileExist scriptPath
+  if scriptExists
+    then putStrLn "Script exits"
+    else putStrLn "Script does not exist"
   pure $ if scriptExists
     then (shell $ demoDir </> "launch_demo.sh") { cwd = Just demoDir }
     else shell $ "echo 'Demo script not found at " ++ scriptPath ++ "'"
