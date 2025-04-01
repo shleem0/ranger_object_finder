@@ -282,16 +282,26 @@ class RangerBluetoothHandler private constructor
 
                 val handler = RangerBluetoothHandler(gatt, demoStartChar!!, demoCancelChar!!, poisonStateChar!!, resetPoisonChar!!, ctx)
 
-                val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
                 val d = handler.poisonStateChar.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+
                 val res2 = gatt.writeDescriptor(d, BluetoothGattDescriptor.ENABLE_INDICATION_VALUE)
+                if (res2 != BluetoothStatusCodes.SUCCESS) {
+                    h.completeExceptionally(RuntimeException("Failed to write to poison indication descriptor"))
+                    return
+                }
+
+                val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
+                if (!res1) {
+                    h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
+                    return
+                }
 
                 val resetPoisonRes = handler.resetPoison().get(3, TimeUnit.SECONDS)
 
-                if (resetPoisonRes && res1 && res2 == BluetoothStatusCodes.SUCCESS) {
+                if (resetPoisonRes) {
                     h.complete(handler)
                 } else {
-                    h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
+                    h.completeExceptionally(RuntimeException("Initial poison reset failed"))
                 }
 
             }
