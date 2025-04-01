@@ -93,7 +93,9 @@ itp RangerComms{phoneToRanger, rangerToPhone, currIndex} = Interpreter
   , recv = \_ SPhone msg -> SideM $ do
       (idx, SomeMsg (msg', val)) <- atomically $ readTQueue phoneToRanger
       PacketIndex idx' <- get
-      when (idx /= idx') $ throwError RangerPacketIndexError -- TODO: handle out-of-order packets better
+      -- for demo purposes the index is now ignored, because the app doesn't have anything which would
+      -- benefit from indexing implemented
+      -- when (idx /= idx') $ throwError RangerPacketIndexError -- TODO: handle out-of-order packets better
       val' <- case (msg, msg') of
         (Msg.FunctionCall, Msg.FunctionCall) -> pure val
         (Msg.FunctionCall, _) -> throwError RangerDesync
