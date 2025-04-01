@@ -22,6 +22,10 @@ bus.write_byte_data(I2C, CTRL2_G, new_val)
 
 def read_angle():
 
+    with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
+
+        f.write("0.0 0.0 0.0")
+
     while True:
 
         ax, ay, az, gx, gy, gz = sensor.get_readings()
