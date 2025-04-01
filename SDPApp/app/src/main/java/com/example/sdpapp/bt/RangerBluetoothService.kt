@@ -34,8 +34,8 @@ import java.util.UUID
 * see example https://github.com/bluez/bluer/blob/master/bluer/examples/gatt_client.rs
 */
 // private val RANGER_DEMO_ADDRESS = "90:32:4B:8F:FC:D6"
-// private val RANGER_DEMO_ADDRESS = "B8:27:EB:02:F7:BB"
-private val RANGER_DEMO_ADDRESS = "43:45:C0:00:1F:AC"
+private val RANGER_DEMO_ADDRESS = "B8:27:EB:02:F7:BB"
+// private val RANGER_DEMO_ADDRESS = "43:45:C0:00:1F:AC"
 
 private const val TAG = "RangerBluetoothService"
 
