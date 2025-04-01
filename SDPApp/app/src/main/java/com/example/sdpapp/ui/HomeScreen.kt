@@ -270,12 +270,12 @@ fun HomeScreen(navController: NavController) {
                                         navController.navigate("home")
                                     }
                                 ) {
-                                    Text("Disconnect", color = MaterialTheme.colorScheme.error)
+                                    Text("Cancel Search", color = MaterialTheme.colorScheme.error)
                                 }
                             },
                             dismissButton = {
                                 TextButton(onClick = { showCancelSearchDialog = false }) {
-                                    Text("Cancel")
+                                    Text("Back")
                                 }
                             },
                             title = { Text("Cancel Search?") },
