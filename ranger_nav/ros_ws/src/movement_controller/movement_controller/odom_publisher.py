@@ -142,7 +142,7 @@ class OdometryPublisher(Node):
 
         odom.twist.twist.linear.x = linear_vel_x
         odom.twist.twist.linear.y = linear_vel_y
-        odom.twist.twist.angular.z = angular_velocity
+        odom.twist.twist.angular.z = angular_vel
 
         self.odom_publisher.publish(odom)
 
