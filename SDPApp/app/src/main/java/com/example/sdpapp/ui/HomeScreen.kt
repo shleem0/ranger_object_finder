@@ -117,7 +117,9 @@ fun HomeScreen(navController: NavController) {
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
-                        onClick = { connectToRobot(context) },
+                        onClick = {
+                            connectToRobot(context)
+                                  },
                         modifier = Modifier
                             .height(100.dp)
                             .width(150.dp)
