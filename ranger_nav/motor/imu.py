@@ -39,7 +39,7 @@ def read_angle():
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
 
-            f.write(f"{accel_x - (-0.01038)} {accel_y - (-0.233)} {angular_vel - 0.01503}")
+            f.write(f"{accel_x - (-0.04038)} {accel_y - (-0.263)} {angular_vel - 0.01803}")
 
         time.sleep(0.2)
 
