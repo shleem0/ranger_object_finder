@@ -120,9 +120,8 @@ class RangerBluetoothHandler private constructor
     private fun resetPoison(): Future<Boolean> {
         val writeResult = gatt.writeCharacteristic(resetPoisonChar, ByteArray(1), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
         if (writeResult != BluetoothStatusCodes.SUCCESS) {
-            return CompletableFuture.completedFuture(false)
-        } else {
             Log.e(TAG, "Failed to write to poison reset: $writeResult")
+            return CompletableFuture.completedFuture(false)
         }
         val readResult = queueRead(poisonStateChar)
         return readResult
