@@ -4,8 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import java.util.concurrent.ExecutionException
 
@@ -98,9 +101,27 @@ class RangerBluetoothService : Service() {
             Log.d(TAG, "Broadcasting connect")
             updateConnectionState(STATE_READY)
             broadcastUpdate(ACTION_GATT_READY)
+
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(
+                    this,
+                    "Connected to Robot.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
             return true
         } catch (e: ExecutionException) {
             Log.e(TAG, "Failed to connect: $e")
+
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(
+                    this,
+                    "Unable to connect. Make sure the robot is turned on and in range.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
             return false
         }
     }

@@ -172,13 +172,6 @@ class RangerBluetoothHandler private constructor
             override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
                 Log.d(TAG, "Connection state change")
                 if (status != BluetoothGatt.GATT_SUCCESS) {
-                    Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(
-                            ctx,
-                            "Unable to connect. Make sure the robot is turned on and in range.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
                     Log.e(TAG, "GATT connection state change did not return success")
                 }
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
@@ -286,14 +279,6 @@ class RangerBluetoothHandler private constructor
                 }
 
                 Log.i(TAG, "Found all characteristics")
-
-                Handler(Looper.getMainLooper()).post {
-                    Toast.makeText(
-                        ctx,
-                        "Connected to Robot.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
 
                 val handler = RangerBluetoothHandler(gatt, demoStartChar!!, demoCancelChar!!, poisonStateChar!!, resetPoisonChar!!, ctx)
 
