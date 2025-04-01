@@ -117,7 +117,7 @@ class RangerBluetoothHandler private constructor
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingPermission")
     private fun resetPoison(): Future<Boolean> {
-        val writeResult = gatt.writeCharacteristic(resetPoisonChar, ByteArray(0), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+        val writeResult = gatt.writeCharacteristic(resetPoisonChar, ByteArray(1), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
         if (writeResult != BluetoothStatusCodes.SUCCESS) {
             return CompletableFuture.completedFuture(false)
         }
