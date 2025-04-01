@@ -5,6 +5,7 @@ module Ranger.Demo
   , getDemoState
   , waitDemoStateChange
   , cancelDemoProcedure
+  , getDemoDir
   ) where
 import System.IO.Unsafe
 import Control.Concurrent.STM
@@ -16,6 +17,11 @@ import Data.Functor
 import System.Exit
 import Control.Concurrent.Async
 
+getDemoDir :: IO FilePath
+getDemoDir = do
+  d <- getHomeDirectory
+  pure $ d </> "DEMO"
+
 -- | System.Process's ProcessHandle seems to have internal race conditions for
 -- getProcessExitCode/waitForProcess, so this just wraps the demo process inside
 data DemoHandle = DemoHandle
@@ -25,10 +31,13 @@ data DemoHandle = DemoHandle
 
 demoScript :: IO CreateProcess
 demoScript = do
-  d <- getHomeDirectory
-  let demoDir = d </> "DEMO"
+  demoDir <- getDemoDir
   createDirectoryIfMissing True demoDir
-  pure (shell $ demoDir </> "launch_demo.sh") { cwd = Just demoDir}
+  let scriptPath = demoDir </> "launch_demo.sh"
+  scriptExists <- doesFileExist scriptPath
+  pure $ if scriptExists
+    then (shell $ demoDir </> "launch_demo.sh") { cwd = Just demoDir }
+    else shell $ "echo 'Demo script not found at " ++ scriptPath ++ "'"
 
 {-# NOINLINE demoScriptHandle #-}
 demoScriptHandle :: TVar (Int, Maybe DemoHandle)
