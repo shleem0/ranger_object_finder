@@ -28,8 +28,6 @@ def read_angle():
 
         f.write("0.0 0.0 0.0")
 
-    total = 0
-    counter = 0
 
     while True:
 
@@ -39,13 +37,6 @@ def read_angle():
         accel_y = ay * 0.122 * 9.80665 / 1000
         angular_vel = gz * 8.75 * (pi / 180) / 1000
 
-        counter += 1
-        total += accel_x
-        mean = total / counter
-
-        print(mean)
-
-        
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
 
             f.write(f"{accel_x - (-0.01038)} {accel_y - (-0.233)} {angular_vel - 0.01503}")
