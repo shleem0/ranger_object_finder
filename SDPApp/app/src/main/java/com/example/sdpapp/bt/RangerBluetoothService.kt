@@ -218,12 +218,14 @@ class RangerBluetoothService : Service() {
                     return
                 }
 
-                Toast.makeText(
-                    this@RangerBluetoothService,
-                    "Connected to Robot.",
-                    Toast.LENGTH_LONG
-                ).show()
-
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(
+                        this@RangerBluetoothService,
+                        "Connected to Robot.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                
                 Log.d(TAG, "cancel characteristic is " + demoCancelChar.toString())
 
                 connectionState = STATE_READY
