@@ -138,7 +138,9 @@ def find_item_in_scene(scene_path, visualise = False):
             center_y = (box[1] + box[3]) / 2.0
             # Convert x and y pixel coordinates to cm using your measurements functions:
             distance_x_cm = measurements.x_pixel_to_cm(center_x, full_width)
-            distance_y_cm = measurements.pixels_to_cm(center_y, full_height) - 2
+            distance_y_cm = measurements.pixels_to_cm(center_y, full_height)
+            if distance_y_cm > 0:
+                distance_y_cm -= 5
             # print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
             # send_coordinates(distance_x_cm, distance_y_cm) 
             send_coordinates(distance_y_cm, distance_x_cm) # Swapped x and y for arduino
