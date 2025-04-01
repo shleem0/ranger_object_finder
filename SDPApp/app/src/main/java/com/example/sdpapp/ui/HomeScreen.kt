@@ -72,7 +72,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-var demoStarted = false
+var demoRunning = false
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -117,7 +117,9 @@ fun HomeScreen(navController: NavController) {
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
-                        onClick = { connectToRobot(context) },
+                        onClick = {
+                            connectToRobot(context)
+                                  },
                         modifier = Modifier
                             .height(100.dp)
                             .width(150.dp)
@@ -177,6 +179,7 @@ fun HomeScreen(navController: NavController) {
                                     onClick = {
                                         disconnectFromRobot(context)
                                         showDisconnectDialog = false
+                                        demoRunning = false
                                         navController.navigate("home")
                                     }
                                 ) {
@@ -197,7 +200,7 @@ fun HomeScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            if (!demoStarted) {
+            if (!demoRunning) {
                 Box(
                     modifier = Modifier.height(100.dp),
                     contentAlignment = Alignment.BottomCenter
@@ -267,6 +270,7 @@ fun HomeScreen(navController: NavController) {
                                     onClick = {
                                         s?.cancelDemo()
                                         showCancelSearchDialog = false
+                                        demoRunning = false
                                         navController.navigate("home")
                                     }
                                 ) {
@@ -669,5 +673,5 @@ fun disconnectFromRobot(context: Context) {
 }
 
 fun demoStartedFunction(){
-    demoStarted = true
+    demoRunning = true
 }
