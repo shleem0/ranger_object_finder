@@ -43,10 +43,10 @@ def read_angle():
         elif ay > 0:
             ay -= 0.004
 
-        if angular_vel < 0:
-            angular_vel += 10
-        elif angular_vel > 0:
-            angular_vel -= 10
+        if gz < 0:
+            gz += 10
+        elif gz > 0:
+            gz -= 10
         
         accel_x = ax * 0.122 * 9.80665 / 1000
         accel_y = ay * 0.122 * 9.80665 / 100000
