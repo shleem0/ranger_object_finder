@@ -287,11 +287,13 @@ class RangerBluetoothHandler private constructor
 
                 Log.i(TAG, "Found all characteristics")
 
-                Toast.makeText(
-                    ctx,
-                    "Connected to Robot.",
-                    Toast.LENGTH_LONG
-                ).show()
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(
+                        ctx,
+                        "Connected to Robot.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
                 val handler = RangerBluetoothHandler(gatt, demoStartChar!!, demoCancelChar!!, poisonStateChar!!, resetPoisonChar!!, ctx)
 
