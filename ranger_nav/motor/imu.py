@@ -42,9 +42,9 @@ def read_angle():
         if gz < 10 and gz > -10:
             gz = 0
         
-        accel_x = ax * 0.122 * 9.80665 / 1000
-        accel_y = ay * 0.122 * 9.80665 / 1000
-        angular_vel = gz * 8.75 * (pi / 180) / 1000
+        accel_x = ax * 0.122 * 9.80665 / 10000
+        accel_y = ay * 0.122 * 9.80665 / 10000
+        angular_vel = gz * 8.75 * (pi / 180) / 10000
 
 
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
