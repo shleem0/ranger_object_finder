@@ -35,6 +35,8 @@ import Data.Foldable
 import qualified Data.ByteString as B
 import Data.Traversable
 import qualified Data.Vector as V
+import System.IO.Error
+import Data.Either
 
 rangerDirectory :: IO FilePath
 rangerDirectory = getXdgDirectory XdgData "ranger"
@@ -136,8 +138,10 @@ runRangerControl = interpret $ \_ -> \case
     let objectDir = rangerDir </> T.unpack (objectName oid)
     liftIO $ removeDirectoryRecursive objectDir
   GetNotificationPhoto -> do
-    liftIO $ putStrLn "placeholder: returning nothing as notification"
-    pure mempty
+    demoDir <- liftIO getDemoDir
+    let imgfile = demoDir </> "camera_data.jpg"
+    r <- liftIO $ tryJust (guard . isDoesNotExistError) (B.readFile imgfile)
+    pure $ fromRight mempty r
   PowerOff -> do
     liftIO $ putStrLn "placeholder: failing to power off"
     pure False
