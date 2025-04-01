@@ -117,9 +117,11 @@ class RangerBluetoothHandler private constructor
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingPermission")
     private fun resetPoison(): Future<Boolean> {
-        val writeResult = gatt.writeCharacteristic(resetPoisonChar, ByteArray(0), BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE)
+        val writeResult = gatt.writeCharacteristic(resetPoisonChar, ByteArray(1), BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
         if (writeResult != BluetoothStatusCodes.SUCCESS) {
             return CompletableFuture.completedFuture(false)
+        } else {
+            Log.e(TAG, "Failed to write to poison reset: $writeResult")
         }
         val readResult = queueRead(poisonStateChar)
         return readResult
@@ -282,16 +284,26 @@ class RangerBluetoothHandler private constructor
 
                 val handler = RangerBluetoothHandler(gatt, demoStartChar!!, demoCancelChar!!, poisonStateChar!!, resetPoisonChar!!, ctx)
 
-                val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
                 val d = handler.poisonStateChar.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+
                 val res2 = gatt.writeDescriptor(d, BluetoothGattDescriptor.ENABLE_INDICATION_VALUE)
+                if (res2 != BluetoothStatusCodes.SUCCESS) {
+                    h.completeExceptionally(RuntimeException("Failed to write to poison indication descriptor"))
+                    return
+                }
+
+                val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
+                if (!res1) {
+                    h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
+                    return
+                }
 
                 val resetPoisonRes = handler.resetPoison().get(3, TimeUnit.SECONDS)
 
-                if (resetPoisonRes && res1 && res2 == BluetoothStatusCodes.SUCCESS) {
+                if (resetPoisonRes) {
                     h.complete(handler)
                 } else {
-                    h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
+                    h.completeExceptionally(RuntimeException("Initial poison reset failed"))
                 }
 
             }
