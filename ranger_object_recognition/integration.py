@@ -142,7 +142,7 @@ def find_item_in_scene(scene_path, visualise = False):
             if distance_y_cm > 0:
                 distance_y_cm -= 5
             else:
-                distance_y_cm += 5
+                distance_y_cm += 9
             # print(f"Crop {idx} center is at (X: {distance_x_cm:.2f} cm, Y: {distance_y_cm:.2f} cm) from camera.", file=sys.stderr)
             # send_coordinates(distance_x_cm, distance_y_cm) 
             send_coordinates(distance_y_cm, distance_x_cm) # Swapped x and y for arduino
