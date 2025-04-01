@@ -41,9 +41,9 @@ def read_angle():
 
         counter += 1
         total += accel_x
-        total /= counter
+        mean = total / counter
 
-        print(total)
+        print(mean)
 
         
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
