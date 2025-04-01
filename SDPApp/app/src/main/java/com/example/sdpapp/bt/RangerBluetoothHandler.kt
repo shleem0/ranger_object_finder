@@ -18,6 +18,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.sdpapp.ui.demoStartedFunction
+import kotlinx.coroutines.delay
 import java.io.Closeable
 import java.util.LinkedList
 import java.util.Queue
@@ -292,20 +293,25 @@ class RangerBluetoothHandler private constructor
                     return
                 }
 
-                val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
-                if (!res1) {
-                    h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
-                    return
-                }
 
-                val resetPoisonRes = handler.resetPoison().get(3, TimeUnit.SECONDS)
+                Handler(Looper.getMainLooper()).postDelayed(
+                    {
+                        val res1 = gatt.setCharacteristicNotification(handler.poisonStateChar, true)
+                        if (!res1) {
+                            h.completeExceptionally(RuntimeException("Failed to enable indications on poison state"))
+                            return@postDelayed
+                        }
 
-                if (resetPoisonRes) {
-                    h.complete(handler)
-                } else {
-                    h.completeExceptionally(RuntimeException("Initial poison reset failed"))
-                }
+                        val resetPoisonRes = handler.resetPoison().get(3, TimeUnit.SECONDS)
 
+                        if (resetPoisonRes) {
+                            h.complete(handler)
+                        } else {
+                            h.completeExceptionally(RuntimeException("Initial poison reset failed"))
+                        }
+                    },
+                    500
+                )
             }
 
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
