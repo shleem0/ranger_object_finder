@@ -32,14 +32,32 @@ def read_angle():
     while True:
 
         ax, ay, az, gx, gy, gz = sensor.get_readings()
+
+        if ax < 0:
+            ax += 0.004
+        elif ax > 0:
+            ax -= 0.004
+
+        if ay < 0:
+            ay += 0.004
+        elif ay > 0:
+            ay -= 0.004
+
+        if angular_vel < 0:
+            angular_vel += 10
+        elif angular_vel > 0:
+            angular_vel -= 10
         
         accel_x = ax * 0.122 * 9.80665 / 1000
         accel_y = ay * 0.122 * 9.80665 / 1000
         angular_vel = gz * 8.75 * (pi / 180) / 1000
 
+
+
+
         with open("/home/ubuntu/ranger_object_finder/ranger_nav/motor/imu_data.txt","w") as f:
 
-            f.write(f"{accel_x - (-0.04038)} {accel_y - (-0.263)} {angular_vel - 0.01803}")
+            f.write(f"{accel_x} {accel_y} {angular_vel}")
 
         time.sleep(0.2)
 
