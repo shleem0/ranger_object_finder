@@ -35,6 +35,8 @@ import Data.Foldable
 import qualified Data.ByteString as B
 import Data.Traversable
 import qualified Data.Vector as V
+import System.IO.Error
+import Data.Either
 
 rangerDirectory :: IO FilePath
 rangerDirectory = getXdgDirectory XdgData "ranger"
@@ -93,7 +95,9 @@ itp RangerComms{phoneToRanger, rangerToPhone, currIndex} = Interpreter
   , recv = \_ SPhone msg -> SideM $ do
       (idx, SomeMsg (msg', val)) <- atomically $ readTQueue phoneToRanger
       PacketIndex idx' <- get
-      when (idx /= idx') $ throwError RangerPacketIndexError -- TODO: handle out-of-order packets better
+      -- for demo purposes the index is now ignored, because the app doesn't have anything which would
+      -- benefit from indexing implemented
+      -- when (idx /= idx') $ throwError RangerPacketIndexError -- TODO: handle out-of-order packets better
       val' <- case (msg, msg') of
         (Msg.FunctionCall, Msg.FunctionCall) -> pure val
         (Msg.FunctionCall, _) -> throwError RangerDesync
@@ -134,8 +138,10 @@ runRangerControl = interpret $ \_ -> \case
     let objectDir = rangerDir </> T.unpack (objectName oid)
     liftIO $ removeDirectoryRecursive objectDir
   GetNotificationPhoto -> do
-    liftIO $ putStrLn "placeholder: returning nothing as notification"
-    pure mempty
+    demoDir <- liftIO getDemoDir
+    let imgfile = demoDir </> "camera_data.jpg"
+    r <- liftIO $ tryJust (guard . isDoesNotExistError) (B.readFile imgfile)
+    pure $ fromRight mempty r
   PowerOff -> do
     liftIO $ putStrLn "placeholder: failing to power off"
     pure False

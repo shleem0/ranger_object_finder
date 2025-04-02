@@ -94,6 +94,12 @@ class MainActivity : ComponentActivity() {
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             bluetoothService = (service as RangerBluetoothService.LocalBinder).getService()
+            bluetoothService?.let { bluetooth ->
+                if (!bluetooth.initialize()) {
+                    Log.e("MainActivity", "Unable to initialize Bluetooth")
+                    finish()
+                }
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
