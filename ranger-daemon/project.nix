@@ -23,7 +23,6 @@ in pkgs.haskell-nix.cabalProject' {
       cp cbits/ranger_types.h $out/include || true
     '';
   }];
-  cabalProjectFreeze = builtins.readFile ../cabal.project.freeze;
   cabalProject = builtins.readFile ../cabal.project;
   shell.buildInputs = [
     (pkgs.writeScriptBin "haskell-language-server-wrapper" ''
