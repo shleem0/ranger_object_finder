@@ -115,8 +115,6 @@ class OdometryPublisher(Node):
         linear_vel_x = self.prev_linear_vel_x + accel_x * dt
         linear_vel_y = self.prev_linear_vel_y + accel_y * dt
 
-        print(f"Linear x vel: {linear_vel_x}, y vel: {linear_vel_y}")
-
         # Normal straight-line motion
         self.x += linear_vel_x * dt
         self.y += linear_vel_y * dt
